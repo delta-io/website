@@ -1,0 +1,14 @@
+name: Build checks
+on:
+  - push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm ci
+      - run: npm run lint
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm ci
+      - run: npm run build
