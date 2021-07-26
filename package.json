@@ -18,7 +18,17 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "lint": "eslint \"**/*.{js,jsx}\" && prettier --check .",
-    "lint:fix": "eslint \"**/*.{js,jsx}\" --fix && prettier --write ."
+    "lint:fix": "eslint \"**/*.{js,jsx}\" --fix && prettier --write .",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown"
+    ],
+    "**/*.jsx?": [
+      "eslint --fix",
+      "prettier --write --ignore-unknown"
+    ]
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
@@ -47,6 +57,8 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1",
     "prettier": "^2.3.2"
   }
 }
