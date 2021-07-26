@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Retrieve required node version
         run: |
-          "engine_node_version=$(cat package.json | jq .engines.node)" >> $GITHUB_ENV
+          "engine_node_version=$(jq '.engines.node' -f package.json)" >> $GITHUB_ENV
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.engine_node_version }}
@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Retrieve required node version
         run: |
-          "engine_node_version=$(cat package.json | jq .engines.node)" >> $GITHUB_ENV
+          "engine_node_version=$(jq '.engines.node' -f package.json)" >> $GITHUB_ENV
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.engine_node_version }}
