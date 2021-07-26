@@ -5,10 +5,26 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Retrieve required node version
+        run: |
+          echo ::set-env name=ENGINE_NODE_VERSION::$(cat package.json | jq .engines.node)
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.ENGINE_NODE_VERSION }}
       - run: npm ci
       - run: npm run lint
   dry-run:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Retrieve required node version
+        run: |
+          echo ::set-env name=ENGINE_NODE_VERSION::$(cat package.json | jq .engines.node)
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.ENGINE_NODE_VERSION }}
       - run: npm ci
       - run: npm run build
