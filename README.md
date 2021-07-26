@@ -1,54 +1,30 @@
 <p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
+  <a href="https://delta.io">
+    <img alt="Delta Lake" src="src/images/icon.png" width="60" />
   </a>
 </p>
-<h1 align="center">
-  Gatsby minimal starter
-</h1>
+<h1 align="center">Delta Lake Website</h1>
 
-## 🚀 Quick start
+<p align="center">This repo contains the official source code for the <a href="https://delta.io">Delta Lake website</a>.</p>
 
-1.  **Create a Gatsby site.**
+<p align="center">
+  <a href="https://app.netlify.com/sites/delta-lake/deploys">
+    <img src="https://api.netlify.com/api/v1/badges/1728ed28-4d36-4f40-9a46-a649be7bb58c/deploy-status" alt="Netlify status">
+  </a>
+</p>
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+## :rocket: Getting up and running locally
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+Simply check out this repo, run `npm install`, then run `npm run develop`.
 
-2.  **Start developing.**
+### Code formatting
 
-    Navigate into your new site’s directory and start it up.
+If you use Visual Studio Code, install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions to automatically format your code as you make changes.
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+Alternatively, you may run `npm run lint` or `npm run lint:fix` to both check for and fix lint issues, respectively. All changes are automatically linted (and will attempt to auto-fix) on the git pre-commit hook.
 
-3.  **Open the code and start customizing!**
+**All PRs require linters to pass in order to deploy to production.**
 
-    Your site is now running at http://localhost:8000!
+## :handshake: Contributing
 
-    Edit `src/pages/index.js` to see your site update in real-time!
-
-4.  **Learn more**
-
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-## 🚀 Quick start (Gatsby Cloud)
-
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal)
+All changes are proposed as a [pull request](https://github.com/jakebellacera/delta-lake/pulls). Simply create a pull request and request a review and we'll get on it.
