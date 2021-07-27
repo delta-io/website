@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://delta.io">
-    <img alt="Delta Lake" src="src/images/icon.png" width="60" />
+    <img alt="Delta Lake" src="static/images/icon.png" width="60" />
   </a>
 </p>
 <h1 align="center">Delta Lake Website</h1>

@@ -2,11 +2,11 @@ import * as React from "react";
 import SEO from "src/components/SEO";
 import PageLayout from "src/components/PageLayout";
 
-const HomePage = () => (
+const SharingPage = () => (
   <>
-    <SEO title="Home" />
-    <PageLayout>Home page</PageLayout>
+    <SEO title="Delta Sharing" />
+    <PageLayout>Delta Sharing page</PageLayout>
   </>
 );
 
-export default HomePage;
+export default SharingPage;

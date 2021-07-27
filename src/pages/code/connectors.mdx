@@ -1,0 +1,24 @@
+---
+title: Delta Lake Connectors
+---
+
+import { connectors } from "../../data/connectors";
+
+Use the language, services, connectors, or database of your choice with Delta Lake.
+
+<CardDataList
+  cards={connectors.map((connector) => {
+    const languages = connector.languages.length
+      ? connector.languages.join(", ")
+      : "N/A";
+    const license = connector.license || "N/A";
+    return {
+      title: connector.name,
+      description: connector.description,
+      url: connector.url,
+      tags: connector.tags,
+      meta: `${languages} • ${license}`,
+      thumbnail: connector.thumbnail,
+    };
+  })}
+/>

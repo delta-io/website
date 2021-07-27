@@ -12,5 +12,19 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react"],
-  rules: {},
+  rules: {
+    "react/prop-types": 0,
+    "import/prefer-default-export": 0,
+  },
+  settings: {
+    "import/resolver": {
+      alias: {
+        map: [
+          ["config", "./config"],
+          ["src", "./src"],
+        ],
+        extensions: [".js", ".jsx", ".mdx"],
+      },
+    },
+  },
 };

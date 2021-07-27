@@ -1,7 +1,12 @@
+const { mdxPageTypes } = require("./config/pages");
+
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
+    siteUrl: "https://delta.io",
     title: "Delta Lake",
+    description:
+      "Delta Lake is an open-source storage layer that brings ACID transactions to Apache Spark and big data workloads.",
+    twitter: "@DeltaLakeOSS",
   },
   plugins: [
     "gatsby-plugin-styled-components",
@@ -16,7 +21,7 @@ module.exports = {
         start_url: "/",
         background_color: "#042436",
         theme_color: "#00ADD4",
-        icon: "src/images/icon.png",
+        icon: "static/images/icon.png",
         icon_options: {
           purpose: "maskable",
         },
@@ -25,21 +30,13 @@ module.exports = {
     "gatsby-plugin-mdx",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    {
+    ...mdxPageTypes.map(({ name, path }) => ({
       resolve: "gatsby-source-filesystem",
       options: {
-        name: "images",
-        path: "./src/images/",
+        name,
+        path: `./${path}`,
       },
-      __key: "images",
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "pages",
-        path: "./src/pages/",
-      },
-      __key: "pages",
-    },
+      __key: name,
+    })),
   ],
 };
