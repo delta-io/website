@@ -1,3 +1,4 @@
+const remarkSlug = require("remark-slug");
 const { mdxPageTypes } = require("./config/pages");
 
 module.exports = {
@@ -9,8 +10,16 @@ module.exports = {
     twitter: "@DeltaLakeOSS",
   },
   plugins: [
+    "gatsby-plugin-anchor-links",
     "gatsby-plugin-styled-components",
     "gatsby-plugin-image",
+    {
+      resolve: "gatsby-plugin-google-fonts",
+      options: {
+        fonts: ["source sans pro:400,400i,600,600i", "source code pro:400"],
+        display: "swap",
+      },
+    },
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
@@ -27,7 +36,20 @@ module.exports = {
         },
       },
     },
-    "gatsby-plugin-mdx",
+    {
+      resolve: "gatsby-plugin-mdx",
+      options: {
+        remarkPlugins: [remarkSlug],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: "gatsby-remark-vscode",
+            options: {
+              theme: "Monokai",
+            },
+          },
+        ],
+      },
+    },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     ...mdxPageTypes.map(({ name, path }) => ({

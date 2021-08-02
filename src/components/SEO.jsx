@@ -1,7 +1,7 @@
 import * as React from "react";
-import { string, number } from "prop-types";
+import { number, string } from "prop-types";
 import { Helmet } from "react-helmet";
-import { useStaticQuery, graphql } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 
 const siteQuery = graphql`
   query SiteQuery {
@@ -10,6 +10,7 @@ const siteQuery = graphql`
         title
         description
         twitter
+        siteUrl
       }
     }
   }
@@ -20,6 +21,7 @@ const SEO = (props) => {
     title,
     description = "",
     lang = "en",
+    thumbnailPath,
     meta: customMeta = [],
     pageIndex,
   } = props;
@@ -50,6 +52,13 @@ const SEO = (props) => {
     meta.push({
       property: "og:description",
       content: description,
+    });
+  }
+
+  if (thumbnailPath) {
+    meta.push({
+      property: "og:image",
+      content: `${site.siteMetadata.siteUrl}${thumbnailPath}`,
     });
   }
 
@@ -100,10 +109,12 @@ const SEO = (props) => {
 
 SEO.defaultProps = {
   pageIndex: 0,
+  thumbnailPath: undefined,
 };
 
 SEO.propTypes = {
   title: string.isRequired,
+  thumbnailPath: string,
   pageIndex: number,
 };
 

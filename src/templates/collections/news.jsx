@@ -4,6 +4,7 @@ import SEO from "src/components/SEO";
 import PageLayout from "src/components/PageLayout";
 import Pagination from "src/components/Pagination";
 import CardDataList from "src/components/CardDataList";
+import Section from "src/components/Section";
 
 const NewsCollectionTemplate = ({ data, pageContext }) => {
   const { hasPreviousPage, hasNextPage, currentPage } = pageContext;
@@ -22,22 +23,29 @@ const NewsCollectionTemplate = ({ data, pageContext }) => {
       title,
       description,
       url: slug,
-      meta: `Posted on ${date} by ${author}`,
+      meta: `${date} by ${author}`,
       thumbnail: thumbnail.publicURL,
     };
   });
 
   return (
     <>
-      <SEO title="News" pageIndex={currentPage} />
+      <SEO title="Delta Lake News" pageIndex={currentPage} />
       <PageLayout>
-        <CardDataList cards={cards} />
-        <Pagination
-          hasPreviousPage={hasPreviousPage}
-          hasNextPage={hasNextPage}
-          currentPage={currentPage}
-          basePath="/news"
-        />
+        <Section
+          padding="xxl"
+          title="Delta Lake News"
+          primary
+          background="white"
+        >
+          <CardDataList cards={cards} columns={{ xs: 1, sm: 2, lg: 3 }} />
+          <Pagination
+            hasPreviousPage={hasPreviousPage}
+            hasNextPage={hasNextPage}
+            currentPage={currentPage}
+            basePath="/news"
+          />
+        </Section>
       </PageLayout>
     </>
   );

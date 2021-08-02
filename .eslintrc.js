@@ -26,5 +26,17 @@ module.exports = {
         extensions: [".js", ".jsx", ".mdx"],
       },
     },
+    "import/order": [
+      "error",
+      {
+        pathGroups: [
+          {
+            pattern: "src/**",
+            group: "external",
+            position: "after",
+          },
+        ],
+      },
+    ],
   },
 };
