@@ -8,6 +8,10 @@ import DiagramSection from "src/components/pages/index/DiagramSection";
 import LatestUpdateSection from "src/components/pages/index/LatestUpdateSection";
 import KeyFeaturesSection from "src/components/pages/index/KeyFeaturesSection";
 import GetStartedSection from "src/components/pages/index/GetStartedSection";
+import OrganizationsSection from "src/components/pages/index/OrganizationsSection";
+import HowItWorksSection from "src/components/pages/index/HowItWorksSection";
+import CommunitySection from "src/components/pages/shared/CommunitySection";
+import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
 
 const HomePage = () => (
   <>
@@ -161,6 +165,10 @@ const HomePage = () => (
         ctaLabel="Get Started"
         ctaUrl="https://docs.delta.io/latest/delta-intro.html"
       />
+      <OrganizationsSection />
+      <HowItWorksSection />
+      <CommunitySection />
+      <ProjectGovernanceSection />
     </PageLayout>
   </>
 );

@@ -1,6 +1,14 @@
 import * as React from "react";
 import styled from "styled-components";
-import { arrayOf, number, string, oneOf, oneOfType, shape } from "prop-types";
+import {
+  arrayOf,
+  number,
+  string,
+  oneOf,
+  oneOfType,
+  shape,
+  bool,
+} from "prop-types";
 import { breakpoints, spacing } from "config/theme";
 
 const columnsRule = (columns) => {
@@ -26,6 +34,8 @@ const gutterRule = (gutter) => `
 
 const GridContainer = styled.div`
   display: grid;
+  ${(props) => props.evenRows && "grid-auto-rows: 1fr;"}
+
   ${(props) => {
     const { theme, columns, gutter } = props;
 
@@ -50,10 +60,11 @@ const GridContainer = styled.div`
 `;
 
 const Grid = (props) => {
-  const { columns, gutter, className, children } = props;
+  const { evenRows, columns, gutter, className, children } = props;
 
   return (
     <GridContainer
+      evenRows={evenRows}
       columns={
         typeof columns === "string" ||
         typeof columns === "number" ||
@@ -72,6 +83,7 @@ const Grid = (props) => {
 Grid.defaultProps = {
   columns: 1,
   gutter: "md",
+  evenRows: false,
 };
 
 const columnSizeType = oneOfType([
@@ -97,6 +109,7 @@ const responsiveColumnsType = Object.keys(breakpoints).reduce(
 );
 
 Grid.propTypes = {
+  evenRows: bool,
   columns: oneOfType([columnSizeType, shape(responsiveColumnsType)]),
   gutter: oneOfType([gutterSizeType, shape(responsiveGutterType)]),
 };

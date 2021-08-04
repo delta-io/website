@@ -57,6 +57,12 @@ const SectionTitle = styled(Typography)`
     props.showingSubtitle ? props.theme.spacing.md : "0"};
 `;
 
+const SectionSubtitle = styled.div`
+  max-width: ${(props) => props.theme.rem(props.theme.breakpoints.lg)};
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 const Section = (props) => {
   const {
     title,
@@ -91,7 +97,11 @@ const Section = (props) => {
                 {title}
               </SectionTitle>
             )}
-            {typeof subtitle === "function" ? subtitle() : subtitle}
+            {subtitle && (
+              <SectionSubtitle>
+                {typeof subtitle === "function" ? subtitle() : subtitle}
+              </SectionSubtitle>
+            )}
           </SectionHeader>
         )}
         {children}

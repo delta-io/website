@@ -1,25 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 import Button from "src/components/Button";
-import Section from "src/components/Section";
+import LakeSection from "src/components/pages/shared/LakeSection";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import { string, node } from "prop-types";
-import bgMobile from "./bg-mobile.jpg";
-import bgDesktop from "./bg-desktop.jpg";
-import { imageOffsets } from "../DiagramSection";
-
-const HeroSectionRoot = styled(Section)`
-  background-color: ${(props) => props.theme.dark.bg};
-  color: ${(props) => props.theme.dark.color};
-  background-image: url(${bgMobile});
-  background-size: cover;
-  background-position: 50%;
-
-  ${(props) =>
-    props.theme.mediaBreakpointUp("sm")(`
-    background-image: url(${bgDesktop});
-  `)}
-`;
+import { imageOffsets } from "./DiagramSection";
 
 const HeroSectionContent = styled(TypographyContainer)`
   text-align: center;
@@ -52,7 +37,7 @@ const HeroSection = (props) => {
   const { title, description, ctaLabel, ctaUrl, versionNumber } = props;
 
   return (
-    <HeroSectionRoot padding="xxl">
+    <LakeSection padding="xxl">
       <HeroSectionContent>
         <Typography variant="h1">{title}</Typography>
         <HeroSectionDescription variant="p">
@@ -64,7 +49,7 @@ const HeroSection = (props) => {
         <Typography variant="p2">v{versionNumber}</Typography>
       </HeroSectionContent>
       <HeroSectionDiagramOffset />
-    </HeroSectionRoot>
+    </LakeSection>
   );
 };
 
