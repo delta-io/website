@@ -6,7 +6,7 @@ import HeroSection from "src/components/pages/index/HeroSection";
 import { Link } from "gatsby";
 import DiagramSection from "src/components/pages/index/DiagramSection";
 import LatestUpdateSection from "src/components/pages/index/LatestUpdateSection";
-import KeyFeaturesSection from "src/components/pages/index/KeyFeaturesSection";
+import KeyFeaturesSection from "src/components/pages/shared/KeyFeaturesSection";
 import GetStartedSection from "src/components/pages/index/GetStartedSection";
 import OrganizationsSection from "src/components/pages/index/OrganizationsSection";
 import HowItWorksSection from "src/components/pages/index/HowItWorksSection";
