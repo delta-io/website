@@ -1,7 +1,7 @@
 // Colors
 export const colors = {
   primary: "#00add4",
-  accent: "#f50057",
+  accent: "#ffda47",
   text: "#002638",
   textSecondary: "#7c8e97",
   bgLight: "#f5f8f9",

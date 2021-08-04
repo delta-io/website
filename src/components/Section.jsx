@@ -66,6 +66,7 @@ const Section = (props) => {
     background,
     container,
     renderBeforeTitle,
+    centeredHeader,
     className,
     children,
   } = props;
@@ -81,7 +82,7 @@ const Section = (props) => {
       <ContainerComponent>
         {renderBeforeTitle && renderBeforeTitle()}
         {(title || subtitle) && (
-          <SectionHeader>
+          <SectionHeader centered={centeredHeader}>
             {title && (
               <SectionTitle
                 variant={primary ? "h1" : "h2"}
