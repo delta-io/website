@@ -6,6 +6,8 @@ import CommunitySection from "src/components/pages/shared/CommunitySection";
 import KeyFeaturesSection from "src/components/pages/shared/KeyFeaturesSection";
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
 import FeaturedVideoSection from "src/components/pages/sharing/FeaturedVideoSection";
+import ConnectorsSection from "src/components/pages/sharing/ConnectorsSection";
+import EcosystemSection from "src/components/pages/sharing/EcosystemSection";
 
 const SharingPage = () => (
   <>
@@ -37,6 +39,8 @@ const SharingPage = () => (
           },
         ]}
       />
+      <ConnectorsSection />
+      <EcosystemSection />
       <CommunitySection />
       <ProjectGovernanceSection />
     </PageLayout>

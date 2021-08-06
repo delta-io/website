@@ -26,6 +26,10 @@ const communities = [
   },
 ];
 
+const CommunityGrid = styled(Grid)`
+  justify-content: center;
+`;
+
 const CommunityTile = styled(Link)`
   display: flex;
   flex-flow: column;
@@ -39,6 +43,7 @@ const CommunityTile = styled(Link)`
   white-space: nowrap;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   color: ${(props) => props.theme.light.color};
+  width: 160px;
 
   img {
     display: block;
@@ -65,14 +70,20 @@ const CommunitySection = () => (
     padding="xxl"
     centeredHeader
   >
-    <Grid columns={communities.length} gutter="xl">
+    <CommunityGrid
+      columns={{
+        xs: Array(2).fill("160px"),
+        md: communities.map(() => "160px"),
+      }}
+      gutter="xl"
+    >
       {communities.map((community) => (
         <CommunityTile key={community.name} to={community.url}>
           <img src={community.logo} alt={community.name} />
           {community.name}
         </CommunityTile>
       ))}
-    </Grid>
+    </CommunityGrid>
   </LakeSection>
 );
 
