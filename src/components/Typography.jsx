@@ -64,10 +64,23 @@ const H6 = styled.h6`
 
 const OrderedList = styled.ol`
   ${blockStyles}
+  font-size: ${(props) => props.theme.fontSizes.primary};
 `;
 
-const UnorderedList = styled.ol`
+const UnorderedList = styled.ul`
   ${blockStyles}
+  font-size: ${(props) => props.theme.fontSizes.primary};
+`;
+
+const ListItem = styled.li`
+  ${blockStyles}
+`;
+
+const HorizontalRule = styled.hr`
+  margin: 1.5em 0;
+  border: none;
+  height: 1px;
+  background: ${(props) => props.theme.colors.border};
 `;
 
 const elements = {
@@ -81,6 +94,8 @@ const elements = {
   h6: H6,
   ol: OrderedList,
   ul: UnorderedList,
+  li: ListItem,
+  hr: HorizontalRule,
 };
 
 const Typography = (props) => {

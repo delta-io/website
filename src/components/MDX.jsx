@@ -5,6 +5,11 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import CardDataList from "src/components/CardDataList";
 import Typography from "src/components/Typography";
+import styled from "styled-components";
+
+const Image = styled.img`
+  max-width: 100%;
+`;
 
 const mdxComponents = {
   p: (props) => <Typography variant="p" {...props} />,
@@ -17,6 +22,10 @@ const mdxComponents = {
   ol: (props) => <Typography variant="ol" {...props} />,
   ul: (props) => <Typography variant="ul" {...props} />,
   a: Link,
+  li: (props) => <Typography variant="li" {...props} />,
+  hr: (props) => <Typography variant="hr" {...props} />,
+  thematicBreak: (props) => <Typography variant="hr" {...props} />,
+  img: (props) => <Image {...props} />,
 
   // Custom components
   CardDataList,

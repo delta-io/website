@@ -20,6 +20,10 @@ const SidebarMenuLinkList = styled(LinkList)`
 const SidebarMenu = (props) => {
   const { links } = props;
 
+  if (!links) {
+    return null;
+  }
+
   return <SidebarMenuLinkList links={links} linkComponent={SidebarMenuLink} />;
 };
 
