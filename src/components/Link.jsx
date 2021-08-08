@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import * as React from "react";
 import { Link as GatsbyLink } from "gatsby";
+import { OutboundLink } from "gatsby-plugin-google-analytics";
 
 const externalLinkRegex = /^\w+:\/\//;
 const anchorLinkRegex = /^#/;
@@ -11,8 +12,12 @@ const Link = (props) => {
   const isExternal = externalLinkRegex.test(href);
   const isAnchor = anchorLinkRegex.test(href);
 
-  if (isExternal || isAnchor) {
+  if (isAnchor) {
     return <a href={href} {...rest} />;
+  }
+
+  if (isExternal) {
+    return <OutboundLink href={href} {...rest} />;
   }
 
   return (

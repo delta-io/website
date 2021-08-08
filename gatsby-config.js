@@ -75,5 +75,13 @@ module.exports = {
       __key: name,
     })),
     searchPluginConfig,
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: "UA-138952006-1",
+        anonymize: true,
+        respectDNT: true,
+      },
+    },
   ],
 };
