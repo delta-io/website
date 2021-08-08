@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 
 // styles
 const pageStyles = {
@@ -45,7 +45,7 @@ const NotFoundPage = () => (
         </>
       ) : null}
       <br />
-      <Link to="/">Go home</Link>.
+      <Link href="/">Go home</Link>.
     </p>
   </main>
 );

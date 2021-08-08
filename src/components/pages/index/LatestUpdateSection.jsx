@@ -1,5 +1,5 @@
 import color from "color";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import * as React from "react";
 import Grid from "src/components/Grid";
 import Section from "src/components/Section";
@@ -64,11 +64,11 @@ const LatestUpdateSection = () => (
     <Grid columns={{ xs: 1, sm: 2, lg: 4 }} gutter="xl">
       {updates.map((update) => (
         <div key={update.url}>
-          <Link to={update.url}>
+          <Link href={update.url}>
             <CardThumbnail />
           </Link>
           <CardTitle variant="p2">
-            <Link to={update.url}>{update.title}</Link>
+            <Link href={update.url}>{update.title}</Link>
           </CardTitle>
         </div>
       ))}

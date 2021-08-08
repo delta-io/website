@@ -2,7 +2,7 @@ import * as React from "react";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
 import styled from "styled-components";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import LakeSection from "../LakeSection";
 import slack from "./logos/slack.png";
 import googleGroups from "./logos/google-groups.png";
@@ -78,7 +78,7 @@ const CommunitySection = () => (
       gutter="xl"
     >
       {communities.map((community) => (
-        <CommunityTile key={community.name} to={community.url}>
+        <CommunityTile key={community.name} href={community.url}>
           <img src={community.logo} alt={community.name} />
           {community.name}
         </CommunityTile>

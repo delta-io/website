@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import * as menus from "config/menus";
 import { mediaBreakpointUp, mediaBreakpointDown } from "config/theme";
 import styled from "styled-components";
@@ -193,7 +193,7 @@ const PageHeader = () => {
         <HeaderSearchToggle as="button" onClick={() => setSearchShowing(true)}>
           <HeaderIcon icon="search" />
         </HeaderSearchToggle>
-        <HeaderLogo to="/">
+        <HeaderLogo href="/">
           <img src={logo} alt="Delta Lake" width="133" height="28" />
         </HeaderLogo>
         <HeaderMenuToggle as="button" onClick={() => setMenuShowing(true)}>
@@ -207,7 +207,7 @@ const PageHeader = () => {
               return (
                 <HeaderTab
                   key={label}
-                  to={url}
+                  href={url}
                   activeClassName="active"
                   partiallyActive
                 >
@@ -227,7 +227,7 @@ const PageHeader = () => {
               const { label, url, icon } = link;
 
               return (
-                <HeaderTab key={label} to={url}>
+                <HeaderTab key={label} href={url}>
                   <HeaderIcon icon={icon} />
                 </HeaderTab>
               );

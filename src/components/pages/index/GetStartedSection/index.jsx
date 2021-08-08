@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import * as React from "react";
 import Button from "src/components/Button";
 import Grid from "src/components/Grid";
@@ -111,7 +112,7 @@ const GetStartedSection = (props) => {
           </GetStartedSectionCodeBlock>
         </Grid>
       </GetStartedSectionContent>
-      <Button to={ctaUrl}>{ctaLabel}</Button>
+      <Button href={ctaUrl}>{ctaLabel}</Button>
     </GetStartedSectionRoot>
   );
 };

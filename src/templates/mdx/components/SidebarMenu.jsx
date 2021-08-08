@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import LinkList from "src/components/LinkList";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 
 const SidebarMenuLink = styled(Link)`
   font-weight: ${(props) => props.theme.fontWeightBold};

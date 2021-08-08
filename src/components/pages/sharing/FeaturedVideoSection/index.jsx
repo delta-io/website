@@ -1,7 +1,7 @@
 import * as React from "react";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import Embed from "src/components/Embed";
 import sharingVideo from "./sharing-video.jpg";
@@ -23,7 +23,7 @@ const FeaturedVideoSection = () => (
     centeredHeader
   >
     <FeaturedVideoContent>
-      <Link to="https://youtu.be/HQRusxdkwFo">
+      <Link href="https://youtu.be/HQRusxdkwFo">
         <VideoThumbnail
           src={sharingVideo}
           aspectRatio={[16, 9]}

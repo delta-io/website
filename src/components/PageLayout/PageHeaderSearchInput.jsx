@@ -2,8 +2,9 @@ import { string, func, bool } from "prop-types";
 import * as React from "react";
 import styled from "styled-components";
 import { InputField } from "src/components/Form";
-import { graphql, Link, useStaticQuery } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 import { useFlexSearch } from "react-use-flexsearch";
+import Link from "src/components/Link";
 
 const PageHeaderSearchInputRoot = styled.div`
   position: relative;
@@ -112,7 +113,7 @@ const PageHeaderSearchInput = (props) => {
           <NoResults>No results matched “{input}”</NoResults>
         ) : (
           results.map((result) => (
-            <SearchResult to={result.url} key={result.url}>
+            <SearchResult href={result.url} key={result.url}>
               <em>{result.type}</em>
               <strong>{result.title}</strong>
               <span>{result.description}</span>

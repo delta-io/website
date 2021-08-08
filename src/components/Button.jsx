@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import color from "color";
 import { bool } from "prop-types";
 

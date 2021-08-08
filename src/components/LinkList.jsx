@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import { rem, spacingRem } from "config/theme";
 
 const LinkListNav = styled.nav`
@@ -18,7 +18,7 @@ const LinkList = (props) => {
     items.map((item) => (
       <React.Fragment key={item.url}>
         <LinkComponent
-          to={item.url}
+          href={item.url}
           style={{ marginLeft: rem(spacingRem.sm * level) }}
         >
           {item.title}

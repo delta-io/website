@@ -2,7 +2,7 @@ import * as React from "react";
 import Section from "src/components/Section";
 import Grid from "src/components/Grid";
 import Typography, { TypographyContainer } from "src/components/Typography";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import styled from "styled-components";
 import linuxFoundation from "./linux-foundation.png";
 
@@ -29,7 +29,7 @@ const ProjectGovernanceSection = () => (
           any single company. To emphasize this we joined the Delta Lake Project
           in 2019, which is a sub-project of the Linux Foundation Projects.
           Within the project, we make decisions based on{" "}
-          <Link to="/pdfs/delta-charter.pdf">these rules</Link>.
+          <Link href="/pdfs/delta-charter.pdf">these rules</Link>.
         </Typography>
       </TypographyContainer>
     </ProjectGovernanceSectionGrid>

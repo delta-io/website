@@ -1,6 +1,6 @@
 import * as React from "react";
 import { arrayOf, shape, string, number, objectOf } from "prop-types";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import styled from "styled-components";
 import Grid from "src/components/Grid";
 import Typography, { TypographyContainer } from "./Typography";
@@ -76,13 +76,13 @@ const CardDataList = (props) => {
       {cards.map((card) => (
         <div key={card.url}>
           <ThumbnailContainer aspectRatio={thumbnailRatio} size={thumbnailSize}>
-            <Link to={card.url}>
+            <Link href={card.url}>
               <img src={card.thumbnail} alt={card.title} />
             </Link>
           </ThumbnailContainer>
           <TypographyContainer>
             <CardTitle variant="h4">
-              <Link to={card.url}>{card.title}</Link>
+              <Link href={card.url}>{card.title}</Link>
             </CardTitle>
             {card.meta && <CardContent variant="p2">{card.meta}</CardContent>}
             <CardContent variant="p2">{card.description}</CardContent>
@@ -93,7 +93,7 @@ const CardDataList = (props) => {
                 ))}
               </CardContent>
             )}
-            <Link to={card.url}>{readMoreLabel}</Link>
+            <Link href={card.url}>{readMoreLabel}</Link>
           </TypographyContainer>
         </div>
       ))}

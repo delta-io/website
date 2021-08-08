@@ -4,7 +4,7 @@ import Section from "src/components/Section";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
 import { code, community, docs, learn, news } from "config/menus";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import logo from "./delta-lake-logo.svg";
 import theLinuxFoundationLogo from "./the-linux-foundation-logo.svg";
 
@@ -100,7 +100,7 @@ const PageFooter = () => (
             <FooterMenu key={menu.title}>
               {menu.title}
               {menu.links.map((link) => (
-                <FooterMenuLink key={link.url} to={link.url}>
+                <FooterMenuLink key={link.url} href={link.url}>
                   {link.label}
                 </FooterMenuLink>
               ))}

@@ -4,7 +4,7 @@ import Button from "src/components/Button";
 import LakeSection from "src/components/pages/shared/LakeSection";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import { string, node } from "prop-types";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import { imageOffsets } from "./DiagramSection";
 
 const HeroSectionContent = styled(TypographyContainer)`
@@ -54,10 +54,10 @@ const HeroSection = (props) => {
           {description}
         </HeroSectionDescription>
         <Typography variant="p">
-          <Button to={ctaUrl}>{ctaLabel}</Button>
+          <Button href={ctaUrl}>{ctaLabel}</Button>
         </Typography>
         <Typography variant="p2">
-          <VersionNumber to="https://github.com/delta-io/delta/releases">
+          <VersionNumber href="https://github.com/delta-io/delta/releases">
             v{versionNumber}
           </VersionNumber>
         </Typography>

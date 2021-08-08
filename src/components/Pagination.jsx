@@ -1,6 +1,6 @@
 import * as React from "react";
 import { bool, number, string } from "prop-types";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 
 const Pagination = (props) => {
   const { hasPreviousPage, hasNextPage, currentPage, basePath } = props;
@@ -14,7 +14,7 @@ const Pagination = (props) => {
       {hasPreviousPage && (
         <div>
           <Link
-            to={`${basePath}${
+            href={`${basePath}${
               currentPage - 1 < 2 ? "" : `/${currentPage - 1}`
             }`}
           >
@@ -24,7 +24,7 @@ const Pagination = (props) => {
       )}
       {hasNextPage && (
         <div>
-          <Link to={`${basePath}/${currentPage + 1}`}>Next page</Link>
+          <Link href={`${basePath}/${currentPage + 1}`}>Next page</Link>
         </div>
       )}
     </div>

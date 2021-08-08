@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from "react";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import CardDataList from "src/components/CardDataList";
@@ -16,7 +16,7 @@ const mdxComponents = {
   h6: (props) => <Typography variant="h6" {...props} />,
   ol: (props) => <Typography variant="ol" {...props} />,
   ul: (props) => <Typography variant="ul" {...props} />,
-  a: ({ href, ...props }) => <Link to={href} {...props} />,
+  a: Link,
 
   // Custom components
   CardDataList,

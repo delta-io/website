@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import Section from "src/components/Section";
 import Grid from "src/components/Grid";
 import styled from "styled-components";
@@ -57,7 +57,7 @@ const OrganizationsSection = () => (
     subtitle={
       <Typography variant="p">
         Thousands of companies are processing exabytes of data per month with
-        Delta Lake. See more <Link to="/community">here</Link>.
+        Delta Lake. See more <Link href="/community">here</Link>.
       </Typography>
     }
     centeredHeader

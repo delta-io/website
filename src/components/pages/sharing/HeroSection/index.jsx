@@ -1,4 +1,4 @@
-import { Link } from "gatsby";
+import Link from "src/components/Link";
 import * as React from "react";
 import Button from "src/components/Button";
 import Grid from "src/components/Grid";
@@ -65,18 +65,18 @@ const HeroSection = () => (
           regardless of which computing platforms they use.
         </HeroSectionDescription>
         <ButtonRow columns={["min-content", "min-content"]} gutter="lg">
-          <Button to="https://github.com/delta-io/delta-sharing">
+          <Button href="https://github.com/delta-io/delta-sharing">
             Get started
           </Button>
           <Button
-            to="https://databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html"
+            href="https://databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html"
             secondary
           >
             Read more
           </Button>
         </ButtonRow>
         <Typography variant="p2">
-          <VersionNumber to="https://github.com/delta-io/delta-sharing">
+          <VersionNumber href="https://github.com/delta-io/delta-sharing">
             v0.1.0
           </VersionNumber>
         </Typography>
