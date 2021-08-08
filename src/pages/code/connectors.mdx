@@ -12,18 +12,11 @@ Use the language, services, connectors, or database of your choice with Delta La
   thumbnailRatio={[1, 1]}
   thumbnailSize={["70px", "70px"]}
   columns={{ xs: 1, md: 2 }}
-  cards={connectors.map((connector) => {
-    const languages = connector.languages.length
-      ? connector.languages.join(", ")
-      : "N/A";
-    const license = connector.license || "N/A";
-    return {
-      title: connector.name,
-      description: connector.description,
-      url: connector.url,
-      tags: connector.tags,
-      meta: `${languages} • ${license}`,
-      thumbnail: connector.thumbnail,
-    };
-  })}
+  cards={connectors.map((connector) => ({
+    title: connector.name,
+    description: connector.description,
+    url: connector.url,
+    tags: connector.tags,
+    thumbnail: connector.thumbnail,
+  }))}
 />

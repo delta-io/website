@@ -5,23 +5,31 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography from "src/components/Typography";
 import styled from "styled-components";
+import genericThumbnail from "./generic-thumbnail.png";
+import beyondLambdaVideoThumbnail from "./beyond-lambda-introducing-delta-architecture.jpg";
+import salesforceBlogThumbnail from "./salesforce-blog-thumbnail.jpg";
+import gettingDataReadyVideoThumbnail from "./getting-data-ready-for-data-science-with-delta-lake-and-mlflow.jpg";
 
 const updates = [
   {
-    title: "Latest news article",
-    url: "#",
+    title: "Delta Lake 1.0.0 Released",
+    thumbnail: genericThumbnail,
+    url: "/news/2021-05-24-delta-lake-1-0-0-released",
   },
   {
-    title: "Latest news article",
-    url: "#",
+    title: "Beyond Lambda: Introducing Delta Architecture",
+    thumbnail: beyondLambdaVideoThumbnail,
+    url: "https://www.youtube.com/watch?v=FePv0lro0z8",
   },
   {
-    title: "Latest news article",
-    url: "#",
+    title: "Salesforce Engineering: Delta Lake Tech Talk Series",
+    thumbnail: salesforceBlogThumbnail,
+    url: "/news/2021-03-02-salesforce-engineering-delta-lake-tech-talk-series",
   },
   {
-    title: "Latest news article",
-    url: "#",
+    title: "Getting Data Ready for Data Science with Delta Lake and MLflow",
+    thumbnail: gettingDataReadyVideoThumbnail,
+    url: "https://www.youtube.com/watch?v=hQaENo78za0",
   },
 ];
 
@@ -65,7 +73,9 @@ const LatestUpdateSection = () => (
       {updates.map((update) => (
         <div key={update.url}>
           <Link href={update.url}>
-            <CardThumbnail />
+            <CardThumbnail>
+              <img src={update.thumbnail} alt="" />
+            </CardThumbnail>
           </Link>
           <CardTitle variant="p2">
             <Link href={update.url}>{update.title}</Link>

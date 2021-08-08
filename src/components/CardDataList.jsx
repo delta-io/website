@@ -63,6 +63,12 @@ const CardContent = styled(Typography)`
   margin-bottom: ${(props) => props.theme.spacing.xs};
 `;
 
+const CardTag = styled.span`
+  display: inline-block;
+  margin-right: ${(props) => props.theme.spacing.md};
+  font-weight: ${(props) => props.theme.fontWeightBold};
+`;
+
 const CardDataList = (props) => {
   const { columns, cards, thumbnailRatio, thumbnailSize, readMoreLabel } =
     props;
@@ -89,7 +95,7 @@ const CardDataList = (props) => {
             {card.tags?.length && (
               <CardContent variant="p2">
                 {card.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
+                  <CardTag key={tag}>{tag}</CardTag>
                 ))}
               </CardContent>
             )}
