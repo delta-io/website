@@ -24,6 +24,11 @@ const GlobalStyles = createGlobalStyle`
     color: ${(props) => props.theme.dark.color};
   }
 
+  input,
+  select {
+    font-family: ${(props) => props.theme.fontFamilyBase};
+  }
+
   a {
     color: ${(props) => props.theme.colors.primary};
   }

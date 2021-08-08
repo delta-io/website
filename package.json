@@ -39,6 +39,7 @@
     "gatsby-plugin-anchor-links": "^1.2.1",
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-image": "^1.10.1",
+    "gatsby-plugin-local-search": "^2.0.1",
     "gatsby-plugin-manifest": "^3.10.0",
     "gatsby-plugin-mdx": "^2.10.1",
     "gatsby-plugin-react-helmet": "^4.10.0",
@@ -52,6 +53,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
+    "react-use-flexsearch": "^0.1.1",
     "remark-slug": "^6.1.0",
     "styled-components": "^5.3.0"
   },

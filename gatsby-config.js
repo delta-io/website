@@ -1,5 +1,6 @@
 const remarkSlug = require("remark-slug");
 const { mdxPageTypes } = require("./config/pages");
+const { searchPluginConfig } = require("./config/search");
 
 module.exports = {
   siteMetadata: {
@@ -60,5 +61,6 @@ module.exports = {
       },
       __key: name,
     })),
+    searchPluginConfig,
   ],
 };

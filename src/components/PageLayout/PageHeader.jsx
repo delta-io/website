@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Section from "src/components/Section";
 import Icon from "src/components/Icon";
 import logo from "./delta-lake-logo.svg";
+import PageHeaderSearchInput from "./PageHeaderSearchInput";
 
 const { useState } = React;
 
@@ -36,26 +37,7 @@ const HeaderContainer = styled.div`
   position: relative;
 `;
 
-const HeaderMenu = styled.div`
-  ${(props) =>
-    showingMobileMenu(`
-    position: fixed;
-    top: 0;
-    right: 0;
-    transform: ${props.showing ? "translateX(0)" : "translateX(100%)"};
-    bottom: 0;
-    background-color: white;
-    color: ${props.theme.light.color};
-    z-index: 999;
-  `)}
-
-  ${hidingMobileMenu(`
-    display: flex;
-    flex: 1 1 auto;
-  `)}
-`;
-
-const HeaderMenuBackdrop = styled.button`
+const HeaderBackdrop = styled.button`
   ${(props) =>
     showingMobileMenu(`
     background-color: rgba(0, 0, 0, 0.5);
@@ -73,6 +55,25 @@ const HeaderMenuBackdrop = styled.button`
 
   ${hidingMobileMenu(`
     display: none;
+  `)}
+`;
+
+const HeaderMenu = styled.div`
+  ${(props) =>
+    showingMobileMenu(`
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: ${props.showing ? "translateX(0)" : "translateX(100%)"};
+    bottom: 0;
+    background-color: white;
+    color: ${props.theme.light.color};
+    z-index: 999;
+  `)}
+
+  ${hidingMobileMenu(`
+    display: flex;
+    flex: 1 1 auto;
   `)}
 `;
 
@@ -128,12 +129,11 @@ const HeaderIcon = styled(Icon)`
   font-size: ${(props) => props.theme.rem(26)};
 `;
 
-const HeaderMenuToggle = styled(HeaderTab)`
+const HeaderToggle = styled(HeaderTab)`
   border: 0;
   background-color: transparent;
   appearance: none;
   position: absolute;
-  right: 0;
   cursor: pointer;
 
   ${hidingMobileMenu(`
@@ -141,12 +141,58 @@ const HeaderMenuToggle = styled(HeaderTab)`
   `)}
 `;
 
+const HeaderMenuToggle = styled(HeaderToggle)`
+  right: 0;
+`;
+
+const HeaderSearchToggle = styled(HeaderToggle)`
+  left: 0;
+`;
+
+const HeaderSearch = styled.div`
+  ${(props) =>
+    showingMobileMenu(`
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 75%;
+    min-width: 300px;
+    transform: ${props.showing ? "translateX(0)" : "translateX(-100%)"};
+    background-color: white;
+    color: ${props.theme.light.color};
+    z-index: 999;
+    padding: ${props.theme.spacing.md}
+  `)}
+
+  ${hidingMobileMenu(`
+    display: none;
+  `)}
+`;
+
+const DesktopHeaderSearchInput = styled(PageHeaderSearchInput)`
+  display: none;
+
+  ${(props) =>
+    hidingMobileMenu(`
+    display: block;
+    flex: 1 1 auto;
+    min-height: 48px;
+    padding: ${props.theme.spacing.xs} 0;
+  `)}
+`;
+
 const PageHeader = () => {
   const [menuShowing, setMenuShowing] = useState(false);
+  const [searchShowing, setSearchShowing] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <Header>
       <HeaderContainer>
+        <HeaderSearchToggle as="button" onClick={() => setSearchShowing(true)}>
+          <HeaderIcon icon="search" />
+        </HeaderSearchToggle>
         <HeaderLogo to="/">
           <img src={logo} alt="Delta Lake" width="133" height="28" />
         </HeaderLogo>
@@ -170,6 +216,12 @@ const PageHeader = () => {
               );
             })}
           </HeaderNav>
+          <DesktopHeaderSearchInput
+            input={searchInput}
+            onChange={setSearchInput}
+            floatingResults
+            dark
+          />
           <HeaderSocialNav>
             {menus.headerSocial.map((link) => {
               const { label, url, icon } = link;
@@ -182,9 +234,18 @@ const PageHeader = () => {
             })}
           </HeaderSocialNav>
         </HeaderMenu>
-        <HeaderMenuBackdrop
-          onClick={() => setMenuShowing(false)}
-          showing={menuShowing}
+        <HeaderSearch showing={searchShowing}>
+          <PageHeaderSearchInput
+            input={searchInput}
+            onChange={setSearchInput}
+          />
+        </HeaderSearch>
+        <HeaderBackdrop
+          onClick={() => {
+            setMenuShowing(false);
+            setSearchShowing(false);
+          }}
+          showing={menuShowing || searchShowing}
         />
       </HeaderContainer>
     </Header>
