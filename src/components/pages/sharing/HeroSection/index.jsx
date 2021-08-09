@@ -8,6 +8,10 @@ import styled from "styled-components";
 import heroDesktop from "./hero-desktop.png";
 import heroMobile from "./hero-mobile.png";
 
+const HeroSectionRoot = styled(Section)`
+  padding-bottom: ${(props) => props.theme.spacing.xl};
+`;
+
 const HeroSectionDescription = styled(Typography)`
   max-width: ${(props) => props.theme.rem(props.theme.breakpoints.md)};
   margin-left: auto;
@@ -52,7 +56,7 @@ const HeroImageDesktop = styled(HeroImage)`
 `;
 
 const HeroSection = () => (
-  <Section
+  <HeroSectionRoot
     padding="xxxl"
     title="An Open Standard for Secure Data Sharing"
     background="white"

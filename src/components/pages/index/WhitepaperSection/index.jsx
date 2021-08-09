@@ -17,6 +17,10 @@ const WhitepaperSectionColumn = styled(TypographyContainer)`
   }
 `;
 
+const ButtonRow = styled(Typography)`
+  margin-bottom: ${(props) => props.theme.spacing.xxl};
+`;
+
 const WhitepaperSection = () => (
   <Section
     title="Read the Lakehouse Whitepaper"
@@ -29,11 +33,11 @@ const WhitepaperSection = () => (
           warehouses and data lakes: standard DBMS management functions usable
           against low-cost object stores.
         </Typography>
-        <Typography variant="p">
+        <ButtonRow variant="p">
           <Button href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">
             Read the whitepaper
           </Button>
-        </Typography>
+        </ButtonRow>
       </>
     }
     background="white"
