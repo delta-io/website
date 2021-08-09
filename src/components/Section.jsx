@@ -31,6 +31,7 @@ const Container = styled.div`
 
 const SectionRoot = styled.div`
   padding: ${(props) => props.theme.spacing[props.padding] || 0} 0;
+
   ${(props) => {
     const { background } = props;
 

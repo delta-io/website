@@ -47,7 +47,7 @@ const HeroSection = (props) => {
   const { title, description, ctaLabel, ctaUrl, versionNumber } = props;
 
   return (
-    <LakeSection padding="xxl" primary>
+    <LakeSection padding="xxxl" primary>
       <HeroSectionContent>
         <Typography variant="h1">{title}</Typography>
         <HeroSectionDescription variant="p">

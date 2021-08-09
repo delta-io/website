@@ -67,6 +67,7 @@ export const spacing = {
   lg: rem(24),
   xl: rem(30),
   xxl: rem(60),
+  xxxl: rem(100),
 };
 export const breakpoints = {
   xs: 0,

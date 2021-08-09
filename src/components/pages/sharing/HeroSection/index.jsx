@@ -53,7 +53,7 @@ const HeroImageDesktop = styled(HeroImage)`
 
 const HeroSection = () => (
   <Section
-    padding="xxl"
+    padding="xxxl"
     title="An Open Standard for Secure Data Sharing"
     background="white"
     primary

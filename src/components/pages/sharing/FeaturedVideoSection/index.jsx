@@ -19,7 +19,7 @@ const VideoThumbnail = styled(Embed)`
 const FeaturedVideoSection = () => (
   <Section
     title="Watch the Data+AI Summit 2021 Sharing Announcement"
-    padding="xxl"
+    padding="xxxl"
     centeredHeader
   >
     <FeaturedVideoContent>

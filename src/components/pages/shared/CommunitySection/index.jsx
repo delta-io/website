@@ -67,7 +67,7 @@ const CommunitySection = () => (
         and share tips.
       </Typography>
     }
-    padding="xxl"
+    padding="xxxl"
     centeredHeader
   >
     <CommunityGrid

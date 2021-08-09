@@ -27,7 +27,7 @@ const DesktopImage = styled(EcosystemImageBase)`
 const EcosystemSection = () => (
   <Section
     title="Delta Sharing Ecosystem"
-    padding="xxl"
+    padding="xxxl"
     centeredHeader
     background="white"
   >

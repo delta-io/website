@@ -61,7 +61,7 @@ const OrganizationsSection = () => (
       </Typography>
     }
     centeredHeader
-    padding="xxl"
+    padding="xxxl"
   >
     <Grid columns={{ xs: 2, sm: 3, xl: 6 }} gutter="lg" evenRows>
       {logos.map((logo) => (

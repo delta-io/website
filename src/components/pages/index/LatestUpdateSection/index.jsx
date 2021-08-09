@@ -67,7 +67,7 @@ const LatestUpdateSection = () => (
     background={(theme) => theme.light.bg}
     title="The Latest"
     centeredHeader
-    padding="xxl"
+    padding="xxxl"
   >
     <Grid columns={{ xs: 1, sm: 2, lg: 4 }} gutter="xl">
       {updates.map((update) => (

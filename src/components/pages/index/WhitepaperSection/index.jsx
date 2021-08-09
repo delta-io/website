@@ -38,7 +38,7 @@ const WhitepaperSection = () => (
     }
     background="white"
     centeredHeader
-    padding="xxl"
+    padding="xxxl"
   >
     <Grid columns={{ md: 2 }} gutter="xxl">
       <WhitepaperSectionColumn>

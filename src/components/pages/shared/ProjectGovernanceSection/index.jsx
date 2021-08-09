@@ -14,7 +14,7 @@ const ProjectGovernanceSectionGrid = styled(Grid)`
 `;
 
 const ProjectGovernanceSection = () => (
-  <Section padding="xxl">
+  <Section padding="xxxl">
     <ProjectGovernanceSectionGrid columns={{ xs: 1, lg: [1, 3] }}>
       <img
         src={linuxFoundation}

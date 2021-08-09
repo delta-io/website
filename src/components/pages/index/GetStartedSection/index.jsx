@@ -86,7 +86,7 @@ const GetStartedSection = (props) => {
 
   return (
     <GetStartedSectionRoot
-      padding="xxl"
+      padding="xxxl"
       background="white"
       subtitle={
         <TypographyContainer>

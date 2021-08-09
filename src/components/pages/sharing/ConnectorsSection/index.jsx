@@ -99,7 +99,7 @@ const ComingSoonLogosGrid = styled(Grid)`
 `;
 
 const ConnectorsSection = () => (
-  <Section title="Connecting to Delta Sharing" padding="xxl" centeredHeader>
+  <Section title="Connecting to Delta Sharing" padding="xxxl" centeredHeader>
     <Grid gutter={{ xs: "xl", lg: "xxl" }} columns={{ xs: 1, md: 2 }}>
       <ConnectorCard>
         <Typography variant="p">
