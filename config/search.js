@@ -8,7 +8,6 @@ const searchPluginConfig = {
   options: {
     name: "search",
     engine: "flexsearch",
-    engineOptions: "speed",
     query: `
       query SearchPluginQuery {
         allMdx {
@@ -29,7 +28,7 @@ const searchPluginConfig = {
         }
       }
     `,
-    index: ["title", "description"],
+    index: ["title"],
     normalizer: ({ data }) =>
       data.allMdx.edges.map(({ node }) => ({
         id: node.id,

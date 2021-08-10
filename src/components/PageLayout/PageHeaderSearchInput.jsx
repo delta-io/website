@@ -84,10 +84,7 @@ const PageHeaderSearchInput = (props) => {
   const { input, onChange, dark, floatingResults, className } = props;
   const data = useStaticQuery(query);
   const { index: searchIndex, store: searchStore } = data.localSearchSearch;
-  const results = useFlexSearch(input, searchIndex, searchStore, {
-    limit: 5,
-    suggest: true,
-  });
+  const results = useFlexSearch(input, searchIndex, searchStore);
 
   return (
     <PageHeaderSearchInputRoot className={className}>
