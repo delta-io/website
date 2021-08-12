@@ -7,7 +7,7 @@ import { TypographyContainer } from "src/components/Typography";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import TwoColumnLayout from "./components/TwoColumnLayout";
-import SidebarMenu from "./components/SidebarMenu";
+import TableOfContents from "./components/TableOfContents";
 
 const ThumbnailContainer = styled.div`
   line-height: 0;
@@ -34,7 +34,10 @@ const NewsMdxTemplate = ({ data }) => {
     thumbnail: { publicURL: thumbnail },
   } = frontmatter;
 
-  const renderSidebar = () => <SidebarMenu links={tableOfContents.items} />;
+  const tocItems = tableOfContents.items;
+
+  const renderSidebar = () =>
+    tocItems ? <TableOfContents items={tocItems} showTitle /> : null;
   const renderThumbnail = () => (
     <ThumbnailContainer>
       <img src={thumbnail} alt="" />

@@ -6,40 +6,52 @@ import MDX from "src/components/MDX";
 import { TypographyContainer } from "src/components/Typography";
 import * as menus from "config/menus";
 import Section from "src/components/Section";
+import Link from "src/components/Link";
+import styled from "styled-components";
+import LinkList from "src/components/LinkList";
 import TwoColumnLayout from "./components/TwoColumnLayout";
-import SidebarMenu from "./components/SidebarMenu";
+import TableOfContents from "./components/TableOfContents";
 
-const sidebars = {
-  toc:
-    ({ tableOfContents }) =>
-    () =>
-      <SidebarMenu links={tableOfContents.items} />,
-  menu:
-    ({ frontmatter }) =>
-    () => {
-      const { menu } = frontmatter;
+const SidebarMenuLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: ${(props) => props.theme.fontWeightBold};
 
-      const links = menus[menu];
+  &.active {
+    color: ${(props) => props.theme.light.color};
+  }
 
-      if (!links) {
-        return null;
-      }
-
-      return (
-        <SidebarMenu
-          links={links.map((link) => ({
-            ...link,
-            title: link.label,
-          }))}
-        />
-      );
-    },
-};
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const DefaultMdxTemplate = ({ data }) => {
-  const { frontmatter = {}, body } = data.mdx;
+  const { frontmatter = {}, body, tableOfContents } = data.mdx;
 
-  const sidebar = sidebars[frontmatter.sidebar];
+  const tocItems = tableOfContents.items;
+  const sidebarMenu = menus[frontmatter.menu];
+
+  const renderSidebar = () => {
+    if (sidebarMenu) {
+      return (
+        <LinkList
+          links={sidebarMenu}
+          linkComponent={SidebarMenuLink}
+          renderInCurrentItem={() =>
+            tocItems ? <TableOfContents items={tocItems} /> : null
+          }
+        />
+      );
+    }
+
+    if (!tocItems) {
+      return null;
+    }
+
+    return <TableOfContents items={tocItems} showTitle />;
+  };
 
   return (
     <>
@@ -49,9 +61,7 @@ const DefaultMdxTemplate = ({ data }) => {
         thumbnailPath={frontmatter.thumbnail?.publicURL}
       />
       <PageLayout>
-        <TwoColumnLayout
-          renderSidebar={sidebar ? sidebar(data.mdx) : undefined}
-        >
+        <TwoColumnLayout renderSidebar={renderSidebar}>
           <Section title={frontmatter.title} primary container={false}>
             <TypographyContainer>
               <MDX>{body}</MDX>
@@ -70,7 +80,6 @@ export const pageQuery = graphql`
       frontmatter {
         title
         description
-        sidebar
         menu
         thumbnail {
           publicURL

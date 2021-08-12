@@ -26,6 +26,11 @@ const ColumnsGrid = styled(Grid)`
   z-index: 1;
 `;
 
+const SidebarContainer = styled.div`
+  position: sticky;
+  top: ${(props) => props.theme.spacing.md};
+`;
+
 const SidebarColumn = styled.div`
   padding-top: ${(props) => props.theme.spacing.xxl};
   border-top: 2px solid ${(props) => props.theme.colors.border};
@@ -84,7 +89,11 @@ const TwoColumnLayout = (props) => {
         gutter={renderSidebar ? sidebarGutter : undefined}
       >
         <div>{children}</div>
-        {renderSidebar && <SidebarColumn>{renderSidebar()}</SidebarColumn>}
+        {renderSidebar && (
+          <SidebarColumn>
+            <SidebarContainer>{renderSidebar()}</SidebarContainer>
+          </SidebarColumn>
+        )}
       </ColumnsGrid>
     </WrapperSection>
   );

@@ -8,7 +8,7 @@ const externalLinkRegex = /^\w+:\/\//;
 const anchorLinkRegex = /^#/;
 
 const Link = (props) => {
-  const { href, activeClassName, partiallyActive, ...rest } = props;
+  const { href, activeClassName, partiallyActive, active, ...rest } = props;
   const isExternal = externalLinkRegex.test(href);
   const isAnchor = anchorLinkRegex.test(href);
 
