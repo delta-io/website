@@ -5,6 +5,7 @@ import { InputField } from "src/components/Form";
 import { graphql, useStaticQuery } from "gatsby";
 import { useFlexSearch } from "react-use-flexsearch";
 import Link from "src/components/Link";
+import Icon from "../Icon";
 
 const PageHeaderSearchInputRoot = styled.div`
   position: relative;
@@ -71,6 +72,15 @@ const SearchResult = styled(Link)`
   }
 `;
 
+const ExternalLinkIcon = styled(Icon)`
+  vertical-align: baseline;
+  display: inline-block;
+  position: relative;
+  top: 0.125em;
+  margin-left: 0.125em;
+  color: ${(props) => props.theme.colors.primary};
+`;
+
 const query = graphql`
   query PageHeaderSearchInput {
     localSearchSearch {
@@ -110,9 +120,16 @@ const PageHeaderSearchInput = (props) => {
           <NoResults>No results matched “{input}”</NoResults>
         ) : (
           results.map((result) => (
-            <SearchResult href={result.url} key={result.url}>
+            <SearchResult
+              href={result.url}
+              key={result.url}
+              target={result.isExternal ? "_blank" : undefined}
+            >
               <em>{result.type}</em>
-              <strong>{result.title}</strong>
+              <strong>
+                {result.title}
+                {result.isExternal && <ExternalLinkIcon icon="externalLink" />}
+              </strong>
               <span>{result.description}</span>
             </SearchResult>
           ))
