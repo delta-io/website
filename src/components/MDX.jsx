@@ -3,9 +3,9 @@ import * as React from "react";
 import Link from "src/components/Link";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
-import CardDataList from "src/components/CardDataList";
 import Typography from "src/components/Typography";
 import styled from "styled-components";
+import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
 
 const Image = styled.img`
   max-width: 100%;
@@ -28,7 +28,7 @@ const mdxComponents = {
   img: (props) => <Image {...props} />,
 
   // Custom components
-  CardDataList,
+  JsonCardDataList,
 };
 
 const MDX = (props) => {

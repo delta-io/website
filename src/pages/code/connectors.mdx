@@ -4,19 +4,6 @@ sidebar: menu
 menu: code
 ---
 
-import { connectors } from "../../data/connectors";
-
 Use the language, services, connectors, or database of your choice with Delta Lake.
 
-<CardDataList
-  thumbnailRatio={[1, 1]}
-  thumbnailSize={["70px", "70px"]}
-  columns={{ xs: 1, md: 2 }}
-  cards={connectors.map((connector) => ({
-    title: connector.name,
-    description: connector.description,
-    url: connector.url,
-    tags: connector.tags,
-    thumbnail: connector.thumbnail,
-  }))}
-/>
+<JsonCardDataList data="connectors" />

@@ -4,19 +4,6 @@ sidebar: menu
 menu: learn
 ---
 
-import { videos } from "../../data/videos";
-
 Watch the latest videos and webinars for the open-source Delta Lake project.
 
-<CardDataList
-  columns={{ xs: 1, md: 2 }}
-  cards={videos.map((video) => {
-    return {
-      title: video.title,
-      description: video.description,
-      url: video.url,
-      thumbnail: video.thumbnail,
-    };
-  })}
-  readMoreLabel="Watch now"
-/>
+<JsonCardDataList data="videos" />

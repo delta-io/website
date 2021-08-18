@@ -66,6 +66,14 @@ module.exports = {
     },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
+    "gatsby-transformer-json",
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "data",
+        path: "./src/data/",
+      },
+    },
     ...mdxPageTypes.map(({ name, path }) => ({
       resolve: "gatsby-source-filesystem",
       options: {
