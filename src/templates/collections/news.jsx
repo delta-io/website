@@ -24,7 +24,7 @@ const NewsCollectionTemplate = ({ data, pageContext }) => {
       description,
       url: slug,
       meta: `${date} by ${author}`,
-      thumbnail: thumbnail.publicURL,
+      thumbnail,
     };
   });
 
@@ -38,7 +38,11 @@ const NewsCollectionTemplate = ({ data, pageContext }) => {
           primary
           background="white"
         >
-          <CardDataList cards={cards} columns={{ xs: 1, sm: 2, lg: 3 }} />
+          <CardDataList
+            cards={cards}
+            columns={{ xs: 1, sm: 2, lg: 3 }}
+            thumbnailRatio={[16, 9]}
+          />
           <Pagination
             hasPreviousPage={hasPreviousPage}
             hasNextPage={hasNextPage}
@@ -66,7 +70,9 @@ export const pageQuery = graphql`
             description
             author
             thumbnail {
-              publicURL
+              childImageSharp {
+                gatsbyImageData(width: 700, height: 394)
+              }
             }
           }
           fields {

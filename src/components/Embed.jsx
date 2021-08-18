@@ -1,6 +1,7 @@
-import { arrayOf, number, string } from "prop-types";
+import { arrayOf, number, string, any } from "prop-types";
 import * as React from "react";
 import styled from "styled-components";
+import { StaticImage, GatsbyImage, getImage } from "gatsby-plugin-image";
 
 const embedStyles = `
   position: absolute;
@@ -12,11 +13,12 @@ const embedStyles = `
 
 const EmbedContainer = styled.div`
   position: relative;
-  padding-top: ${(props) =>
-    (props.aspectRatio[1] / props.aspectRatio[0]) * 100}%;
+  ${(props) =>
+    !props.src?.childImageSharp &&
+    `padding-top: ${(props.aspectRatio[1] / props.aspectRatio[0]) * 100}%;`}
 `;
 
-const EmbedImage = styled.img`
+const EmbedImage = styled(StaticImage)`
   ${embedStyles}
 `;
 
@@ -30,6 +32,14 @@ const determineEmbedComponent = (src) => {
 
 const Embed = (props) => {
   const { aspectRatio, src, maxWidth, className } = props;
+
+  if (src?.childImageSharp) {
+    return (
+      <div className={className}>
+        <GatsbyImage image={getImage(src)} />
+      </div>
+    );
+  }
 
   const embeddedComponent = determineEmbedComponent(src);
 
@@ -48,7 +58,8 @@ Embed.defaultProps = {
 
 Embed.propTypes = {
   aspectRatio: arrayOf(number.isRequired).isRequired,
-  src: string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
+  src: any,
   maxWidth: string,
 };
 

@@ -5,10 +5,10 @@ import CardDataList from "src/components/CardDataList";
 const dataListProps = {
   connectors: {
     thumbnailRatio: [1, 1],
-    thumbnailSize: ["70px", "70px"],
     columns: { xs: 1, md: 2 },
   },
   videos: {
+    thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2 },
     readMoreLabel: "Watch now",
   },
@@ -21,7 +21,17 @@ const query = graphql`
         node {
           title: name
           tags
-          thumbnail
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(
+                width: 70
+                height: 70
+                placeholder: NONE
+                transformOptions: { fit: CONTAIN }
+                backgroundColor: "#FFFFFF"
+              )
+            }
+          }
           url
           description
           id
@@ -32,7 +42,11 @@ const query = graphql`
       edges {
         node {
           description
-          thumbnail
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(width: 700, height: 394)
+            }
+          }
           title
           url
           id

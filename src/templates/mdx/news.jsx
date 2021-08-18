@@ -6,17 +6,12 @@ import MDX from "src/components/MDX";
 import { TypographyContainer } from "src/components/Typography";
 import Section from "src/components/Section";
 import styled from "styled-components";
+import Embed from "src/components/Embed";
 import TwoColumnLayout from "./components/TwoColumnLayout";
 import TableOfContents from "./components/TableOfContents";
 
-const ThumbnailContainer = styled.div`
-  line-height: 0;
+const Thumbnail = styled(Embed)`
   margin-bottom: ${(props) => props.theme.spacing.md};
-
-  img {
-    display: block;
-    width: 100%;
-  }
 `;
 
 const PostMeta = styled.div`
@@ -27,22 +22,13 @@ const PostMeta = styled.div`
 
 const NewsMdxTemplate = ({ data }) => {
   const { frontmatter = {}, fields = {}, body, tableOfContents } = data.mdx;
-  const {
-    title,
-    description,
-    author,
-    thumbnail: { publicURL: thumbnail },
-  } = frontmatter;
+  const { title, description, author, thumbnail } = frontmatter;
 
   const tocItems = tableOfContents.items;
 
   const renderSidebar = () =>
     tocItems ? <TableOfContents items={tocItems} showTitle /> : null;
-  const renderThumbnail = () => (
-    <ThumbnailContainer>
-      <img src={thumbnail} alt="" />
-    </ThumbnailContainer>
-  );
+  const renderThumbnail = () => <Thumbnail src={thumbnail} />;
   const renderPostMeta = () => (
     <PostMeta>
       {fields.date} by {author}
@@ -82,7 +68,9 @@ export const pageQuery = graphql`
         description
         author
         thumbnail {
-          publicURL
+          childImageSharp {
+            gatsbyImageData(width: 1368, height: 770)
+          }
         }
       }
       fields {

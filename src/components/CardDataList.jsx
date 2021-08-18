@@ -1,46 +1,26 @@
 import * as React from "react";
-import { arrayOf, shape, string, number, objectOf } from "prop-types";
+import {
+  arrayOf,
+  oneOfType,
+  shape,
+  string,
+  number,
+  objectOf,
+  object,
+} from "prop-types";
 import Link from "src/components/Link";
 import styled from "styled-components";
 import Grid from "src/components/Grid";
-import Typography, { TypographyContainer } from "./Typography";
+import Typography, { TypographyContainer } from "src/components/Typography";
+import Embed from "src/components/Embed";
 
 const ThumbnailContainer = styled.div`
-  position: relative;
   margin-bottom: ${(props) => props.theme.spacing.md};
 
   a {
     margin-top: auto;
     display: block;
   }
-
-  img {
-    margin-top: auto;
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  ${(props) =>
-    !props.size &&
-    `padding-top: ${(props.aspectRatio[1] / props.aspectRatio[0]) * 100}%;`}
-  background-color: ${(props) => props.theme.border};
-  ${(props) =>
-    props.size &&
-    `
-    width: ${props.size[0]};
-    height: ${props.size[1]};
-
-    img {
-      width: auto;
-      height: auto;
-      max-width: ${props.size[0]};
-      max-height: ${props.size[1]};
-    }
-  `};
 `;
 
 const CardTitle = styled(Typography)`
@@ -70,8 +50,7 @@ const CardTag = styled.span`
 `;
 
 const CardDataList = (props) => {
-  const { columns, cards, thumbnailRatio, thumbnailSize, readMoreLabel } =
-    props;
+  const { columns, cards, thumbnailRatio, maxWidth, readMoreLabel } = props;
 
   if (!cards.length) {
     return null;
@@ -81,9 +60,13 @@ const CardDataList = (props) => {
     <Grid columns={columns} gutter="lg">
       {cards.map((card) => (
         <div key={card.url}>
-          <ThumbnailContainer aspectRatio={thumbnailRatio} size={thumbnailSize}>
+          <ThumbnailContainer>
             <Link href={card.url}>
-              <img src={card.thumbnail} alt={card.title} />
+              <Embed
+                src={card.thumbnail}
+                aspectRatio={thumbnailRatio}
+                maxWidth={maxWidth}
+              />
             </Link>
           </ThumbnailContainer>
           <TypographyContainer>
@@ -109,8 +92,7 @@ const CardDataList = (props) => {
 
 CardDataList.defaultProps = {
   readMoreLabel: "Read more",
-  thumbnailRatio: [16, 9],
-  thumbnailSize: undefined,
+  maxWidth: undefined,
 };
 
 CardDataList.propTypes = {
@@ -119,15 +101,21 @@ CardDataList.propTypes = {
     shape({
       title: string.isRequired,
       url: string.isRequired,
-      thumbnail: string.isRequired,
+      thumbnail: oneOfType([
+        string,
+        shape({
+          // eslint-disable-next-line react/forbid-prop-types
+          childImageSharp: object,
+        }),
+      ]).isRequired,
       description: string.isRequired,
       meta: string,
       tags: arrayOf(string),
     })
   ).isRequired,
-  thumbnailRatio: arrayOf(number),
+  thumbnailRatio: arrayOf(number).isRequired,
   readMoreLabel: string,
-  thumbnailSize: arrayOf(string),
+  maxWidth: string,
 };
 
 export default CardDataList;
