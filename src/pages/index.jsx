@@ -42,6 +42,17 @@ const HomePage = () => (
       <KeyFeaturesSection
         features={[
           {
+            title: "Delta Sharing",
+            description: (
+              <>
+                <Link to="/sharing">Delta Sharing</Link> is the industry’s first
+                open protocol for secure data sharing, making it simple to share
+                data with other organizations regardless of which computing
+                platforms they use.
+              </>
+            ),
+          },
+          {
             title: "ACID Transactions",
             description: (
               <>
