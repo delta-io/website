@@ -1,5 +1,6 @@
 const remarkSlug = require("remark-slug");
 const remarkGfm = require("remark-gfm");
+const remarkHighlightJs = require("remark-highlight.js");
 const { mdxPageTypes } = require("./config/pages");
 const { searchPluginConfig } = require("./config/search");
 
@@ -41,7 +42,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-mdx",
       options: {
-        remarkPlugins: [remarkSlug, remarkGfm],
+        remarkPlugins: [remarkSlug, remarkGfm, remarkHighlightJs],
         gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-images",
@@ -53,12 +54,6 @@ module.exports = {
             resolve: "gatsby-remark-copy-linked-files",
             options: {
               ignoreFileExtensions: ["png", "jpg", "jpeg"],
-            },
-          },
-          {
-            resolve: "gatsby-remark-vscode",
-            options: {
-              theme: "Monokai",
             },
           },
         ],
