@@ -1,9 +1,5 @@
 const main = [
   {
-    label: "Sharing",
-    url: "/sharing",
-  },
-  {
     label: "Code",
     url: "/code",
   },
@@ -26,6 +22,10 @@ const main = [
   {
     label: "Docs",
     url: "https://docs.delta.io/",
+  },
+  {
+    label: "Sharing",
+    url: "/sharing",
   },
 ];
 
