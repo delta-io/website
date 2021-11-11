@@ -68,11 +68,16 @@ const GetStartedSectionContent = styled.div`
 
 const GetStartedSectionCodeBlock = styled.pre`
   text-align: left;
-  padding: ${(props) => `${props.theme.spacing.xl} ${props.theme.spacing.xxl}`};
+  padding: ${(props) => `${props.theme.spacing.xl} ${props.theme.spacing.xl}`};
   background-color: ${(props) => props.theme.light.bg};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   font-weight: ${(props) => props.theme.fontWeightBold};
   display: flex;
+
+  ${(props) =>
+    props.theme.mediaBreakpointUp("lg")(`
+    padding: ${props.theme.spacing.xl} ${props.theme.spacing.xxl};
+  `)}
 
   code {
     flex: 0 0 auto;

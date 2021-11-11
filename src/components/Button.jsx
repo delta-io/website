@@ -11,12 +11,12 @@ const Button = styled(Link)`
   background-color: ${(props) =>
     props.secondary ? "transparent" : props.theme.colors.primary};
   color: ${(props) => (props.secondary ? props.theme.colors.primary : "white")};
-  border-radius: 0.25em;
+  border-radius: 3px;
   text-decoration: none;
   font-weight: ${(props) => props.theme.fontWeightBold};
   font-size: ${(props) => props.theme.fontSizes.primary};
   white-space: nowrap;
-  border: 3px solid ${(props) => props.theme.colors.primary};
+  border: 2px solid ${(props) => props.theme.colors.primary};
 
   &:hover {
     background-color: ${(props) =>

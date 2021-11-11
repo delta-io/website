@@ -15,10 +15,15 @@ const HeroSectionDescription = styled(Typography)`
   max-width: ${(props) => props.theme.rem(props.theme.breakpoints.md)};
   margin-left: auto;
   margin-right: auto;
+  font-size: 1.35rem;
 
   a {
     color: ${(props) => props.theme.colors.accent};
   }
+`;
+
+const HeroButton = styled(Button)`
+  min-width: 200px;
 `;
 
 const VersionNumber = styled(Link)`
@@ -54,7 +59,7 @@ const HeroSection = (props) => {
           {description}
         </HeroSectionDescription>
         <Typography variant="p">
-          <Button href={ctaUrl}>{ctaLabel}</Button>
+          <HeroButton href={ctaUrl}>{ctaLabel}</HeroButton>
         </Typography>
         <Typography variant="p2">
           <VersionNumber href="https://github.com/delta-io/delta/releases">

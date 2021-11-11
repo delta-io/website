@@ -10,7 +10,6 @@ const dataListProps = {
   videos: {
     thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2 },
-    readMoreLabel: "Watch now",
   },
 };
 

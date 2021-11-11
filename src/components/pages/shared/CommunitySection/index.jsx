@@ -44,6 +44,9 @@ const CommunityTile = styled(Link)`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   color: ${(props) => props.theme.light.color};
   width: 160px;
+  transition: transform 250ms ease-out;
+  margin-left: auto;
+  margin-right: auto;
 
   img {
     display: block;
@@ -54,7 +57,7 @@ const CommunityTile = styled(Link)`
   }
 
   &:hover {
-    text-decoration: underline;
+    transform: scale(1.02);
   }
 `;
 
@@ -72,7 +75,7 @@ const CommunitySection = () => (
   >
     <CommunityGrid
       columns={{
-        xs: Array(2).fill("160px"),
+        xs: 1,
         md: communities.map(() => "160px"),
       }}
       gutter="xl"

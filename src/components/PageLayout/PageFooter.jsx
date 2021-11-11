@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Section from "src/components/Section";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
-import { code, community, docs, learn, news } from "config/menus";
+import { code, community, docs, learn, blog } from "config/menus";
 import Link from "src/components/Link";
 import logo from "./delta-lake-logo.svg";
 import theLinuxFoundationLogo from "./the-linux-foundation-logo.svg";
@@ -14,42 +14,27 @@ const menus = [
     links: code,
   },
   {
+    title: "Docs",
+    links: docs,
+  },
+  {
     title: "Learn",
     links: learn,
   },
   {
-    title: "News",
-    links: news,
+    title: "Blog",
+    links: blog,
   },
   {
     title: "Community",
     links: community,
   },
-  {
-    title: "Docs",
-    links: docs,
-  },
 ];
 
 const Copyright = styled.div`
   ${(props) =>
-    props.theme.mediaBreakpointDown("md")(`
-    margin-top: ${props.theme.spacing.xl};
-  `)}
-
-  ${(props) =>
-    props.theme.mediaBreakpointBetween(
-      "md",
-      "xl"
-    )(`
-    grid-row: 1;
+    props.theme.mediaBreakpointUp("lg")(`
     width: 250px;
-  `)}
-
-  ${(props) =>
-    props.theme.mediaBreakpointUp("xl")(`
-    margin-top: ${props.theme.spacing.xl};
-    text-align: center;
   `)}
 
   a {
@@ -62,13 +47,15 @@ const Copyright = styled.div`
 `;
 
 const Footer = styled.footer`
-  color: ${(props) => props.theme.colors.textSecondary};
+  color: ${(props) => props.theme.dark.textSecondary};
 `;
 
 const FooterLogo = styled.img`
+  display: none;
+
   ${(props) =>
-    props.theme.mediaBreakpointUp("xl")(`
-    display: none;
+    props.theme.mediaBreakpointUp("lg")(`
+    display: block;
   `)}
 `;
 
@@ -79,12 +66,18 @@ const FooterMenu = styled.nav`
   align-content: start;
 `;
 
+const FooterMenuHeader = styled.div`
+  text-transform: uppercase;
+  font-weight: ${(props) => props.theme.fontWeightBold};
+`;
+
 const FooterMenuLink = styled(Link)`
   color: ${(props) => props.theme.dark.color};
   text-decoration: none;
 
   &:hover {
     color: white;
+    text-decoration: underline;
   }
 `;
 
@@ -92,13 +85,14 @@ const PageFooter = () => (
   <Footer>
     <Section padding="xl">
       <Grid
-        columns={{ xs: 1, md: ["max-content", "auto"], xl: 1 }}
-        gutter={{ xs: "md", md: "xl" }}
+        columns={{ xs: 1, lg: ["min-content", "auto", "min-content"] }}
+        gutter={{ xs: "lg", lg: "xl" }}
       >
-        <Grid columns={{ xs: 1, md: 3, xl: 5 }}>
+        <FooterLogo src={logo} alt="Delta Lake" width={160} height={34} />
+        <Grid columns={{ xs: 1, md: 5, xl: 5 }}>
           {menus.map((menu) => (
             <FooterMenu key={menu.title}>
-              {menu.title}
+              <FooterMenuHeader>{menu.title}</FooterMenuHeader>
               {menu.links.map((link) => (
                 <FooterMenuLink key={link.url} href={link.url}>
                   {link.label}
@@ -108,7 +102,6 @@ const PageFooter = () => (
           ))}
         </Grid>
         <Copyright>
-          <FooterLogo src={logo} alt="Delta Lake" width={133} height={28} />
           <Typography variant="p2">
             Copyright © {new Date().getFullYear()} Delta Lake, a series of LF
             Projects, LLC. For web site terms of use, trademark policy and other

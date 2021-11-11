@@ -22,12 +22,16 @@ const EmbedImage = styled(StaticImage)`
   ${embedStyles}
 `;
 
+const OtherEmbed = styled.div`
+  ${embedStyles}
+`;
+
 const determineEmbedComponent = (src) => {
   if (/\.(jpe?g|gif|png)/.test(src)) {
     return <EmbedImage src={src} />;
   }
 
-  return <div />;
+  return <OtherEmbed>{src}</OtherEmbed>;
 };
 
 const Embed = (props) => {

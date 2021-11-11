@@ -1,110 +1,109 @@
-import { func } from "prop-types";
+import { string, shape, arrayOf, object } from "prop-types";
 import * as React from "react";
-import Section, {
-  containerPadding,
-  containerWidth,
-} from "src/components/Section";
+import Section from "src/components/Section";
 import Grid from "src/components/Grid";
 import styled from "styled-components";
-import { rem, spacingRem } from "config/theme";
+import Link from "src/components/Link";
+import LinkList from "src/components/LinkList";
+import TableOfContents from "./TableOfContents";
 
-const sidebarWidthPx = {
-  lg: 360,
-  xl: 400,
-};
-
-const sidebarGutter = "xxl";
-
-const WrapperSection = styled(Section)`
-  background-color: white;
-  position: relative;
-  z-index: 1;
-`;
+const menuSidebarWidthPx = 200;
 
 const ColumnsGrid = styled(Grid)`
   position: relative;
   z-index: 1;
 `;
 
-const SidebarContainer = styled.div`
-  position: sticky;
-  top: ${(props) => props.theme.spacing.md};
+const MainColumn = styled.div`
+  max-width: 100%;
+  overflow: hidden;
 `;
 
 const SidebarColumn = styled.div`
-  padding-top: ${(props) => props.theme.spacing.xxl};
-  border-top: 2px solid ${(props) => props.theme.colors.border};
+  display: none;
+  border-right: 1px solid ${(props) => props.theme.colors.border};
 
   ${(props) =>
     props.theme.mediaBreakpointUp("lg")(`
-      padding-top: 0;
-      border-top: 0;
-      color: ${props.theme.colors.textSecondary};
-  `)};
+    display: block;
+  `)}
 `;
 
-const computeSidebarDecorationOffset = (breakpoint) =>
-  `calc(50% + (${parseInt(containerWidth[breakpoint], 10) / 2}rem - ${
-    sidebarWidthPx[breakpoint]
-  }px - ${containerPadding} - ${rem(spacingRem[sidebarGutter] / 2)}))`;
+const SidebarMenuLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: ${(props) => props.theme.fontWeightBold};
 
-const SidebarDecoration = styled.div`
-  display: none;
-  position: absolute;
-  z-index: 0;
-  background-color: ${(props) => props.theme.light.bg};
-  border-left: 1px solid ${(props) => props.theme.colors.border};
+  &.active {
+    color: ${(props) => props.theme.light.color};
+  }
 
-  ${(props) =>
-    props.theme.mediaBreakpointMap({
-      lg: `
-      display: block;
-      top: 0;
-      right: 0;
-      height: 100%;
-      left: ${computeSidebarDecorationOffset("lg")};
-    `,
-      xl: `
-      left: ${computeSidebarDecorationOffset("xl")};
-    `,
-    })};
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const InnerToc = styled(TableOfContents)`
+  margin-bottom: ${(props) => props.theme.spacing.md};
 `;
 
 const TwoColumnLayout = (props) => {
-  const { renderSidebar, children } = props;
+  const { children, sidebarMenu, tocItems } = props;
+  const hasSidebar = sidebarMenu || tocItems;
 
   return (
-    <WrapperSection padding="xxl">
-      {renderSidebar && <SidebarDecoration />}
+    <Section padding="xxl" background="white">
       <ColumnsGrid
         columns={
-          renderSidebar
+          hasSidebar
             ? {
                 xs: 1,
-                lg: ["auto", `${sidebarWidthPx.lg}px`],
-                xl: ["auto", `${sidebarWidthPx.xl}px`],
+                lg: [`${menuSidebarWidthPx}px`, "auto"],
               }
             : 1
         }
-        gutter={renderSidebar ? sidebarGutter : undefined}
+        gutter="xl"
       >
-        <div>{children}</div>
-        {renderSidebar && (
+        {hasSidebar && (
           <SidebarColumn>
-            <SidebarContainer>{renderSidebar()}</SidebarContainer>
+            {sidebarMenu ? (
+              <LinkList
+                links={sidebarMenu}
+                linkComponent={SidebarMenuLink}
+                renderInCurrentItem={() =>
+                  tocItems ? <InnerToc items={tocItems} /> : null
+                }
+              />
+            ) : (
+              <TableOfContents items={tocItems} showTitle />
+            )}
           </SidebarColumn>
         )}
+        <MainColumn>
+          <div>{children}</div>
+        </MainColumn>
       </ColumnsGrid>
-    </WrapperSection>
+    </Section>
   );
 };
 
 TwoColumnLayout.defaultProps = {
-  renderSidebar: undefined,
+  sidebarMenu: undefined,
+  tocItems: undefined,
 };
 
 TwoColumnLayout.propTypes = {
-  renderSidebar: func,
+  // eslint-disable-next-line react/forbid-prop-types
+  sidebarMenu: arrayOf(object),
+  tocItems: arrayOf(
+    shape({
+      title: string,
+      url: string,
+      // eslint-disable-next-line react/forbid-prop-types
+      items: arrayOf(object),
+    })
+  ),
 };
 
 export default TwoColumnLayout;

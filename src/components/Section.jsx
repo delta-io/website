@@ -67,6 +67,7 @@ const SectionSubtitle = styled.div`
 const Section = (props) => {
   const {
     title,
+    titleSize,
     subtitle,
     primary,
     padding,
@@ -92,7 +93,7 @@ const Section = (props) => {
           <SectionHeader centered={centeredHeader}>
             {title && (
               <SectionTitle
-                variant={primary ? "h1" : "h2"}
+                variant={primary ? "h1" : titleSize}
                 showingSubtitle={!!subtitle}
               >
                 {title}
@@ -114,6 +115,7 @@ const Section = (props) => {
 Section.defaultProps = {
   padding: undefined,
   title: undefined,
+  titleSize: "h2",
   subtitle: undefined,
   primary: false,
   container: true,
@@ -124,6 +126,7 @@ Section.defaultProps = {
 Section.propTypes = {
   padding: oneOf(Object.keys(spacing)),
   title: string,
+  titleSize: oneOf(["h1", "h2", "h3", "h4", "h5"]),
   subtitle: oneOfType([func, node]),
   primary: bool,
   container: bool,

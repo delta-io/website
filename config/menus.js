@@ -8,12 +8,16 @@ const main = [
     url: "/code",
   },
   {
+    label: "Integrations",
+    url: "/integrations",
+  },
+  {
     label: "Learn",
     url: "/learn",
   },
   {
-    label: "News",
-    url: "/news",
+    label: "Blog",
+    url: "/blog",
   },
   {
     label: "Community",
@@ -49,85 +53,37 @@ const code = [
     label: "Get the Code",
   },
   {
-    url: "/code/connectors",
-    label: "Connector Gallery",
+    url: "/code/contributing",
+    label: "Contributing",
+  },
+  {
+    url: "/integrations",
+    label: "Connectors",
   },
 ];
 
 const community = [
   {
     url: "/community/",
-    label: "Resources",
+    label: "Join community",
   },
   {
-    url: "/community/#1",
-    label: "Team",
-  },
-  {
-    url: "/community/#2",
-    label: "Users",
+    url: "#",
+    label: "Meetings",
   },
 ];
 
 const docs = [
   {
-    url: "https://docs.delta.io/latest/delta-intro.html",
-    label: "Introduction",
-  },
-  {
-    url: "https://docs.delta.io/latest/quick-start.html",
-    label: "Quickstart",
-  },
-  {
-    url: "https://docs.delta.io/latest/delta-batch.html",
-    label: "Table batch reads and writes",
-  },
-  {
-    url: "https://docs.delta.io/latest/delta-streaming.html",
-    label: "Table streaming reads and writes",
-  },
-  {
-    url: "https://docs.delta.io/latest/delta-update.html",
-    label: "Table deletes, updates, and merges",
-  },
-  {
-    url: "https://docs.delta.io/latest/delta-utility.html",
-    label: "Table utility commands",
-  },
-  {
-    url: "https://docs.delta.io/latest/delta-apidoc.html",
-    label: "API reference",
-  },
-  {
-    url: "https://docs.delta.io/latest/delta-storage.html",
-    label: "Storage configuration",
-  },
-  {
-    url: "https://docs.delta.io/latest/concurrency-control.html",
-    label: "Concurrency control",
-  },
-  {
-    url: "https://docs.delta.io/latest/integrations.html",
-    label: "Integrations",
-  },
-  {
-    url: "https://docs.delta.io/latest/porting.html",
-    label: "Migration guide",
-  },
-  {
-    url: "https://docs.delta.io/latest/best-practices.html",
-    label: "Best practices",
-  },
-  {
-    url: "https://docs.delta.io/latest/delta-faq.html",
-    label: "FAQs",
+    url: "https://docs.delta.io/",
+    label: "Visit Docs",
   },
 ];
 
 const learn = [
   {
-    label: "Delta Lake Quickstart",
-    url: "https://docs.delta.io/latest/quick-start.html",
+    label: "Quickstart",
+    url: "/learn/quickstart",
   },
   {
     label: "Tutorials",
@@ -139,26 +95,10 @@ const learn = [
   },
 ];
 
-const news = [
+const blog = [
   {
-    url: "/news/",
-    label: "Release Notes",
-  },
-  {
-    url: "/news/#1",
-    label: "Events",
-  },
-  {
-    url: "/news/#2",
-    label: "Features",
-  },
-  {
-    url: "/news/#3",
-    label: "Newsletters",
-  },
-  {
-    url: "/news/#4",
-    label: "All Posts",
+    url: "/blog/",
+    label: "Visit Blog",
   },
 ];
 
@@ -169,5 +109,5 @@ module.exports = {
   community,
   docs,
   learn,
-  news,
+  blog,
 };

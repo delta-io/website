@@ -6,12 +6,12 @@ import Pagination from "src/components/Pagination";
 import CardDataList from "src/components/CardDataList";
 import Section from "src/components/Section";
 
-const NewsCollectionTemplate = ({ data, pageContext }) => {
+const BlogCollectionTemplate = ({ data, pageContext }) => {
   const { hasPreviousPage, hasNextPage, currentPage } = pageContext;
   const { edges } = data.allMdx;
 
   if (!edges.length) {
-    return <div>No news articles found!</div>;
+    return <div>No articles found!</div>;
   }
 
   const cards = edges.map(({ node }) => {
@@ -30,24 +30,26 @@ const NewsCollectionTemplate = ({ data, pageContext }) => {
 
   return (
     <>
-      <SEO title="Delta Lake News" pageIndex={currentPage} />
+      <SEO title="Delta Lake Blog" pageIndex={currentPage} />
       <PageLayout>
         <Section
           padding="xxl"
-          title="Delta Lake News"
+          title="Delta Lake Blog"
           primary
           background="white"
         >
           <CardDataList
             cards={cards}
             columns={{ xs: 1, sm: 2, lg: 3 }}
+            density="relaxed"
             thumbnailRatio={[16, 9]}
+            clampDescriptionLines={2}
           />
           <Pagination
             hasPreviousPage={hasPreviousPage}
             hasNextPage={hasNextPage}
             currentPage={currentPage}
-            basePath="/news"
+            basePath="/blog"
           />
         </Section>
       </PageLayout>
@@ -56,10 +58,10 @@ const NewsCollectionTemplate = ({ data, pageContext }) => {
 };
 
 export const pageQuery = graphql`
-  query NewsListTemplateQuery($skip: Int!, $limit: Int!) {
+  query BlogCollectionTemplateQuery($skip: Int!, $limit: Int!) {
     allMdx(
       sort: { fields: [fields___date], order: DESC }
-      filter: { fields: { pageType: { eq: "news" } } }
+      filter: { fields: { pageType: { eq: "blog" } } }
       limit: $limit
       skip: $skip
     ) {
@@ -85,4 +87,4 @@ export const pageQuery = graphql`
   }
 `;
 
-export default NewsCollectionTemplate;
+export default BlogCollectionTemplate;

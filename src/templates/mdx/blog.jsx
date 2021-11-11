@@ -7,8 +7,7 @@ import { TypographyContainer } from "src/components/Typography";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import Embed from "src/components/Embed";
-import TwoColumnLayout from "./components/TwoColumnLayout";
-import TableOfContents from "./components/TableOfContents";
+import OneColumnLayout from "./components/OneColumnLayout";
 
 const Thumbnail = styled(Embed)`
   margin-bottom: ${(props) => props.theme.spacing.md};
@@ -20,14 +19,10 @@ const PostMeta = styled.div`
   padding: 0 0 ${(props) => props.theme.spacing.md};
 `;
 
-const NewsMdxTemplate = ({ data }) => {
-  const { frontmatter = {}, fields = {}, body, tableOfContents } = data.mdx;
+const BlogMdxTemplate = ({ data }) => {
+  const { frontmatter = {}, fields = {}, body } = data.mdx;
   const { title, description, author, thumbnail } = frontmatter;
 
-  const tocItems = tableOfContents.items;
-
-  const renderSidebar = () =>
-    tocItems ? <TableOfContents items={tocItems} showTitle /> : null;
   const renderThumbnail = () => <Thumbnail src={thumbnail} />;
   const renderPostMeta = () => (
     <PostMeta>
@@ -39,7 +34,7 @@ const NewsMdxTemplate = ({ data }) => {
     <>
       <SEO title={title} description={description} thumbnailPath={thumbnail} />
       <PageLayout>
-        <TwoColumnLayout renderSidebar={renderSidebar}>
+        <OneColumnLayout>
           <Section
             title={title}
             primary
@@ -51,7 +46,7 @@ const NewsMdxTemplate = ({ data }) => {
               <MDX>{body}</MDX>
             </TypographyContainer>
           </Section>
-        </TwoColumnLayout>
+        </OneColumnLayout>
       </PageLayout>
     </>
   );
@@ -62,7 +57,6 @@ export const pageQuery = graphql`
     mdx(fields: { slug: { eq: $slug } }) {
       id
       body
-      tableOfContents(maxDepth: 4)
       frontmatter {
         title
         description
@@ -80,4 +74,4 @@ export const pageQuery = graphql`
   }
 `;
 
-export default NewsMdxTemplate;
+export default BlogMdxTemplate;

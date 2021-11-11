@@ -2,7 +2,6 @@ import * as React from "react";
 import Link from "src/components/Link";
 import LinkList from "src/components/LinkList";
 import Typography from "src/components/Typography";
-import useIdObserver from "src/hooks/useIdObserver";
 import styled from "styled-components";
 
 const TableOfContentsLinkTitle = styled(Typography)`
@@ -22,47 +21,29 @@ const TableOfContentsLink = styled(Link)`
   }
 `;
 
-const observeTocItems = (tocItems, observer) => {
-  tocItems.forEach(({ url, items: childItems }) => {
-    if (url) {
-      const el = document.getElementById(url.replace(/^#/, ""));
-
-      if (el && observer) {
-        observer.observe(el);
-      }
-    }
-
-    if (childItems) {
-      observeTocItems(childItems);
-    }
-  });
-};
-
-const activateItems = (items, activeId) =>
+const mapTocItems = (items) =>
   items.map((item) => ({
     ...item,
     label: item.title,
-    active: item.url === activeId,
-    items: item.items ? activateItems(item.items, activeId) : undefined,
+    items: item.items ? mapTocItems(item.items) : undefined,
   }));
 
 const TableOfContents = (props) => {
-  const { items, showTitle } = props;
-  const activeId = useIdObserver((observer) =>
-    observeTocItems(items, observer)
-  );
+  const { items, className, showTitle } = props;
 
   return (
     <>
-      {showTitle && (
-        <TableOfContentsLinkTitle variant="p2">
-          On this page
-        </TableOfContentsLinkTitle>
-      )}
-      <LinkList
-        links={activateItems(items, `#${activeId}`)}
-        linkComponent={TableOfContentsLink}
-      />
+      <div className={className}>
+        {showTitle && (
+          <TableOfContentsLinkTitle variant="p2">
+            On this page
+          </TableOfContentsLinkTitle>
+        )}
+        <LinkList
+          links={mapTocItems(items)}
+          linkComponent={TableOfContentsLink}
+        />
+      </div>
     </>
   );
 };

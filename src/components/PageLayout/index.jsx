@@ -30,7 +30,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   a {
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.link};
   }
 
   code {

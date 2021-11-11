@@ -6,9 +6,9 @@ const mdxPageTypes = [
     path: "src/pages",
   },
   {
-    name: "news",
-    path: "src/news",
-    template: "news",
+    name: "blog",
+    path: "src/blog",
+    template: "blog",
     perPage: 12,
   },
 ];

@@ -4,6 +4,7 @@ import Link from "src/components/Link";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import Typography from "src/components/Typography";
+import Info from "src/components/Info";
 import styled from "styled-components";
 import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
 
@@ -12,11 +13,14 @@ const Image = styled.img`
 `;
 
 const HighlightedCodeBlock = styled.pre`
-  code {
+  overflow: auto;
+
+  > code {
     padding: ${(props) => props.theme.spacing.sm};
     border-radius: 0.25em;
     display: block;
     overflow-x: auto;
+    white-space: pre;
   }
 
   /*!
@@ -38,7 +42,7 @@ const HighlightedCodeBlock = styled.pre`
 base00  #212121  Default Background
 base01  #303030  Lighter Background (Used for status bars, line number and folding marks)
 base02  #353535  Selection Background
-base03  #4A4A4A  Comments, Invisibles, Line Highlighting
+base03  #9A9A9A  Comments, Invisibles, Line Highlighting
 base04  #B2CCD6  Dark Foreground (Used for status bars)
 base05  #EEFFFF  Default Foreground, Caret, Delimiters, Operators
 base06  #EEFFFF  Light Foreground (Not often used)
@@ -70,9 +74,9 @@ base0F  #FF5370  Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php 
   .hljs-property {
   }
 
-  /* base03 - #4A4A4A -  Comments, Invisibles, Line Highlighting */
+  /* base03 - #9A9A9A -  Comments, Invisibles, Line Highlighting */
   .hljs-comment {
-    color: #4a4a4a;
+    color: #9a9a9a;
   }
 
   /* base04 - #B2CCD6 -  Dark Foreground (Used for status bars) */
@@ -202,6 +206,7 @@ const mdxComponents = {
 
   // Custom components
   JsonCardDataList,
+  Info,
 };
 
 const MDX = (props) => {

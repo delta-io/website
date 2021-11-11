@@ -9,6 +9,20 @@ import Icon from "../Icon";
 
 const PageHeaderSearchInputRoot = styled.div`
   position: relative;
+  z-index: 99;
+`;
+
+const PageHeaderSearchInputRootCloseOutside = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 98;
+`;
+
+const SearchInput = styled(InputField)`
+  border-radius: 3px;
 `;
 
 const SearchResultsList = styled.div`
@@ -97,45 +111,54 @@ const PageHeaderSearchInput = (props) => {
   const results = useFlexSearch(input, searchIndex, searchStore);
 
   return (
-    <PageHeaderSearchInputRoot className={className}>
-      <InputField
-        type="text"
-        icon="search"
-        value={input}
-        onChange={(e) => {
-          const { value } = e.target;
+    <>
+      <PageHeaderSearchInputRoot className={className}>
+        <SearchInput
+          type="text"
+          icon="search"
+          value={input}
+          onChange={(e) => {
+            const { value } = e.target;
 
-          // Prevent sending spaces
-          if (value.trim() === "") {
-            onChange("");
-          } else {
-            onChange(value);
-          }
-        }}
-        placeholder="Search…"
-        dark={dark}
-      />
-      <SearchResultsList floating={floatingResults}>
-        {input !== "" && results.length === 0 ? (
-          <NoResults>No results matched “{input}”</NoResults>
-        ) : (
-          results.map((result) => (
-            <SearchResult
-              href={result.url}
-              key={result.url}
-              target={result.isExternal ? "_blank" : undefined}
-            >
-              <em>{result.type}</em>
-              <strong>
-                {result.title}
-                {result.isExternal && <ExternalLinkIcon icon="externalLink" />}
-              </strong>
-              <span>{result.description}</span>
-            </SearchResult>
-          ))
+            // Prevent sending spaces
+            if (value.trim() === "") {
+              onChange("");
+            } else {
+              onChange(value);
+            }
+          }}
+          placeholder="Search…"
+          dark={dark}
+        />
+        {input !== "" && (
+          <SearchResultsList floating={floatingResults}>
+            {results.length === 0 ? (
+              <NoResults>No results matched “{input}”</NoResults>
+            ) : (
+              results.map((result) => (
+                <SearchResult
+                  href={result.url}
+                  key={result.id}
+                  target={result.isExternal ? "_blank" : undefined}
+                >
+                  <em>{result.type}</em>
+                  <strong>
+                    {result.title}
+                    {result.isExternal && (
+                      <ExternalLinkIcon icon="externalLink" />
+                    )}
+                  </strong>
+                  <span>{result.description}</span>
+                </SearchResult>
+              ))
+            )}
+          </SearchResultsList>
         )}
-      </SearchResultsList>
-    </PageHeaderSearchInputRoot>
+      </PageHeaderSearchInputRoot>
+      {floatingResults && input !== "" && (
+        <PageHeaderSearchInputRootCloseOutside onClick={() => onChange("")} />
+      )}
+    </>
   );
 };
 

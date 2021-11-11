@@ -2,15 +2,27 @@ import { oneOf } from "prop-types";
 import * as React from "react";
 import styled from "styled-components";
 
-const blockStyles = `
+const scaleSize = (amount, variant) => {
+  if (variant === "dense") {
+    return amount * 0.4;
+  }
+
+  if (variant === "relaxed") {
+    return amount * 1.6;
+  }
+
+  return amount;
+};
+
+const blockStyles = (props) => `
   margin-top: 0;
-  margin-bottom: 1em;
+  margin-bottom: ${scaleSize(1, props.density)}em;
 `;
 
 const headerStyles = (props) => `
   line-height: ${props.theme.lineHeightHeader};
-  margin-top: 1.5em;
-  margin-bottom: .5em;
+  margin-top: ${scaleSize(1.5, props.density)}em;
+  margin-bottom: ${scaleSize(0.5, props.density)}em;
 `;
 
 export const TypographyContainer = styled.div`
@@ -24,7 +36,7 @@ export const TypographyContainer = styled.div`
 `;
 
 const Paragraph = styled.p`
-  ${blockStyles}
+  ${(props) => blockStyles(props)}
   font-size: ${(props) => props.theme.fontSizes.primary};
 `;
 
@@ -63,21 +75,21 @@ const H6 = styled.h6`
 `;
 
 const OrderedList = styled.ol`
-  ${blockStyles}
+  ${(props) => blockStyles(props)}
   font-size: ${(props) => props.theme.fontSizes.primary};
 `;
 
 const UnorderedList = styled.ul`
-  ${blockStyles}
+  ${(props) => blockStyles(props)}
   font-size: ${(props) => props.theme.fontSizes.primary};
 `;
 
 const ListItem = styled.li`
-  ${blockStyles}
+  ${(props) => blockStyles(props)}
 `;
 
 const HorizontalRule = styled.hr`
-  margin: 1.5em 0;
+  margin: ${(props) => scaleSize(1.5, props.density)}em 0;
   border: none;
   height: 1px;
   background: ${(props) => props.theme.colors.border};
@@ -111,10 +123,12 @@ const Typography = (props) => {
 
 Typography.defaultProps = {
   variant: "p",
+  density: undefined,
 };
 
 Typography.propTypes = {
   variant: oneOf(Object.keys(elements)),
+  density: oneOf(["dense", "relaxed"]),
 };
 
 export default Typography;

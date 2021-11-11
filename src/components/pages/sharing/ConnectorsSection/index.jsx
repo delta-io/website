@@ -85,6 +85,8 @@ const ConnectorCard = styled(TypographyContainer)`
 
 const ComingSoonTitle = styled(Typography)`
   text-align: center;
+  margin-top: 80px;
+  margin-bottom: 20px;
 `;
 
 const ComingSoonLogosGrid = styled(Grid)`

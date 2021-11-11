@@ -14,7 +14,7 @@ const updates = [
   {
     title: "Delta Lake 1.0.0 Released",
     thumbnail: genericThumbnail,
-    url: "/news/2021-05-24-delta-lake-1-0-0-released",
+    url: "/blog/2021-05-24-delta-lake-1-0-0-released",
   },
   {
     title: "Beyond Lambda: Introducing Delta Architecture",
@@ -24,7 +24,7 @@ const updates = [
   {
     title: "Salesforce Engineering: Delta Lake Tech Talk Series",
     thumbnail: salesforceBlogThumbnail,
-    url: "/news/2021-03-02-salesforce-engineering-delta-lake-tech-talk-series",
+    url: "/blog/2021-03-02-salesforce-engineering-delta-lake-tech-talk-series",
   },
   {
     title: "Getting Data Ready for Data Science with Delta Lake and MLflow",
@@ -66,6 +66,7 @@ const LatestUpdateSection = () => (
   <Section
     background={(theme) => theme.light.bg}
     title="The Latest"
+    titleSize="h5"
     centeredHeader
     padding="xxxl"
   >

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Link from "src/components/Link";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import Embed from "src/components/Embed";
-import sharingVideo from "./sharing-video.jpg";
+import { StaticImage } from "gatsby-plugin-image";
 
 const FeaturedVideoContent = styled(TypographyContainer)`
   text-align: center;
@@ -25,7 +25,7 @@ const FeaturedVideoSection = () => (
     <FeaturedVideoContent>
       <Link href="https://youtu.be/HQRusxdkwFo">
         <VideoThumbnail
-          src={sharingVideo}
+          src={<StaticImage src="./matei-video.jpg" alt="" />}
           aspectRatio={[16, 9]}
           maxWidth="402px"
         />

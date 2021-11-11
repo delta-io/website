@@ -1,18 +1,24 @@
 // Colors
 export const colors = {
   primary: "#00add4",
+  link: "#00819e",
   accent: "#ffda47",
   text: "#002638",
-  textSecondary: "#7c8e97",
+  textSecondary: "#536974",
   bgLight: "#f5f8f9",
   bgDark: "#042436",
-  border: "#ebeff0",
+  border: "#B9C0C1",
+  info: "#00add4",
+  warning: "#ffda47",
+  danger: "red",
 };
 
 // Color mixins
 export const dark = {
   bg: colors.bgDark,
   color: "#FFFFFF",
+  textSecondary: "#73828C",
+  border: "#2C4553",
 };
 export const light = {
   bg: colors.bgLight,
@@ -65,7 +71,7 @@ export const spacing = {
   sm: rem(12),
   md: rem(18),
   lg: rem(24),
-  xl: rem(30),
+  xl: rem(40),
   xxl: rem(60),
   xxxl: rem(100),
 };
