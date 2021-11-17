@@ -11,7 +11,7 @@ import trinoLogo from "./trino.png";
 import rustLogo from "./rust.png";
 import hiveLogo from "./hive.png";
 import tableauLogo from "./tableau.png";
-import powerbiLogo from "./powerbi.png";
+import powerBiLogo from "./powerbi.png";
 
 const comingSoonLogos = [
   {
@@ -44,28 +44,14 @@ const comingSoonLogos = [
     width: 119,
     height: 24,
   },
-  {
-    src: powerbiLogo,
-    alt: "Power Bi",
-    width: 104,
-    height: 34,
-  },
 ];
-
-const pandasCode =
-  'delta_sharing.<span class="color-blue">load_as_pandas(…)</span>';
-const sparkCode =
-  'delta_sharing.<span class="color-blue">load_as_spark(…)</span>';
 
 const ConnectorCard = styled(TypographyContainer)`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   background-color: white;
-  padding: ${(props) => props.theme.spacing.xl}
-    ${(props) => props.theme.spacing.lg};
+  padding: ${(props) => props.theme.spacing.lg}
+    ${(props) => props.theme.spacing.md};
   text-align: center;
-
-  ${(props) =>
-    props.theme.mediaBreakpointUp("lg")(`padding: ${props.theme.spacing.xl};`)}
 
   img {
     margin-bottom: -${(props) => props.theme.spacing.md};
@@ -73,7 +59,7 @@ const ConnectorCard = styled(TypographyContainer)`
 
   pre {
     background-color: ${(props) => props.theme.light.bg};
-    padding: ${(props) => props.theme.spacing.md};
+    padding: ${(props) => props.theme.spacing.sm};
     font-size: ${(props) => props.theme.fontSizes.primary};
     font-weight: ${(props) => props.theme.fontWeightBold};
   }
@@ -100,27 +86,48 @@ const ComingSoonLogosGrid = styled(Grid)`
   }
 `;
 
+const connectors = [
+  {
+    name: "Pandas",
+    description: "Load table as Pandas DataFrame",
+    logo: pandasLogo,
+    code: 'delta_sharing.<span class="color-blue">load_as_pandas(…)</span>',
+  },
+  {
+    name: "Apache Spark",
+    description: "Load table as Spark DataFrame",
+    logo: sparkLogo,
+    code: 'delta_sharing.<span class="color-blue">load_as_spark(…)</span>',
+  },
+  {
+    name: "Power BI",
+    description: "Load directly into Power BI",
+    logo: powerBiLogo,
+    code: false,
+  },
+];
+
 const ConnectorsSection = () => (
   <Section title="Connecting to Delta Sharing" padding="xxxl" centeredHeader>
-    <Grid gutter={{ xs: "xl", lg: "xxl" }} columns={{ xs: 1, md: 2 }}>
-      <ConnectorCard>
-        <Typography variant="p">
-          <img src={pandasLogo} alt="Pandas" width="111" height="53" />
-        </Typography>
-        <Typography variant="p">Load table as Pandas DataFrame</Typography>
-        <pre>
-          <code dangerouslySetInnerHTML={{ __html: pandasCode }} />
-        </pre>
-      </ConnectorCard>
-      <ConnectorCard>
-        <Typography variant="p">
-          <img src={sparkLogo} alt="Apache Spark" width="111" height="53" />
-        </Typography>
-        <Typography variant="p">Load table as Spark DataFrame</Typography>
-        <pre>
-          <code dangerouslySetInnerHTML={{ __html: sparkCode }} />
-        </pre>
-      </ConnectorCard>
+    <Grid gutter="xl" columns={{ xs: 1, md: 2, xl: 3 }}>
+      {connectors.map((connector) => (
+        <ConnectorCard>
+          <Typography variant="p">
+            <img
+              src={connector.logo}
+              alt={connector.name}
+              width="111"
+              height="53"
+            />
+          </Typography>
+          <Typography variant="p">{connector.description}</Typography>
+          {connector.code && (
+            <pre>
+              <code dangerouslySetInnerHTML={{ __html: connector.code }} />
+            </pre>
+          )}
+        </ConnectorCard>
+      ))}
     </Grid>
     <ComingSoonTitle variant="h5">and more are coming soon!</ComingSoonTitle>
     <ComingSoonLogosGrid
