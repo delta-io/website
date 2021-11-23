@@ -1,9 +1,5 @@
 const main = [
   {
-    label: "Code",
-    url: "/code",
-  },
-  {
     label: "Integrations",
     url: "/integrations",
   },
@@ -42,23 +38,8 @@ const headerSocial = [
   },
   {
     label: "Slack Group",
-    url: "#",
+    url: "https://join.slack.com/t/delta-users/shared_invite/zt-ngdxlkxh-c~rjOonFCDS2xve_lx3TIA",
     icon: "slack",
-  },
-];
-
-const code = [
-  {
-    url: "/code",
-    label: "Get the Code",
-  },
-  {
-    url: "/code/contributing",
-    label: "Contributing",
-  },
-  {
-    url: "/integrations",
-    label: "Connectors",
   },
 ];
 
@@ -68,8 +49,8 @@ const community = [
     label: "Join community",
   },
   {
-    url: "#",
-    label: "Meetings",
+    url: "/code/contributing",
+    label: "Contributing",
   },
 ];
 
@@ -105,7 +86,6 @@ const blog = [
 module.exports = {
   main,
   headerSocial,
-  code,
   community,
   docs,
   learn,

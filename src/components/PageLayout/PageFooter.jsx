@@ -3,16 +3,12 @@ import styled from "styled-components";
 import Section from "src/components/Section";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
-import { code, community, docs, learn, blog } from "config/menus";
+import { community, docs, learn, blog } from "config/menus";
 import Link from "src/components/Link";
 import logo from "./delta-lake-logo.svg";
 import theLinuxFoundationLogo from "./the-linux-foundation-logo.svg";
 
 const menus = [
-  {
-    title: "Code",
-    links: code,
-  },
   {
     title: "Docs",
     links: docs,
@@ -89,7 +85,7 @@ const PageFooter = () => (
         gutter={{ xs: "lg", lg: "xl" }}
       >
         <FooterLogo src={logo} alt="Delta Lake" width={160} height={34} />
-        <Grid columns={{ xs: 1, md: 5, xl: 5 }}>
+        <Grid columns={{ xs: 1, md: 4, xl: 4 }}>
           {menus.map((menu) => (
             <FooterMenu key={menu.title}>
               <FooterMenuHeader>{menu.title}</FooterMenuHeader>
