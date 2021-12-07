@@ -5,31 +5,31 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography from "src/components/Typography";
 import styled from "styled-components";
-import genericThumbnail from "./generic-thumbnail.png";
-import beyondLambdaVideoThumbnail from "./beyond-lambda-introducing-delta-architecture.jpg";
-import salesforceBlogThumbnail from "./salesforce-blog-thumbnail.jpg";
-import gettingDataReadyVideoThumbnail from "./getting-data-ready-for-data-science-with-delta-lake-and-mlflow.jpg";
+import communityOfficeHoursThumbnail from "./delta-lake-community-ama_20211111.jpg";
+import roadmapThumbnail from "./delta-lake-roadmap-2021h2.jpg";
+import daiwtDeltaLakePanelThumbnail from "./DAIWT-EMEA-panel.jpg";
+import whyDataEatingUniverseThumbnail from "./why-data-eating-universe.jpg";
 
 const updates = [
   {
-    title: "Delta Lake 1.0.0 Released",
-    thumbnail: genericThumbnail,
-    url: "/blog/2021-05-24-delta-lake-1-0-0-released",
+    title: "Delta Lake Community Office Hours",
+    thumbnail: communityOfficeHoursThumbnail,
+    url: "https://www.youtube.com/watch?v=SOgI8gx1tjE",
   },
   {
-    title: "Beyond Lambda: Introducing Delta Architecture",
-    thumbnail: beyondLambdaVideoThumbnail,
-    url: "https://www.youtube.com/watch?v=FePv0lro0z8",
+    title: "Delta Lake Roadmap 2021 H2",
+    thumbnail: roadmapThumbnail,
+    url: "https://www.youtube.com/watch?v=NBcn2J6V-MM",
   },
   {
-    title: "Salesforce Engineering: Delta Lake Tech Talk Series",
-    thumbnail: salesforceBlogThumbnail,
-    url: "/blog/2021-03-02-salesforce-engineering-delta-lake-tech-talk-series",
+    title: "DAIWT: Delta Lake EMEA Panel",
+    thumbnail: daiwtDeltaLakePanelThumbnail,
+    url: "https://youtu.be/atS-9yCjo68?t=2125",
   },
   {
-    title: "Getting Data Ready for Data Science with Delta Lake and MLflow",
-    thumbnail: gettingDataReadyVideoThumbnail,
-    url: "https://www.youtube.com/watch?v=hQaENo78za0",
+    title: "Why Data is Eating the Universe",
+    thumbnail: whyDataEatingUniverseThumbnail,
+    url: "https://www.youtube.com/watch?v=o6lUFUxlois",
   },
 ];
 
