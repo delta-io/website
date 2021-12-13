@@ -49,8 +49,16 @@ const community = [
     label: "Join community",
   },
   {
-    url: "/code/contributing",
+    url: "/community/contributing",
     label: "Contributing",
+  },
+  {
+    url: "/community/answering_questions",
+    label: "Answering Questions",
+  },
+  {
+    url: "/community/contributing_to_docs",
+    label: "Contributing to Documentation",
   },
 ];
 
