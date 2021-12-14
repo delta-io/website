@@ -1,9 +1,6 @@
-import color from "color";
-import Link from "src/components/Link";
 import * as React from "react";
-import Grid from "src/components/Grid";
+import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
-import Typography from "src/components/Typography";
 import styled from "styled-components";
 import communityOfficeHoursThumbnail from "./delta-lake-community-ama_20211111.jpg";
 import roadmapThumbnail from "./delta-lake-roadmap-2021h2.jpg";
@@ -33,33 +30,8 @@ const updates = [
   },
 ];
 
-const CardThumbnail = styled.div`
-  padding-top: ${(9 / 16) * 100}%;
-  position: relative;
-  background-color: ${(props) => color(props.theme.light.bg).darken(0.1)};
-  margin-bottom: ${(props) => props.theme.spacing.sm};
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const CardTitle = styled(Typography)`
+const CenteredImageStrip = styled(ImageStrip)`
   text-align: center;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
 
 const LatestUpdateSection = () => (
@@ -70,20 +42,7 @@ const LatestUpdateSection = () => (
     centeredHeader
     padding="xxxl"
   >
-    <Grid columns={{ xs: 1, sm: 2, lg: 4 }} gutter="xl">
-      {updates.map((update) => (
-        <div key={update.url}>
-          <Link href={update.url}>
-            <CardThumbnail>
-              <img src={update.thumbnail} alt="" />
-            </CardThumbnail>
-          </Link>
-          <CardTitle variant="p2">
-            <Link href={update.url}>{update.title}</Link>
-          </CardTitle>
-        </div>
-      ))}
-    </Grid>
+    <CenteredImageStrip items={updates} />
   </Section>
 );
 

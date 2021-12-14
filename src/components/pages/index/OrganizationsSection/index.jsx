@@ -1,55 +1,8 @@
 import * as React from "react";
 import Link from "src/components/Link";
 import Section from "src/components/Section";
-import Grid from "src/components/Grid";
-import styled from "styled-components";
 import Typography from "src/components/Typography";
-import tencent from "./logos/tencent.png";
-import databricks from "./logos/databricks.png";
-import comcast from "./logos/comcast.png";
-import alibaba from "./logos/alibaba.png";
-import viacom from "./logos/viacom.png";
-import condeNast from "./logos/conde-nast.png";
-
-const logos = [
-  {
-    src: tencent,
-    alt: "Tencent",
-  },
-  {
-    src: databricks,
-    alt: "Databricks",
-  },
-  {
-    src: comcast,
-    alt: "Comcast",
-  },
-  {
-    src: alibaba,
-    alt: "Alibaba",
-  },
-  {
-    src: viacom,
-    alt: "Viacom",
-  },
-  {
-    src: condeNast,
-    alt: "Condé Nast",
-  },
-];
-
-const OrganizationLogo = styled.div`
-  padding: ${(props) => props.theme.spacing.lg};
-  display: flex;
-  align-items: center;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-
-  img {
-    width: 100%;
-    height: auto;
-  }
-`;
+import OrganizationTiles from "src/components/pages/shared/OrganizationTiles";
 
 const OrganizationsSection = () => (
   <Section
@@ -63,13 +16,7 @@ const OrganizationsSection = () => (
     centeredHeader
     padding="xxxl"
   >
-    <Grid columns={{ xs: 2, sm: 3, xl: 6 }} gutter="lg" evenRows>
-      {logos.map((logo) => (
-        <OrganizationLogo key={logo.alt}>
-          <img src={logo.src} alt={logo.alt} />
-        </OrganizationLogo>
-      ))}
-    </Grid>
+    <OrganizationTiles columns={{ xs: 2, sm: 3, xl: 6 }} first={6} dark />
   </Section>
 );
 

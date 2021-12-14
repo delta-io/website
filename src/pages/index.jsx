@@ -27,14 +27,17 @@ const HomePage = () => (
         description={
           <>
             Delta Lake is an open-source project that enables building a{" "}
-            <Link href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">
+            <Link
+              href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
+              target="_blank"
+            >
               Lakehouse architecture
             </Link>{" "}
             on top of existing storage systems such as S3, ALDS, GCS, and HDFS.
           </>
         }
         ctaLabel="Get Started"
-        ctaUrl="https://docs.delta.io/latest/delta-intro.html"
+        ctaUrl="/learn/getting-started"
         versionNumber="1.0.0"
       />
       <DiagramSection />
@@ -174,7 +177,7 @@ const HomePage = () => (
       />
       <GetStartedSection
         ctaLabel="Get Started"
-        ctaUrl="https://docs.delta.io/latest/delta-intro.html"
+        ctaUrl="/learn/getting-started"
       />
       <OrganizationsSection />
       <WhitepaperSection />

@@ -1,5 +1,9 @@
 const main = [
   {
+    label: "Sharing",
+    url: "/sharing",
+  },
+  {
     label: "Integrations",
     url: "/integrations",
   },
@@ -17,15 +21,11 @@ const main = [
   },
   {
     label: "Docs",
-    url: "https://docs.delta.io/",
-  },
-  {
-    label: "Sharing",
-    url: "/sharing",
+    url: "/docs",
   },
 ];
 
-const headerSocial = [
+const social = [
   {
     label: "StackOverflow",
     url: "https://stackoverflow.com/search?q=%5Bdatabricks%5D+delta",
@@ -38,7 +38,7 @@ const headerSocial = [
   },
   {
     label: "Slack Group",
-    url: "https://join.slack.com/t/delta-users/shared_invite/zt-ngdxlkxh-c~rjOonFCDS2xve_lx3TIA",
+    url: "https://dbricks.co/delta-users-slack",
     icon: "slack",
   },
 ];
@@ -46,33 +46,42 @@ const headerSocial = [
 const community = [
   {
     url: "/community/",
-    label: "Join community",
+    label: "Delta Community",
+  },
+  {
+    url: "/community/contributors",
+    label: "Contributors",
+  },
+  {
+    url: "/community/meetings",
+    label: "Meetings",
+  },
+  {
+    url: "/community/organizations",
+    label: "Organizations",
   },
   {
     url: "/community/contributing",
-    label: "Contributing",
+    label: "Contributing Guidelines",
   },
   {
-    url: "/community/answering_questions",
+    url: "/community/answering-questions",
     label: "Answering Questions",
   },
   {
-    url: "/community/contributing_to_docs",
+    url: "/community/contributing-to-docs",
     label: "Contributing to Documentation",
-  },
-];
-
-const docs = [
-  {
-    url: "https://docs.delta.io/",
-    label: "Visit Docs",
   },
 ];
 
 const learn = [
   {
-    label: "Quickstart",
-    url: "/learn/quickstart",
+    label: "Docs",
+    url: "/docs",
+  },
+  {
+    label: "Getting Started",
+    url: "/learn/getting-started",
   },
   {
     label: "Tutorials",
@@ -84,18 +93,25 @@ const learn = [
   },
 ];
 
-const blog = [
+const footer = [
+  {
+    url: "/sharing/",
+    label: "Sharing",
+  },
+  {
+    url: "/integrations/",
+    label: "Integrations",
+  },
   {
     url: "/blog/",
-    label: "Visit Blog",
+    label: "Blog",
   },
 ];
 
 module.exports = {
-  main,
-  headerSocial,
   community,
-  docs,
+  footer,
   learn,
-  blog,
+  main,
+  social,
 };

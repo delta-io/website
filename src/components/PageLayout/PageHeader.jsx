@@ -223,11 +223,11 @@ const PageHeader = () => {
             dark
           />
           <HeaderSocialNav>
-            {menus.headerSocial.map((link) => {
+            {menus.social.map((link) => {
               const { label, url, icon } = link;
 
               return (
-                <HeaderTab key={label} href={url}>
+                <HeaderTab key={label} href={url} target="_blank">
                   <HeaderIcon icon={icon} />
                 </HeaderTab>
               );

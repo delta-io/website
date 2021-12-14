@@ -3,10 +3,15 @@ import * as React from "react";
 import Link from "src/components/Link";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
+import styled from "styled-components";
 import Typography from "src/components/Typography";
 import Info from "src/components/Info";
-import styled from "styled-components";
+import ImageStrip from "src/components/ImageStrip";
+import GithubContributorsGrid from "src/components/pages/shared/GithubContributorsGrid";
+import ImageStripDataList from "src/components/pages/shared/ImageStripDataList";
 import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
+import OrganizationTiles from "src/components/pages/shared/OrganizationTiles";
+import SocialTiles from "src/components/pages/shared/SocialTiles";
 
 const Image = styled.img`
   max-width: 100%;
@@ -205,8 +210,13 @@ const mdxComponents = {
   pre: (props) => <HighlightedCodeBlock {...props} />,
 
   // Custom components
-  JsonCardDataList,
+  GithubContributorsGrid,
   Info,
+  ImageStrip,
+  ImageStripDataList,
+  JsonCardDataList,
+  OrganizationTiles,
+  SocialTiles,
 };
 
 const MDX = (props) => {

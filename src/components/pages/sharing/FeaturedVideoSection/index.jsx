@@ -23,7 +23,7 @@ const FeaturedVideoSection = () => (
     centeredHeader
   >
     <FeaturedVideoContent>
-      <Link href="https://youtu.be/HQRusxdkwFo">
+      <Link href="https://youtu.be/HQRusxdkwFo" target="_blank">
         <VideoThumbnail
           src={<StaticImage src="./matei-video.jpg" alt="" />}
           aspectRatio={[16, 9]}

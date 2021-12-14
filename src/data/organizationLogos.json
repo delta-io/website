@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Databricks",
+    "logo": "./images/organizationLogos/databricks.png"
+  },
+  {
+    "name": "Tencent",
+    "logo": "./images/organizationLogos/tencent.png"
+  },
+  {
+    "name": "Comcast",
+    "logo": "./images/organizationLogos/comcast.png"
+  },
+  {
+    "name": "Alibaba",
+    "logo": "./images/organizationLogos/alibaba.png"
+  },
+  {
+    "name": "Viacom",
+    "logo": "./images/organizationLogos/viacom.png"
+  },
+  {
+    "name": "Ciena",
+    "logo": "./images/organizationLogos/ciena.png"
+  },
+  {
+    "name": "Jam City",
+    "logo": "./images/organizationLogos/jam-city.png"
+  },
+  {
+    "name": "Informatica",
+    "logo": "./images/organizationLogos/informatica.png"
+  },
+  {
+    "name": "Health Direct Australia",
+    "logo": "./images/organizationLogos/health-direct-australia.png"
+  },
+  {
+    "name": "Booz Allen Hamilton",
+    "logo": "./images/organizationLogos/booz-allen-hamilton.png"
+  },
+  {
+    "name": "McAfee",
+    "logo": "./images/organizationLogos/mcafee.png"
+  },
+  {
+    "name": "Condé Nast",
+    "logo": "./images/organizationLogos/conde-nast.png"
+  },
+  {
+    "name": "Tableau",
+    "logo": "./images/organizationLogos/tableau.png"
+  },
+  {
+    "name": "McGraw-Hill Education",
+    "logo": "./images/organizationLogos/mcgraw-hill-education.png"
+  },
+  {
+    "name": "Acorns",
+    "logo": "./images/organizationLogos/acorns.png"
+  },
+  {
+    "name": "EverQuote",
+    "logo": "./images/organizationLogos/everquote.png"
+  },
+  {
+    "name": "Namely",
+    "logo": "./images/organizationLogos/namely.png"
+  },
+  {
+    "name": "Talend",
+    "logo": "./images/organizationLogos/talend.png"
+  },
+  {
+    "name": "Edmunds",
+    "logo": "./images/organizationLogos/edmunds.png"
+  },
+  {
+    "name": "Attunity",
+    "logo": "./images/organizationLogos/attunity.png"
+  },
+  {
+    "name": "Tilting Point",
+    "logo": "./images/organizationLogos/tilting-point.png"
+  },
+  {
+    "name": "Usermind",
+    "logo": "./images/organizationLogos/usermind.png"
+  },
+  {
+    "name": "Zeiss",
+    "logo": "./images/organizationLogos/zeiss.png"
+  },
+  {
+    "name": "Split",
+    "logo": "./images/organizationLogos/split.png"
+  },
+  {
+    "name": "UpWork",
+    "logo": "./images/organizationLogos/upwork.png"
+  },
+  {
+    "name": "Dollar Shave Club",
+    "logo": "./images/organizationLogos/dollar-shave-club.png"
+  },
+  {
+    "name": "Wehkamp",
+    "logo": "./images/organizationLogos/wehkamp.png"
+  },
+  {
+    "name": "eBay",
+    "logo": "./images/organizationLogos/ebay.png"
+  }
+]

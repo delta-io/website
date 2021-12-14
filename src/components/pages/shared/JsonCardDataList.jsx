@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import { number, string } from "prop-types";
 import CardDataList from "src/components/CardDataList";
+import useDataList from "src/hooks/useDataList";
 
 const dataListProps = {
   connectors: {
@@ -11,55 +12,19 @@ const dataListProps = {
     thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2 },
   },
+  meetings: {
+    thumbnailRatio: [16, 9],
+    columns: { xs: 1, md: 2, lg: 3 },
+  },
 };
 
-const query = graphql`
-  query JsonCardDataListQuery {
-    connectors: allConnectorsJson {
-      edges {
-        node {
-          title: name
-          tags
-          thumbnail {
-            childImageSharp {
-              gatsbyImageData(
-                width: 70
-                height: 70
-                placeholder: NONE
-                transformOptions: { fit: CONTAIN }
-                backgroundColor: "#FFFFFF"
-              )
-            }
-          }
-          url
-          description
-          id
-        }
-      }
-    }
-    videos: allVideosJson {
-      edges {
-        node {
-          description
-          thumbnail {
-            childImageSharp {
-              gatsbyImageData(width: 700, height: 394)
-            }
-          }
-          title
-          url
-          id
-        }
-      }
-    }
-  }
-`;
-
 const JsonCardDataList = (props) => {
-  const { data: dataList } = props;
-  const data = useStaticQuery(query);
+  const { data: dataList, first } = props;
+  let cards = useDataList(dataList);
 
-  const cards = data[dataList]?.edges.map(({ node }) => ({ ...node }));
+  if (first) {
+    cards = cards.slice(0, first);
+  }
 
   if (!cards) {
     return null;
@@ -72,6 +37,15 @@ const JsonCardDataList = (props) => {
       {...dataListProps[dataList]}
     />
   );
+};
+
+JsonCardDataList.defaultProps = {
+  first: undefined,
+};
+
+JsonCardDataList.propTypes = {
+  data: string.isRequired,
+  first: number,
 };
 
 export default JsonCardDataList;

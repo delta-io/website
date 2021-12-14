@@ -6,12 +6,7 @@ import MDX from "src/components/MDX";
 import { TypographyContainer } from "src/components/Typography";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import Embed from "src/components/Embed";
 import OneColumnLayout from "./components/OneColumnLayout";
-
-const Thumbnail = styled(Embed)`
-  margin-bottom: ${(props) => props.theme.spacing.md};
-`;
 
 const PostMeta = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.colors.border};
@@ -23,7 +18,6 @@ const BlogMdxTemplate = ({ data }) => {
   const { frontmatter = {}, fields = {}, body } = data.mdx;
   const { title, description, author, thumbnail } = frontmatter;
 
-  const renderThumbnail = () => <Thumbnail src={thumbnail} />;
   const renderPostMeta = () => (
     <PostMeta>
       {fields.date} by {author}
@@ -40,7 +34,6 @@ const BlogMdxTemplate = ({ data }) => {
             primary
             container={false}
             subtitle={renderPostMeta}
-            renderBeforeTitle={thumbnail ? renderThumbnail : undefined}
           >
             <TypographyContainer>
               <MDX>{body}</MDX>

@@ -69,12 +69,16 @@ const HeroSection = () => (
           regardless of which computing platforms they use.
         </HeroSectionDescription>
         <ButtonRow columns={["min-content", "min-content"]} gutter="lg">
-          <Button href="https://github.com/delta-io/delta-sharing">
+          <Button
+            href="https://github.com/delta-io/delta-sharing"
+            target="_blank"
+          >
             Get started
           </Button>
           <Button
             href="https://databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html"
             secondary
+            target="_blank"
           >
             Read more
           </Button>

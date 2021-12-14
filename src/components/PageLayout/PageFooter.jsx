@@ -3,27 +3,27 @@ import styled from "styled-components";
 import Section from "src/components/Section";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
-import { community, docs, learn, blog } from "config/menus";
+import { community, footer, learn, social } from "config/menus";
 import Link from "src/components/Link";
 import logo from "./delta-lake-logo.svg";
 import theLinuxFoundationLogo from "./the-linux-foundation-logo.svg";
 
 const menus = [
   {
-    title: "Docs",
-    links: docs,
+    title: "Delta Lake",
+    links: footer,
   },
   {
     title: "Learn",
     links: learn,
   },
   {
-    title: "Blog",
-    links: blog,
-  },
-  {
     title: "Community",
     links: community,
+  },
+  {
+    title: "Social Channels",
+    links: social,
   },
 ];
 
@@ -85,12 +85,16 @@ const PageFooter = () => (
         gutter={{ xs: "lg", lg: "xl" }}
       >
         <FooterLogo src={logo} alt="Delta Lake" width={160} height={34} />
-        <Grid columns={{ xs: 1, md: 4, xl: 4 }}>
+        <Grid columns={{ xs: 1, md: 4 }}>
           {menus.map((menu) => (
             <FooterMenu key={menu.title}>
               <FooterMenuHeader>{menu.title}</FooterMenuHeader>
               {menu.links.map((link) => (
-                <FooterMenuLink key={link.url} href={link.url}>
+                <FooterMenuLink
+                  key={link.url}
+                  href={link.url}
+                  target={/^http/.test(link.url) ? "_blank" : undefined}
+                >
                   {link.label}
                 </FooterMenuLink>
               ))}
@@ -102,7 +106,10 @@ const PageFooter = () => (
             Copyright © {new Date().getFullYear()} Delta Lake, a series of LF
             Projects, LLC. For web site terms of use, trademark policy and other
             project polcies please see{" "}
-            <a href="https://lfprojects.org">https://lfprojects.org</a>.
+            <a href="https://lfprojects.org" target="_blank" rel="noreferrer">
+              https://lfprojects.org
+            </a>
+            .
           </Typography>
           <img src={theLinuxFoundationLogo} alt="The Linux Foundation" />
         </Copyright>

@@ -73,7 +73,6 @@ const Section = (props) => {
     padding,
     background,
     container,
-    renderBeforeTitle,
     centeredHeader,
     className,
     children,
@@ -88,7 +87,6 @@ const Section = (props) => {
       background={background}
     >
       <ContainerComponent>
-        {renderBeforeTitle && renderBeforeTitle()}
         {(title || subtitle) && (
           <SectionHeader centered={centeredHeader}>
             {title && (
@@ -120,7 +118,6 @@ Section.defaultProps = {
   primary: false,
   container: true,
   background: undefined,
-  renderBeforeTitle: undefined,
 };
 
 Section.propTypes = {
@@ -131,7 +128,6 @@ Section.propTypes = {
   primary: bool,
   container: bool,
   background: oneOfType([func, string]),
-  renderBeforeTitle: func,
 };
 
 export default Section;
