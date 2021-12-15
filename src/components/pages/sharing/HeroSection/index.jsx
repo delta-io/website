@@ -5,8 +5,23 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography from "src/components/Typography";
 import styled from "styled-components";
+import sharingLogo from "./delta-sharing-logo.svg";
 import heroDesktop from "./hero-desktop.png";
 import heroMobile from "./hero-mobile.png";
+
+const DeltaSharingLogo = styled.img`
+  width: 200px;
+
+  ${(props) =>
+    props.theme.mediaBreakpointUp("md")(`
+    width: 300px;
+  `)}
+
+  ${(props) =>
+    props.theme.mediaBreakpointUp("lg")(`
+    width: auto;
+  `)}
+`;
 
 const HeroSectionRoot = styled(Section)`
   padding-bottom: ${(props) => props.theme.spacing.xl};
@@ -16,6 +31,7 @@ const HeroSectionDescription = styled(Typography)`
   max-width: ${(props) => props.theme.rem(props.theme.breakpoints.md)};
   margin-left: auto;
   margin-right: auto;
+  margin-top: ${(props) => `-${props.theme.spacing.xs}`};
 `;
 
 const ButtonRow = styled(Grid)`
@@ -23,12 +39,12 @@ const ButtonRow = styled(Grid)`
   margin-bottom: ${(props) => props.theme.spacing.md};
 `;
 
-const VersionNumber = styled(Link)`
-  color: inherit;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
+const ProjectLinks = styled(ButtonRow)`
+  a {
+    &:not(:hover) {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 `;
 
@@ -58,11 +74,14 @@ const HeroImageDesktop = styled(HeroImage)`
 const HeroSection = () => (
   <HeroSectionRoot
     padding="xxxl"
-    title="An Open Standard for Secure Data Sharing"
+    title={<DeltaSharingLogo src={sharingLogo} alt="Delta Sharing" />}
     background="white"
     primary
     subtitle={
       <>
+        <HeroSectionDescription variant="h3">
+          An open standard for secure data sharing
+        </HeroSectionDescription>
         <HeroSectionDescription variant="p">
           Delta Sharing is the industry’s first open protocol for secure data
           sharing, making it simple to share data with other organizations
@@ -84,9 +103,21 @@ const HeroSection = () => (
           </Button>
         </ButtonRow>
         <Typography variant="p2">
-          <VersionNumber href="https://github.com/delta-io/delta-sharing">
-            v0.1.0
-          </VersionNumber>
+          <ProjectLinks columns={["60px", "60px"]} gutter="lg">
+            <Link
+              href="https://github.com/delta-io/delta-sharing"
+              target="_blank"
+              style={{ textAlign: "right" }}
+            >
+              Github
+            </Link>{" "}
+            <Link
+              href="https://github.com/delta-io/delta-sharing/releases"
+              target="_blank"
+            >
+              Releases
+            </Link>
+          </ProjectLinks>
         </Typography>
         <HeroImageMobile src={heroMobile} />
         <HeroImageDesktop src={heroDesktop} />
