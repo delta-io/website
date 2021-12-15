@@ -23,18 +23,12 @@ const ImageStrip = (props) => {
       className={className}
     >
       {items.map((item) => (
-        <div key={item.url}>
-          <Link href={item.url}>
-            <CardThumbnail>
-              <Embed src={item.thumbnail} alt="" aspectRatio={[16, 9]} />
-            </CardThumbnail>
-          </Link>
-          <Typography variant="p2">
-            <Link href={item.url} muted>
-              {item.title}
-            </Link>
-          </Typography>
-        </div>
+        <Link key={item.url} href={item.url} muted>
+          <CardThumbnail>
+            <Embed src={item.thumbnail} alt="" aspectRatio={[16, 9]} />
+          </CardThumbnail>
+          <Typography variant="p2">{item.title}</Typography>
+        </Link>
       ))}
     </Grid>
   );
