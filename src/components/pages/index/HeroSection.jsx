@@ -63,15 +63,15 @@ const HeroSection = (props) => {
           <ButtonRow columns={["60px", "60px"]} gutter="lg">
             <HeroLink
               href="https://github.com/delta-io/delta"
-              target="_blank"
               style={{ textAlign: "right" }}
+              newTab
               muted
             >
               Github
             </HeroLink>{" "}
             <HeroLink
               href="https://github.com/delta-io/delta/releases"
-              target="_blank"
+              newTab
               muted
             >
               Releases

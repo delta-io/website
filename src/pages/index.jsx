@@ -29,7 +29,7 @@ const HomePage = () => (
             Delta Lake is an open-source project that enables building a{" "}
             <Link
               href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
-              target="_blank"
+              newTab
             >
               Lakehouse architecture
             </Link>{" "}
@@ -65,7 +65,10 @@ const HomePage = () => (
                 transactions. Delta Lake brings ACID transactions to your data
                 lakes. It provides serializability, the strongest level of
                 isolation level. Learn more at{" "}
-                <Link href="https://databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html">
+                <Link
+                  href="https://databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html"
+                  newTab
+                >
                   Diving into Delta Lake: Unpacking the Transaction Log
                 </Link>
                 .

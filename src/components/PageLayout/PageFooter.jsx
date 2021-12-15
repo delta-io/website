@@ -93,7 +93,7 @@ const PageFooter = () => (
                 <FooterMenuLink
                   key={link.url}
                   href={link.url}
-                  target={/^http/.test(link.url) ? "_blank" : undefined}
+                  newTab={/^http/.test(link.url)}
                   muted
                 >
                   {link.label}
@@ -107,9 +107,9 @@ const PageFooter = () => (
             Copyright © {new Date().getFullYear()} Delta Lake, a series of LF
             Projects, LLC. For web site terms of use, trademark policy and other
             project polcies please see{" "}
-            <a href="https://lfprojects.org" target="_blank" rel="noreferrer">
+            <Link href="https://lfprojects.org" newTab>
               https://lfprojects.org
-            </a>
+            </Link>
             .
           </Typography>
           <img src={theLinuxFoundationLogo} alt="The Linux Foundation" />

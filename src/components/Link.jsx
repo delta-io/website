@@ -20,17 +20,45 @@ const StyledLink = styled.a`
 `;
 
 const Link = (props) => {
-  const { href, activeClassName, partiallyActive, active, muted, ...rest } =
-    props;
+  const {
+    href,
+    activeClassName,
+    partiallyActive,
+    active,
+    muted,
+    target,
+    newTab,
+    rel,
+    ...rest
+  } = props;
   const isExternal = externalLinkRegex.test(href);
   const isAnchor = anchorLinkRegex.test(href);
+  const linkTarget = target || newTab ? "_blank" : undefined;
+  const linkRel = rel || linkTarget === "_blank" ? "noreferrer" : undefined;
 
   if (isAnchor) {
-    return <StyledLink muted={muted} href={href} {...rest} />;
+    return (
+      <StyledLink
+        muted={muted}
+        href={href}
+        target={linkTarget}
+        rel={linkRel}
+        {...rest}
+      />
+    );
   }
 
   if (isExternal) {
-    return <StyledLink as={OutboundLink} muted={muted} href={href} {...rest} />;
+    return (
+      <StyledLink
+        as={OutboundLink}
+        muted={muted}
+        href={href}
+        target={linkTarget}
+        rel={linkRel}
+        {...rest}
+      />
+    );
   }
 
   return (
@@ -40,6 +68,8 @@ const Link = (props) => {
       to={href}
       activeClassName={activeClassName}
       partiallyActive={partiallyActive}
+      target={linkTarget}
+      rel={linkRel}
       {...rest}
     />
   );

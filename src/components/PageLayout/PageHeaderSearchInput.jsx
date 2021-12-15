@@ -139,7 +139,7 @@ const PageHeaderSearchInput = (props) => {
                 <SearchResult
                   href={result.url}
                   key={result.id}
-                  target={result.isExternal ? "_blank" : undefined}
+                  newTab={result.isExternal}
                 >
                   <em>{result.type}</em>
                   <strong>
