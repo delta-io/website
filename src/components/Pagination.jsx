@@ -25,7 +25,7 @@ const Pagination = (props) => {
           href={`${basePath}${
             currentPage - 1 < 2 ? "" : `/${currentPage - 1}`
           }`}
-          secondary
+          variant="secondary"
         >
           Previous page
         </Button>

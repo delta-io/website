@@ -57,7 +57,9 @@ const HeroSection = (props) => {
           {description}
         </HeroSectionDescription>
         <Typography variant="p">
-          <HeroButton href={ctaUrl}>{ctaLabel}</HeroButton>
+          <HeroButton href={ctaUrl} variant="accent">
+            {ctaLabel}
+          </HeroButton>
         </Typography>
         <Typography variant="p2">
           <ButtonRow columns={["60px", "60px"]} gutter="lg">

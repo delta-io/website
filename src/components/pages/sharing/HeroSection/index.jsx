@@ -79,7 +79,7 @@ const HeroSection = () => (
           </Button>
           <Button
             href="https://databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html"
-            secondary
+            variant="secondary"
             newTab
           >
             Read more
