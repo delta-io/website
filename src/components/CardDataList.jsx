@@ -16,7 +16,7 @@ import Typography, { TypographyContainer } from "src/components/Typography";
 import Embed from "src/components/Embed";
 
 const ThumbnailContainer = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing.md};
+  margin-bottom: ${(props) => props.theme.spacing.sm};
 
   a {
     margin-top: auto;
