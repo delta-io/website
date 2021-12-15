@@ -1,7 +1,7 @@
 import Link from "src/components/Link";
 import * as React from "react";
 import Button from "src/components/Button";
-import Grid from "src/components/Grid";
+import ButtonRow from "src/components/ButtonRow";
 import Section from "src/components/Section";
 import Typography from "src/components/Typography";
 import styled from "styled-components";
@@ -32,11 +32,6 @@ const HeroSectionDescription = styled(Typography)`
   margin-left: auto;
   margin-right: auto;
   margin-top: ${(props) => `-${props.theme.spacing.xs}`};
-`;
-
-const ButtonRow = styled(Grid)`
-  justify-content: center;
-  margin-bottom: ${(props) => props.theme.spacing.md};
 `;
 
 const HeroImage = styled.img`

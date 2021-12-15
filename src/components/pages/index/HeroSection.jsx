@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import Button from "src/components/Button";
+import ButtonRow from "src/components/ButtonRow";
 import LakeSection from "src/components/pages/shared/LakeSection";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import { string, node } from "prop-types";
@@ -26,6 +27,12 @@ const HeroButton = styled(Button)`
   min-width: 200px;
 `;
 
+const HeroLink = styled(Link)`
+  &:hover {
+    color: ${(props) => props.theme.colors.accent};
+  }
+`;
+
 const HeroSectionDiagramOffset = styled.div`
   ${(props) =>
     props.theme.mediaBreakpointMap(
@@ -40,7 +47,7 @@ const HeroSectionDiagramOffset = styled.div`
 `;
 
 const HeroSection = (props) => {
-  const { title, description, ctaLabel, ctaUrl, versionNumber } = props;
+  const { title, description, ctaLabel, ctaUrl } = props;
 
   return (
     <LakeSection padding="xxxl" primary>
@@ -53,9 +60,23 @@ const HeroSection = (props) => {
           <HeroButton href={ctaUrl}>{ctaLabel}</HeroButton>
         </Typography>
         <Typography variant="p2">
-          <Link href="https://github.com/delta-io/delta/releases" muted>
-            v{versionNumber}
-          </Link>
+          <ButtonRow columns={["60px", "60px"]} gutter="lg">
+            <HeroLink
+              href="https://github.com/delta-io/delta"
+              target="_blank"
+              style={{ textAlign: "right" }}
+              muted
+            >
+              Github
+            </HeroLink>{" "}
+            <HeroLink
+              href="https://github.com/delta-io/delta/releases"
+              target="_blank"
+              muted
+            >
+              Releases
+            </HeroLink>
+          </ButtonRow>
         </Typography>
       </HeroSectionContent>
       <HeroSectionDiagramOffset />
@@ -68,7 +89,6 @@ HeroSection.propTypes = {
   description: node.isRequired,
   ctaLabel: string.isRequired,
   ctaUrl: string.isRequired,
-  versionNumber: string.isRequired,
 };
 
 export default HeroSection;
