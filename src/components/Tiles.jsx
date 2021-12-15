@@ -10,16 +10,14 @@ const Tile = styled.div`
   padding: ${(props) => props.theme.spacing.lg};
   display: flex;
   align-items: center;
-  background-color: white;
   justify-content: center;
 
   ${(props) =>
-    props.dark
-      ? "box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15)"
-      : `
-        border: 1px solid ${props.theme.colors.border};
-        border-radius: 3px;
-      `};
+    props.dark &&
+    `
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  `}
 `;
 
 const TileImage = styled.img`
