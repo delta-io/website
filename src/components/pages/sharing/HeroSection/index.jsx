@@ -39,15 +39,6 @@ const ButtonRow = styled(Grid)`
   margin-bottom: ${(props) => props.theme.spacing.md};
 `;
 
-const ProjectLinks = styled(ButtonRow)`
-  a {
-    &:not(:hover) {
-      color: inherit;
-      text-decoration: none;
-    }
-  }
-`;
-
 const HeroImage = styled.img`
   display: block;
   width: 100%;
@@ -103,21 +94,23 @@ const HeroSection = () => (
           </Button>
         </ButtonRow>
         <Typography variant="p2">
-          <ProjectLinks columns={["60px", "60px"]} gutter="lg">
+          <ButtonRow columns={["60px", "60px"]} gutter="lg">
             <Link
               href="https://github.com/delta-io/delta-sharing"
               target="_blank"
               style={{ textAlign: "right" }}
+              muted
             >
               Github
             </Link>{" "}
             <Link
               href="https://github.com/delta-io/delta-sharing/releases"
               target="_blank"
+              muted
             >
               Releases
             </Link>
-          </ProjectLinks>
+          </ButtonRow>
         </Typography>
         <HeroImageMobile src={heroMobile} />
         <HeroImageDesktop src={heroDesktop} />

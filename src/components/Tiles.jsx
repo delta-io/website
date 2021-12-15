@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import Link from "src/components/Link";
 import Grid from "src/components/Grid";
 import Embed from "src/components/Embed";
 import { arrayOf, shape, string, bool, number } from "prop-types";
@@ -31,13 +32,12 @@ const TileLabel = styled.div`
   margin-top: ${(props) => props.theme.spacing.sm};
 `;
 
-const TileLink = styled(Tile).attrs({ as: "a" })`
+const TileLink = styled(Tile).attrs({ as: Link, muted: true })`
   display: block;
   text-align: center;
 
   &:not(:hover) {
     color: ${(props) => props.theme.light.color};
-    text-decoration: none;
   }
 `;
 

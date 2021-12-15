@@ -1,17 +1,13 @@
 import * as React from "react";
 import { arrayOf, string } from "prop-types";
 import styled from "styled-components";
+import Link from "src/components/Link";
 import Grid from "src/components/Grid";
 
-const User = styled.a`
+const User = styled(Link)`
   display: block;
   text-align: center;
   overflow: hidden;
-
-  &:not(:hover) {
-    color: inherit;
-    text-decoration: none;
-  }
 `;
 
 const Avatar = styled.img`
@@ -28,7 +24,7 @@ const GithubContributorsGrid = (props) => {
   return (
     <Grid columns={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}>
       {users.map((user) => (
-        <User key={user} href={`https://github.com/${user}`}>
+        <User key={user} href={`https://github.com/${user}`} muted>
           <Avatar
             src={`https://github.com/${user}.png?size=400`}
             alt=""

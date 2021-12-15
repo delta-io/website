@@ -68,12 +68,12 @@ const FooterMenuHeader = styled.div`
 `;
 
 const FooterMenuLink = styled(Link)`
-  color: ${(props) => props.theme.dark.color};
-  text-decoration: none;
+  &:not(:hover) {
+    color: ${(props) => props.theme.dark.color};
+  }
 
   &:hover {
     color: white;
-    text-decoration: underline;
   }
 `;
 
@@ -94,6 +94,7 @@ const PageFooter = () => (
                   key={link.url}
                   href={link.url}
                   target={/^http/.test(link.url) ? "_blank" : undefined}
+                  muted
                 >
                   {link.label}
                 </FooterMenuLink>

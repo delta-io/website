@@ -26,15 +26,6 @@ const HeroButton = styled(Button)`
   min-width: 200px;
 `;
 
-const VersionNumber = styled(Link)`
-  color: inherit;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 const HeroSectionDiagramOffset = styled.div`
   ${(props) =>
     props.theme.mediaBreakpointMap(
@@ -62,9 +53,9 @@ const HeroSection = (props) => {
           <HeroButton href={ctaUrl}>{ctaLabel}</HeroButton>
         </Typography>
         <Typography variant="p2">
-          <VersionNumber href="https://github.com/delta-io/delta/releases">
+          <Link href="https://github.com/delta-io/delta/releases" muted>
             v{versionNumber}
-          </VersionNumber>
+          </Link>
         </Typography>
       </HeroSectionContent>
       <HeroSectionDiagramOffset />

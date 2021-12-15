@@ -13,17 +13,6 @@ const CardThumbnail = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 `;
 
-const CardTitle = styled(Typography)`
-  a {
-    color: inherit;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
 const ImageStrip = (props) => {
   const { items, className } = props;
 
@@ -40,9 +29,11 @@ const ImageStrip = (props) => {
               <Embed src={item.thumbnail} alt="" aspectRatio={[16, 9]} />
             </CardThumbnail>
           </Link>
-          <CardTitle variant="p2">
-            <Link href={item.url}>{item.title}</Link>
-          </CardTitle>
+          <Typography variant="p2">
+            <Link href={item.url} muted>
+              {item.title}
+            </Link>
+          </Typography>
         </div>
       ))}
     </Grid>

@@ -31,15 +31,6 @@ const ThumbnailContainer = styled.div`
 const CardTitle = styled(Typography)`
   margin-top: 0;
   margin-bottom: ${(props) => props.theme.spacing.xs};
-
-  a {
-    color: inherit;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
 
 const CardContent = styled(Typography)`
@@ -101,7 +92,9 @@ const CardDataList = (props) => {
           </ThumbnailContainer>
           <TypographyContainer>
             <CardTitle variant="h4">
-              <Link href={card.url}>{card.title}</Link>
+              <Link href={card.url} muted>
+                {card.title}
+              </Link>
             </CardTitle>
             {card.meta && (
               <>

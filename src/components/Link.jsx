@@ -3,25 +3,40 @@
 import * as React from "react";
 import { Link as GatsbyLink } from "gatsby";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
+import styled from "styled-components";
 
 const externalLinkRegex = /^\w+:\/\//;
 const anchorLinkRegex = /^#/;
 
+const StyledLink = styled.a`
+  ${(props) =>
+    props.muted === true &&
+    `
+    &:not(:hover) {
+      color: inherit;
+      text-decoration: none;
+    }
+  `}
+`;
+
 const Link = (props) => {
-  const { href, activeClassName, partiallyActive, active, ...rest } = props;
+  const { href, activeClassName, partiallyActive, active, muted, ...rest } =
+    props;
   const isExternal = externalLinkRegex.test(href);
   const isAnchor = anchorLinkRegex.test(href);
 
   if (isAnchor) {
-    return <a href={href} {...rest} />;
+    return <StyledLink muted={muted} href={href} {...rest} />;
   }
 
   if (isExternal) {
-    return <OutboundLink href={href} {...rest} />;
+    return <StyledLink as={OutboundLink} muted={muted} href={href} {...rest} />;
   }
 
   return (
-    <GatsbyLink
+    <StyledLink
+      as={GatsbyLink}
+      muted={muted}
       to={href}
       activeClassName={activeClassName}
       partiallyActive={partiallyActive}
