@@ -2,12 +2,12 @@
 title: Delta Sharing 0.3.0 Released
 description: We are excited to announce the release of Delta Sharing 0.3.0.
 thumbnail: ./thumbnail.png
-author: John O'Dwyer
+author: Lin Zhou
 ---
 
 We are excited to announce the release of [Delta Sharing 0.3.0](https://github.com/delta-io/delta-sharing/releases/tag/v0.3.0), which introduces the following improvements and fixes issues:
 
-## Improvements:
+#### Improvements:
 
 - Support Azure Blob Storage and Azure Data Lake Gen2 in Delta Sharing Server ([#56](https://github.com/delta-io/delta-sharing/pull/56), [#59](https://github.com/delta-io/delta-sharing/pull/59))
 - Apache Spark Connector now can send the `limitHint` parameter when a user query is using `limit` ([#55](https://github.com/delta-io/delta-sharing/pull/55))
@@ -17,11 +17,11 @@ We are excited to announce the release of [Delta Sharing 0.3.0](https://github.c
 - Add a User-Agent header to request sent from Apache Spark Connector and Python ([#75](https://github.com/delta-io/delta-sharing/pull/75))
 - Add an optional `expirationTime` field to Delta Sharing Profile File Format to provide the token expiration time ([#77](https://github.com/delta-io/delta-sharing/pull/77))
 
-## Bug fixes:
+#### Bug fixes:
 
 - Fix a corner case that `list_all_tables` may not return correct results in the Python Connector ([#84](https://github.com/delta-io/delta-sharing/pull/84))
 
-## Credits:
+#### Credits:
 
 Denny Lee, Felix Cheung, Lin Zhou, Matei Zaharia, Shixiong Zhu, Will Girten, Xiaotong Sun, Yuhong Chen, kohei-tosshy, William Chau
 

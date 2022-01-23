@@ -14,25 +14,32 @@
     "thumbnail": "./images/connectors/apache-flink-logo.png"
   },
   {
-    "name": "Trino/Delta Reader",
+    "name": "Trino/Delta Reader (Preview)",
     "description": "This connector leverages the Delta Standalone project for Trino to read from Delta Lake tables.",
-    "url": "https://github.com/trinodb/trino-hive-apache",
+    "url": "https://github.com/vkorukanti/trino/tree/359-delta",
     "tags": ["Trino"],
     "thumbnail": "./images/connectors/trino-logo.png"
   },
   {
     "name": "PrestoDB/Delta Reader",
     "description": "This connector leverages the Delta Standalone project for Trino to read from Delta Lake tables.",
-    "url": "https://github.com/prestodb/presto",
+    "url": "https://github.com/prestodb/presto/blob/master/presto-docs/src/main/sphinx/connector/deltalake.rst",
     "tags": ["PrestoDB"],
     "thumbnail": "./images/connectors/prestodb-logo.png"
   },
   {
-    "name": "Beam/Delta Reader",
+    "name": "Beam/Delta Reader (Preview)",
     "description": "This connector leverages the Delta Standalone project for Apache Beam to read from Delta Lake tables.",
     "url": "https://github.com/mbenenso/beam-deltalake",
     "tags": ["Beam"],
     "thumbnail": "./images/connectors/apache-beam.png"
+  },
+  {
+    "name": "Athena Query Federation/Delta Reader (Preview)",
+    "description": "This connector leverages the Delta Standalone project for Apache Beam to read from Delta Lake tables.",
+    "url": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
+    "tags": ["Athena Query Federation"],
+    "thumbnail": "./images/connectors/AthenaFederation1.png"
   },
   {
     "name": "Delta Standalone",
@@ -57,7 +64,7 @@
   },
   {
     "name": "Hive Connector",
-    "description": "This project is a library to make Hive read Delta Lake tables. The project provides a uber JAR delta-hive-assembly_-0.2.0.jar to use in Hive. You can use either Scala 2.11 or 2.12. The released JARs are available in the releases page. Please download the uber JAR for the corresponding Scala version you would like to use. You can also use the following instructions to build it as well.",
+    "description": "This project is a library to make Hive read Delta Lake tables. The project provides a uber JAR delta-hive-assembly_-0.2|3.0.jar to use in Hive. You can use either Scala 2.11 or 2.12. The released JARs are available in the releases page. Please download the uber JAR for the corresponding Scala version you would like to use. You can also use the following instructions to build it as well.",
     "url": "https://github.com/delta-io/connectors",
     "tags": ["Hive"],
     "thumbnail": "./images/connectors/hive.png"

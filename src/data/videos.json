@@ -1,5 +1,35 @@
 [
   {
+    "title": "Delta Lake Community Office Hours (2022-01-20)",
+    "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions.  Thanks!",
+    "thumbnail": "./images/videos/delta-lake-community-ama_20220120.jpg",
+    "url": "https://youtu.be/A3FY8QLE0-A"
+  },
+  {
+    "title": "Delta Lake Connector for Presto",
+    "description": "Delta lake is an open-source project that enables building a lakehouse architecture on top of existing storage systems such as S3, ADLS, GCS, and HDFS. We - the Presto and Delta Lake communities - have come together to make it easier for Presto to leverage the reliability of data lakes by integrating with Delta Lake.  In this session, we would like to share the design decisions and internals of the Presto/Delta connector.",
+    "thumbnail": "./images/videos/Delta-Lake-Connector-for-Presto.jpg",
+    "url": "https://youtu.be/JrXGkqpl7xk"
+  },
+  {
+    "title": "Delta Lake Roadmap 2021 H2",
+    "description": "We're starting to get feedback from the Delta Lake community on more integrations per the proposed 2021 H2 roadmap. Through this talk, Vini and Denny will provide a recap of the features including Spark 3.1 support, Delta Sharing released in 2021 H1, and what the community asks for the future roadmap for Delta Lake OSS. There are callouts for OPTIMIZE, Apache Heron, and Trino CTAS support as well as the current integration efforts around Apache Flink, PrestoDB, Apache Pulsar, LakeFS, and Nessie. Don't forget the standalone readers and writers and rust lang API optimizations.",
+    "thumbnail": "./images/videos/delta-lake-roadmap-2021h2.jpg",
+    "url": "https://www.youtube.com/watch?v=NBcn2J6V-MM"
+  },
+  {
+    "title": "Data + AI World Tour: Delta Lake EMEA Panel",
+    "description": "Join us for a fun and informative panel discussion about Delta Lake technical scenarios and use cases. Our panelists come from a variety of backgrounds and will each give us their own unique perspective. Gerhard is a Data Engineer and a Delta Lake contributor, Ivana Pejeva is a Data Scientist and Florian Valeye is an Data Engineering Manager and Delta Lake committer. Come listen in and ask questions.",
+    "thumbnail": "./images/videos/DAIWT-EMEA-panel.jpg",
+    "url": "https://youtu.be/atS-9yCjo68?t=2125"
+  },
+  {
+    "title": "Why Data is Eating the Universe",
+    "description": "Why Data is Eating the Universe: The Coming Age of Massive Sky Surveys From Killer Asteroids to Dark Energy: How Apache Spark and Delta Lake can enable the next generation of discoveries in Astronomy",
+    "thumbnail": "./images/videos/why-data-eating-universe.jpg",
+    "url": "https://youtu.be/o6lUFUxlois"
+  },
+  {
     "title": "Beyond Lambda: Introducing Delta Architecture",
     "description": "Online Tech Talk with Denny Lee, Developer Advocate @ Databricks Lambda architecture is a popular technique where records are processed by a batch system and streaming system in parallel. The results are then combined during query time to provide a complete answer.",
     "thumbnail": "./images/videos/beyond-lambda-introducing-delta-architecture.jpg",

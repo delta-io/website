@@ -5,26 +5,71 @@ menu: learn
 
 This page contains a list of documentation links for various Delta Lake projects.
 
-## Delta Lake
+![](delta-lake-logo.png)
 
-Visit the [Delta Lake Documentation](https://docs.delta.io/latest/index.html) to learn about how to use Delta Lake.
+#### Delta Lake
 
-### API Documentation
+[Delta Lake](https://delta.io) is a storage layer that brings data reliability via scalable, ACID transactions to Apache Spark™, Flink, Hive, Presto, Trino, and other big-data engines.
 
-- [Scala API docs](https://docs.delta.io/latest/delta-apidoc.html)
+Visit the [Delta Lake Documentation](https://docs.delta.io/latest/index.html) for the latest Delta Lake documentation and reference guide.
+
+For more information
+
+- [Delta Lake GitHub](https://github.com/delta-io/delta/blob/master/README.md)
+- [Delta Transaction Log Protocol](https://github.com/delta-io/delta/blob/master/PROTOCOL.md)
+- [Delta Lake Code of Conduct](https://github.com/delta-io/delta/blob/master/CODE_OF_CONDUCT.md)
+- [Contributions](https://github.com/delta-io/delta/blob/master/CONTRIBUTING.md)
+
+In addition, refer to the following links for the API documentation
+
+- [Scala API docs](https://docs.delta.io/latest/api/scala/io/delta/tables/index.html)
 - [Java API docs](https://docs.delta.io/latest/api/java/index.html)
 - [Python API docs](https://docs.delta.io/latest/api/python/index.html)
 
-## Delta Sharing
+![](delta-sharing-logo-sm.png)
 
-Delta Sharing is an open protocol for secure data sharing. Visit the [Delta Sharing Github repo](https://github.com/delta-io/delta-sharing) to learn more about how to use Delta Sharing.
+#### Delta Sharing
 
-## Delta RS (Delta Rust API)
+[Delta Sharing](https://github.com/delta-io/delta-sharing/#delta-sharing-an-open-protocol-for-secure-data-sharing) is an open protocol for secure real-time exchange of large datasets, which enables organizations to share data in real time regardless of which computing platforms they use. It is a simple [REST protocol](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md) that securely shares access to part of a cloud dataset and leverages modern cloud storage systems, such as S3, ADLS, or GCS, to reliably transfer data.
 
-Delta RS is a native Rust library for Delta Lake with bindings into Python and Ruby. Visit the [Delta RS Github repo](https://github.com/delta-io/delta-rs) to learn more about how to use Delta RS.
+For more information:
 
-## Delta Connectors
+- [Python Connector](https://github.com/delta-io/delta-sharing/#python-connector)
+- [Apache Spark™ Connector](https://github.com/delta-io/delta-sharing/#apache-spark-connector)
+- [Delta Sharing Reference Server](https://github.com/delta-io/delta-sharing/#delta-sharing-reference-server)
+- [Delta Sharing Protocol](https://github.com/delta-io/delta-sharing/#delta-sharing-protocol)
+- [Contributing](https://github.com/delta-io/delta-sharing/blob/main/CONTRIBUTING.md)
 
-- Link to connector #1 doc
-- Link to another connector doc
-- ...
+![](delta-lake-logo.png)
+
+#### Delta Lake Connectors
+
+We are building [connectors](https://github.com/delta-io/connectors) to bring [Delta Lake](https://delta.io/) to popular big-data engines outside [Apache Spark](https://spark.apache.org/) (e.g., [Apache Hive](https://hive.apache.org/), [Presto](https://prestodb.io/)) and also to common reporting tools like [Microsoft Power BI](https://powerbi.microsoft.com/).
+
+For more information:
+
+- [Delta Standalone](https://github.com/delta-io/connectors#delta-standalone), formerly known as the Delta Standalone Reader (DSR), is a JVM library to read and write Delta Lake tables.
+  - [PrestoDB/Delta Connector](https://github.com/prestodb/presto/blob/master/presto-docs/src/main/sphinx/connector/deltalake.rst): This connector allows reading Delta Lake tables in Presto. The connector uses the Delta Standalone Library (DSR) provided by Delta Lake project to read the table metadata.
+- [Hive Connector](https://github.com/delta-io/connectors#hive-connector): This project is a library to make Hive read Delta Lake tables.
+- [sql-delta-import](https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md): Imports data from a relational database or any other JDBC source into your Delta Lake. Import either entire table or only a subset of columns, control level of parallelism, include any custom transformations
+- [Power BI](https://github.com/delta-io/connectors/blob/master/powerbi/README.md): Reading Delta Lake tables natively in PowerBI
+- [Flink Delta Lake Connector](https://github.com/pkubit-g/connectors/tree/flink_sink_feature_docs/flink-connector): Official Delta Lake connector for Apache Flink.
+
+![](delta-rs-logo-sm.png)
+
+#### delta-rs (Delta Rust API)
+
+[delta-rs](https://github.com/delta-io/delta-rs): This library provides low level access to Delta tables in Rust, which can be used with data processing frameworks like [datafusion](https://github.com/apache/arrow-datafusion), [ballista](https://github.com/apache/arrow-datafusion/tree/master/ballista), [polars](https://github.com/pola-rs/polars), [vega](https://github.com/rajasekarv/vega), etc. It also provides bindings to other higher level languages such as [Python](https://delta-io.github.io/delta-rs/python/) or Ruby.
+
+For more information:
+
+- [Delta Rust Documentation](https://docs.rs/deltalake/latest/deltalake/)
+- [Python bindings documentation of delta-rs](https://delta-io.github.io/delta-rs/python/#python-bindings-documentation-of-delta-rs)
+  - [Deltalake-python](https://github.com/delta-io/delta-rs/tree/main/python): Native [Delta Lake](https://delta.io/) Python binding based on [delta-rs](https://github.com/delta-io/delta-rs) with [Pandas](https://pandas.pydata.org/) integration.
+- [Ruby bindings example](https://github.com/delta-io/delta-rs/tree/main/ruby)
+
+![](delta-rs-logo-sm.png)
+
+#### kafka-delta-ingest
+
+The kafka-delta-ingest project aims to build a highly efficient daemon for streaming data through [Apache Kafka](https://kafka.apache.org) into [Delta Lake](https://delta.io). This project is currently highly experimental and evolving in tandem with the [delta-rs](https://github.com/delta-io/delta-rs) bindings.
