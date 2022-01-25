@@ -26,19 +26,21 @@ const HomePage = () => (
         title="Build Lakehouses with Delta Lake"
         description={
           <>
-            Delta Lake is an open-source project that enables building a{" "}
+            Delta Lake is an open-source storage framework that enables building
+            a <br />{" "}
             <Link
               href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
               newTab
             >
               Lakehouse architecture
             </Link>{" "}
-            on top of existing storage systems such as S3, ALDS, GCS, and HDFS.
+            with compute engines including Spark, PrestoDB, Flink, Trino, and
+            Hive and APIs for Scala, Java, Rust, Ruby, and Python.
           </>
         }
         ctaLabel="Get Started"
         ctaUrl="/learn/getting-started"
-        versionNumber="1.0.0"
+        versionNumber="1.1.0"
       />
       <DiagramSection />
       <LatestUpdateSection />
