@@ -39,8 +39,11 @@ const CommunitySection = () => (
     title="Join the Delta Lake Community"
     subtitle={
       <Typography variant="p">
-        Communicate with fellow Delta Lake users and contributors, ask questions
-        and share tips.
+        Delta Lake is supported by more than 190 developers from over 50
+        organizations across multiple repositories.
+        <br />
+        Chat with fellow Delta Lake users and contributors, ask questions and
+        share tips.
       </Typography>
     }
     padding="xxxl"
