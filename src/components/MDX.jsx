@@ -13,6 +13,12 @@ import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
 import OrganizationTiles from "src/components/pages/shared/OrganizationTiles";
 import SocialTiles from "src/components/pages/shared/SocialTiles";
 
+const MarkdownContent = styled.div`
+  .align-image-left .gatsby-resp-image-wrapper {
+    margin-left: 0 !important;
+  }
+`;
+
 const Image = styled.img`
   max-width: 100%;
 `;
@@ -224,7 +230,9 @@ const MDX = (props) => {
 
   return (
     <MDXProvider components={mdxComponents}>
-      <MDXRenderer>{children}</MDXRenderer>
+      <MarkdownContent>
+        <MDXRenderer>{children}</MDXRenderer>
+      </MarkdownContent>
     </MDXProvider>
   );
 };
