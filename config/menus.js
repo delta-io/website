@@ -49,8 +49,8 @@ const community = [
     label: "Delta Community",
   },
   {
-    url: "/community/contributors",
-    label: "Contributors",
+    url: "/community/contributing",
+    label: "Contributing",
   },
   {
     url: "/community/meetings",
@@ -59,18 +59,6 @@ const community = [
   {
     url: "/community/organizations",
     label: "Organizations",
-  },
-  {
-    url: "/community/contributing",
-    label: "Contributing Guidelines",
-  },
-  {
-    url: "/community/answering-questions",
-    label: "Answering Questions",
-  },
-  {
-    url: "/community/contributing-to-docs",
-    label: "Contributing to Documentation",
   },
 ];
 
