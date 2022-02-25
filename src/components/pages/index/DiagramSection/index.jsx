@@ -1,7 +1,7 @@
 import * as React from "react";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import deltaDiagram from "./delta-diagram.png";
+import deltaDiagram from "./delta-hp-hero-wide.png";
 
 export const imageOffsets = {
   sm: 35,
@@ -16,7 +16,7 @@ const DiagramSectionRoot = styled(Section)`
 `;
 
 const DiagramWrapper = styled.div`
-  max-width: 970px;
+  max-width: 2000px;
   margin-left: auto;
   margin-right: auto;
 
