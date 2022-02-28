@@ -5,7 +5,8 @@ import AnnouncementSection from "src/components/pages/index/AnnouncementSection"
 import HeroSection from "src/components/pages/index/HeroSection";
 import Link from "src/components/Link";
 import DiagramSection from "src/components/pages/index/DiagramSection";
-import LatestUpdateSection from "src/components/pages/index/LatestUpdateSection";
+import IntegrationsSection from "src/components/pages/index/IntegrationsSection";
+// import LatestUpdateSection from "src/components/pages/index/LatestUpdateSection";
 import KeyFeaturesSection from "src/components/pages/shared/KeyFeaturesSection";
 import GetStartedSection from "src/components/pages/index/GetStartedSection";
 import OrganizationsSection from "src/components/pages/index/OrganizationsSection";
@@ -43,7 +44,8 @@ const HomePage = () => (
         versionNumber="1.1.0"
       />
       <DiagramSection />
-      <LatestUpdateSection />
+      <IntegrationsSection />
+      {/* <LatestUpdateSection />  */}
       <KeyFeaturesSection
         features={[
           {
