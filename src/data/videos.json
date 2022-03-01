@@ -1,13 +1,13 @@
 [
   {
     "title": "Delta Lake Community Office Hours (2022-01-20)",
-    "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions.  Thanks!",
+    "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions. Thanks!",
     "thumbnail": "./images/videos/delta-lake-community-ama_20220120.jpg",
     "url": "https://youtu.be/A3FY8QLE0-A"
   },
   {
     "title": "Delta Lake Connector for Presto",
-    "description": "Delta lake is an open-source project that enables building a lakehouse architecture on top of existing storage systems such as S3, ADLS, GCS, and HDFS. We - the Presto and Delta Lake communities - have come together to make it easier for Presto to leverage the reliability of data lakes by integrating with Delta Lake.  In this session, we would like to share the design decisions and internals of the Presto/Delta connector.",
+    "description": "Delta lake is an open-source project that enables building a lakehouse architecture on top of existing storage systems such as S3, ADLS, GCS, and HDFS. We - the Presto and Delta Lake communities - have come together to make it easier for Presto to leverage the reliability of data lakes by integrating with Delta Lake. In this session, we would like to share the design decisions and internals of the Presto/Delta connector.",
     "thumbnail": "./images/videos/Delta-Lake-Connector-for-Presto.jpg",
     "url": "https://youtu.be/JrXGkqpl7xk"
   },
@@ -28,6 +28,216 @@
     "description": "Why Data is Eating the Universe: The Coming Age of Massive Sky Surveys From Killer Asteroids to Dark Energy: How Apache Spark and Delta Lake can enable the next generation of discoveries in Astronomy",
     "thumbnail": "./images/videos/why-data-eating-universe.jpg",
     "url": "https://youtu.be/o6lUFUxlois"
+  },
+  {
+    "title": "Data Reliability for Data Lakes",
+    "description": "Building a modern data lake requires dealing with a lot of complexity: querying historical data + streaming data simultaneously (lambda architecture), validation to ensure data isn't too messy for data science and machine learning, reprocessing to handle failures, and ensuring ACID-compliant data updates. We created the Delta Lake project, open sourced under the Linux Foundation, to relieve data scientists and data engineers from these complex systems problems and instead enable them to focus on extracting value from data. In this talk, we'll dive into these challenges and how ACID transactions solve them. We'll discuss patterns that emerge when you can focus on data quality and the nitty gritty internals of ACID on Spark which enable this focus.",
+    "thumbnail": "./images/videos/data-reliability-for-data-lakes.jpg",
+    "url": "https://www.youtube.com/watch?v=0eae1WHzMKU"
+  },
+  {
+    "title": "SmartSQL Queries powered by Delta Engine on Lakehouse",
+    "description": "As a data analyst have you ever wanted to be able to simply add some Machine Learning capabilities into your SQL Query? Does your database engine require additional laborious steps in order to leverage Python or R functionality for your data scientist to work on? Do you feel that your teams are siloed from each other preventing you from getting the most out of your data? Join us while we work together to build machine learning algorithms into simple functions that our data analysts can use to build smarts into their analytics.",
+    "thumbnail": "./images/videos/smartsql-queries-powered-by-delta-engine-on-lakehouse.jpg",
+    "url": "https://www.youtube.com/watch?v=PCVyk8npl-k"
+  },
+  {
+    "title": "Tutorial: How Delta Lake Supercharges Data Lakes",
+    "description": "Delta Lake's transaction log brings high reliability, performance, and ACID compliant transactions to data lakes. But exactly how does it accomplish this? Working through concrete examples, we will take a close look at how the transaction logs are managed and leveraged by Delta to supercharge data lakes.",
+    "thumbnail": "./images/videos/tutorial-how-delta-lake-supercharges-data-lakes.jpg",
+    "url": "https://www.youtube.com/watch?v=u1VfOiHVeMI"
+  },
+  {
+    "title": "Generating Surrogate Keys for your Data Lakehouse with Spark SQL and Delta Lake",
+    "description": "For this tech chat, we will discuss a popular data warehousing fundamental - surrogate keys. As we had discussed in various other Delta Lake tech talks, the reliability brought to data lakes by Delta Lake has brought a resurgence of many of the data warehousing fundamentals such as Change Data Capture in data lakes. Surrogate keys are unique and lack any business context so they can stand the test of time when joining domain (or dimensional) and fact data. This can be difficult in single-node systems and can be even more complex for distributed systems. In this session, we will discuss the history and value of surrogate keys and what are the requirements for good strategies to implement this data warehousing fundamental into your Delta Lake.",
+    "thumbnail": "./images/videos/generating-surrogate-keys-for-your-data-lakehouse-with-spark-sql-and-delta-lake.jpg",
+    "url": "https://www.youtube.com/watch?v=aF2hRH5WZAU"
+  },
+  {
+    "title": "Delta Lake 0.7.0 + Spark 3.0 AMA",
+    "description": "On August 18th, 2020, join Apache Spark and Delta Lake committers Burak Yavuz, Tathagata Das, and Denny Lee for an illuminating \"Ask Me Anything\" session. Whether you would like to know more about the history of Apache Spark to the current bleeding edge use cases of Spark 3.0 and Delta Lake, this is the session to ask your questions!",
+    "thumbnail": "./images/videos/delta-lake-070-spark-30-ama.jpg",
+    "url": "https://www.youtube.com/watch?v=xzKqjCB8SWU"
+  },
+  {
+    "title": "Simplifying Disaster Recovery with Delta Lake",
+    "description": "There's a need to develop a recovery process for Delta table in a DR scenario. Cloud multi-region sync is Asynchronous. This type of replication does not guarantee the chronological order of files at the target (DR) region. In some cases, we can expect large files to arrive later than small files. With Delta Lake, this can create an incomplete version at the DR site at the breakup point. The assumption is that the Primary (Prod) site is not reachable and therefore there's a need to identify and fix the incomplete version of the Delta Lake table. Similar scenarios happen with RDBMS replication, they rely on their logs to restore the database to a stable version and run the recovery or reload process. This document will address this need and look for a solution that can be shared with customers.",
+    "thumbnail": "./images/videos/simplifying-disaster-recovery-with-delta-lake.jpg",
+    "url": "https://databricks.com/session_na20/simplifying-disaster-recovery-with-delta-lake"
+  },
+  {
+    "title": "Real-Time Forecasting at Scale using Delta Lake and Delta Caching",
+    "description": "GumGum receives around 30 billion programmatic inventory impressions amounting to 25 TB of data each day. Inventory impression is the real estate to show potential ads on a publisher page. By generating near-real-time inventory forecast based on campaign-specific targeting rules, GumGum enables the account managers to set up successful future campaigns. This talk will highlight the data pipelines and architecture that help the company achieve a forecast response time of less than 30 seconds for this scale.",
+    "thumbnail": "./images/videos/real-time-forecasting-at-scale-using-delta-lake-and-delta-caching.jpg",
+    "url": "https://databricks.com/session_na20/real-time-forecasting-at-scale-using-delta-lake-and-delta-caching"
+  },
+  {
+    "title": "Patterns and Operational Insights from the First Users of Delta Lake",
+    "description": "Cyber threat detection and response requires demanding work loads over large volumes of log and telemetry data. A few years ago I came to Apple after building such a system at another FAANG company, and my boss asked me to do it again. I learned a lot from my prior experience using Apache Spark and AWS S3 at massive scale some good patterns, but also some bad patterns and pieces of technology that I wanted to avoid.",
+    "thumbnail": "./images/videos/patterns-and-operational-insights-from-the-first-users-of-delta-lake.jpg",
+    "url": "https://databricks.com/session_na20/patterns-and-operational-insights-from-the-first-users-of-delta-lake"
+  },
+  {
+    "title": "Machine Learning Data Lineage with MLflow and Delta Lake",
+    "description": "In this talk, we will give a detailed introduction to two popular features: MLflow Model Registry and Delta Lake Time Travel, as well as how they can work together to help create a full data lineage in machine learning pipelines.",
+    "thumbnail": "./images/videos/machine-learning-data-lineage-with-mlflow-and-delta-lake.jpg",
+    "url": "https://databricks.com/session_na20/machine-learning-data-lineage-with-mlflow-and-delta-lake"
+  },
+  {
+    "title": "Best Practices for Building Robust Data Platform with Apache Spark and Delta",
+    "description": "This talk will focus on Journey of technical challenges, trade offs and ground-breaking achievements for building performant and scalable pipelines from the experience working with our customers. The problems encountered are shared by many organizations and so the lessons learned and best practices are widely applicable.",
+    "thumbnail": "./images/videos/best-practices-for-building-robust-data-platform-with-apache-spark-and-delta.jpg",
+    "url": "https://databricks.com/session_na20/best-practices-for-building-robust-data-platform-with-apache-spark-and-delta"
+  },
+  {
+    "title": "Automatic Forecasting using Prophet, Databricks, Delta Lake and MLflow",
+    "description": "As Atlassian continues to scale to more and more customers, the demand for our legendary support continues to grow. Atlassian needs to maintain balance between the staffing levels needed to service this increasing support ticket volume with the budgetary constraints needed to keep the business healthy – automated ticket volume forecasting is at the centre of this delicate balance.",
+    "thumbnail": "./images/videos/automatic-forecasting-using-prophet-databricks-delta-lake-and-mlflow.jpg",
+    "url": "https://databricks.com/session_na20/automatic-forecasting-using-prophet-databricks-delta-lake-and-mlflow"
+  },
+  {
+    "title": "Building the Petcare Data Platform using Delta Lake and 'Kyte': Our Spark ETL Pipeline",
+    "description": "At Mars Petcare (in a division known as Kinship Data & Analytics) we are building out the Petcare Data Platform – a cloud based Data Lake solution. Leveraging Microsoft Azure, we were faced with important decisions around tools and design. We chose Delta Lake as a storage layer to build out our platform and bring insight to the science community across Mars Petcare.",
+    "thumbnail": "./images/videos/building-the-petcare-data-platform-using-delta-lake-and-kyte.jpg",
+    "url": "https://databricks.com/session_na20/building-the-petcare-data-platform-using-delta-lake-and-kyte-our-spark-etl-pipeline"
+  },
+  {
+    "title": "Parallelization of Structured Streaming Jobs Using Delta Lake",
+    "description": "We'll tackle the problem of running streaming jobs from another perspective using Databricks Delta Lake, while examining some of the current issues that we faced at Tubi while running regular structured streaming. A quick overview on why we transitioned from parquet data files to delta and the problems it solved for us in running our streaming jobs. After converting our datasets to Delta Lake.",
+    "thumbnail": "./images/videos/parallelization-of-structured-streaming-jobs-using-delta-lake.jpg",
+    "url": "https://databricks.com/session_na20/parallelization-of-structured-streaming-jobs-using-delta-lake"
+  },
+  {
+    "title": "VIP Ask Me Anything (AMA) Session: Delta Lake",
+    "description": "Databricks is proud to announce that Gartner has named us a Leader in both the 2021 Magic Quadrant for Cloud Database Management Systems and the 2021 Magic Quadrant for Data Science and Machine Learning Platforms.",
+    "thumbnail": "./images/videos/vip-ask-me-anything-ama-session-delta-lake.jpg",
+    "url": "https://youtu.be/uYr_bjMTv5U"
+  },
+  {
+    "title": "A Thorough Comparison of Delta Lake, Iceberg and Hudi",
+    "description": "Recently, a set of modern table formats such as Delta Lake, Hudi, Iceberg spring out. Along with Hive Metastore these table formats are trying to solve problems that stand in traditional data lake for a long time with their declared features like ACID, schema evolution, upsert, time travel, incremental consumption etc. This talk will share the research that we did for the comparison about the key features and design these table format holds, the maturity of features, such as APIs expose to end user, how to work with compute engines and finally a comprehensive benchmark about transaction, upsert and mass partitions will be shared as references to audiences.",
+    "thumbnail": "./images/videos/a-thorough-comparison-of-delta-lake-iceberg-and-hudi.jpg",
+    "url": "https://databricks.com/session_na20/a-thorough-comparison-of-delta-lake-iceberg-and-hudi"
+  },
+  {
+    "title": "Operationalizing Big Data Pipelines At Scale",
+    "description": "Running a global, world-class business with data-driven decision making requires ingesting and processing diverse sets of data at tremendous scale. How does a company achieve this while ensuring quality and honoring their commitment as responsible stewards of data? This session will detail how Starbucks has embraced big data, building robust, high-quality pipelines for faster insights to drive world-class customer experiences.",
+    "thumbnail": "./images/videos/operationalizing-big-data-pipelines-at-scale.jpg",
+    "url": "https://databricks.com/session_na20/operationalizing-big-data-pipelines-at-scale"
+  },
+  {
+    "title": "Simplify CDC Pipeline with Spark Streaming SQL and Delta Lake",
+    "description": "Change Data Capture CDC is a typical use case in Real-Time Data Warehousing. It tracks the data change log -binlog- of a relational database [OLTP], and replay these change log timely to an external storage to do Real-Time OLAP, such as delta/kudu. To implement a robust CDC streaming pipeline, lots of factors should be concerned, such as how to ensure data accuracy , how to process OLTP source schema changed, whether it is easy to build for variety databases with less code. This talk will share the practice for simplify CDC pipeline with SparkStreaming SQL and Delta Lake.",
+    "thumbnail": "./images/videos/simplify-cdc-pipeline-with-spark-streaming-sql-and-delta-lake.jpg",
+    "url": "https://databricks.com/session_na20/simplify-cdc-pipeline-with-spark-streaming-sql-and-delta-lake"
+  },
+  {
+    "title": "Columbia Migrates from Legacy Data Warehouse to an Open Data Platform with Delta Lake",
+    "description": "Columbia is a data-driven enterprise, integrating data from all line-of-business-systems to manage its wholesale and retail businesses. This includes integrating real-time and batch data to better manage purchase orders and generate accurate consumer demand forecasts. It also includes analyzing product reviews to increase customer satisfaction. In this presentation, we'll walk through how we achieved a 70% reduction in pipeline creation time and reduced ETL workload times from four hours with previous data warehouses to minutes using Azure Databricks, hence enabling near real-time analytics. We migrated from multiple legacy data warehouses, run by individual lines of business, to a single scalable, reliable, performant data lake on top of Azure and Delta Lake.",
+    "thumbnail": "./images/videos/columbia-migrates-from-legacy-data-warehouse-to-an-open-data-platform-with-delta-lake.jpg",
+    "url": "https://databricks.com/session_na20/columbia-migrates-from-legacy-data-warehouse-to-an-open-data-platform-with-delta-lake"
+  },
+  {
+    "title": "Building Data Quality Audit Framework using Delta Lake at Cerner",
+    "description": "Cerner needs to know what assets it owns, where they are located, and the status of those assets. A configuration management system is an inventory of IT assets and IT things like servers, network devices, storage arrays, and software licenses. There was a need to bring all the data sources into one place so that Cerner has a single source of truth for configuration. This gave birth to a data platform called Beacon. Bad data quality has a significant business costs in time, effort and accuracy. Poor-quality data is often pegged as the source of operational snafus, inaccurate analytics and ill-conceived business strategies. In our case since configuration data is largely used in making decisions about security, incident management, cost analysis etc it caused downstream impact due to gaps in data. To handle data quality issues, Databricks and Delta Lake was introduced at the helm of the data pipeline architecture. In this talk we'll describe the journey behind building an end to end pipeline conformed to CI/CD standards of the industry from data ingestion, processing, reporting to machine learning and how Delta Lake plays a vital role in not only catching data issues but make it scalable and re-usable for other teams. We'll talk about the challenges faced in between and lessons learned from it.",
+    "thumbnail": "./images/videos/building-data-quality-audit-framework-using-delta-lake-at-cerner.jpg",
+    "url": "https://databricks.com/session_na20/building-data-quality-audit-framework-using-delta-lake-at-cerner"
+  },
+  {
+    "title": "Powering Interactive BI Analytics with Presto and Delta Lake",
+    "description": "Presto, an open source distributed SQL engine, is widely recognized for its low-latency queries, high concurrency, and native ability to query multiple data sources. Proven at scale in a variety of use cases at Airbnb, Comcast, GrubHub, Facebook, FINRA, LinkedIn, Lyft, Netflix, Twitter, and Uber, in the last few years Presto experienced an unprecedented growth in popularity in both on-premises and cloud deployments over Object Stores, HDFS, NoSQL and RDBMS data stores. Delta Lake, a storage layer originally invented by Databricks and recently open sourced, brings ACID capabilities to big datasets held in Object Storage. While initially designed for Spark, Delta Lake now supports multiple query compute engines. In particular, Starburst, developed a native integration for Presto that leverages Delta-specific performance optimizations. In this talk we show how a combination of Presto, Spark Streaming, and Delta Lake into one architecture supports highly concurrent and interactive BI analytics. Furthermore Presto enables query-time correlations between S3-based IoT data, customer data in a legacy Oracle database, and web log data in Elasticsearch.",
+    "thumbnail": "./images/videos/powering-interactive-bi-analytics-with-presto-and-delta-lake.jpg",
+    "url": "https://databricks.com/session_na20/powering-interactive-bi-analytics-with-presto-and-delta-lake"
+  },
+  {
+    "title": "VIP Ask Me Anything (AMA) Session: Delta Lake 0.7.0 Early Preview",
+    "description": "Databricks is proud to announce that Gartner has named us a Leader in both the 2021 Magic Quadrant for Cloud Database Management Systems and the 2021 Magic Quadrant for Data Science and Machine Learning Platforms.",
+    "thumbnail": "./images/videos/vip-ask-me-anything-ama-session-delta-lake-070-early-preview.jpg",
+    "url": "https://www.youtube.com/watch?v=YzQjicfx3lk"
+  },
+  {
+    "title": "How Starbucks is Achieving Enterprise Data and ML at Scale",
+    "description": "Starbucks makes sure that everything we do is through the lens of humanity – from our commitment to the highest quality coffee in the world, to the way we engage with our customers and communities to do business responsibly. A key aspect to ensuring those world-class customer experiences is data. This talk highlights the Enterprise Data Analytics mission at Starbucks that helps making decisions powered by data at tremendous scale. This includes everything ranging from processing data at petabyte scale with governed processes, deploying platforms at the speed-of-business and enabling ML across the enterprise. In this session, Vish Subramanian will detail how Starbucks has built world-class Enterprise data platforms to drive world-class customer experiences.",
+    "thumbnail": "./images/videos/how-starbucks-is-achieving-enterprise-data-and-ml-at-scale.jpg",
+    "url": "https://www.youtube.com/watch?v=8SPPMb41Zn8"
+  },
+  {
+    "title": "Realizing the Vision of the Data Lakehouse",
+    "description": "This keynote by Databricks CEO, Ali Ghodsi, explains why the open source Delta Lake project takes the industry closer to realizing the full potential of the data lakehouse, including new capabilities within the Databricks Unified Data Analytics platform to significantly accelerate performance. In addition, Ali will announce new open source capabilities to collaboratively run SQL queries against your data lake, build live dashboards, and alert on important changes to make it easier for all data teams to analyze and understand their data.",
+    "thumbnail": "./images/videos/realizing-the-vision-of-the-data-lakehouse.jpg",
+    "url": "https://www.youtube.com/watch?v=g11y-kJHr3I"
+  },
+  {
+    "title": "Building a Better Delta Lake with Talend and Databricks",
+    "description": "With the introduction of Delta Lake last year, a well-tested pattern of building out the bronze, silver, and gold data architecture approach has proven useful. This session will review how to use Talend Data Fabric to accelerate the development of a Delta Lake using highly productive, scalable, and enterprise ready data flow tools. Covered in this section are demonstrations of ingesting 'Bronze' data, refining 'Silver' data tables, and performing Feature Engineering for 'Gold' tables.",
+    "thumbnail": "./images/videos/building-a-better-delta-lake-with-talend-and-databricks.jpg",
+    "url": "https://databricks.com/session_na20/building-a-better-delta-lake-with-talend-and-databricks"
+  },
+  {
+    "title": "Delta from a Data Engineer's Perspective",
+    "description": "Take a walk through the daily struggles of a data engineer in this presentation as we cover what is truly needed to create robust end to end Big Data solutions.",
+    "thumbnail": "./images/videos/delta-from-a-data-engineers-perspective.jpg",
+    "url": "https://databricks.com/session_na20/delta-from-a-data-engineers-perspective"
+  },
+  {
+    "title": "Slowly Changing Dimensions (SCD) Type 2",
+    "description": "We will discuss a popular online analytics processing (OLAP) fundamental - slowly changing dimensions (SCD) - specifically Type-2. As we have discussed in various other Delta Lake tech talks, the reliability brought to data lakes by Delta Lake has brought a resurgence of many of the data warehousing fundamentals such as Change Data Capture in data lakes. Type 2 SCD within data warehousing allows you to keep track of both the history and current data over time. We will discuss how to apply these concepts to your data lake within the context of the market segmentation of a climbing eCommerce site.",
+    "thumbnail": "./images/videos/slowly-changing-dimensions-scd-type-2.jpg",
+    "url": "https://www.youtube.com/watch?v=HZWwZG07hzQ"
+  },
+  {
+    "title": "Best Practices on How to Process and Analyze Audit Logs with Delta Lake and Structured Streaming",
+    "description": "In this tech conversation, Denny Lee will interview Craig Ng and Miklos Christine to discuss the best practices on how to process and analyze Databricks audit logs using Delta Lake and Structured Streaming.  We will discuss and demonstrate how administrators can utilize audit logs to track resource usage and identify these potentially costly anti-patterns.",
+    "thumbnail": "./images/videos/best-practices-on-how-to-process-and-analyze-audit-logs-with-delta-lake-and-structured-streaming.jpg",
+    "url": "https://www.youtube.com/watch?v=hngJDSxQyjY"
+  },
+  {
+    "title": "Data and AI Talk with Databricks Co-Founder, Matei Zaharia",
+    "description": "We are happy to have Matei Zaharia join this month's Data and AI Talk Matei Zaharia is an assistant professor at Stanford CS, where he works on computer systems and machine learning as part of Stanford DAWN. He is also co-founder and Chief Technologist of Databricks, the data and AI platform startup. During his Ph.D., Matei started the Apache Spark project, which is now one of the most widely used frameworks for distributed data processing. He also co-started other widely used data and AI software such as MLflow, Apache Mesos and Spark Streaming. Join this great session where we will discuss these technologies as well as answer selected questions posted in the comment section.",
+    "thumbnail": "./images/videos/data-and-ai-talk-with-databricks-co-founder-matei-zaharia.jpg",
+    "url": "https://www.youtube.com/watch?v=rvUxVbpw0TI"
+  },
+  {
+    "title": "Addressing GDPR and CCPA Scenarios with Delta Lake and Apache Spark&#x2122;",
+    "description": "Your organization may manage hundreds of terabytes worth of personal information in your cloud. Bringing these datasets into GDPR and CCPA compliance is of paramount importance, but this can be a big challenge, especially for larger datasets stored in data lakes. Learn how you can use Delta Lake which is created by Databricks and powered by Apache Spark™ to manage GDPR and CCPA compliance for your data lake. Because Delta Lake adds a transactional layer that provides structured data management on top of your data lake, it can dramatically simplify and accelerate your ability to locate and remove personal information (also known as \"personal data\") in response to consumer GDPR or CCPA requests without disrupting your data pipelines.",
+    "thumbnail": "./images/videos/addressing-gdpr-and-ccpa-scenarios-with-delta-lake-and-apache-spark.jpg",
+    "url": "https://www.youtube.com/watch?v=7y0AAQ6qX5w"
+  },
+  {
+    "title": "Using Delta as a Change Data Capture Source",
+    "description": "While it is common to use Delta Lake as a sink for change data captured from traditional data sources; customers are increasingly asking how to use Delta tables as a source for a change data capture (CDC) process. To state a different way, how can we read a stream of changes from a Delta table, so that they can be propagated downstream.",
+    "thumbnail": "./images/videos/using-delta-as-a-change-data-capture-source.jpg",
+    "url": "https://www.youtube.com/watch?v=7y0AAQ6qX5w"
+  },
+  {
+    "title": "Predictive Maintenance (PdM) on IoT Data for Early Fault Detection w/ Delta Lake",
+    "description": "Predictive Maintenance (PdM) is different from other routine or time-based maintenance approaches as it combines various sensor readings and sophisticated analytics on thousands of logged events in near real time and promises several fold improvements in cost savings because tasks are performed only when warranted. The top industries leading the IoT revolution include manufacturing, transportation, utilities, healthcare, consumer electronics & cars. The global market size for this is expected to grow at a CAGR of 28%. PdM plays a key role in Industry 4.0 to help corporations not only reduce unplanned downtimes, but also improve productivity and safety. The collaborative Data and Analytics platform from Databricks is a great technology fit to facilitate these use cases by providing a single unified platform to ingest the sensor data, perform the necessary transformations and exploration, run ML and generate valuable insights.",
+    "thumbnail": "./images/videos/pdm-on-iot-data-for-early-fault-detection.jpg",
+    "url": "https://www.youtube.com/watch?v=68zy_nSV8g0"
+  },
+  {
+    "title": "Diving into Delta Lake Part 3: How do DELETE, UPDATE, and MERGE work",
+    "description": "In the earlier Delta Lake Internals tech talk series sessions, we described how the Delta Lake transaction log works. In this session, we will dive deeper into how commits, snapshot isolation, and partition and files change when performing deletes, updates, merges, and structured streaming.",
+    "thumbnail": "./images/videos/diving-into-delta-lake-part-3.jpg",
+    "url": "https://www.youtube.com/watch?v=tjb10n5wVs8"
+  },
+  {
+    "title": "Diving into Delta Lake Part 2: Enforcing and Evolving the Schema",
+    "description": "As business problems and requirements evolve over time, so too does the structure of your data. With Delta Lake, as the data changes, incorporating new dimensions is easy. Users have access to simple semantics to control the schema of their tables. These tools include schema enforcement, which prevents users from accidentally polluting their tables with mistakes or garbage data, as well as schema evolution, which enables them to automatically add new columns of rich data when those columns belong. In this webinar, we'll dive into the use of these tools.",
+    "thumbnail": "./images/videos/diving-into-delta-lake-part-2.jpg",
+    "url": "https://www.youtube.com/watch?v=tjb10n5wVs8"
+  },
+  {
+    "title": "Diving into Delta Lake Part 1: Unpacking the Transaction Log",
+    "description": "The transaction log is key to understanding Delta Lake because it is the common thread that runs through many of its most important features, including ACID transactions, scalable metadata handling, time travel, and more. In this session, we'll explore what the Delta Lake transaction log is, how it works at the file level, and how it offers an elegant solution to the problem of multiple concurrent reads and writes.",
+    "thumbnail": "./images/videos/diving-into-delta-lake-part-1.jpg",
+    "url": "https://www.youtube.com/watch?v=F91G4RoA8is"
+  },
+  {
+    "title": "Simplify and Scale Data Engineering Pipelines with Delta Lake",
+    "description": "A common data engineering pipeline architecture uses tables that correspond to different quality levels, progressively adding structure to the data: data ingestion (\"Bronze\" tables), transformation/feature engineering (\"Silver\" tables), and machine learning training or prediction (\"Gold\" tables). Combined, we refer to these tables as a \"multi-hop\" architecture. It allows data engineers to build a pipeline that begins with raw data as a \"single source of truth\" from which everything flows. In this session, we will show how to build a scalable data engineering data pipeline using Delta Lake.",
+    "thumbnail": "./images/videos/simplify-and-scale-data-engineering-pipelines-with-delta-lake.jpg",
+    "url": "https://www.youtube.com/watch?v=qtCxNSmTejk"
   },
   {
     "title": "Beyond Lambda: Introducing Delta Architecture",
@@ -97,13 +307,13 @@
   },
   {
     "title": "Building Data Pipelines Using Structured Streaming and Delta Lake",
-    "description": "Given the rise of IoT and other real-time sources and businesses’ desire to draw fast insights, there is a growing imperative for data professionals to build streaming data pipelines. Given the plethora of different tools and frameworks in the big data community, it is challenging to architect such pipelines correctly that achieve the desired performance...",
+    "description": "Given the rise of IoT and other real-time sources and businesses' desire to draw fast insights, there is a growing imperative for data professionals to build streaming data pipelines. Given the plethora of different tools and frameworks in the big data community, it is challenging to architect such pipelines correctly that achieve the desired performance...",
     "thumbnail": "./images/videos/building-data-pipelines-using-structured-streaming-and-delta-lake.jpg",
     "url": "https://vimeo.com/359601962"
   },
   {
     "title": "Simplify and Scale Data Engineering Pipelines",
-    "description": "A common data engineering pipeline architecture uses tables that correspond to different quality levels, progressively adding structure to the data: data ingestion (“Bronze” tables), transformation/feature engineering (“Silver” tables), and machine learning training or prediction (“Gold” tables). Combined, we refer to these tables as a “multi-hop” architecture. It allows data engineers to build a pipeline that...",
+    "description": "A common data engineering pipeline architecture uses tables that correspond to different quality levels, progressively adding structure to the data: data ingestion (\"Bronze\" tables), transformation/feature engineering (\"Silver\" tables), and machine learning training or prediction (\"Gold\" tables). Combined, we refer to these tables as a \"multi-hop\" architecture. It allows data engineers to build a pipeline that...",
     "thumbnail": "./images/videos/simplify-and-scale-data-engineering-pipelines.jpg",
     "url": "https://vimeo.com/356260747"
   },
@@ -130,5 +340,17 @@
     "description": "Delta Lake is an open source storage layer that brings reliability to data lakes. Delta Lake provides ACID transactions, scalable metadata handling, and unifies streaming and batch data processing. Delta Lake runs on top of your existing data lake and is fully compatible with Apache Spark APIs. Specifically, Delta Lake offers: ACID transactions on Spark...",
     "thumbnail": "./images/videos/delta-lake-open-source-reliability-for-data-lakes.jpg",
     "url": "https://vimeo.com/338100834"
+  },
+  {
+    "title": "Announcing Delta Lake Open Source Project | Ali Ghodsi (Databricks), Michael Armbrust (Databricks)",
+    "description": "Keynote from Spark + AI Summit 2019",
+    "thumbnail": "./images/videos/spark-ai-summit-2019-keynote.jpg",
+    "url": "https://www.youtube.com/watch?v=5I5pqDsvGEc"
+  },
+  {
+    "title": "Threat Detection and Response at Scale (Dominque Brezinski & Michael Armbrust)",
+    "description": "We approached Databricks with a set of challenges to collaborate on: provide a stable and optimized platform for Unified Analytics that allows our team to focus on value delivery using streaming, SQL, graph, and ML; leverage decoupled storage and compute while delivering high performance over a broad set of workloads; use S3 notifications instead of list operations; remove Hive Metastore from the write path; and approach indexed response times for our more common search cases, without hard-to-scale index maintenance, over our entire retention window. This is about the fruit of that collaboration.",
+    "thumbnail": "./images/videos/spark-ai-summit-2019-threat-detection.jpg",
+    "url": "https://www.youtube.com/watch?v=SFeBJxI4Q98"
   }
 ]
