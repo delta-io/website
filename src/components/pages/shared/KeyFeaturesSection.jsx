@@ -36,7 +36,7 @@ const KeyFeaturesSection = (props) => {
   return (
     <Section
       title="Key Features"
-      padding="xxxl"
+      padding="xl"
       centeredHeader
       background="white"
     >
