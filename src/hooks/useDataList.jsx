@@ -39,6 +39,21 @@ const query = graphql`
         }
       }
     }
+    tutorials: allTutorialsJson {
+      edges {
+        node {
+          description
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(width: 700, height: 394)
+            }
+          }
+          title
+          url
+          id
+        }
+      }
+    }
     meetings: allMeetingsJson {
       edges {
         node {

@@ -16,6 +16,10 @@ const dataListProps = {
     thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2, lg: 3 },
   },
+  tutorials: {
+    thumbnailRatio: [16, 9],
+    columns: { xs: 1 },
+  },
 };
 
 const JsonCardDataList = (props) => {
