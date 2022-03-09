@@ -157,7 +157,7 @@
   },
   {
     "title": "How Starbucks is Achieving Enterprise Data and ML at Scale",
-    "description": "Starbucks makes sure that everything we do is through the lens of humanity – from our commitment to the highest quality coffee in the world, to the way we engage with our customers and communities to do business responsibly. A key aspect to ensuring those world-class customer experiences is data. This talk highlights the Enterprise Data Analytics mission at Starbucks that helps making decisions powered by data at tremendous scale. This includes everything ranging from processing data at petabyte scale with governed processes, deploying platforms at the speed-of-business and enabling ML across the enterprise. In this session, Vish Subramanian will detail how Starbucks has built world-class Enterprise data platforms to drive world-class customer experiences.",
+    "description": "Starbucks makes sure that everything we do is through the lens of humanity - from our commitment to the highest quality coffee in the world, to the way we engage with our customers and communities to do business responsibly. A key aspect to ensuring those world-class customer experiences is data. This talk highlights the Enterprise Data Analytics mission at Starbucks that helps making decisions powered by data at tremendous scale. This includes everything ranging from processing data at petabyte scale with governed processes, deploying platforms at the speed-of-business and enabling ML across the enterprise. In this session, Vish Subramanian will detail how Starbucks has built world-class Enterprise data platforms to drive world-class customer experiences.",
     "thumbnail": "./images/videos/how-starbucks-is-achieving-enterprise-data-and-ml-at-scale.jpg",
     "url": "https://www.youtube.com/watch?v=8SPPMb41Zn8"
   },
@@ -198,7 +198,7 @@
     "url": "https://www.youtube.com/watch?v=rvUxVbpw0TI"
   },
   {
-    "title": "Addressing GDPR and CCPA Scenarios with Delta Lake and Apache Spark&#x2122;",
+    "title": "Addressing GDPR and CCPA Scenarios with Delta Lake and Apache Spark™",
     "description": "Your organization may manage hundreds of terabytes worth of personal information in your cloud. Bringing these datasets into GDPR and CCPA compliance is of paramount importance, but this can be a big challenge, especially for larger datasets stored in data lakes. Learn how you can use Delta Lake which is created by Databricks and powered by Apache Spark™ to manage GDPR and CCPA compliance for your data lake. Because Delta Lake adds a transactional layer that provides structured data management on top of your data lake, it can dramatically simplify and accelerate your ability to locate and remove personal information (also known as \"personal data\") in response to consumer GDPR or CCPA requests without disrupting your data pipelines.",
     "thumbnail": "./images/videos/addressing-gdpr-and-ccpa-scenarios-with-delta-lake-and-apache-spark.jpg",
     "url": "https://www.youtube.com/watch?v=7y0AAQ6qX5w"
