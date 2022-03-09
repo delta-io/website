@@ -40,6 +40,12 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-plugin-google-gtag",
+      options: {
+        trackingIds: ["G-C2QGWXS5DG"],
+      },
+    },
+    {
       resolve: "gatsby-plugin-mdx",
       options: {
         remarkPlugins: [remarkSlug, remarkGfm, remarkHighlightJs],
@@ -78,13 +84,5 @@ module.exports = {
       __key: name,
     })),
     searchPluginConfig,
-    {
-      resolve: "gatsby-plugin-google-analytics",
-      options: {
-        trackingId: "UA-138952006-1",
-        anonymize: true,
-        respectDNT: true,
-      },
-    },
   ],
 };

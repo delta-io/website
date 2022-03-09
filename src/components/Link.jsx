@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import * as React from "react";
 import { Link as GatsbyLink } from "gatsby";
-import { OutboundLink } from "gatsby-plugin-google-analytics";
+import { OutboundLink } from "gatsby-plugin-google-gtag";
 import styled from "styled-components";
 
 const externalLinkRegex = /^\w+:\/\//;
