@@ -1,5 +1,29 @@
 [
   {
+    "title": "Delta Lake Community Office Hours (2022-03-03)",
+    "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions featuring Florian Valeye, Ivana Pejava, Shixiong Zhu, Denny Lee, and hosted by Vini Jaiswal .  Thanks!",
+    "thumbnail": "./images/videos/ama_2022-03-03.jpg",
+    "url": "https://www.youtube.com/watch?v=-KBbECH-oKQ"
+  },
+  {
+    "title": "Delta Lake Community Office Hours (2022-02-17)",
+    "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions featuring Dominique Brezinski, Gerhard Brueckl, QP Hou, Denny Lee, and hosted by Vini Jaiswal .  Thanks!",
+    "thumbnail": "./images/videos/ama_2022-02-17.jpg",
+    "url": "https://www.youtube.com/watch?v=oc1mlhtsyPg"
+  },
+  {
+    "title": "Delta Lake Community Office Hours (2022-02-03)",
+    "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions.  Thanks!",
+    "thumbnail": "./images/videos/ama_2022-02-03.jpg",
+    "url": "https://www.youtube.com/watch?v=HQd7UsIZ0qU"
+  },
+  {
+    "title": "PrestoDB / Delta Lake Community Office Hours (2022-01-25)",
+    "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions.  Thanks!",
+    "thumbnail": "./images/videos/ama_2022-01-25.jpg",
+    "url": "https://www.youtube.com/watch?v=8qZ1zXLlD08"
+  },
+  {
     "title": "Delta Lake Community Office Hours (2022-01-20)",
     "description": "Join us for the next Delta Lake Community Office Hours and ask us your #DeltaLake questions. Thanks!",
     "thumbnail": "./images/videos/delta-lake-community-ama_20220120.jpg",
