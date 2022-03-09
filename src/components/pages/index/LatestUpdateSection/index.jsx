@@ -2,31 +2,31 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import communityOfficeHoursThumbnail from "./delta-lake-community-ama_20220120.jpg";
-import thumbnail2 from "./Delta-Lake-Connector-for-Presto.jpg";
-import roadmapThumbnail from "./delta-lake-roadmap-2021h2.jpg";
-import daiwtDeltaLakePanelThumbnail from "./DAIWT-EMEA-panel.jpg";
+import thumbnail4 from "./extending-delta-sharing.png";
+import thumbnail3 from "./ama_2022-03-03.jpg";
+import thumbnail2 from "./ama_2022-02-17.jpg";
+import thumbnail1 from "./delta-lake-roadmap-2021h2.jpg";
 
 const updates = [
   {
-    title: "Delta Lake Community Office Hours (2022-01-20)",
-    thumbnail: communityOfficeHoursThumbnail,
-    url: "https://youtu.be/A3FY8QLE0-A",
+    title: "Extending Delta Sharing to Google Cloud Storage",
+    thumbnail: thumbnail4,
+    url: "https://delta.io/blog/2022-03-11-delta-sharing-0-4-0-released/",
   },
   {
-    title: "Delta Lake Connector for Presto",
+    title: "Community AMA (2022-03-03)",
+    thumbnail: thumbnail3,
+    url: "https://www.youtube.com/watch?v=-KBbECH-oKQ",
+  },
+  {
+    title: "Community AMA (2022-02-17)",
     thumbnail: thumbnail2,
-    url: "https://youtu.be/JrXGkqpl7xk",
+    url: "https://www.youtube.com/watch?v=oc1mlhtsyPg",
   },
   {
     title: "Delta Lake Roadmap 2021 H2",
-    thumbnail: roadmapThumbnail,
+    thumbnail: thumbnail1,
     url: "https://www.youtube.com/watch?v=NBcn2J6V-MM",
-  },
-  {
-    title: "DAIWT: Delta Lake EMEA Panel",
-    thumbnail: daiwtDeltaLakePanelThumbnail,
-    url: "https://youtu.be/atS-9yCjo68?t=2125",
   },
 ];
 
