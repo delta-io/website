@@ -64,8 +64,8 @@ const community = [
 
 const learn = [
   {
-    label: "Docs",
-    url: "/docs",
+    label: "Learn",
+    url: "/learn",
   },
   {
     label: "Getting Started",

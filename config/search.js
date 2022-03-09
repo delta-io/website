@@ -3,6 +3,7 @@ const types = {
   blog: "Blog",
   allConnectorsJson: "Connector",
   allVideosJson: "Video",
+  allTutorialsJson: "Tutorials",
 };
 
 const searchPluginConfig = {
@@ -39,6 +40,16 @@ const searchPluginConfig = {
           }
         }
         allVideosJson {
+          edges {
+            node {
+              id
+              title
+              description
+              url
+            }
+          }
+        }
+        allTutorialsJson {
           edges {
             node {
               id
