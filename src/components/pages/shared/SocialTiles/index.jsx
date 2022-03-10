@@ -5,6 +5,7 @@ import Tiles from "src/components/Tiles";
 import slack from "./logos/slack.png";
 import googleGroups from "./logos/google-groups.png";
 import youtube from "./logos/youtube.png";
+import linkedin from "./logos/linkedin.png";
 
 const communities = [
   {
@@ -17,6 +18,12 @@ const communities = [
     label: "Google Group",
     url: "https://groups.google.com/forum/#!forum/delta-users",
   },
+  {
+    thumbnail: linkedin,
+    label: "LinkedIn",
+    url: "https://linkedin.com/company/deltalake",
+  },
+
   {
     thumbnail: youtube,
     label: "YouTube",
