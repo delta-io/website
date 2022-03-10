@@ -6,7 +6,8 @@ import HeroSection from "src/components/pages/index/HeroSection";
 import Link from "src/components/Link";
 import DiagramSection from "src/components/pages/index/DiagramSection";
 import LatestUpdateSection from "src/components/pages/index/LatestUpdateSection";
-import KeyFeaturesSection from "src/components/pages/shared/KeyFeaturesSection";
+// import KeyFeaturesSection from "src/components/pages/shared/KeyFeaturesSection";
+import KeyFeaturesSection from "src/components/pages/index/KeyFeaturesSection";
 import GetStartedSection from "src/components/pages/index/GetStartedSection";
 import OrganizationsSection from "src/components/pages/index/OrganizationsSection";
 import WhitepaperSection from "src/components/pages/index/WhitepaperSection";
@@ -44,7 +45,8 @@ const HomePage = () => (
       />
       <DiagramSection />
       <LatestUpdateSection />
-      <KeyFeaturesSection
+      <KeyFeaturesSection />
+      {/* <KeyFeaturesSection
         features={[
           {
             title: "Delta Sharing",
@@ -179,7 +181,7 @@ const HomePage = () => (
             ),
           },
         ]}
-      />
+      /> */}
       <GetStartedSection
         ctaLabel="Get Started"
         ctaUrl="/learn/getting-started"
