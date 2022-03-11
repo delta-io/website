@@ -32,7 +32,7 @@ const main = [
 const social = [
   {
     label: "StackOverflow",
-    url: "https://stackoverflow.com/search?q=%5Bdatabricks%5D+delta",
+    url: "https://stackoverflow.com/questions/tagged/delta-lake",
     icon: "stackOverflow",
   },
   {
@@ -44,6 +44,11 @@ const social = [
     label: "Slack Group",
     url: "https://dbricks.co/delta-users-slack",
     icon: "slack",
+  },
+  {
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/company/deltalake",
+    icon: "linkedin",
   },
 ];
 
