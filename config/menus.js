@@ -96,10 +96,29 @@ const footer = [
   },
 ];
 
+const docs = [
+  {
+    label: "Apache Spark",
+  },
+  {
+    label: "> Batch reads and writes",
+    url: "/docs/spark/batch",
+  },
+  {
+    label: "> Streaming reads and writes",
+    url: "/docs/spark/streaming",
+  },
+  {
+    label: "> Updates, deletes, and merges",
+    url: "/docs/spark/updates",
+  },
+];
+
 module.exports = {
   community,
   footer,
   learn,
   main,
   social,
+  docs,
 };
