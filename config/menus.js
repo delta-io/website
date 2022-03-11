@@ -101,16 +101,20 @@ const docs = [
     label: "Apache Spark",
   },
   {
-    label: "> Batch reads and writes",
+    label: "> Batch operations",
     url: "/docs/spark/batch",
   },
   {
-    label: "> Streaming reads and writes",
+    label: "> Streaming operations",
     url: "/docs/spark/streaming",
   },
   {
-    label: "> Updates, deletes, and merges",
+    label: "> Update operations",
     url: "/docs/spark/updates",
+  },
+  {
+    label: "> Utility operations",
+    url: "/docs/spark/utilities",
   },
 ];
 
