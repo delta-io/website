@@ -103,15 +103,23 @@ const CardDataList = (props) => {
               </>
             )}
             <CardContent variant="p2" lineClamp={clampDescriptionLines}>
+              <Link href={card.docs} muted>
+                docs
+              </Link>{" "}
+              |
+              <Link href={card.reference} muted>
+                {" "}
+                reference
+              </Link>
+              {card.tags?.length && (
+                <CardContent variant="p2">
+                  {card.tags.map((tag) => (
+                    <CardTag key={tag}>{tag}</CardTag>
+                  ))}
+                </CardContent>
+              )}
               {card.description}
             </CardContent>
-            {card.tags?.length && (
-              <CardContent variant="p2">
-                {card.tags.map((tag) => (
-                  <CardTag key={tag}>{tag}</CardTag>
-                ))}
-              </CardContent>
-            )}
           </TypographyContainer>
         </div>
       ))}
@@ -139,6 +147,9 @@ CardDataList.propTypes = {
         }),
       ]).isRequired,
       description: string.isRequired,
+      docs: string,
+      reference: string,
+      version: string,
       meta: string,
       tags: arrayOf(string),
     })

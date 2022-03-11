@@ -21,7 +21,7 @@ const main = [
   },
   {
     label: "Docs",
-    url: "/docs",
+    url: "https://docs.delta.io",
   },
 ];
 
