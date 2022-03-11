@@ -80,7 +80,6 @@
     "tags": ["Kafka"],
     "thumbnail": "./images/connectors/kafka.png"
   },
-
   {
     "name": "dlt - Delta Lake interface for SparkR",
     "description": "This package provide readers and writers for the Delta format, DeltaTable merge API, and Delta table builder API for SparkR.",
@@ -90,11 +89,12 @@
     "tags": ["SparkR"],
     "thumbnail": "./images/connectors/dlt.png"
   },
-
   {
     "name": "Beam/Delta Reader (Preview)",
     "description": "This connector leverages the Delta Standalone project for Apache Beam to read from Delta Lake tables.",
     "url": "https://github.com/mbenenso/beam-deltalake",
+    "docs": "https://github.com/mbenenso/beam-deltalake",
+    "reference": "https://github.com/mbenenso/beam-deltalake-example",
     "tags": ["Beam"],
     "thumbnail": "./images/connectors/apache-beam.png"
   },
@@ -116,14 +116,17 @@
     "name": "Power BI Delta Sharing Connector (beta)",
     "description": "Reading Delta Sharing tables natively in Power BI.",
     "url": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
+    "docs": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
+    "reference": "https://github.com/delta-io/connectors/tree/master/powerbi#examples",
     "tags": ["PowerBI"],
     "thumbnail": "./images/connectors/powerbi.png"
   },
-
   {
     "name": "Presto",
     "description": "Presto supports reading from external tables using a manifest file, which is a text file containing the list of data files to read for querying a table. When an external table is defined in the Hive metastore using manifest files, Presto can use the list of files in the manifest rather than finding the files by directory listing.",
     "url": "https://docs.delta.io/latest/presto-integration.html",
+    "docs": "https://docs.delta.io/latest/presto-integration.html",
+    "reference": "https://docs.delta.io/latest/presto-integration.html",
     "tags": ["Presto", "manifest"],
     "thumbnail": "./images/connectors/presto.png"
   },
@@ -131,6 +134,8 @@
     "name": "Athena",
     "description": "Athena supports reading from external tables using a manifest file, which is a text file containing the list of data files to read for querying a table. When an external table is defined in the Hive metastore using manifest files, Athena can use the list of files in the manifest rather than finding the files by directory listing.",
     "url": "https://docs.delta.io/latest/presto-integration.html",
+    "docs": "https://docs.delta.io/latest/presto-integration.html",
+    "reference": "https://docs.delta.io/latest/presto-integration.html",
     "tags": ["Athena", "AWS", "manifest"],
     "thumbnail": "./images/connectors/athena.png"
   },
@@ -138,6 +143,8 @@
     "name": "Snowflake",
     "description": "A Delta table can be read by Snowflake using a manifest file, which is a text file containing the list of data files to read for querying a Delta table.",
     "url": "https://docs.delta.io/latest/snowflake-integration.html",
+    "docs": "https://docs.delta.io/latest/snowflake-integration.html",
+    "reference": "https://docs.delta.io/latest/snowflake-integration.html",
     "tags": ["Snowflake", "manifest"],
     "thumbnail": "./images/connectors/snowflake.png"
   },
@@ -145,6 +152,8 @@
     "name": "Redshift",
     "description": "A Delta table can be read by Redshift Spectrum using a manifest file, which is a text file containing the list of data files to read for querying a Delta table.",
     "url": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
+    "docs": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
+    "reference": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
     "tags": ["Redshift", "AWS", "manifest"],
     "thumbnail": "./images/connectors/redshift.png"
   }
