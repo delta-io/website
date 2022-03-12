@@ -20,7 +20,7 @@ const query = graphql`
           }
           url
           docs
-          reference
+          source_code
           description
           id
         }

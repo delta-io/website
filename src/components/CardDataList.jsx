@@ -107,9 +107,9 @@ const CardDataList = (props) => {
                 docs
               </Link>{" "}
               |
-              <Link href={card.reference} muted>
+              <Link href={card.source_code} muted>
                 {" "}
-                reference
+                source code
               </Link>
               {card.tags?.length && (
                 <CardContent variant="p2">
