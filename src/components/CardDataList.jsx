@@ -148,8 +148,7 @@ CardDataList.propTypes = {
       ]).isRequired,
       description: string.isRequired,
       docs: string,
-      reference: string,
-      version: string,
+      source_code: string,
       meta: string,
       tags: arrayOf(string),
     })

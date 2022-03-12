@@ -104,7 +104,7 @@
     "url": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
     "docs": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
     "source_code": "https://github.com/malonsocasas/aws-athena-query-federation/tree/master/athena-deltalake",
-    "tags": ["AWS", "Athena", "Athena Query Federation", "standalone"],
+    "tags": ["AWS", "Athena", "standalone"],
     "thumbnail": "./images/connectors/AthenaFederation1.png"
   },
   {
