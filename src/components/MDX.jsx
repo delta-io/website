@@ -17,6 +17,24 @@ const MarkdownContent = styled.div`
   .align-image-left .gatsby-resp-image-wrapper {
     margin-left: 0 !important;
   }
+  ,
+  .github-md-table-format {
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    th,
+    td {
+      padding: 10px;
+    }
+  }
 `;
 
 const Image = styled.img`
