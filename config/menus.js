@@ -116,6 +116,10 @@ const docs = [
     label: "> Utility operations",
     url: "/docs/spark/utilities",
   },
+  {
+    label: "> Constraints",
+    url: "/docs/spark/constraints",
+  },
 ];
 
 module.exports = {
