@@ -76,7 +76,7 @@
     "description": "This project builds a highly efficient daemon for streaming data through Apache Kafka into Delta Lake.",
     "url": "https://github.com/delta-io/kafka-delta-ingest",
     "docs": "https://github.com/delta-io/kafka-delta-ingest/blob/main/doc/DESIGN.md",
-    "source_code": "https://github.com/delta-io/kafka-delta-ingest/tree/main/src",
+    "source_code": "https://github.com/delta-io/kafka-delta-ingest/",
     "tags": ["Kafka", "Rust"],
     "thumbnail": "./images/connectors/kafka.png"
   },
@@ -92,9 +92,9 @@
   {
     "name": "Apache Beam (Preview)",
     "description": "This connector allows Apache Beam to read from Delta Lake.",
-    "url": "https://github.com/mbenenso/beam-deltalake",
-    "docs": "https://github.com/mbenenso/beam-deltalake",
-    "source_code": "https://github.com/mbenenso/beam-deltalake/tree/main/src",
+    "url": "https://github.com/mbenenso/beam-deltalake/",
+    "docs": "https://github.com/mbenenso/beam-deltalake/",
+    "source_code": "https://github.com/mbenenso/beam-deltalake/",
     "tags": ["Beam", "standalone"],
     "thumbnail": "./images/connectors/apache-beam.png"
   },
@@ -121,7 +121,6 @@
     "description": "This connector allows Power BI to read from Delta Sharing endpoint.",
     "url": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
     "docs": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
-    "source_code": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
     "tags": ["PowerBI", "Delta Sharing"],
     "thumbnail": "./images/connectors/powerbi.png"
   },
@@ -130,7 +129,6 @@
     "description": "This utility allows Presto to read from Delta Lake using a manifest file.",
     "url": "https://docs.delta.io/latest/presto-integration.html",
     "docs": "https://docs.delta.io/latest/presto-integration.html",
-    "source_code": "https://docs.delta.io/latest/presto-integration.html",
     "tags": ["Presto", "manifest"],
     "thumbnail": "./images/connectors/presto.png"
   },
