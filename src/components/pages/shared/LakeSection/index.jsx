@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Section from "src/components/Section";
 import bgMobile from "./bg-mobile.jpg";
+// import bgDesktop from "./bg-desktop-with-crab.jpg";
 import bgDesktop from "./bg-desktop.jpg";
 
 const LakeSection = styled(Section)`
