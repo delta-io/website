@@ -77,7 +77,7 @@ const learn = [
     url: "/learn/getting-started",
   },
   {
-    label: "Blog",
+    label: "Blogs",
     url: "/blog",
   },
   {
@@ -105,7 +105,7 @@ const footer = [
   },
   {
     url: "/blog/",
-    label: "Blog",
+    label: "Blogs",
   },
 ];
 
