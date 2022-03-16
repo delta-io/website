@@ -81,6 +81,21 @@ const query = graphql`
         }
       }
     }
+    latestBlogs: allLatestBlogsJson {
+      edges {
+        node {
+          description
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(width: 700, height: 394)
+            }
+          }
+          title
+          url
+          id
+        }
+      }
+    }
   }
 `;
 
