@@ -19,6 +19,8 @@ const query = graphql`
             }
           }
           url
+          docs
+          source_code
           description
           id
         }
