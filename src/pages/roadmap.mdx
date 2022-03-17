@@ -1,0 +1,80 @@
+---
+title: Delta Lake Roadmap
+width: full
+---
+
+Below is a recreation of the original Delta Lake 2022 H1 Roadmap [here in Github](https://github.com/delta-io/delta/issues/920). For the roadmap discussions or changes, please reference Github.
+
+<br />
+
+This is the proposed Delta Lake 2022 H1 roadmap discussion thread. Below are the initially proposed items for the roadmap to be completed by June 2022. We will also be sending out a survey (we will update this issue with the survey) to get more feedback from the Delta Lake community!
+
+## Performance Optimizations
+
+---
+
+Based on the overwhelming feedback from the Delta Users [Slack](https://dbricks.co/delta-users-slack), [Google Groups](https://dbricks.co/delta-users-slack), Community AMAs (on [Delta Lake YouTube](http://youtube.com/c/deltalake)), Delta Lake 2021H2 survey, and [2021H2 roadmap](https://github.com/delta-io/delta/issues/748), we propose the following Delta Lake performance enhancements in the next two quarters.
+
+| Issue                                               | Description                                                                                                                                                                             | Target CY2022 |
+| :-------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------ |
+|                                                     | **OPTIMIZE (file compaction)**: Table optimize is an operation to rearrange the data and/or metadata to speed up queries and/or reduce the metadata size                                | Q1            |
+| [923](https://github.com/delta-io/delta/issues/923) | **File skipping using columns stats**: This is a performance optimization that aims at speeding up queries that contain filters (WHERE clauses) on non-partitionBy columns.             | Q1            |
+|                                                     | **Automatic data skipping using generated columns**: Enhance [generated columns](https://docs.delta.io/1.0.0/delta-batch.html#use-generated-columns) to include automatic data skipping | Q1            |
+|                                                     | **OPTIMIZE ZORDER**: Data clustering via multi-column locality-preserving space-filling curves with offline sorting.                                                                    | Q2            |
+|                                                     | **MERGE Performance Improvements**: We will be providing a project improvement plan (PIP) document shortly on the proposed design for discussion.                                       | Q2/Q3         |
+
+<br />
+
+## Schema Operations
+
+---
+
+For this semester, our focus will be on columnar mappings.
+
+| Issue | Description                                                                      | Target CY2022 |
+| :---- | :------------------------------------------------------------------------------- | :------------ |
+|       | **Column mapping read support**: Read tables with columns remapped by name or id | Q1            |
+|       | **Column renaming and dropping**: Ability rename/drop column with alter table    | Q1            |
+
+<br />
+
+## Integrations
+
+---
+
+Extending from the recent releases of [PrestoDB](https://github.com/delta-io/connectors/pull/82), [Hive 3](https://github.com/delta-io/connectors/issues/36), and [Delta Sink for Apache Flink Streams API](https://github.com/delta-io/connectors/issues/111), we have additional integrations planned.
+
+| Issue                                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                      | Target CY2022 |
+| :------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------ |
+| [112](https://github.com/delta-io/connectors/issues/112) | **Delta Source for Apache Pulsar**: Build a Pulsar/Delta reader leveraging [Delta Standalone](https://docs.delta.io/latest/delta-standalone.html). Join us via the Delta Users Slack [#connector-pulsar](https://delta-users.slack.com/archives/C028MGBP4JY) channel.                                                                                                                                                            | Q1            |
+| [238](https://github.com/delta-io/connectors/issues/238) | **Flink Sink on Table API**: Build a Flink/Delta sink (i.e., Flink writes to Delta Lake) using the Apache Flink Table API. Join us via the Delta Users Slack [#flink-delta-connector](https://delta-users.slack.com/archives/C023YA69W6B) channel and we have bi-weekly meetings on Tuesdays.                                                                                                                                    | Q2/Q3         |
+| [110](https://github.com/delta-io/connectors/issues/110) | **Delta Source for Apache Flink**: Build a Flink/Delta source (i.e., Flink reads from Delta Lake) leveraging [Delta Standalone](https://docs.delta.io/latest/delta-standalone.html). Join us via the Delta Users Slack [#flink-delta-connector](https://delta-users.slack.com/archives/C023YA69W6B) channel and we have bi-weekly meetings on Tuesdays.                                                                          | Q2/Q3         |
+| [82](https://github.com/delta-io/connectors/pull/82)     | **Delta Source for Trino**: Joint Delta Lake and Trino community collaboration on the following PRs: [10987](https://github.com/trinodb/trino/pull/10897), [10300](https://github.com/trinodb/trino/pull/10300). This is a community effort and all are welcome! Join us via the Delta User Slack channel [#trino](https://delta-users.slack.com/archives/C021Z8G1AE5) channel and we will have bi-weekly meetings on Thursdays. | Q2/Q3         |
+|                                                          | **Delta Source for Big Query**: Allows Big Query to natively read Delta Lake tables.                                                                                                                                                                                                                                                                                                                                             | Q2/Q3         |
+| [523](https://github.com/delta-io/delta-rs/pull/523)     | **Delta Rust Writer**: Extending Delta Rust API to write to Delta Lake.                                                                                                                                                                                                                                                                                                                                                          | Q2/Q3         |
+|                                                          | **Hive/Delta writer**: Extending Hive to write to Delta Lake                                                                                                                                                                                                                                                                                                                                                                     | Q3            |
+
+<br />
+
+## Operations Enhancements
+
+---
+
+Two very popular requests are planned for this semester: Table Restore, S3 multi-cluster writes.
+
+| Issue                                                                                                | Description                                                                                                                                                                                                                                                                                                              | Target CY2022 |
+| :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------ |
+| [903](https://github.com/delta-io/delta/pull/903), [863](https://github.com/delta-io/delta/pull/863) | **Table Restore**: Rollback to a previous version of a Delta table using Python, Scala, and/or SQL APIs.                                                                                                                                                                                                                 | Q1            |
+| [41](https://github.com/delta-io/delta/issues/41)                                                    | **S3 multi-cluster writes**: Allows multiple clusters/drivers/JVMs to concurrently write to S3 using DynanoDB as the lock store. Please refer to this PIP: [[2021-12-22] Delta OSS S3 Multi-Cluster Writes](https://docs.google.com/document/d/1Gs4ZsTH19lMxth4BSdwlWjUNR-XhKHicDvBjd2RqNd8/edit#heading=h.mjjuxw9mcz9h) | Q1            |
+| [747](https://github.com/delta-io/delta/issues/747)                                                  | **delta.io.Guide**: Enhance the Delta Lake documentation by creating a new guide (PIP will follow soon)                                                                                                                                                                                                                  | Q2/Q3         |
+|                                                                                                      | **Iceberg to Delta Converter**: Ability to convert Iceberg table to Delta table without a rewrite.                                                                                                                                                                                                                       | Q3            |
+|                                                                                                      | **Table Cloning**: Clones a source Delta table to a target destination at a specific version. A clone can be either deep or shallow: deep clones copy over the data from the source and shallow clones do not.                                                                                                           | Q3            |
+|                                                                                                      | **Change Data Feed**: The Delta change data feed represents row-level changes between versions of a Delta table. When enabled on a Delta table, the runtime records “change events” for all the data written into the table.                                                                                             | Q3            |
+
+<br />
+
+### Updates
+
+- 2022-03-08: Based on community feedback, we are also prioritizing Hive/Delta writer, clones, and CDF
+
+If there are other issue that should be considered within this roadmap, let's have a discussion here or via the Delta Users Slack [#deltalake-oss](https://delta-users.slack.com/archives/CJ70UCSHM) channel.

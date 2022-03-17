@@ -12,8 +12,8 @@ const main = [
     url: "/learn",
   },
   {
-    label: "Blog",
-    url: "/blog",
+    label: "Roadmap",
+    url: "/roadmap",
   },
   {
     label: "Community",
@@ -77,6 +77,10 @@ const learn = [
     url: "/learn/getting-started",
   },
   {
+    label: "Blogs",
+    url: "/blog",
+  },
+  {
     label: "Tutorials",
     url: "/learn/tutorials/",
   },
@@ -96,8 +100,12 @@ const footer = [
     label: "Integrations",
   },
   {
+    url: "/roadmap/",
+    label: "Roadmap",
+  },
+  {
     url: "/blog/",
-    label: "Blog",
+    label: "Blogs",
   },
 ];
 
