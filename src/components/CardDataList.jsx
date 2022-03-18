@@ -103,14 +103,20 @@ const CardDataList = (props) => {
               </>
             )}
             <CardContent variant="p2" lineClamp={clampDescriptionLines}>
-              <Link href={card.docs} muted>
-                docs
-              </Link>{" "}
-              |
-              <Link href={card.source_code} muted>
-                {" "}
-                source code
-              </Link>
+              {card.docs && (
+                <Link href={card.docs} muted>
+                  {" "}
+                  docs{" "}
+                </Link>
+              )}
+              {card.docs && card.source_code && " | "}
+              {card.source_code && (
+                <Link href={card.source_code} muted>
+                  {" "}
+                  source code{" "}
+                </Link>
+              )}
+              {card.docs && card.source_code && <br />}
               {card.tags?.length && (
                 <CardContent variant="p2">
                   {card.tags.map((tag) => (
