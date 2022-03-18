@@ -30,11 +30,11 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 
   return (
     <>
-      <SEO title="Delta Lake Blog" pageIndex={currentPage} />
+      <SEO title="Delta Lake Blogs" pageIndex={currentPage} />
       <PageLayout>
         <Section
           padding="xxl"
-          title="Delta Lake Blog"
+          title="Delta Lake Blogs"
           primary
           background="white"
         >

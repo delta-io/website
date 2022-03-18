@@ -1,6 +1,6 @@
 const types = {
   pages: "Page",
-  blog: "Blog",
+  blog: "Blogs",
   allConnectorsJson: "Connector",
   allVideosJson: "Video",
   allTutorialsJson: "Tutorials",
