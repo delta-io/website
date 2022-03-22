@@ -71,6 +71,16 @@ const learn = [
   {
     label: "Learn",
     url: "/learn",
+    items: [
+      {
+        label: "Getting Started",
+        url: "/learn/getting-started",
+      },
+      {
+        label: "Blogs",
+        url: "/blog",
+      },
+    ],
   },
   {
     label: "Getting Started",
