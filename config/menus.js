@@ -19,6 +19,14 @@ const main = [
         label: "Blogs",
         url: "/blog",
       },
+      {
+        label: "Tutorials",
+        url: "/learn/tutorials/",
+      },
+      {
+        label: "Videos",
+        url: "/learn/videos/",
+      },
     ],
   },
   {
