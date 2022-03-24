@@ -7,6 +7,7 @@ import Section from "src/components/Section";
 import Icon from "src/components/Icon";
 import logo from "./delta-lake-logo.svg";
 import PageHeaderSearchInput from "./PageHeaderSearchInput";
+import HeaderNavItem, { HeaderTab } from "./HeaderNavItem";
 
 const { useState } = React;
 
@@ -90,30 +91,30 @@ const HeaderNav = styled.div`
   `)}
 `;
 
-const HeaderTab = styled(Link)`
-  font-size: ${(props) => props.theme.fontSizes.secondary};
-  padding: ${(props) => props.theme.spacing.xs}
-    ${(props) => props.theme.spacing.sm};
-  color: inherit;
-  text-decoration: none;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid transparent;
+// const HeaderTab = styled(Link)`
+//   font-size: ${(props) => props.theme.fontSizes.secondary};
+//   padding: ${(props) => props.theme.spacing.xs}
+//     ${(props) => props.theme.spacing.sm};
+//   color: inherit;
+//   text-decoration: none;
+//   min-height: 48px;
+//   display: flex;
+//   align-items: center;
+//   border-bottom: 2px solid transparent;
 
-  &.active {
-    border-bottom-color: ${(props) => props.theme.colors.primary};
-  }
+//   &.active {
+//     border-bottom-color: ${(props) => props.theme.colors.primary};
+//   }
 
-  ${(props) =>
-    showingMobileMenu(`
-    border-bottom: 0;
+//   ${(props) =>
+//     showingMobileMenu(`
+//     border-bottom: 0;
 
-    &.active {
-      color: ${props.theme.colors.primary};
-    }
-  `)}
-`;
+//     &.active {
+//       color: ${props.theme.colors.primary};
+//     }
+//   `)}
+// `;
 
 const HeaderSocialNav = styled(HeaderNav)`
   margin-left: auto;
@@ -204,16 +205,7 @@ const PageHeader = () => {
             {menus.main.map((link) => {
               const { label, url } = link;
 
-              return (
-                <HeaderTab
-                  key={label}
-                  href={url}
-                  activeClassName="active"
-                  partiallyActive
-                >
-                  {label}
-                </HeaderTab>
-              );
+              return <HeaderNavItem items={link} />;
             })}
           </HeaderNav>
           <DesktopHeaderSearchInput
@@ -228,7 +220,7 @@ const PageHeader = () => {
 
               return (
                 <HeaderTab key={label} href={url} newTab>
-                  <HeaderIcon icon={icon} />
+                  <HeaderIcon icon={icon} />{" "}
                 </HeaderTab>
               );
             })}

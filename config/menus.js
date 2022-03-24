@@ -10,6 +10,16 @@ const main = [
   {
     label: "Learn",
     url: "/learn",
+    submenu: [
+      {
+        label: "Getting Started",
+        url: "/learn/getting-started",
+      },
+      {
+        label: "Blogs",
+        url: "/blog",
+      },
+    ],
   },
   {
     label: "Roadmap",
@@ -71,16 +81,6 @@ const learn = [
   {
     label: "Learn",
     url: "/learn",
-    items: [
-      {
-        label: "Getting Started",
-        url: "/learn/getting-started",
-      },
-      {
-        label: "Blogs",
-        url: "/blog",
-      },
-    ],
   },
   {
     label: "Getting Started",
