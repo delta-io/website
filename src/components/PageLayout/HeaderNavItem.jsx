@@ -1,5 +1,4 @@
 import * as React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import Link from "src/components/Link";
 import { mediaBreakpointDown } from "config/theme";
@@ -43,6 +42,7 @@ export const HeaderDropDown = styled(NavDropdown)`
   display: flex;
   align-items: center;
   border-bottom: 2px solid transparent;
+  color: white;
 
   &.active {
     border-bottom-color: ${(props) => props.theme.colors.primary};
@@ -58,6 +58,12 @@ export const HeaderDropDown = styled(NavDropdown)`
   `)}
 `;
 
+// style={{
+//   backgroundColor: 'blue',
+//   width: '100px',
+//   height: '100px'
+// }}
+
 const HeaderNavItem = ({ items }) => (
   <>
     {items.submenu ? (
@@ -65,6 +71,7 @@ const HeaderNavItem = ({ items }) => (
         id="nav-dropdown-dark-example"
         title={items.label}
         menuVariant="dark"
+        style={{ color: "white" }}
       >
         {items.submenu.map((link) => (
           <HeaderDropDown.Item href={link.url}>
