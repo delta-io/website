@@ -68,8 +68,15 @@ const HeaderNavItem = ({ items }) => (
         style={{ color: "white" }}
       >
         {items.submenu.map((link) => (
-          <HeaderDropDown.Item href={link.url}>
-            {link.label}
+          <HeaderDropDown.Item>
+            <HeaderTab
+              key={link.label}
+              href={link.url}
+              activeClassName="active"
+              partiallyActive
+            >
+              {link.label}
+            </HeaderTab>
           </HeaderDropDown.Item>
         ))}
       </HeaderDropDown>
