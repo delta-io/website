@@ -202,11 +202,9 @@ const PageHeader = () => {
         </HeaderMenuToggle>
         <HeaderMenu showing={menuShowing}>
           <HeaderNav>
-            {menus.main.map((link) => {
-              const { label, url } = link;
-
-              return <HeaderNavItem items={link} />;
-            })}
+            {menus.main.map((link) => (
+              <HeaderNavItem items={link} />
+            ))}
           </HeaderNav>
           <DesktopHeaderSearchInput
             input={searchInput}
