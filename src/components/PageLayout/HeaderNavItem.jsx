@@ -58,12 +58,6 @@ export const HeaderDropDown = styled(NavDropdown)`
   `)}
 `;
 
-// style={{
-//   backgroundColor: 'blue',
-//   width: '100px',
-//   height: '100px'
-// }}
-
 const HeaderNavItem = ({ items }) => (
   <>
     {items.submenu ? (

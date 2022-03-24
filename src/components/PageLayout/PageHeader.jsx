@@ -91,31 +91,6 @@ const HeaderNav = styled.div`
   `)}
 `;
 
-// const HeaderTab = styled(Link)`
-//   font-size: ${(props) => props.theme.fontSizes.secondary};
-//   padding: ${(props) => props.theme.spacing.xs}
-//     ${(props) => props.theme.spacing.sm};
-//   color: inherit;
-//   text-decoration: none;
-//   min-height: 48px;
-//   display: flex;
-//   align-items: center;
-//   border-bottom: 2px solid transparent;
-
-//   &.active {
-//     border-bottom-color: ${(props) => props.theme.colors.primary};
-//   }
-
-//   ${(props) =>
-//     showingMobileMenu(`
-//     border-bottom: 0;
-
-//     &.active {
-//       color: ${props.theme.colors.primary};
-//     }
-//   `)}
-// `;
-
 const HeaderSocialNav = styled(HeaderNav)`
   margin-left: auto;
   padding-right: 0;
