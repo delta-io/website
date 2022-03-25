@@ -49,7 +49,7 @@ const GlobalStyles = createGlobalStyle`
   .nav-link, .nav-link:focus, .nav-link:hover {
     color: ${(props) => props.theme.dark.color};
   }
-  
+
   .dropdown-menu-dark {
     color: ${(props) => props.theme.dark.color};
     background-color: ${(props) => props.theme.dark.bg};
