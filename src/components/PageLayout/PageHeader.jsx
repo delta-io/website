@@ -7,6 +7,7 @@ import Section from "src/components/Section";
 import Icon from "src/components/Icon";
 import logo from "./delta-lake-logo.svg";
 import PageHeaderSearchInput from "./PageHeaderSearchInput";
+import HeaderNavItem, { HeaderTab } from "./HeaderNavItem";
 
 const { useState } = React;
 
@@ -87,31 +88,6 @@ const HeaderNav = styled.div`
     min-width: 200px;
     flex-flow: column;
     padding: 0 ${props.theme.spacing.sm};
-  `)}
-`;
-
-const HeaderTab = styled(Link)`
-  font-size: ${(props) => props.theme.fontSizes.secondary};
-  padding: ${(props) => props.theme.spacing.xs}
-    ${(props) => props.theme.spacing.sm};
-  color: inherit;
-  text-decoration: none;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid transparent;
-
-  &.active {
-    border-bottom-color: ${(props) => props.theme.colors.primary};
-  }
-
-  ${(props) =>
-    showingMobileMenu(`
-    border-bottom: 0;
-
-    &.active {
-      color: ${props.theme.colors.primary};
-    }
   `)}
 `;
 
@@ -201,20 +177,9 @@ const PageHeader = () => {
         </HeaderMenuToggle>
         <HeaderMenu showing={menuShowing}>
           <HeaderNav>
-            {menus.main.map((link) => {
-              const { label, url } = link;
-
-              return (
-                <HeaderTab
-                  key={label}
-                  href={url}
-                  activeClassName="active"
-                  partiallyActive
-                >
-                  {label}
-                </HeaderTab>
-              );
-            })}
+            {menus.main.map((link) => (
+              <HeaderNavItem items={link} />
+            ))}
           </HeaderNav>
           <DesktopHeaderSearchInput
             input={searchInput}
@@ -228,7 +193,7 @@ const PageHeader = () => {
 
               return (
                 <HeaderTab key={label} href={url} newTab>
-                  <HeaderIcon icon={icon} />
+                  <HeaderIcon icon={icon} />{" "}
                 </HeaderTab>
               );
             })}

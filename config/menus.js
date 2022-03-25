@@ -10,6 +10,24 @@ const main = [
   {
     label: "Learn",
     url: "/learn",
+    submenu: [
+      {
+        label: "Getting Started",
+        url: "/learn/getting-started",
+      },
+      {
+        label: "Blogs",
+        url: "/blog",
+      },
+      {
+        label: "Tutorials",
+        url: "/learn/tutorials/",
+      },
+      {
+        label: "Videos",
+        url: "/learn/videos/",
+      },
+    ],
   },
   {
     label: "Roadmap",
@@ -68,10 +86,6 @@ const community = [
 ];
 
 const learn = [
-  {
-    label: "Learn",
-    url: "/learn",
-  },
   {
     label: "Getting Started",
     url: "/learn/getting-started",
