@@ -46,13 +46,10 @@ const GlobalStyles = createGlobalStyle`
     font-weight: ${(props) => props.theme.fontWeightBold};
   }
 
-  .nav-link {
+  .nav-link, .nav-link:focus, .nav-link:hover {
     color: ${(props) => props.theme.dark.color};
   }
-
-  .nav-link:focus, .nav-link:hover {
-    color: ${(props) => props.theme.dark.color};
-}
+  
   .dropdown-menu-dark {
     color: ${(props) => props.theme.dark.color};
     background-color: ${(props) => props.theme.dark.bg};

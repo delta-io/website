@@ -52,8 +52,12 @@ export const HeaderDropDown = styled(NavDropdown)`
     showingMobileMenu(`
     border-bottom: 0;
 
+    .nav-link, .nav-link:focus, .nav-link:hover {
+      color: ${props.theme.light.color};
+    }
+  
     &.active {
-      color: ${props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.primary};
     }
   `)}
 `;
