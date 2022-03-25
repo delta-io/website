@@ -57,7 +57,7 @@ export const HeaderDropDown = styled(NavDropdown)`
     }
   
     &.active {
-      color: ${(props) => props.theme.colors.primary};
+      color: ${props.theme.colors.primary};
     }
   `)}
 `;
