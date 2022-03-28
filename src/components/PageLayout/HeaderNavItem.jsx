@@ -77,7 +77,6 @@ const HeaderNavItem = ({ items }) => (
               key={link.label}
               href={link.url}
               activeClassName="active"
-              partiallyActive
             >
               {link.label}
             </HeaderTab>
