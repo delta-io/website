@@ -79,7 +79,7 @@ const HeroSection = (props) => {
               Releases
             </HeroLink>
             <HeroLink
-              href="https://github.com/delta-io/delta/issues/920"
+              href="/roadmap/"
               style={{ textAlign: "right" }}
               newTab
               muted
