@@ -1,7 +1,6 @@
 import * as React from "react";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import deltaDiagram from "./delta-hp-hero-wide.png";
 import deltaDiagramTop from "./delta-hp-hero-top.png";
 import deltaDiagramBottom from "./delta-hp-hero-bottom.png";
 
