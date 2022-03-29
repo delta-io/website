@@ -23,6 +23,8 @@ If you use Visual Studio Code, install the [Prettier](https://marketplace.visual
 
 Alternatively, you may run `npm run lint` or `npm run lint:fix` to both check for and fix lint issues, respectively. All changes are automatically linted (and will attempt to auto-fix) on the git pre-commit hook.
 
+This repo runs automated checks on PRs, like the lint check above. Sometimes this process can hang. If you see the process hang, try running an empty commit and push the commit to rerun the checks. You can do this by running the following git command `git commit --allow-empty -m "Empty commit"` then pushing the commit to origin.
+
 **All PRs require linters to pass in order to deploy to production.**
 
 ## :handshake: Contributing
