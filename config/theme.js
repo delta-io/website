@@ -67,6 +67,7 @@ export const spacingRem = {
   xxl: 60,
 };
 export const spacing = {
+  none: rem(0),
   xs: rem(6),
   sm: rem(12),
   md: rem(18),

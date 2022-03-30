@@ -18,7 +18,7 @@ const dataListProps = {
   },
   tutorials: {
     thumbnailRatio: [16, 9],
-    columns: { xs: 1 },
+    columns: { xs: 1, md: 2 },
   },
 };
 
