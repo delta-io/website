@@ -36,6 +36,36 @@ const main = [
   {
     label: "Community",
     url: "/community",
+    submenu: [
+      {
+        url: "/community",
+        label: "Delta Community",
+      },
+      {
+        url: "/community/contributing-guidelines",
+        label: "Contributing Guidelines",
+      },
+      {
+        url: "/community/answering-questions",
+        label: "Answering Questions",
+      },
+      {
+        url: "/community/contributing-to-docs",
+        label: "Contributing to Documentation",
+      },
+      {
+        url: "/community/contributing",
+        label: "Contributing",
+      },
+      {
+        url: "/community/meetings",
+        label: "Meetings",
+      },
+      {
+        url: "/community/organizations",
+        label: "Organizations",
+      },
+    ],
   },
   {
     label: "Docs",

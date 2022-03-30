@@ -81,7 +81,7 @@ const HeaderMenu = styled.div`
 const HeaderNav = styled.div`
   display: flex;
   flex: 0 0 auto;
-  padding: 0 ${(props) => props.theme.spacing.lg};
+  padding: 0 ${(props) => props.theme.spacing.md};
 
   ${(props) =>
     showingMobileMenu(`
