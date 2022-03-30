@@ -1,7 +1,8 @@
 import * as React from "react";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import deltaDiagram from "./delta-hp-hero-wide.png";
+import deltaDiagramTop from "./delta-hp-hero-top.png";
+import deltaDiagramBottom from "./delta-hp-hero-bottom.png";
 
 export const imageOffsets = {
   sm: 35,
@@ -15,7 +16,7 @@ const DiagramSectionRoot = styled(Section)`
   padding-bottom: ${(props) => props.theme.spacing.xxl};
 `;
 
-const DiagramWrapper = styled.div`
+const DiagramWrapperTop = styled.div`
   max-width: 2000px;
   margin-left: auto;
   margin-right: auto;
@@ -37,11 +38,27 @@ const DiagramWrapper = styled.div`
   }
 `;
 
+const DiagramWrapperBottom = styled.div`
+  max-width: 2000px;
+  margin-left: auto;
+  margin-right: auto;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+`;
+
 const DiagramSection = () => (
   <DiagramSectionRoot>
-    <DiagramWrapper>
-      <img src={deltaDiagram} alt="An overview of Delta Lake" />
-    </DiagramWrapper>
+    <DiagramWrapperTop>
+      <a href="/integrations/">
+        <img src={deltaDiagramTop} alt="Delta Lake Integrations" />
+      </a>
+    </DiagramWrapperTop>
+    <DiagramWrapperBottom>
+      <img src={deltaDiagramBottom} alt="An overview of Delta Lake" />
+    </DiagramWrapperBottom>
   </DiagramSectionRoot>
 );
 
