@@ -101,24 +101,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       });
 
     // Create listing pages for .mdx page types which support pagination
-    mdxPageTypes.forEach(({ name, template, perPage }) => {
+    mdxPageTypes.forEach(({ name, template, perPage, featuredCount }) => {
       if (perPage) {
         const pages = allMdxPages.filter(
           ({ node }) => node.fields.pageType === name
         );
-        const totalPages = Math.ceil(pages.length / perPage);
+        const totalPages = Math.ceil((pages.length - featuredCount) / perPage);
 
         Array.from({ length: totalPages }).forEach((_, i) => {
           createPage({
             path: i === 0 ? `/${name}` : `/${name}/${i + 1}`,
             component: getCollectionTemplatePath(template),
             context: {
-              limit: perPage,
-              skip: i * perPage,
+              limit: i === 0 ? perPage + featuredCount : perPage,
+              skip: i !== 0 ? i * perPage + featuredCount : i * perPage,
               currentPage: i + 1,
               totalPages,
               hasNextPage: i + 1 < totalPages,
               hasPreviousPage: i > 0,
+              featuredCount: i === 0 ? featuredCount : 0,
             },
           });
         });
