@@ -38,32 +38,16 @@ const main = [
     url: "/community",
     submenu: [
       {
-        url: "/community",
-        label: "Delta Community",
-      },
-      {
-        url: "/community/contributing-guidelines",
-        label: "Contributing Guidelines",
-      },
-      {
-        url: "/community/answering-questions",
-        label: "Answering Questions",
-      },
-      {
-        url: "/community/contributing-to-docs",
-        label: "Contributing to Documentation",
-      },
-      {
         url: "/community/contributing",
         label: "Contributing",
       },
       {
-        url: "/community/meetings",
-        label: "Meetings",
+        url: "/community/getting-help",
+        label: "Getting Help",
       },
       {
-        url: "/community/organizations",
-        label: "Organizations",
+        url: "/community/adoption",
+        label: "Adoption",
       },
     ],
   },
@@ -98,20 +82,16 @@ const social = [
 
 const community = [
   {
-    url: "/community/",
-    label: "Delta Community",
-  },
-  {
     url: "/community/contributing",
     label: "Contributing",
   },
   {
-    url: "/community/meetings",
-    label: "Meetings",
+    url: "/community/getting-help",
+    label: "Getting Help",
   },
   {
-    url: "/community/organizations",
-    label: "Organizations",
+    url: "/community/adoption",
+    label: "Adoption",
   },
 ];
 
