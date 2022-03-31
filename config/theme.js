@@ -84,6 +84,14 @@ export const breakpoints = {
   xl: 1200,
 };
 
+export const breakpointGreaterThan = (test) => (size) => {
+  const sizes = Object.keys(breakpoints);
+
+  return (
+    sizes.findIndex((bp) => bp === size) > sizes.findIndex((bp) => bp === test)
+  );
+};
+
 /**
  * Creates a function which wraps CSS rules in a media query set to the provided
  * breakpoint and above.
