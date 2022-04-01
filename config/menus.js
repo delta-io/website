@@ -4,10 +4,6 @@ const main = [
     url: "/sharing",
   },
   {
-    label: "Integrations",
-    url: "/integrations",
-  },
-  {
     label: "Learn",
     url: "/learn",
     submenu: [
@@ -38,22 +34,49 @@ const main = [
     url: "/community",
     submenu: [
       {
-        url: "/community/contributing",
-        label: "Contributing",
+        url: "/community",
+        label: "The Delta Community",
       },
       {
-        url: "/community/getting-help",
-        label: "Getting Help",
+        url: "/community/contributors",
+        label: "Contributors",
       },
       {
         url: "/community/adoption",
         label: "Adoption",
       },
+      {
+        url: "/community/meetings",
+        label: "Meetings  ",
+      },
+    ],
+  },
+  {
+    label: "Contribute",
+    submenu: [
+      {
+        url: "/community/contributing",
+        label: "Contributing",
+      },
+      {
+        url: "/community/contributing-to-docs",
+        label: "Contributing to Documentation",
+      },
+      {
+        url: "/community/getting-help",
+        label: "Getting Help",
+      },
     ],
   },
   {
     label: "Docs",
-    url: "https://docs.delta.io",
+    submenu: [
+      { label: "Delta Docs", url: "https://docs.delta.io" },
+      {
+        label: "Integrations",
+        url: "/integrations",
+      },
+    ],
   },
 ];
 
