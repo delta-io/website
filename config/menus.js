@@ -38,16 +38,20 @@ const main = [
     url: "/community",
     submenu: [
       {
-        url: "/community/contributing",
-        label: "Contributing",
+        url: "/community",
+        label: "The Delta Community",
       },
       {
         url: "/community/getting-help",
         label: "Getting Help",
       },
       {
-        url: "/community/adoption",
-        label: "Adoption",
+        url: "/community/contributing",
+        label: "Contributing",
+      },
+      {
+        url: "/community/contributing-to-docs",
+        label: "Contributing to Documentation",
       },
     ],
   },
