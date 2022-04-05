@@ -11,9 +11,9 @@
   {
     "name": "Apache Flink (Preview)",
     "description": "This connector allows Apache Flink to write to Delta Lake.",
-    "url": "https://github.com/delta-io/connectors/tree/master/flink-connector/",
-    "docs": "https://github.com/delta-io/connectors/tree/master/flink-connector",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/flink-connector/",
+    "url": "https://github.com/delta-io/connectors/tree/master/flink/",
+    "docs": "https://github.com/delta-io/connectors/tree/master/flink",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/flink",
     "tags": ["Flink", "standalone"],
     "thumbnail": "./images/connectors/apache-flink-logo.png"
   },
