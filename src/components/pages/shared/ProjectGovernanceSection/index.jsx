@@ -29,7 +29,7 @@ const ProjectGovernanceSection = () => (
           any single company. To emphasize this we joined the Delta Lake Project
           in 2019, which is a sub-project of the Linux Foundation Projects.
           Within the project, we make decisions based on{" "}
-          <Link href="/pdfs/delta-charter.pdf" newTab>
+          <Link href="https://delta.io/pdfs/delta-charter.pdf" newTab>
             these rules
           </Link>
           .
