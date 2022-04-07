@@ -11,7 +11,7 @@ const communities = [
   {
     thumbnail: slack,
     label: "Slack Channel",
-    url: "https://dbricks.co/delta-users-slack",
+    url: "https://go.delta.io/delta-users",
   },
   {
     thumbnail: googleGroups,
