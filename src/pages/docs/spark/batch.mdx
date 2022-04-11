@@ -5,7 +5,7 @@ menu: docs
 
 Delta Lake supports most of the options provided by Apache DataFrame read and write APIs for performing batch reads and writes on tables.
 
-For many Delta Lake operations on tables, you enable integration with Apache s DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [\_](#sql-support).
+For many Delta Lake operations on tables, you enable integration with Apache s DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [configure spark session](#sql-support).
 
 <a id="ddlcreatetable"></a>
 
@@ -13,13 +13,13 @@ For many Delta Lake operations on tables, you enable integration with Apache s D
 
 Delta Lake supports creating two types of tables---tables defined in the metastore and tables defined by path.
 
-To work with metastore-defined tables, you must enable integration with Apache Spark DataSourceV2 and Catalog APIs by setting configurations when you create a new `SparkSession`. See [\_](#sql-support).
+To work with metastore-defined tables, you must enable integration with Apache Spark DataSourceV2 and Catalog APIs by setting configurations when you create a new `SparkSession`. See [sql support](#sql-support).
 
 You can create tables in the following ways.
 
 - **SQL DDL commands**: You can use standard SQL DDL commands supported in Apache Spark (for example, `CREATE TABLE` and `REPLACE TABLE`) to create Delta tables.
 
-  .. code-language-tabs::
+
 
   ```sql
   CREATE TABLE IF NOT EXISTS default.people10m (
@@ -47,7 +47,7 @@ You can create tables in the following ways.
 
   SQL also supports creating a table at a path, without creating an entry in the Hive metastore.
 
-  .. code-language-tabs::
+
 
   ```sql
   -- Create or replace table with path
@@ -65,7 +65,7 @@ You can create tables in the following ways.
 
 - **`DataFrameWriter` API**: If you want to simultaneously create a table and insert data into it from Spark DataFrames or Datasets, you can use the Spark `DataFrameWriter` ([Scala or Java](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/DataFrameWriter.html) and [Python](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql.html#input-and-output)).
 
-  .. code-language-tabs::
+
 
   ```python
   # Create table in the metastore using DataFrame's schema and write data to it
@@ -87,10 +87,10 @@ You can create tables in the following ways.
 
 - **`DeltaTableBuilder` API**: You can also use the `DeltaTableBuilder` API in Delta Lake to create tables. Compared to the DataFrameWriter APIs, this API makes it easier to specify additional information like column comments, table properties, and [generated columns](#deltausegeneratedcolumns).
 
-  .. note::
+
   This feature is new and is in Preview.
 
-  .. code-language-tabs::
+
 
   ```python
   # Create table in the metastore
@@ -167,7 +167,7 @@ See the [API documentation](delta-apidoc.md) for details.
 You can partition data to speed up queries or DML that have predicates involving the partition columns.
 To partition data when you create a Delta table, specify a partition by columns. The following example partitions by gender.
 
-.. code-language-tabs::
+
 
 ```sql
 -- Create table in the metastore
@@ -242,10 +242,10 @@ When you run `CREATE TABLE` with a `LOCATION` that _already_ contains data store
 
 - If you specify _any configuration_ (schema, partitioning, or table properties), Delta Lake verifies that the specification exactly matches the configuration of the existing data.
 
-  .. important::
+
   If the specified configuration does not _exactly_ match the configuration of the data, Delta Lake throws an exception that describes the discrepancy.
 
-.. note::
+
 
 The metastore is not the source of truth about the latest information of a Delta table. In fact, the table definition in the metastore may not contain all the metadata like schema and properties. It contains the location of the table, and the table's transaction log at the location is the source of truth. If you query the metastore from a system that is not aware of this Delta-specific customization, you may see incomplete or stale table information.
 
@@ -253,14 +253,14 @@ The metastore is not the source of truth about the latest information of a Delta
 
 ### Use generated columns
 
-.. note::
+
 This feature is new and is in Preview.
 
 Delta Lake supports generated columns which are a special type of columns whose values are automatically generated based on a user-specified function over other columns in the Delta table. When you write to a table with generated columns and you do not explicitly provide values for them, Delta Lake automatically computes the values. For example, you can automatically generate a date column (for partitioning the table by date) from the timestamp column; any writes into the table need only specify the data for the timestamp column. However, if you explicitly provide values for them, the values must satisfy the [constraint](delta-constraints.md) `(<value> <=> <generation expression>) IS TRUE` or the write will fail with an error.
 
 The following example shows how to create a table with generated columns:
 
-.. code-language-tabs::
+
 
 ```python
 DeltaTable.create(spark) \
@@ -322,7 +322,7 @@ The following restrictions apply to generated columns:
 
 You can load a Delta table as a DataFrame by specifying a table name or a path:
 
-.. code-language-tabs::
+
 
 ```sql
 SELECT * FROM default.people10m   -- query table in the metastore
@@ -421,7 +421,7 @@ new_customers_count = count - last_week_count
 
 To time travel to a previous version, you must retain _both_ the log and the data files for that version.
 
-The data files backing a Delta table are _never_ deleted automatically; data files are deleted only when you run [VACUUM](delta-utility.md#delta-vacuum). `VACUUM` _does not_ delete Delta log files; log files are automatically cleaned up after checkpoints are written.
+The data files backing a Delta table are _never_ deleted automatically; data files are deleted only when you run [VACUUM](utilities#delta-vacuum). `VACUUM` _does not_ delete Delta log files; log files are automatically cleaned up after checkpoints are written.
 
 By default you can time travel to a Delta table up to 30 days old unless you have:
 
@@ -436,7 +436,7 @@ By default you can time travel to a Delta table up to 30 days old unless you hav
 
     To access 30 days of historical data even if you run `VACUUM` on the Delta table, set `delta.deletedFileRetentionDuration = "interval 30 days"`. This setting may cause your storage costs to go up.
 
-.. note::
+
 Due to log entry cleanup, instances can arise where you cannot time travel to a version that is less than the retention interval. Delta Lake requires all consecutive log entries since the previous checkpoint to time travel to a particular version. For example, with a table initially consisting of log entries for versions [0, 19] and a checkpoint at verison 10, if the log entry for version 0 is cleaned up, then you cannot time travel to versions [1, 9]. Increasing the table property `delta.logRetentionDuration` can help avoid these situations.
 
 <a id="deltadataframewrites"></a>
@@ -449,7 +449,7 @@ Due to log entry cleanup, instances can arise where you cannot time travel to a 
 
 To atomically add new data to an existing Delta table, use `append` mode:
 
-.. code-language-tabs::
+
 
 ```sql
 INSERT INTO default.people10m SELECT * FROM morePeople
@@ -472,7 +472,7 @@ df.write.mode("append").delta("/delta/people10m")
 
 To atomically replace all the data in a table, use `overwrite` mode:
 
-.. code-language-tabs::
+
 
 ```sql
 INSERT OVERWRITE TABLE default.people10m SELECT * FROM morePeople
@@ -493,7 +493,7 @@ df.write.mode("overwrite").delta("/delta/people10m")
 
 Using DataFrames, you can also selectively overwrite only the data that matches an arbitrary expression. This feature is available in Delta Lake 1.1.0 and above. The following command atomically replaces events in January in the target table, which is partitioned by `start_date`, with the data in `df`:
 
-.. code-language-tabs::
+
 
 ```python
 df.write \
@@ -513,7 +513,7 @@ df.write
 
 This sample code writes out the data in `df`, validates that it all matches the predicate, and performs an atomic replacement. If you want to write out data that doesn't all match the predicate, to replace the matching rows in the target table, you can disable the constraint check by setting `spark.databricks.delta.replaceWhere.constraintCheck.enabled` to false:
 
-.. code-language-tabs::
+
 
 ```python
 spark.conf.set("spark.databricks.delta.replaceWhere.constraintCheck.enabled", False)
@@ -525,7 +525,7 @@ spark.conf.set("spark.databricks.delta.replaceWhere.constraintCheck.enabled", fa
 
 In Delta Lake 1.0.0 and below, `replaceWhere` overwrites data matching a predicate over partition columns only. The following command atomically replaces the month in January in the target table, which is partitioned by `date`, with the data in `df`:
 
-.. code-language-tabs::
+
 
 ```python
 df.write \
@@ -545,7 +545,7 @@ df.write
 
 In Delta Lake 1.1.0 and above, if you want to fall back to the old behavior, you can disable the `spark.databricks.delta.replaceWhere.dataColumns.enabled` flag:
 
-.. code-language-tabs::
+
 
 ```python
 spark.conf.set("spark.databricks.delta.replaceWhere.dataColumns.enabled", False)
@@ -555,18 +555,18 @@ spark.conf.set("spark.databricks.delta.replaceWhere.dataColumns.enabled", False)
 spark.conf.set("spark.databricks.delta.replaceWhere.dataColumns.enabled", false)
 ```
 
-.. note::
+
 Unlike the file APIs in Apache Spark, Delta Lake remembers and enforces the schema of a table. This means that by default overwrites _do not_ replace the schema of an existing table.
 
-For Delta Lake support for updating tables, see [\_](delta-update.md).
+For Delta Lake support for updating tables, see [delta update documentation](delta-update.md).
 
 <a id="user-metadata"></a>
 
 ### Set user-defined commit metadata
 
-You can specify user-defined strings as metadata in commits made by these operations, either using the DataFrameWriter option `userMetadata` or the SparkSession configuration `spark.databricks.delta.commitInfo.userMetadata`. If both of them have been specified, then the option takes preference. This user-defined metadata is readable in the [history](delta-utility.md#delta-history) operation.
+You can specify user-defined strings as metadata in commits made by these operations, either using the DataFrameWriter option `userMetadata` or the SparkSession configuration `spark.databricks.delta.commitInfo.userMetadata`. If both of them have been specified, then the option takes preference. This user-defined metadata is readable in the [history](utilities#delta-history) operation.
 
-.. code-language-tabs::
+
 
 ```sql
 
@@ -613,7 +613,7 @@ Delta Lake lets you update the schema of a table. The following types of changes
 
 You can make these changes explicitly using DDL or implicitly using DML.
 
-.. important::
+
 When you update a Delta table schema, streams that read from that table terminate. If you want the stream to continue you must restart it.
 
 <a id="explicit-schema-update"></a>
@@ -659,7 +659,7 @@ the schema after is:
 | +-field2
 ```
 
-.. note::
+
 Adding nested columns is supported only for structs. Arrays and maps are not supported.
 
 #### Change column comment or ordering
@@ -807,15 +807,15 @@ You can store your own metadata as a table property using `TBLPROPERTIES` in `CR
 In addition, to tailor behavior and performance, Delta Lake supports certain Delta table properties:
 
 - Block deletes and updates in a Delta table: `delta.appendOnly=true`.
-- Configure the [time travel](#deltatimetravel) retention properties: `delta.logRetentionDuration=<interval-string>` and `delta.deletedFileRetentionDuration=<interval-string>`. For details, see [\_](#data-retention).
+- Configure the [time travel](#deltatimetravel) retention properties: `delta.logRetentionDuration=<interval-string>` and `delta.deletedFileRetentionDuration=<interval-string>`. For details, see [data retention](#data-retention).
 
-.. note::
+
 
 - Modifying a Delta table property is a write operation that will conflict with other [concurrent write operations](concurrency-control.md), causing them to fail. We recommend that you modify a table property only when there are no concurrent write operations on the table.
 
 You can also set `delta.`-prefixed properties during the first commit to a Delta table using Spark configurations. For example, to initialize a Delta table with the property `delta.appendOnly=true`, set the Spark configuration `spark.databricks.delta.properties.defaults.appendOnly` to `true`. For example:
 
-.. code-language-tabs::
+
 
 ```sql
 spark.sql("SET spark.databricks.delta.properties.defaults.appendOnly = true")
@@ -839,11 +839,11 @@ It also provides the following unique commands:
 
 ### `DESCRIBE DETAIL`
 
-Provides information about schema, partitioning, table size, and so on. For details, see [\_](delta-utility.md#delta-detail).
+Provides information about schema, partitioning, table size, and so on. For details, see [delta details](utilities#delta-detail).
 
 ### `DESCRIBE HISTORY`
 
-Provides provenance information, including the operation, user, and so on, and operation metrics for each write to a table. Table history is retained for 30 days. For details, see [\_](delta-utility.md#delta-history).
+Provides provenance information, including the operation, user, and so on, and operation metrics for each write to a table. Table history is retained for 30 days. For details, see [delta history](utilities#delta-history).
 
 <a id="sql-support"></a>
 
@@ -945,4 +945,4 @@ df1.union(df2).write.format("delta")
   .save("...")
 ```
 
-You can find the details of the Hadoop file system configurations for your storage in [\_](/delta/delta-storage-oss.md).
+You can find the details of the Hadoop file system configurations for your storage in [delta storage](/delta/delta-storage-oss.md).
