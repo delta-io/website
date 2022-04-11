@@ -8,7 +8,7 @@ Delta Lake is deeply integrated with [Spark Structured Streaming](https://spark.
 - Maintaining "exactly-once" processing with more than one stream (or concurrent batch jobs)
 - Efficiently discovering which files are new when using files as the source for a stream
 
-For many Delta Lake operations on tables, you enable integration with Apache Spark DataSourceV2 and Catalog APIs by setting configurations when you create a new `SparkSession`. See [\_](delta-batch.md#sql-support).
+For many Delta Lake operations on tables, you enable integration with Apache Spark DataSourceV2 and Catalog APIs by setting configurations when you create a new `SparkSession`. See [sql support](delta-batch.md#sql-support).
 
 <a id="stream-source"></a>
 
@@ -33,7 +33,7 @@ The following options are available to control micro-batches:
 
 If you use `maxBytesPerTrigger` in conjunction with `maxFilesPerTrigger`, the micro-batch processes data until either the `maxFilesPerTrigger` or `maxBytesPerTrigger` limit is reached.
 
-.. note::
+
 
 In cases when the source table transactions are cleaned up due to the `logRetentionDuration` [configuration](delta-batch.md#data-retention) and the stream lags in processing, Delta Lake processes the data corresponding to the latest available transaction history of the source table but does not fail the stream. This can result in data being dropped.
 
@@ -83,7 +83,7 @@ You can use the following options to specify the starting point of the Delta Lak
 
 You cannot set both options at the same time; you can use only one of them. They take effect only when starting a new streaming query. If a streaming query has started and the progress has been recorded in its checkpoint, these options are ignored.
 
-.. important::
+
 Although you can start the streaming source from a specified version or timestamp, the schema of the streaming source is always the latest schema of the Delta table. You must ensure there is no incompatible schema change to the Delta table after the specified version or timestamp. Otherwise, the streaming source may return incorrect results when reading the data with an incorrect schema.
 
 #### Example
@@ -118,7 +118,7 @@ By default, streams run in append mode, which adds new records to the table.
 
 You can use the path method:
 
-.. code-language-tabs::
+
 
 ```python
 events.writeStream
@@ -144,7 +144,7 @@ events.writeStream
 
 or the table method:
 
-.. code-language-tabs::
+
 
 ```python
 events.writeStream
