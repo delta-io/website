@@ -5,7 +5,7 @@ menu: docs
 
 Delta tables support a number of utility operations.
 
-For many Delta Lake operations, you enable integration with Apache Spark DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [\_](delta-batch.md#sql-support).
+For many Delta Lake operations, you enable integration with Apache Spark DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [sql support](delta-batch.md#sql-support).
 
 <a id="delta-vacuum"></a>
 
@@ -13,10 +13,9 @@ For many Delta Lake operations, you enable integration with Apache Spark DataSou
 
 You can remove files no longer referenced by a Delta table and are older than the retention
 threshold by running the `vacuum` command on the table. `vacuum` is not triggered automatically. The
-default retention threshold for the files is 7 days. To change this behavior, see [\_](delta-batch.md#data-retention).
+default retention threshold for the files is 7 days. To change this behavior, see [data retention](delta-batch.md#data-retention).
 
-.. important:: - `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [\_](delta-batch.md#table-properties). - The ability to [time travel](delta-batch.md#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
-.. code-language-tabs::
+- `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [table properties](delta-batch.md#table-properties). - The ability to [time travel](delta-batch.md#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
 
 ```sql
 VACUUM eventsTable   -- vacuum files not required by versions older than the default retention period
@@ -62,12 +61,11 @@ deltaTable.vacuum();        // vacuum files not required by versions older than 
 deltaTable.vacuum(100);     // vacuum files not required by versions more than 100 hours old
 ```
 
-.. note::
 When using `VACUUM`, to configure Spark to delete files in parallel (based on the number of shuffle partitions) set the session configuration `"spark.databricks.delta.vacuum.parallelDelete.enabled"` to `"true"` .
 
-See the [\_](delta-apidoc.md) for Scala, Java, and Python syntax details.
+See the [Delta API documentation](delta-apidoc.md) for Scala, Java, and Python syntax details.
 
-.. include:: /shared/delta-retention-warning.md
+/shared/delta-retention-warning.md
 
 Delta Lake has a safety check to prevent you from running a dangerous `VACUUM`
 command. If you are certain that there are no operations being performed on
@@ -81,8 +79,6 @@ you can turn off this safety check by setting the Spark configuration property
 
 You can retrieve information on the operations, user, timestamp, and so on for each write to a Delta table
 by running the `history` command. The operations are returned in reverse chronological order. By default table history is retained for 30 days.
-
-.. code-language-tabs::
 
 ```sql
 DESCRIBE HISTORY '/data/events/'          -- get the full history of the table
@@ -124,7 +120,7 @@ DataFrame fullHistoryDF = deltaTable.history();       // get the full history of
 DataFrame lastOperationDF = deltaTable.history(1);    // fetch the last operation on the DeltaTable
 ```
 
-See the [\_](delta-apidoc.md) for Scala/Java/Python syntax details.
+See the [Delta API documentation](delta-apidoc.md) for Scala/Java/Python syntax details.
 
 ### History schema
 
@@ -160,7 +156,7 @@ The output of the `history` operation has the following columns.
 +-------+-------------------+------+--------+---------+--------------------+----+--------+---------+-----------+--------------+-------------+--------------------+
 ```
 
-.. note:: - Some of the columns may be nulls because the corresponding information may not be available in your environment. - Columns added in the future will always be added after the last column.
+- Some of the columns may be nulls because the corresponding information may not be available in your environment. - Columns added in the future will always be added after the last column.
 
 <a id="delta-history-metrics"></a>
 
@@ -169,7 +165,6 @@ The output of the `history` operation has the following columns.
 The `history` operation returns a collection of operations metrics in the `operationMetrics` column map.
 The following table lists the map key definitions by operation.
 
-.. csv-table::
 :header: "Operation", "Metric name", "Description"
 
 "WRITE, CREATE TABLE AS SELECT, REPLACE TABLE AS SELECT, COPY INTO",,
@@ -221,11 +216,11 @@ CONVERT,"numConvertedFiles", Number of Parquet files that have been converted.
 
 You can retrieve detailed information about a Delta table (for example, number of files, data size) using `DESCRIBE DETAIL`.
 
-    ```sql
-    DESCRIBE DETAIL '/data/events/'
+```sql
+DESCRIBE DETAIL '/data/events/'
 
-    DESCRIBE DETAIL eventsTable
-    ```
+DESCRIBE DETAIL eventsTable
+```
 
 ### Detail schema
 
@@ -261,25 +256,24 @@ The output of this operation has only one row with the following schema.
 
 You can a generate manifest file for a Delta table that can be used by other processing engines (that is, other than Apache Spark) to read the Delta table.
 
-.. code-language-tabs::
-`` sql GENERATE symlink_format_manifest FOR TABLE delta.`<path-to-delta-table>`  ``
+`sql GENERATE symlink_format_manifest FOR TABLE delta.` `<path-to-delta-table>`
 
-      See [_](delta-batch.md#sql-support) for the steps to enable support for SQL commands in Apache Spark.
+See [sql support](delta-batch.md#sql-support) for the steps to enable support for SQL commands in Apache Spark.
 
-      ```python
-      deltaTable = DeltaTable.forPath(<path-to-delta-table>)
-      deltaTable.generate("symlink_format_manifest")
-      ```
+```python
+deltaTable = DeltaTable.forPath(<path-to-delta-table>)
+deltaTable.generate("symlink_format_manifest")
+```
 
-      ```scala
-      val deltaTable = DeltaTable.forPath(<path-to-delta-table>)
-      deltaTable.generate("symlink_format_manifest")
-      ```
+```scala
+val deltaTable = DeltaTable.forPath(<path-to-delta-table>)
+deltaTable.generate("symlink_format_manifest")
+```
 
-      ```java
-      DeltaTable deltaTable = DeltaTable.forPath(<path-to-delta-table>);
-      deltaTable.generate("symlink_format_manifest");
-      ```
+```java
+DeltaTable deltaTable = DeltaTable.forPath(<path-to-delta-table>);
+deltaTable.generate("symlink_format_manifest");
+```
 
 <a id="convert-to-delta"></a>
 
@@ -287,49 +281,47 @@ You can a generate manifest file for a Delta table that can be used by other pro
 
 Convert a Parquet table to a Delta table in-place. This command lists all the files in the directory, creates a Delta Lake transaction log that tracks these files, and automatically infers the data schema by reading the footers of all Parquet files. If your data is partitioned, you must specify the schema of the partition columns as a DDL-formatted string (that is, `<column-name1> <type>, <column-name2> <type>, ...`).
 
-.. note:: If a Parquet table was created by Structured Streaming, the listing of files can be avoided by using the `_spark_metadata` sub-directory as the source of truth for files contained in the table setting the SQL configuration `spark.databricks.delta.convert.useMetadataLog` to `true`.
+If a Parquet table was created by Structured Streaming, the listing of files can be avoided by using the `_spark_metadata` sub-directory as the source of truth for files contained in the table setting the SQL configuration `spark.databricks.delta.convert.useMetadataLog` to `true`.
 
-.. code-language-tabs::
+```sql
+-- Convert unpartitioned Parquet table at path '<path-to-table>'
+CONVERT TO DELTA parquet.`<path-to-table>`
 
-    ```sql
-    -- Convert unpartitioned Parquet table at path '<path-to-table>'
-    CONVERT TO DELTA parquet.`<path-to-table>`
+-- Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
+CONVERT TO DELTA parquet.`<path-to-table>` PARTITIONED BY (part int, part2 int)
+```
 
-    -- Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
-    CONVERT TO DELTA parquet.`<path-to-table>` PARTITIONED BY (part int, part2 int)
-    ```
+```python
+from delta.tables import *
 
-    ```python
-    from delta.tables import *
+# Convert unpartitioned Parquet table at path '<path-to-table>'
+deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`")
 
-    # Convert unpartitioned Parquet table at path '<path-to-table>'
-    deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`")
+# Convert partitioned parquet table at path '<path-to-table>' and partitioned by integer column named 'part'
+partitionedDeltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int")
+```
 
-    # Convert partitioned parquet table at path '<path-to-table>' and partitioned by integer column named 'part'
-    partitionedDeltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int")
-    ```
+```scala
+import io.delta.tables._
 
-    ```scala
-    import io.delta.tables._
+// Convert unpartitioned Parquet table at path '<path-to-table>'
+val deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`")
 
-    // Convert unpartitioned Parquet table at path '<path-to-table>'
-    val deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`")
+// Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
+val partitionedDeltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int, part2 int")
+```
 
-    // Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
-    val partitionedDeltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int, part2 int")
-    ```
+```java
+import io.delta.tables.*;
 
-    ```java
-    import io.delta.tables.*;
+// Convert unpartitioned Parquet table at path '<path-to-table>'
+DeltaTable deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`");
 
-    // Convert unpartitioned Parquet table at path '<path-to-table>'
-    DeltaTable deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`");
+// Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
+DeltaTable deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int, part2 int");
+```
 
-    // Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
-    DeltaTable deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int, part2 int");
-    ```
-
-.. note:: Any file not tracked by Delta Lake is invisible and can be deleted when you run `vacuum`. You should avoid updating or appending data files during the conversion process. After the table is converted, make sure all writes go through Delta Lake.
+Any file not tracked by Delta Lake is invisible and can be deleted when you run `vacuum`. You should avoid updating or appending data files during the conversion process. After the table is converted, make sure all writes go through Delta Lake.
 
 ## Convert a Delta table to a Parquet table
 
