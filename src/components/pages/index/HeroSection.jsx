@@ -72,7 +72,7 @@ const HeroSection = (props) => {
               Github
             </HeroLink>
             <HeroLink
-              href="https://github.com/delta-io/delta/releases/tag/v1.1.0"
+              href="https://github.com/delta-io/delta/releases/tag/v1.2.0"
               newTab
               muted
             >
