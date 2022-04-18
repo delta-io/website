@@ -42,7 +42,7 @@ const KeyFeaturesGrid = (props) => {
   const { features } = props;
 
   return (
-    <Grid columns={{ sm: 2, md: 3, lg: 4 }}>
+    <Grid columns={{ md: 2, lg: 4 }}>
       {features.map((feature) => (
         <FeatureContainer>
           <Feature key={feature.name} href={`${feature.link}`} muted>
