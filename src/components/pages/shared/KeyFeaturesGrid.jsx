@@ -15,7 +15,7 @@ const Feature = styled(Link)`
   overflow: hidden;
 `;
 
-const Avatar = styled.img`
+const Icon = styled.img`
   max-width: 35%;
   margin-left: auto;
   margin-right: auto;
@@ -46,7 +46,7 @@ const KeyFeaturesGrid = (props) => {
       {features.map((feature) => (
         <FeatureContainer>
           <Feature key={feature.name} href={`${feature.link}`} muted>
-            <Avatar src={feature.image} alt="" />
+            <Icon src={feature.image} alt="" />
             <FeatureNameContent>{feature.name}</FeatureNameContent>
             <FeatureDescContent>{feature.description}</FeatureDescContent>
           </Feature>
