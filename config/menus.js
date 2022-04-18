@@ -70,7 +70,7 @@ const social = [
   },
   {
     label: "Slack Group",
-    url: "https://dbricks.co/delta-users-slack",
+    url: "https://go.delta.io/delta-users",
     icon: "slack",
   },
   {
