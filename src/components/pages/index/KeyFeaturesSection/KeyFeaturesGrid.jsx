@@ -7,12 +7,7 @@ import Typography from "src/components/Typography";
 
 const FeatureContainer = styled.div`
   align-items: center;
-`;
-
-const Feature = styled(Link)`
-  display: block;
   text-align: center;
-  overflow: hidden;
 `;
 
 const Icon = styled.img`
@@ -45,11 +40,9 @@ const KeyFeaturesGrid = (props) => {
     <Grid columns={{ md: 2, lg: 4 }}>
       {features.map((feature) => (
         <FeatureContainer>
-          <Feature key={feature.name} href={`${feature.link}`} muted>
-            <Icon src={feature.image} alt="" />
-            <FeatureNameContent>{feature.name}</FeatureNameContent>
-            <FeatureDescContent>{feature.description}</FeatureDescContent>
-          </Feature>
+          <Icon src={feature.image} alt="" />
+          <FeatureNameContent>{feature.name}</FeatureNameContent>
+          <FeatureDescContent>{feature.description}</FeatureDescContent>
         </FeatureContainer>
       ))}
     </Grid>
