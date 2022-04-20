@@ -25,7 +25,7 @@ const Icon = styled.img`
 `;
 
 const FeatureNameContent = styled(Typography)`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.text};
   font-size: ${(props) => props.theme.fontSizes.h4};
   margin-top: 0;
   margin-bottom: ${(props) => props.theme.spacing.xs};
@@ -33,7 +33,7 @@ const FeatureNameContent = styled(Typography)`
 `;
 
 const FeatureDescContent = styled(Typography)`
-  color: ${(props) => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.textSecondary};
   margin-top: 0;
   margin-bottom: ${(props) => props.theme.spacing.xs};
 `;
