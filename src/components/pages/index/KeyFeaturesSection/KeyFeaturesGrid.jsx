@@ -1,7 +1,6 @@
 import * as React from "react";
 import { arrayOf, string } from "prop-types";
 import styled from "styled-components";
-import Link from "src/components/Link";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
 
