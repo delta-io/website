@@ -9,25 +9,25 @@ const ValuePropsSection = () => (
     <ValuePropsGrid
       features={[
         {
-          image: "/images/value_props/works_with.png",
+          image: "/images/value_props/open.svg",
           name: "Open",
           description:
             "Community driven, rapidly expanding integration ecosystem",
         },
         {
-          image: "/images/value_props/cloud_checked.png",
+          image: "/images/value_props/simple.svg",
           name: "Simple",
           description:
             "One format to unify your ETL, Data warehouse, ML in your lakehouse",
         },
         {
-          image: "/images/value_props/sclae_groups.png",
+          image: "/images/value_props/production.svg",
           name: "Production Ready",
           description:
             "Battle tested in over 10,000+ production environments ​​",
         },
         {
-          image: "/images/value_props/spark_logo.png",
+          image: "/images/value_props/agnostic.svg",
           name: "Platform Agnostic",
           description: "Use on any cloud with any engine",
         },
