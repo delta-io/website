@@ -289,74 +289,12 @@ By default, `updateAll` and `insertAll` assign all the columns in the target Del
 
 Here are a few examples of the effects of `merge` operation with and without schema evolution.
 
-:header-rows: 1
-
-    * - Columns
-      - Query (in Scala)
-      - Behavior without schema evolution (default)
-      - Behavior with schema evolution
-    * - Target columns: `key, value`
-
-        Source columns: `key, value, newValue`
-      - ```scala
-        targetDeltaTable.alias("t")
-          .merge(
-            sourceDataFrame.alias("s"),
-            "t.key = s.key")
-          .whenMatched().updateAll()
-          .whenNotMatched().insertAll()
-          .execute()
-        ```
-      - The table schema remains unchanged; only columns `key`, `value` are updated/inserted.
-      - The table schema is changed to `(key, value, newValue)`. `updateAll` updates columns `value` and `newValue`, and `insertAll` inserts rows `(key, value, newValue)`.
-
-    * - Target columns: `key, oldValue`
-
-        Source columns: `key, newValue`
-      - ```scala
-        targetDeltaTable.alias("t")
-          .merge(
-            sourceDataFrame.alias("s"),
-            "t.key = s.key")
-          .whenMatched().updateAll()
-          .whenNotMatched().insertAll()
-          .execute()
-        ```
-      - `updateAll` and `insertAll` actions throw an error because the target column `oldValue` is not in the source.
-      - The table schema is changed to `(key, oldValue, newValue)`. `updateAll` updates columns `key` and `newValue` leaving `oldValue` unchanged, and `insertAll` inserts rows `(key, NULL, newValue)` (that is, `oldValue` is inserted as `NULL`).
-
-    * - Target columns: `key, oldValue`
-
-        Source columns: `key, newValue`
-      - ```scala
-        targetDeltaTable.alias("t")
-          .merge(
-            sourceDataFrame.alias("s"),
-            "t.key = s.key")
-          .whenMatched().update(Map(
-            "newValue" -> col("s.newValue")))
-          .whenNotMatched().insertAll()
-          .execute()
-        ```
-      - `update` throws an error because column `newValue` does not exist in the target table.
-      - `update` still throws an error because column `newValue` does not exist in the target table.
-
-    * - Target columns: `key, oldValue`
-
-        Source columns: `key, newValue`
-      - ```scala
-        targetDeltaTable.alias("t")
-          .merge(
-            sourceDataFrame.alias("s"),
-            "t.key = s.key")
-          .whenMatched().updateAll()
-          .whenNotMatched().insert(Map(
-            "key" -> col("s.key"),
-            "newValue" -> col("s.newValue")))
-          .execute()
-        ```
-      - `insert` throws an error because column `newValue` does not exist in the target table.
-      - `insert` still throws an error as column `newValue` does not exist in the target table.
+| Columns                                                                             | Query (in Scala)                                                                                                                                                                                                | Behavior without schema evolution (default)                                                                                                                                                                                                                         | Behavior with schema evolution                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Target columns: `key`, `value` <br></br> Source columns:` key`, `value`, `newValue` | ` targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().updateAll() .whenNotMatched().insertAll() .execute()`                                                         | The table schema remains unchanged; only columns `key`, `value` are updated/inserted. <br></br> The table schema is changed to `(key, value, newValue)`. `updateAll` updates columns `value` and `newValue`, and `insertAll` inserts rows `(key, value, newValue)`. | The table schema remains unchanged; only columns `key`, `value` are updated/inserted. <br></br> The table schema is changed to `(key, value, newValue)`. `updateAll` updates columns `value` and `newValue`, and `insertAll` inserts rows `(key, value, newValue)`. |
+| Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`          | targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().updateAll() .whenNotMatched().insertAll() .execute()                                                            | `updateAll` and `insertAll` actions throw an error because the target column `oldValue` is not in the source.                                                                                                                                                       | The table schema is changed to `(key, oldValue, newValue)`. `updateAll` updates columns `key` and `newValue` leaving `oldValue` unchanged, and `insertAll` inserts rows `(key, NULL, newValue)` (that is, `oldValue` is inserted as `NULL`).                        |
+| "Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`"        | `targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().update(Map( "newValue" -> col("s.newValue"))) .whenNotMatched().insertAll() .execute()`                        | `update` throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                              | `update` still throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                        |
+| Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`          | `targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().updateAll() .whenNotMatched().insert(Map( "key" -> col("s.key"), "newValue" -> col("s.newValue"))) .execute()` | `insert` throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                              | `insert` still throws an error as column `newValue` does not exist in the target table.                                                                                                                                                                             |
 
 <a id="arrays-of-structs-considerations"></a>
 
