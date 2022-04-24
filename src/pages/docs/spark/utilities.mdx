@@ -5,7 +5,7 @@ menu: docs
 
 Delta tables support a number of utility operations.
 
-For many Delta Lake operations, you enable integration with Apache Spark DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [sql support](https://delta.io/docs/spark/batch#sql-support).
+For many Delta Lake operations, you enable integration with Apache Spark DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [sql support](https://delta.io/docs/spark/#sql-support).
 
 <a id="delta-vacuum"></a>
 
@@ -13,9 +13,9 @@ For many Delta Lake operations, you enable integration with Apache Spark DataSou
 
 You can remove files no longer referenced by a Delta table and are older than the retention
 threshold by running the `vacuum` command on the table. `vacuum` is not triggered automatically. The
-default retention threshold for the files is 7 days. To change this behavior, see [data retention](delta-batch.md#data-retention).
+default retention threshold for the files is 7 days. To change this behavior, see [data retention](https://delta.io/docs/spark/batch#data-retention).
 
-- `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [table properties](https://delta.io/docs/spark/batch#table-properties). - The ability to [time travel](delta-batch.md#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
+- `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [table properties](https://delta.io/docs/spark/batch#table-properties). - The ability to [time travel](https://delta.io/docs/spark/batch#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
 
 ```sql
 VACUUM eventsTable   -- vacuum files not required by versions older than the default retention period
