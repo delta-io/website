@@ -241,7 +241,7 @@ The metastore is not the source of truth about the latest information of a Delta
 
 This feature is new and is in Preview.
 
-Delta Lake supports generated columns which are a special type of columns whose values are automatically generated based on a user-specified function over other columns in the Delta table. When you write to a table with generated columns and you do not explicitly provide values for them, Delta Lake automatically computes the values. For example, you can automatically generate a date column (for partitioning the table by date) from the timestamp column; any writes into the table need only specify the data for the timestamp column. However, if you explicitly provide values for them, the values must satisfy the [constraint](https://docs.delta.io/latest/delta-constraints.html) `(<value> <=> <generation expression>) IS TRUE` or the write will fail with an error.
+Delta Lake supports generated columns which are a special type of columns whose values are automatically generated based on a user-specified function over other columns in the Delta table. When you write to a table with generated columns and you do not explicitly provide values for them, Delta Lake automatically computes the values. For example, you can automatically generate a date column (for partitioning the table by date) from the timestamp column; any writes into the table need only specify the data for the timestamp column. However, if you explicitly provide values for them, the values must satisfy the [constraint](https://delta.io/docs/spark/constraints) `(<value> <=> <generation expression>) IS TRUE` or the write will fail with an error.
 
 The following example shows how to create a table with generated columns:
 
@@ -864,7 +864,7 @@ Delta Lake uses Hadoop FileSystem APIs to access the storage systems. The creden
 
 When you start a Spark application on a cluster, you can set the Spark configurations in the form of `spark.hadoop.*` to pass your custom Hadoop configurations. For example, Setting a value for `spark.hadoop.a.b.c` will pass the value as a Hadoop configuration `a.b.c`, and Delta Lake will use it to access Hadoop FileSystem APIs.
 
-See [Spark doc](http://spark.apache.org/docs/latest/configuration.html#custom-hadoophive-configuration) for more details.
+See [Spark docs](http://spark.apache.org/docs/latest/configuration.html#custom-hadoophive-configuration) for more details.
 
 ### SQL session configurations
 
