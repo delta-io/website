@@ -5,7 +5,7 @@ menu: docs
 
 Delta tables support a number of utility operations.
 
-For many Delta Lake operations, you enable integration with Apache Spark DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [sql support](delta-batch.md#sql-support).
+For many Delta Lake operations, you enable integration with Apache Spark DataSourceV2 and Catalog APIs (since 3.0) by setting configurations when you create a new `SparkSession`. See [sql support](https://delta.io/docs/spark/batch#sql-support).
 
 <a id="delta-vacuum"></a>
 
@@ -15,7 +15,7 @@ You can remove files no longer referenced by a Delta table and are older than th
 threshold by running the `vacuum` command on the table. `vacuum` is not triggered automatically. The
 default retention threshold for the files is 7 days. To change this behavior, see [data retention](delta-batch.md#data-retention).
 
-- `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [table properties](delta-batch.md#table-properties). - The ability to [time travel](delta-batch.md#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
+- `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [table properties](https://delta.io/docs/spark/batch#table-properties). - The ability to [time travel](delta-batch.md#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
 
 ```sql
 VACUUM eventsTable   -- vacuum files not required by versions older than the default retention period
@@ -63,7 +63,7 @@ deltaTable.vacuum(100);     // vacuum files not required by versions more than 1
 
 When using `VACUUM`, to configure Spark to delete files in parallel (based on the number of shuffle partitions) set the session configuration `"spark.databricks.delta.vacuum.parallelDelete.enabled"` to `"true"` .
 
-See the [Delta API documentation](delta-apidoc.md) for Scala, Java, and Python syntax details.
+See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for Scala, Java, and Python syntax details.
 
 /shared/delta-retention-warning.md
 
@@ -120,7 +120,7 @@ DataFrame fullHistoryDF = deltaTable.history();       // get the full history of
 DataFrame lastOperationDF = deltaTable.history(1);    // fetch the last operation on the DeltaTable
 ```
 
-See the [Delta API documentation](delta-apidoc.md) for Scala/Java/Python syntax details.
+See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for Scala/Java/Python syntax details.
 
 ### History schema
 
@@ -275,7 +275,7 @@ You can a generate manifest file for a Delta table that can be used by other pro
 
 `sql GENERATE symlink_format_manifest FOR TABLE delta.` `<path-to-delta-table>`
 
-See [sql support](delta-batch.md#sql-support) for the steps to enable support for SQL commands in Apache Spark.
+See [sql support](https://delta.io/docs/spark/batch#sql-support) for the steps to enable support for SQL commands in Apache Spark.
 
 ```python
 deltaTable = DeltaTable.forPath(<path-to-delta-table>)
