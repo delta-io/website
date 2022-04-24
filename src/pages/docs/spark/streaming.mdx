@@ -8,7 +8,7 @@ Delta Lake is deeply integrated with [Spark Structured Streaming](https://spark.
 - Maintaining "exactly-once" processing with more than one stream (or concurrent batch jobs)
 - Efficiently discovering which files are new when using files as the source for a stream
 
-For many Delta Lake operations on tables, you enable integration with Apache Spark DataSourceV2 and Catalog APIs by setting configurations when you create a new `SparkSession`. See [sql support](delta-batch.md#sql-support).
+For many Delta Lake operations on tables, you enable integration with Apache Spark DataSourceV2 and Catalog APIs by setting configurations when you create a new `SparkSession`. See [sql support](https://delta.io/docs/spark/delta-batch#sql-support).
 
 <a id="stream-source"></a>
 
@@ -33,9 +33,7 @@ The following options are available to control micro-batches:
 
 If you use `maxBytesPerTrigger` in conjunction with `maxFilesPerTrigger`, the micro-batch processes data until either the `maxFilesPerTrigger` or `maxBytesPerTrigger` limit is reached.
 
-
-
-In cases when the source table transactions are cleaned up due to the `logRetentionDuration` [configuration](delta-batch.md#data-retention) and the stream lags in processing, Delta Lake processes the data corresponding to the latest available transaction history of the source table but does not fail the stream. This can result in data being dropped.
+In cases when the source table transactions are cleaned up due to the `logRetentionDuration` [configuration](https://delta.io/docs/spark/delta-batch#data-retention) and the stream lags in processing, Delta Lake processes the data corresponding to the latest available transaction history of the source table but does not fail the stream. This can result in data being dropped.
 
 ### Ignore updates and deletes
 
@@ -72,7 +70,7 @@ If you update a `user_email` with the `UPDATE` statement, the file containing th
 
 You can use the following options to specify the starting point of the Delta Lake streaming source without processing the entire table.
 
-- `startingVersion`: The Delta Lake version to start from. All table changes starting from this version (inclusive) will be read by the streaming source. You can obtain the commit versions from the `version` column of the [DESCRIBE HISTORY](delta-utility.md#delta-history) command output.
+- `startingVersion`: The Delta Lake version to start from. All table changes starting from this version (inclusive) will be read by the streaming source. You can obtain the commit versions from the `version` column of the [DESCRIBE HISTORY](https://delta.io/docs/spark/utilities#delta-history) command output.
 
   - To return only the latest changes, specify `latest`.
 
@@ -82,7 +80,6 @@ You can use the following options to specify the starting point of the Delta Lak
   - A date string. For example, `"2019-01-01"`.
 
 You cannot set both options at the same time; you can use only one of them. They take effect only when starting a new streaming query. If a streaming query has started and the progress has been recorded in its checkpoint, these options are ignored.
-
 
 Although you can start the streaming source from a specified version or timestamp, the schema of the streaming source is always the latest schema of the Delta table. You must ensure there is no incompatible schema change to the Delta table after the specified version or timestamp. Otherwise, the streaming source may return incorrect results when reading the data with an incorrect schema.
 
@@ -118,8 +115,6 @@ By default, streams run in append mode, which adds new records to the table.
 
 You can use the path method:
 
-
-
 ```python
 events.writeStream
   .format("delta")
@@ -143,8 +138,6 @@ events.writeStream
 ```
 
 or the table method:
-
-
 
 ```python
 events.writeStream
