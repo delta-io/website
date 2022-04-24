@@ -52,9 +52,9 @@ deltaTable.delete("date < '2017-01-01'");            // predicate using SQL form
 deltaTable.delete(functions.col("date").lt(functions.lit("2017-01-01")));   // predicate using Spark SQL functions
 ```
 
-See the [Delta API documentation](delta-apidoc.md) for details.
+See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for details.
 
-`delete` removes the data from the latest version of the Delta table but does not remove it from the physical storage until the old versions are explicitly vacuumed. See [vacuum](delta-utility.md#delta-vacuum) for details.
+`delete` removes the data from the latest version of the Delta table but does not remove it from the physical storage until the old versions are explicitly vacuumed. See [vacuum](https://delta.io/docs/spark/utilities#delta-vacuum) for details.
 
 When possible, provide predicates on the partition columns for a partitioned Delta table as such predicates can significantly speed up the operation.
 
@@ -120,7 +120,7 @@ deltaTable.update(                // predicate using Spark SQL functions
 );
 ```
 
-See the [Delta API Documentation](delta-apidoc.md) for details.
+See the [Delta API Documentation](https://docs.delta.io/latest/delta-apidoc.html) for details.
 
 Similar to delete, update operations can get a significant speedup with predicates on partitions.
 
@@ -211,7 +211,7 @@ DeltaTable.forPath(spark, "/data/events/")
   .execute();
 ```
 
-See the [Delta API documentation](delta-apidoc.md) for Scala, Java, and Python syntax details.
+See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for Scala, Java, and Python syntax details.
 
 ### Operation semantics
 
@@ -320,9 +320,9 @@ You can reduce the time taken by merge using the following approaches:
   events.date = current_date() AND events.country = 'USA'
   ```
 
-  will make the query faster as it looks for matches only in the relevant partitions. Furthermore, it will also reduce the chances of conflicts with other concurrent operations. See [concurency control](concurrency-control.md) for more details.
+  will make the query faster as it looks for matches only in the relevant partitions. Furthermore, it will also reduce the chances of conflicts with other concurrent operations. See [concurency control](https://docs.delta.io/latest/concurrency-control.html#concurrency-control) for more details.
 
-- **Compact files**: If the data is stored in many small files, reading the data to search for matches can become slow. You can compact small files into larger files to improve read throughput. See [best practices for compaction](best-practices.md#compact-files) for details.
+- **Compact files**: If the data is stored in many small files, reading the data to search for matches can become slow. You can compact small files into larger files to improve read throughput. See [best practices for compaction](https://docs.delta.io/latest/best-practices.html#compact-files) for details.
 
 - **Control the shuffle partitions for writes**: The `merge` operation shuffles data multiple times to compute and write the updated data. The number of tasks used to shuffle is controlled by the Spark session configuration `spark.sql.shuffle.partitions`. Setting this parameter not only controls the parallelism but also determines the number of output files. Increasing the value increases parallelism but also generates a larger number of smaller data files.
 
