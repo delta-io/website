@@ -67,6 +67,7 @@ export const spacingRem = {
   xxl: 60,
 };
 export const spacing = {
+  none: rem(0),
   xs: rem(6),
   sm: rem(12),
   md: rem(18),
@@ -81,6 +82,14 @@ export const breakpoints = {
   md: 768,
   lg: 992,
   xl: 1200,
+};
+
+export const breakpointGreaterThan = (test) => (size) => {
+  const sizes = Object.keys(breakpoints);
+
+  return (
+    sizes.findIndex((bp) => bp === size) > sizes.findIndex((bp) => bp === test)
+  );
 };
 
 /**

@@ -31,6 +31,7 @@ const LinkList = (props) => {
         {renderInCurrentItem &&
           location.pathname === item.url &&
           renderInCurrentItem(item)}
+        {item.items && renderItems(item.items, level + 1)}
       </React.Fragment>
     ));
 
