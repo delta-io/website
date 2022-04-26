@@ -5,9 +5,9 @@ thumbnail: ./apache-flink-app-with-delta-lake.png
 author: Fabian Paul, Pawel Kubit, Scott Sandre, Tathagata Das, Denny Lee
 ---
 
-One of the most exciting aspects of the Delta Connectors 0.3.0 is the addition of write functionality with new APIs to support creating and writing Delta tables without Apache Spark™. The latest release 0.4.0 of Delta Connectors introduces the Flink/Delta Connector, which provides a sink that can write Parquet data files from Apache Flink and commit them to Delta tables atomically. This sink uses Flink’s DataStream API and supports both batch and streaming processing.
+One of the most exciting aspects of the [Delta Connectors 0.3.0](https://github.com/delta-io/connectors/releases/tag/v0.3.0) is the addition of write functionality with new APIs to support creating and writing Delta tables without [Apache Spark™](https://spark.apache.org/). The latest release [0.4.0](https://github.com/delta-io/connectors/releases/tag/v0.4.0) of Delta Connectors introduces the [Flink/Delta Connector](https://github.com/delta-io/connectors/tree/master/flink), which provides a sink that can write Parquet data files from Apache Flink and commit them to Delta tables atomically. This sink uses Flink’s [DataStream API](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/dev/datastream/overview/) and supports both batch and streaming processing.
 
-A bit of background for Apache Flink and Delta Lake before we dive into the details for the connector.
+A bit of background for [Apache Flink](https://flink.apache.org/) and [Delta Lake](https://delta.io/) before we dive into the details for the connector.
 
 ## Apache Flink - Distributed processing engine for stateful computations
 
