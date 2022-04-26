@@ -5,9 +5,14 @@ import styled from "styled-components";
 import thumbnail4 from "./extending-delta-sharing.png";
 import thumbnail3 from "./ama_2022-03-03.jpg";
 import thumbnail2 from "./ama_2022-02-17.jpg";
-import thumbnail1 from "./delta-lake-roadmap-2021h2.jpg";
+import thumbnail1 from "./apache-flink-app-with-delta-lake.png";
 
 const updates = [
+  {
+    title: "Writing to Delta Lake from Apache Flink",
+    thumbnail: thumbnail1,
+    url: "http://delta.io/blog/2022-04-27-writing-to-delta-lake-from-apache-flink/",
+  },
   {
     title: "Extending Delta Sharing to Google Cloud Storage",
     thumbnail: thumbnail4,
@@ -22,11 +27,6 @@ const updates = [
     title: "Community AMA (2022-02-17)",
     thumbnail: thumbnail2,
     url: "https://www.youtube.com/watch?v=oc1mlhtsyPg",
-  },
-  {
-    title: "Delta Lake Roadmap 2021 H2",
-    thumbnail: thumbnail1,
-    url: "https://www.youtube.com/watch?v=NBcn2J6V-MM",
   },
 ];
 
