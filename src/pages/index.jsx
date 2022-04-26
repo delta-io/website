@@ -7,6 +7,7 @@ import Link from "src/components/Link";
 import DiagramSection from "src/components/pages/index/DiagramSection";
 import LatestUpdateSection from "src/components/pages/index/LatestUpdateSection";
 // import KeyFeaturesSection from "src/components/pages/shared/KeyFeaturesSection";
+import ValuePropsSection from "src/components/pages/index/ValuePropsSection";
 import KeyFeaturesSection from "src/components/pages/index/KeyFeaturesSection";
 // import GetStartedSection from "src/components/pages/index/GetStartedSection";
 import OrganizationsSection from "src/components/pages/index/OrganizationsSection";
@@ -44,6 +45,7 @@ const HomePage = () => (
         versionNumber="1.1.0"
       />
       <DiagramSection />
+      <ValuePropsSection />
       <LatestUpdateSection />
       <KeyFeaturesSection />
       <OrganizationsSection />
