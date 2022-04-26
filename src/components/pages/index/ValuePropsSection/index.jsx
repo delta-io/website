@@ -29,7 +29,8 @@ const ValuePropsSection = () => (
         {
           image: "/images/value_props/agnostic.svg",
           name: "Platform Agnostic",
-          description: "Use on any cloud with any engine",
+          description:
+            "Use with any query engine on any cloud, on-prem, or locally",
         },
       ]}
     />
