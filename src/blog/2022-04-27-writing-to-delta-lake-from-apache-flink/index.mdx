@@ -68,7 +68,7 @@ The following architecture diagram illustrates how the data is written from a Fl
 
 ### Implementation - Writing data from Flink into Delta Lake tables
 
-The [Flink/Delta Lake Connector](https://github.com/delta-io/connectors/tree/master/flink-connector/) is a JVM library to read and write data from Apache Flink applications to Delta Lake tables utilizing the [Delta Standalone JVM library](https://github.com/delta-io/connectors#delta-standalone). It includes:
+The [Flink/Delta Lake Connector](https://github.com/delta-io/connectors/tree/master/flink/) is a JVM library to read and write data from Apache Flink applications to Delta Lake tables utilizing the [Delta Standalone JVM library](https://github.com/delta-io/connectors#delta-standalone). It includes:
 
 - Sink for writing data from Apache Flink to a Delta table ([#111](https://github.com/delta-io/connectors/issues/111), [design document](https://docs.google.com/document/d/19CU4eJuBXOwW7FC58uSqyCbcLTsgvQ5P1zoPOPgUSpI/edit#heading=h.gjdgxs))
   - Note, we are also working on creating a <code>DeltaSink</code> using Flink’s **Table API** (PR [#250](https://github.com/delta-io/connectors/pull/250)).
