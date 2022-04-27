@@ -46,7 +46,7 @@ Delta files can be in 3 different states:
 
 - **In-progress**: Files to which writers are currently appending new records, they are also called “opened” files.
 - **Pending** : Files that have already been closed and are waiting to be committed to the Delta log during the next checkpoint. These files are in their final state and will not be appended anymore, only renamed during <code>DeltaCommitter.commit</code> operation.
-- **Finished** : Files already written, closed, and successfully committed to Delta table
+- **Finished** : Files already written, closed, and successfully committed to Delta table.
 
 ### DeltaCommittable
 
@@ -62,7 +62,7 @@ The Global Committer combines multiple lists of DeltaCommittables received from 
 
 ## Architecture
 
-The following architecture diagram illustrates how the data is written from a Flink application to Delta Lake tables. Each Flink job can have multiple parallel <code>DeltaWriters</code>, <code>DeltaCommitters</code>, and only one <code>DeltaGlobalCommitter</code>. For each checkpoint, DeltaWriter combines a list of DeltaCommittables from multiple bucket writers and sends it to the DeltaCommitter instance, which then is responsible for locally committing the files and marking them ready to be committed to the Delta log. DeltaGlobalCommiter combines the DeltaCommitables from all the DeltaCommitters and commits the files to the Delta Log.
+The following architecture diagram illustrates how the data is written from a Flink application to Delta Lake tables. Each Flink job can have multiple parallel <code>DeltaWriter</code>s, <code>DeltaCommitter</code>s, and only one <code>DeltaGlobalCommitter</code>. For each checkpoint, DeltaWriter combines a list of DeltaCommittables from multiple bucket writers and sends it to the DeltaCommitter instance, which then is responsible for locally committing the files and marking them ready to be committed to the Delta log. DeltaGlobalCommiter combines the DeltaCommitables from all the DeltaCommitters and commits the files to the Delta Log.
 
 ![Apache Flink App with Delta Lake](./apache-flink-app-with-delta-lake.png)
 
