@@ -2,7 +2,7 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import thumbnail4 from "./ama_2022-04-19.jpg";
+import thumbnail4 from "./extending-delta-sharing.png";
 import thumbnail3 from "./delta-1-2-features.png";
 import thumbnail2 from "./ama_2022-04-28.jpg";
 import thumbnail1 from "./apache-flink-app-with-delta-lake.png";
@@ -25,9 +25,9 @@ const updates = [
     url: "http://delta.io/blog/2022-04-27-writing-to-delta-lake-from-apache-flink/",
   },
   {
-    title: "Community AMA (2022-04-19)",
+    title: "Extending Delta Sharing to Google Cloud Storage",
     thumbnail: thumbnail4,
-    url: "https://www.youtube.com/watch?v=Iy2sb69iHGY",
+    url: "https://delta.io/blog/2022-03-11-delta-sharing-0-4-0-released/",
   },
 ];
 

@@ -34,21 +34,34 @@ Read on to learn more!
 ## Compacting small files (optimize) into larger files in a Delta table
 
 The data in a lakehouse can often have a small file problem. Different file sizes can impact performance and waste valuable resources. So it’s important to have data laid out correctly for optimal query performance. To improve query speed, Delta Lake supports the ability to optimize the layout of data stored in storage. There are various ways to optimize the layout. Currently, only the [bin-packing optimization](https://docs.delta.io/1.2.0/optimizations-oss.html#compaction-bin-packing) is supported. Delta Lake can improve the speed of read queries from a table by coalescing small files into larger ones.
-![Delta-1-2-compaction](./delta-compaction.png)
 
-<b>Fig.Better automatic data compaction for faster query performance.</b>
+<center>
+  <img
+    src="/delta-compaction.png"
+    alt="Delta-1-2-compaction"
+    width="248"
+    height="248"
+  />
+</center>
+
+<b>
+  <center>
+    Fig.1. Better automatic data compaction for faster query performance.
+  </center>
+</b>
+<b></b>
+&nbsp;
 
 Through the reduction of the number of data files being ingested, compacting of small files into larger files in a Delta table can improve read latency as a direct result of reducing metadata size and per-file overheads such as file-open overhead and file-close overhead.
+-- Optimizes Delta Lake table
+-- Optimizes the path-based Delta Lake table
 
 ```Python
 OPTIMIZE delta_table_name;
 OPTIMIZE delta.`/path/to/delta/table`;
 ```
 
--- Optimizes Delta Lake table
--- Optimizes the path-based Delta Lake table
-
-**_If you have a large amount of data and only want to optimize a subset of it, you can specify an optional partition predicate using `WHERE`:_**
+If you have a large amount of data and only want to optimize a subset of it, you can specify an optional partition predicate using `WHERE`:
 
 ```sql
 OPTIMIZE delta_table_name WHERE date >= '2017-01-01'
@@ -65,9 +78,19 @@ SELECT * FROM events
 WHERE year=2020 AND uid=24000
 ```
 
-![Delta-1-2-dataSkipping](./delta-skipping.png)
-
-<b>Fig. Data Skipping</b>
+<center>
+  <img
+    src="/delta-skipping.png"
+    alt="Delta-1-2-dataSkipping"
+    style="max-width: 50%;"
+  />
+</center>
+&nbsp;
+<b>
+  <center>Fig.2. Data Skipping</center>
+</b>
+<b></b>
+&nbsp;
 
 In the above example, our query is looking for events triggered by uid “24000” during the year 2020. Because data skipping information was collected at the time of writing, it's easy for delta to skip the records that don't match the query condition, (which in this case is file1.parquet and file2.parquet) and look for the matching records in file3.parquet.
 
@@ -77,7 +100,18 @@ Delta Lake will automatically calculate generated columns when the user doesn’
 
 For a partition column with a generation expression, Delta Lake automatically generates a partition filter from any data filters on its generating column, when possible. Delta Lake automatically uses partitioning and statistics to read the minimum amount of data when there are applicable predicates in the query. With this new optimization, the DataFrame returned automatically reads the most recent snapshot of the table for any query; you never need to run REFRESH TABLE.
 
-![Delta-1-2-generatedcolumns](./delta-generatedcolumns.png)
+<center>
+  <img
+    src="/delta-generatedcolumns.png"
+    alt="Delta-1-2-generatedcolumns"
+    style="max-width: 50%;"
+  />
+</center>
+&nbsp;
+<b>
+  <center>Fig.3. Generated Columns</center>
+</b>
+&nbsp;
 
 ## S3 multi-cluster write support
 
@@ -85,13 +119,20 @@ One of the key features that Delta Lake offers is its ability to handle concurre
 
 Most storage systems provide this mutual exclusion out-of-the-box. However, a known limitation of S3 is that it does not provide mutual exclusion, meaning that Delta Lake S3 integration allows multi-cluster reads but has historically restricted writes to S3 to originate from a single Spark driver.
 
-![s3-multi-cluster](./delta-s3-multi-cluster.png)
+<center>
+  <img src="/delta-s3-multi-cluster.png" alt="s3-multi-cluster" />
+</center>
+&nbsp;
+<center>
+  <b>Fig.4. s3 multi cluster writes in Delta Lake</b>
+</center>
+&nbsp;
 
 These changes in Delta Lake 1.2, as reads and writes to S3 are now supported in two different modes: Single-cluster and Multi-cluster. With multi-cluster mode, users can concurrently write to the same Delta table from multiple clusters. This mode uses [DynamoDB](https://aws.amazon.com/dynamodb/) internally to provide the mutual exclusion that S3 is lacking, as concurrent writers first try to commit metadata to a DynamoDB table before writing to S3. Note: Multi-cluster mode must be enabled explicitly. Check out our [contributor spotlight](https://youtu.be/QoxgHkZ38gM) for a shout out to this feature.
 
 ## Support for restoring a Delta table to an earlier version
 
-Poor data quality can doom any data analytics or machine learning use case. Sometimes, mistakes occur such as accidental bad writes or deletes. Fortunately, Delta Lake supports the restoration of a Delta table to an earlier state, using the RESTORE command, to address this very issue.
+Poor data quality can doom any data analytics or machine learning use case. Sometimes, mistakes occur such as accidental bad writes or deletes. Fortunately, Delta Lake supports the restoration of a Delta table to an earlier state, using the <code>RESTORE</code> command, to address this very issue.
 
 A Delta table internally maintains historic versions of the table that enable it to be restored to an earlier state. A version corresponding to the earlier state or a timestamp of when the earlier state was created are supported using the aforementioned SQL command, Scala APIs or Python APIs.
 
@@ -140,15 +181,15 @@ To learn more about other scheme evolution operations supported, see the [docume
 
 Another schema change you can make in Delta Lake 1.2 is the support for arbitrary characters.
 
-Prior to 1.2, the supported list of characters was limited by the support of the same in Parquet data format. When column mapping is enabled for a Delta table, you can include spaces as well as any of these characters in the table’s column names: ,;{}()\n\t=.
+Prior to 1.2, the supported list of characters was limited by the support of the same in Parquet data format. When column mapping is enabled for a Delta table, you can include spaces as well as any of these characters in the table’s column names: <code>,;{}()\n\t=</code>.
 
-**_To rename a column_**:
+#### To rename a column
 
 ```SQL
 ALTER TABLE <table_name> RENAME COLUMN old_col_name TO new_col_name
 ```
 
-**_To rename a nested field_**:
+#### To rename a nested field
 
 ```SQL
 ALTER TABLE <table_name> RENAME COLUMN col_name.old_nested_field TO new_nested_field
@@ -164,7 +205,7 @@ Delta Lake is quickly becoming the de facto, open-source storage framework for c
 
 ## What’s next
 
-We are already gearing up for many new features in the next release of Delta Sharing. You can track all the upcoming releases and planned features in [GitHub milestones](https://github.com/delta-io/delta-sharing/milestones).
+We are already gearing up for many new features in the next release of Delta Lake. You can track all the upcoming releases and planned features in [GitHub milestones](https://github.com/delta-io/delta/milestones).
 
 > **Interested in the open-source Delta Lake?**
 > Visit [Delta Lake](https://github.com/delta-io/delta) to learn more, you can join the Delta Lake community via [Slack](http://dbricks.co/delta-users-slack) and [Google Group](https://groups.google.com/forum/#!forum/delta-users).
