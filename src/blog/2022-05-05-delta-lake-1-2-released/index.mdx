@@ -53,12 +53,10 @@ The data in a lakehouse can often have a small file problem. Different file size
 &nbsp;
 
 Through the reduction of the number of data files being ingested, compacting of small files into larger files in a Delta table can improve read latency as a direct result of reducing metadata size and per-file overheads such as file-open overhead and file-close overhead.
--- Optimizes Delta Lake table
--- Optimizes the path-based Delta Lake table
 
-```Python
-OPTIMIZE delta_table_name;
-OPTIMIZE delta.`/path/to/delta/table`;
+```sql
+OPTIMIZE delta_table_name; -- Optimizes Delta Lake table
+OPTIMIZE delta.`/path/to/delta/table`; -- Optimizes the path-based Delta Lake table
 ```
 
 If you have a large amount of data and only want to optimize a subset of it, you can specify an optional partition predicate using `WHERE`:
