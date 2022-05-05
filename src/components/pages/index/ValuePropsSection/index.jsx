@@ -24,7 +24,7 @@ const ValuePropsSection = () => (
           image: "/images/value_props/production.svg",
           name: "Production Ready",
           description:
-            "Analytics and ML running in over 10,000+ production environments ​​",
+            "Battle tested in over 10,000+ production environments ​​",
         },
         {
           image: "/images/value_props/agnostic.svg",
