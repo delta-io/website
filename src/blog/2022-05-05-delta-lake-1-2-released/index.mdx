@@ -92,13 +92,13 @@ WHERE year=2020 AND uid=24000
 <b></b>
 &nbsp;
 
-In the above example, our query is looking for events triggered by uid “24000” during the year 2020. Because data skipping information was collected at the time of writing, it's easy for delta to skip the records that don't match the query condition, (which in this case is file1.parquet and file2.parquet) and look for the matching records in file3.parquet.
+In the above example, our query is looking for events triggered by <code>uid “24000”</code> during the year <code>2020</code>. Because data skipping information was collected at the time of writing, it's easy for delta to skip the records that don't match the query condition, (which in this case is <code>file1.parquet</code> and <code>file2.parquet</code>) and look for the matching records in <code>file3.parquet</code>.
 
 ### Support for generated columns
 
 Delta Lake will automatically calculate generated columns when the user doesn’t provide them when writing to the tables, or automatically check the constraints using the generation expressions when the user provides the values for the generated columns.
 
-For a partition column with a generation expression, Delta Lake automatically generates a partition filter from any data filters on its generating column, when possible. Delta Lake automatically uses partitioning and statistics to read the minimum amount of data when there are applicable predicates in the query. With this new optimization, the DataFrame returned automatically reads the most recent snapshot of the table for any query; you never need to run REFRESH TABLE.
+For a partition column with a generation expression, Delta Lake automatically generates a partition filter from any data filters on its generating column, when possible. Delta Lake automatically uses partitioning and statistics to read the minimum amount of data when there are applicable predicates in the query. With this new optimization, the DataFrame returned automatically reads the most recent snapshot of the table for any query; you never need to run <code>REFRESH TABLE</code>.
 
 <center>
   <img
@@ -208,7 +208,7 @@ Delta Lake is quickly becoming the de facto, open-source storage framework for c
 We are already gearing up for many new features in the next release of Delta Lake. You can track all the upcoming releases and planned features in [GitHub milestones](https://github.com/delta-io/delta/milestones).
 
 > **Interested in the open-source Delta Lake?**
-> Visit [Delta Lake](https://github.com/delta-io/delta) to learn more, you can join the Delta Lake community via [Slack](http://dbricks.co/delta-users-slack) and [Google Group](https://groups.google.com/forum/#!forum/delta-users).
+> Visit [Delta Lake](https://github.com/delta-io/delta) to learn more, you can join the Delta Lake community via [Slack](go.delta.io/delta-users) and [Google Group](https://groups.google.com/forum/#!forum/delta-users).
 
 ## Credits
 
