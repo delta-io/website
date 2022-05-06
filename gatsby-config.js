@@ -9,7 +9,7 @@ module.exports = {
     siteUrl: "https://delta.io",
     title: "Delta Lake",
     description:
-      "Delta Lake is an open-source storage layer that brings ACID transactions to Apache Spark and big data workloads.",
+      "Delta Lake is an open-source storage framework that enables building a Lakehouse architecture with compute engines including Spark, PrestoDB, Flink, Trino, and Hive and APIs for Scala, Java, Rust, Ruby, and Python.",
     twitter: "@DeltaLakeOSS",
   },
   plugins: [
@@ -42,7 +42,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-google-gtag",
       options: {
-        trackingIds: ["G-C2QGWXS5DG"],
+        trackingIds: ["UA-82811140-53"],
       },
     },
     {
