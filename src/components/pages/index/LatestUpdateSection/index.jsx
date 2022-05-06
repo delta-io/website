@@ -3,11 +3,22 @@ import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import thumbnail4 from "./extending-delta-sharing.png";
-import thumbnail3 from "./ama_2022-03-03.jpg";
-import thumbnail2 from "./ama_2022-02-17.jpg";
+import thumbnail3 from "./delta-1-2-features.png";
+import thumbnail2 from "./ama_2022-04-28.jpg";
 import thumbnail1 from "./apache-flink-app-with-delta-lake.png";
 
 const updates = [
+  {
+    title:
+      "Delta Lake 1.2 - More Speed, Efficiency and Extensibility Than Ever",
+    thumbnail: thumbnail3,
+    url: "http://delta.io/blog/2022-05-05-delta-lake-1-2-released/",
+  },
+  {
+    title: "Community AMA (2022-04-28)",
+    thumbnail: thumbnail2,
+    url: "https://www.youtube.com/watch?v=oc1mlhtsyPg",
+  },
   {
     title: "Writing to Delta Lake from Apache Flink",
     thumbnail: thumbnail1,
@@ -17,16 +28,6 @@ const updates = [
     title: "Extending Delta Sharing to Google Cloud Storage",
     thumbnail: thumbnail4,
     url: "https://delta.io/blog/2022-03-11-delta-sharing-0-4-0-released/",
-  },
-  {
-    title: "Community AMA (2022-03-03)",
-    thumbnail: thumbnail3,
-    url: "https://www.youtube.com/watch?v=-KBbECH-oKQ",
-  },
-  {
-    title: "Community AMA (2022-02-17)",
-    thumbnail: thumbnail2,
-    url: "https://www.youtube.com/watch?v=oc1mlhtsyPg",
   },
 ];
 
