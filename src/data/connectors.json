@@ -9,7 +9,7 @@
     "thumbnail": "./images/connectors/apache-spark-icon.png"
   },
   {
-    "name": "Apache Flink (Preview)",
+    "name": "Apache Flink",
     "description": "This connector allows Apache Flink to write to Delta Lake.",
     "url": "https://github.com/delta-io/connectors/tree/master/flink/",
     "docs": "https://github.com/delta-io/connectors/tree/master/flink",
