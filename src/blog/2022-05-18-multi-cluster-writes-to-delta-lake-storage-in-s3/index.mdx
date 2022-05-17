@@ -84,7 +84,7 @@ Nonetheless, after specifying this LogStore implementation, if the default Dynam
 First, configure this LogStore implementation for the scheme s3.
 
 ```scala
-spark.delta.logstore.s3.impl=io.delta.storage.S3DynamoDBLogStore
+spark.delta.logStore.s3.impl=io.delta.storage.S3DynamoDBLogStore
 ```
 
 Next, specify additional information necessary to instantiate the DynamoDB client. You must instantiate the DynamoDB client with the same tableName and region each Spark session for this multi-cluster mode to work correctly. A list of per-session configurations and their defaults is given below:
