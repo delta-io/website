@@ -100,7 +100,18 @@ Next, specify additional information necessary to instantiate the DynamoDB clien
 - \*For more details on AWS credential providers, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html).
 - \*\*These configurations are only used when the given DynamoDB table doesn’t already exist and needs to be automatically created.
 
-> **Important**: At this point, this multi-cluster setup is fully operational. However, there are [extra configuration steps](https://docs.delta.io/latest/delta-storage.html#production-configuration-s3-multi-cluster) you may do to improve performance and optimize storage when running in production.
+<Info title="Important!" level="warning">
+  At this point, this multi-cluster setup is fully operational. However, there
+  are{" "}
+  <a
+    href="https://docs.delta.io/latest/delta-storage.html#production-configuration-s3-multi-cluster"
+    target="_blank"
+  >
+    extra configuration steps
+  </a>{" "}
+  you may do to improve performance and optimize storage when running in
+  production.
+</Info>
 
 ## Discussion
 
