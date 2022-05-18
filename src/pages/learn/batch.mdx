@@ -1,0 +1,463 @@
+---
+title: Delta Operations
+width: full
+---
+
+import { ApacheSpark, DeltaLake } from "/src/components/Attributions";
+import { SparkSession } from "/src/components/DeltaLakeConcepts";
+import { CBCreateTable } from "/src/components/CodeBlocks";
+import 'react-tabs/style/react-tabs.css';
+import * as React from "react";
+
+## Table Operations
+
+<DeltaLake /> supports most of the options provided by <ApacheSpark /> DataFrame
+read and write APIs for performing batch reads and writes on tables. For
+many <DeltaLake /> operations on tables, you enable integration
+with <ApacheSpark /> DataSourceV2 and Catalog APIs (since 3.0) by setting
+configurations when you create a new <SparkSession />.
+
+<br/>
+
+For many <DeltaLake /> operations on tables, you enable integration with
+<ApacheSpark /> DataSourceV2 and Catalog APIs (since 3.0) by setting configurations
+when you create a new <SparkSession />.
+
+## Create a Table
+
+You can create tables in the following ways:
+
+- SQL DDL commands: You can use standard SQL DDL commands supported in Apache Spark (for example, CREATE TABLE and REPLACE TABLE) to create Delta tables.
+
+    <CBCreateTable
+      sql={
+    <div>
+
+    ```sql
+    CREATE TABLE IF NOT EXISTS default.people10m (
+     id INT,
+     firstName STRING,
+     middleName STRING,
+     lastName STRING,
+     gender STRING,
+     birthDate TIMESTAMP,
+     ssn STRING,
+     salary INT
+    ) USING DELTA
+
+    CREATE OR REPLACE TABLE default.people10m (
+     id INT,
+     firstName STRING,
+     middleName STRING,
+     lastName STRING,
+     gender STRING,
+     birthDate TIMESTAMP,
+     ssn STRING,
+     salary INT
+    ) USING DELTA
+    ```
+
+    </div>
+      }
+    />
+
+    SQL also supports creating a table at a path, without creating an entry in the Hive metastore.
+
+    <CBCreateTable
+      sql={
+    <div>
+
+    ```sql
+    -- Create or replace table with path
+    CREATE OR REPLACE TABLE delta.`/tmp/delta/people10m` (
+      id INT,
+      firstName STRING,
+      middleName STRING,
+      lastName STRING,
+      gender STRING,
+      birthDate TIMESTAMP,
+      ssn STRING,
+      salary INT
+    ) USING DELTA
+    ```
+
+    </div>
+      }
+    />
+
+- DataFrameWriter API: If you want to simultaneously create a table and insert data into it from Spark DataFrames or Datasets, you can use the Spark DataFrameWriter (Scala or Java and Python).
+
+    <CBCreateTable
+      python={
+    <div>
+
+    ```python
+    # Create table in the metastore using DataFrame's schema and write data to it
+    df.write.format("delta").saveAsTable("default.people10m")
+
+    # Create or replace partitioned table with path using DataFrame's schema and write/overwrite data to it
+    df.write.format("delta").mode("overwrite").save("/tmp/delta/people10m")
+    ```
+
+    </div>
+      }
+      scala={
+    <div>
+
+    ```scala
+    // Create table in the metastore using DataFrame's schema and write data to it
+    df.write.format("delta").saveAsTable("default.people10m")
+
+    // Create table with path using DataFrame's schema and write data to it
+    df.write.format("delta").mode("overwrite").save("/tmp/delta/people10m")
+    ```
+
+    </div>
+      }
+    />
+
+    You can also create Delta tables using the Spark DataFrameWriterV2 API.
+
+- DeltaTableBuilder API: You can also use the DeltaTableBuilder API in Delta Lake to create tables. Compared to the DataFrameWriter APIs, this API makes it easier to specify additional information like column comments, table properties, and generated columns.
+
+   <Info title="Note" level="info">
+     This feature is new and is in Preview.
+   </Info>
+
+    <CBCreateTable
+      python={
+    <div>
+
+    ```python
+    # Create table in the metastore
+    DeltaTable.createIfNotExists(spark) \
+      .tableName("default.people10m") \
+      .addColumn("id", "INT") \
+      .addColumn("firstName", "STRING") \
+      .addColumn("middleName", "STRING") \
+      .addColumn("lastName", "STRING", comment = "surname") \
+      .addColumn("gender", "STRING") \
+      .addColumn("birthDate", "TIMESTAMP") \
+      .addColumn("ssn", "STRING") \
+      .addColumn("salary", "INT") \
+      .execute()
+
+    # Create or replace table with path and add properties
+    DeltaTable.createOrReplace(spark) \
+      .addColumn("id", "INT") \
+      .addColumn("firstName", "STRING") \
+      .addColumn("middleName", "STRING") \
+      .addColumn("lastName", "STRING", comment = "surname") \
+      .addColumn("gender", "STRING") \
+      .addColumn("birthDate", "TIMESTAMP") \
+      .addColumn("ssn", "STRING") \
+      .addColumn("salary", "INT") \
+      .property("description", "table with people data") \
+      .location("/tmp/delta/people10m") \
+      .execute()
+    ```
+
+    </div>
+      }
+      scala={
+    <div>
+
+    ```scala
+    // Create table in the metastore
+    DeltaTable.createOrReplace(spark)
+      .tableName("default.people10m")
+      .addColumn("id", "INT")
+      .addColumn("firstName", "STRING")
+      .addColumn("middleName", "STRING")
+      .addColumn(
+        DeltaTable.columnBuilder("lastName")
+          .dataType("STRING")
+          .comment("surname")
+          .build())
+      .addColumn("lastName", "STRING", comment = "surname")
+      .addColumn("gender", "STRING")
+      .addColumn("birthDate", "TIMESTAMP")
+      .addColumn("ssn", "STRING")
+      .addColumn("salary", "INT")
+      .execute()
+
+    // Create or replace table with path and add properties
+    DeltaTable.createOrReplace(spark)
+      .addColumn("id", "INT")
+      .addColumn("firstName", "STRING")
+      .addColumn("middleName", "STRING")
+      .addColumn(
+        DeltaTable.columnBuilder("lastName")
+          .dataType("STRING")
+          .comment("surname")
+          .build())
+      .addColumn("lastName", "STRING", comment = "surname")
+      .addColumn("gender", "STRING")
+      .addColumn("birthDate", "TIMESTAMP")
+      .addColumn("ssn", "STRING")
+      .addColumn("salary", "INT")
+      .property("description", "table with people data")
+      .location("/tmp/delta/people10m")
+      .execute()
+    ```
+
+    </div>
+      }
+    />
+
+    See the API documentation for details.
+
+## Partition Data
+
+You can partition data to speed up queries or DML that have predicates involving the partition columns. To partition data when you create a Delta table, specify a partition by columns. The following example partitions by gender.
+
+<CBCreateTable
+  sql={
+  <div>
+
+  ```sql
+  -- Create table in the metastore
+  CREATE TABLE default.people10m (
+    id INT,
+    firstName STRING,
+    middleName STRING,
+    lastName STRING,
+    gender STRING,
+    birthDate TIMESTAMP,
+    ssn STRING,
+    salary INT
+  )
+  USING DELTA
+  PARTITIONED BY (gender)
+  ```
+
+  </div>
+  }
+  python={
+  <div>
+
+```python
+df.write.format("delta").partitionBy("gender").saveAsTable("default.people10m")
+
+DeltaTable.create(spark) \
+  .tableName("default.people10m") \
+  .addColumn("id", "INT") \
+  .addColumn("firstName", "STRING") \
+  .addColumn("middleName", "STRING") \
+  .addColumn("lastName", "STRING", comment = "surname") \
+  .addColumn("gender", "STRING") \
+  .addColumn("birthDate", "TIMESTAMP") \
+  .addColumn("ssn", "STRING") \
+  .addColumn("salary", "INT") \
+  .partitionedBy("gender") \
+  .execute()
+```
+
+  </div>
+  }
+  scala={
+  <div>
+
+  ```scala
+  df.write.format("delta").partitionBy("gender").saveAsTable("default.people10m")
+
+  DeltaTable.createOrReplace(spark)
+    .tableName("default.people10m")
+    .addColumn("id", "INT")
+    .addColumn("firstName", "STRING")
+    .addColumn("middleName", "STRING")
+    .addColumn(
+      DeltaTable.columnBuilder("lastName")
+        .dataType("STRING")
+        .comment("surname")
+        .build())
+    .addColumn("lastName", "STRING", comment = "surname")
+    .addColumn("gender", "STRING")
+    .addColumn("birthDate", "TIMESTAMP")
+    .addColumn("ssn", "STRING")
+    .addColumn("salary", "INT")
+    .partitionedBy("gender")
+    .execute()
+  ```
+
+  </div>
+  }
+/>
+
+To determine whether a table contains a specific partition, use the statement SELECT COUNT(*) &gt; 0 FROM &lt;table-name&gt; WHERE &lt;partition-column&gt; = &lt;value&gt;. If the partition exists, true is returned. For example:
+
+<CBCreateTable
+sql={
+  <div>
+
+  ```sql
+  SELECT COUNT(*) > 0 AS `Partition exists` FROM default.people10m WHERE gender = "M"
+  ```
+
+  </div>
+  }
+  python={
+  <div>
+
+  ```python
+  display(spark.sql("SELECT COUNT(*) > 0 AS `Partition exists` FROM default.people10m WHERE gender = 'M'"))
+  ```
+
+  </div>
+  }
+  scala={
+  <div>
+
+  ```scala
+  display(spark.sql("SELECT COUNT(*) > 0 AS `Partition exists` FROM default.people10m WHERE gender = 'M'"))
+  ```
+
+  </div>
+  }
+/>
+
+## Control Data Location
+
+For tables defined in the metastore, you can optionally specify the LOCATION as a path. Tables created with a specified LOCATION are considered unmanaged by the metastore. Unlike a managed table, where no path is specified, an unmanaged table’s files are not deleted when you DROP the table.
+
+When you run CREATE TABLE with a LOCATION that already contains data stored using Delta Lake, Delta Lake does the following:
+
+- If you specify only the table name and location, for example:
+
+  <CBCreateTable
+  sql={
+    <div>
+
+    ```sql
+    CREATE TABLE default.people10m
+    USING DELTA
+    LOCATION '/tmp/delta/people10m'
+    ```
+
+    </div>
+    }
+  />
+
+  the table in the metastore automatically inherits the schema, partitioning, and table properties of the existing data. This functionality can be used to “import” data into the metastore.
+
+- If you specify any configuration (schema, partitioning, or table properties), Delta Lake verifies that the specification exactly matches the configuration of the existing data.
+
+   <Info title="Important!" level="warning">
+     If the specified configuration does not exactly match the configuration of the data, Delta Lake throws an exception that describes the discrepancy.
+   </Info>
+
+
+<Info title="Note" level="info">
+   The metastore is not the source of truth about the latest information of a Delta table. In fact, the table definition in the metastore may not contain all the metadata like schema and properties. It contains the location of the table, and the table’s transaction log at the location is the source of truth. If you query the metastore from a system that is not aware of this Delta-specific customization, you may see incomplete or stale table information.
+</Info>
+
+## Use Generated Columns
+
+<Info title="Note" level="info">
+  This feature is new and is in Preview.
+</Info>
+
+Delta Lake supports generated columns which are a special type of columns whose values are automatically generated based on a user-specified function over other columns in the Delta table. When you write to a table with generated columns and you do not explicitly provide values for them, Delta Lake automatically computes the values. For example, you can automatically generate a date column (for partitioning the table by date) from the timestamp column; any writes into the table need only specify the data for the timestamp column. However, if you explicitly provide values for them, the values must satisfy the constraint (&lt;value&gt; &lt;=&gt; &lt;generation expression&gt;) IS TRUE or the write will fail with an error.
+
+<Info title="Important!" level="danger">
+  Tables created with generated columns have a higher table writer protocol version than the default. See Table protocol versioning to understand table protocol versioning and what it means to have a higher version of a table protocol version.
+</Info>
+
+The following example shows how to create a table with generated columns:
+
+- A generation expression can use any SQL functions in Spark that always return the same result when given the same argument values, except the following types of functions:
+  - User-defined functions.
+  - Aggregate functions.
+  - Window functions.
+  - Functions returning multiple rows.
+- For Delta Lake 1.1.0 and above, MERGE operations support generated columns when you set spark.databricks.delta.schema.autoMerge.enabled to true.
+
+Delta Lake may be able to generate partition filters for a query whenever a partition column is defined by one of the following expressions:
+
+- CAST(col AS DATE) and the type of col is TIMESTAMP.
+- YEAR(col) and the type of col is TIMESTAMP.
+- Two partition columns defined by YEAR(col), MONTH(col) and the type of col is TIMESTAMP.
+- Three partition columns defined by YEAR(col), MONTH(col), DAY(col) and the type of col is TIMESTAMP.
+- Four partition columns defined by YEAR(col), MONTH(col), DAY(col), HOUR(col) and the type of col is TIMESTAMP.
+- SUBSTRING(col, pos, len) and the type of col is STRING
+- DATE_FORMAT(col, format) and the type of col is TIMESTAMP.
+
+If a partition column is defined by one of the preceding expressions, and a query filters data using the underlying base column of a generation expression, Delta Lake looks at the relationship between the base column and the generated column, and populates partition filters based on the generated partition column if possible. For example, given the following table:
+
+<CBCreateTable
+  python={
+  <div>
+
+  ```python
+  DeltaTable.create(spark) \
+    .tableName("default.events") \
+    .addColumn("eventId", "BIGINT") \
+    .addColumn("data", "STRING") \
+    .addColumn("eventType", "STRING") \
+    .addColumn("eventTime", "TIMESTAMP") \
+    .addColumn("eventDate", "DATE", generatedAlwaysAs="CAST(eventTime AS DATE)") \
+    .partitionedBy("eventType", "eventDate") \
+    .execute()
+  ```
+
+  </div>
+  }
+/>
+
+If you then run the following query:
+
+<CBCreateTable
+  python={
+  <div>
+
+  ```python
+  spark.sql('SELECT * FROM default.events WHERE eventTime >= "2020-10-01 00:00:00" <= "2020-10-01 12:00:00"')
+  ```
+
+  </div>
+  }
+/>
+
+Delta Lake automatically generates a partition filter so that the preceding query only reads the data in partition date=2020-10-01 even if a partition filter is not specified.
+
+As another example, given the following table:
+
+<CBCreateTable
+  python={
+  <div>
+
+  ```python
+  DeltaTable.create(spark) \
+    .tableName("default.events") \
+    .addColumn("eventId", "BIGINT") \
+    .addColumn("data", "STRING") \
+    .addColumn("eventType", "STRING") \
+    .addColumn("eventTime", "TIMESTAMP") \
+    .addColumn("year", "INT", generatedAlwaysAs="YEAR(eventTime)") \
+    .addColumn("month", "INT", generatedAlwaysAs="MONTH(eventTime)") \
+    .addColumn("day", "INT", generatedAlwaysAs="DAY(eventTime)") \
+    .partitionedBy("eventType", "year", "month", "day") \
+    .execute()
+  ```
+
+  </div>
+  }
+/>
+
+If you then run the following query:
+
+<CBCreateTable
+  python={
+  <div>
+
+  ```python
+  spark.sql('SELECT * FROM default.events WHERE eventTime >= "2020-10-01 00:00:00" <= "2020-10-01 12:00:00"')
+  ```
+
+  </div>
+  }
+/>
+
+Delta Lake automatically generates a partition filter so that the preceding query only reads the data in partition year=2020/month=10/day=01 even if a partition filter is not specified.
+
+You can use an EXPLAIN clause and check the provided plan to see whether Delta Lake automatically generates any partition filters.
