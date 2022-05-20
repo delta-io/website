@@ -15,13 +15,13 @@ This is the proposed Delta Lake 2022 H1 roadmap discussion thread. Below are the
 
 Based on the overwhelming feedback from the Delta Users [Slack](https://go.delta.io/delta-users), [Google Groups](https://groups.google.com/forum/#!forum/delta-users), Community AMAs (on [Delta Lake YouTube](http://youtube.com/c/deltalake)), Delta Lake 2021H2 survey, and [2021H2 roadmap](https://github.com/delta-io/delta/issues/748), we propose the following Delta Lake performance enhancements in the next two quarters.
 
-| Issue                                               | Description                                                                                                                                                                             | Target CY2022                                                |
-| :-------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
-| [927](https://github.com/delta-io/delta/issues/927) | **OPTIMIZE (file compaction)**: Table optimize is an operation to rearrange the data and/or metadata to speed up queries and/or reduce the metadata size                                | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
-| [923](https://github.com/delta-io/delta/issues/923) | **File skipping using columns stats**: This is a performance optimization that aims at speeding up queries that contain filters (WHERE clauses) on non-partitionBy columns.             | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
-| [931](https://github.com/delta-io/delta/issues/931) | **Automatic data skipping using generated columns**: Enhance [generated columns](https://docs.delta.io/1.0.0/delta-batch.html#use-generated-columns) to include automatic data skipping | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
-|                                                     | **OPTIMIZE ZORDER**: Data clustering via multi-column locality-preserving space-filling curves with offline sorting.                                                                    | Q2                                                           |
-|                                                     | **MERGE Performance Improvements**: We will be providing a project improvement plan (PIP) document shortly on the proposed design for discussion.                                       | Q2/Q3                                                        |
+| Issue                                                 | Description                                                                                                                                                                             | Target CY2022                                                |
+| :---------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| [927](https://github.com/delta-io/delta/issues/927)   | **OPTIMIZE (file compaction)**: Table optimize is an operation to rearrange the data and/or metadata to speed up queries and/or reduce the metadata size                                | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
+| [923](https://github.com/delta-io/delta/issues/923)   | **File skipping using columns stats**: This is a performance optimization that aims at speeding up queries that contain filters (WHERE clauses) on non-partitionBy columns.             | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
+| [931](https://github.com/delta-io/delta/issues/931)   | **Automatic data skipping using generated columns**: Enhance [generated columns](https://docs.delta.io/1.0.0/delta-batch.html#use-generated-columns) to include automatic data skipping | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
+| [1134](https://github.com/delta-io/delta/issues/1134) | **OPTIMIZE ZORDER**: Data clustering via multi-column locality-preserving space-filling curves with offline sorting.                                                                    | Q3/Q4                                                        |
+|                                                       | **MERGE Performance Improvements**: We will be providing a project improvement plan (PIP) document shortly on the proposed design for discussion.                                       | Q2/Q3                                                        |
 
 <br />
 
@@ -31,11 +31,12 @@ Based on the overwhelming feedback from the Delta Users [Slack](https://go.delta
 
 For this year, our focus will be on columnar mappings.
 
-| Issue                                               | Description                                                                                       | Target CY2022                                                |
-| :-------------------------------------------------- | :------------------------------------------------------------------------------------------------ | :----------------------------------------------------------- |
-| [958](https://github.com/delta-io/delta/issues/958) | **Support for renaming column**: Rename column with ALTER TABLE                                   | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
-| [957](https://github.com/delta-io/delta/issues/957) | **Support for arbitrary column names**: Support characters in column names not allowed by Parquet | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
-|                                                     | **Support for dropping columns**: Drop column with ALTER TABLE                                    | Q2                                                           |
+| Issue                                               | Description                                                                                                                                                                              | Target CY2022                                                |
+| :-------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| [958](https://github.com/delta-io/delta/issues/958) | **Support for renaming column**: Rename column with ALTER TABLE                                                                                                                          | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
+| [957](https://github.com/delta-io/delta/issues/957) | **Support for arbitrary column names**: Support characters in column names not allowed by Parquet                                                                                        | [1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) |
+|                                                     | **Support for dropping columns**: Drop column with ALTER TABLE                                                                                                                           | Q2                                                           |
+| [348](https://github.com/delta-io/delta/issues/348) | **Support for dynamic partition overwrite**: Currently you can overwrite using the `replaceWhere` option but in various scenarios, it is more convenient to specify overwrite partition. | Q2                                                           |
 
 <br />
 
@@ -76,6 +77,7 @@ Two very popular requests are planned for this semester: Table Restore, S3 multi
 
 ### Updates
 
+- 2022-05-18: Include Issue [348](https://github.com/delta-io/delta/issues/348) for the dynamic partition overwrite feature request
 - 2022-05-03: Updated tables with [Delta Lake 1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) release.
 - 2022-03-08: Based on community feedback, we are also prioritizing Hive/Delta writer, clones, and CDF
 
