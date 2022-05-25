@@ -28,8 +28,14 @@ const HomePage = () => (
         title="Build Lakehouses with Delta Lake"
         description={
           <>
-            Delta Lake is an open-source storage framework that enables building
-            a <br />{" "}
+            {" "}
+            <Link
+              href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf"
+              newTab
+            >
+              Delta Lake
+            </Link>{" "}
+            is an open-source storage framework that enables building a <br />{" "}
             <Link
               href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
               newTab
