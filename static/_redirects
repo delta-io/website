@@ -1,4 +1,7 @@
 # Redirects from what the browser requests to what we serve
-/home              /
-/blogs/		       /blog
-/blog-gallery/     /blog
+
+/home /
+/blogs/ /blog
+/blog-gallery/ /blog
+/blog-gallery/page/1/ /blog
+/blog-gallery/page/2/ /blog
