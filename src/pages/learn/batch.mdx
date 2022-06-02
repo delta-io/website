@@ -31,8 +31,8 @@ You can create tables in the following ways:
 - SQL DDL commands: You can use standard SQL DDL commands supported in Apache Spark (for example, CREATE TABLE and REPLACE TABLE) to create Delta tables.
 
     <CBCreateTable
-    sql={
-  <div>
+  sql={
+<div>
 
   ```sql
   CREATE TABLE IF NOT EXISTS default.people10m (
@@ -59,14 +59,14 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
   SQL also supports creating a table at a path, without creating an entry in the Hive metastore.
 
     <CBCreateTable
-    sql={
-  <div>
+  sql={
+<div>
 
   ```sql
   -- Create or replace table with path
@@ -83,14 +83,14 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
 - DataFrameWriter API: If you want to simultaneously create a table and insert data into it from Spark DataFrames or Datasets, you can use the Spark DataFrameWriter (Scala or Java and Python).
 
     <CBCreateTable
-    python={
-  <div>
+  python={
+<div>
 
   ```python
   # Create table in the metastore using DataFrame's schema and write data to it
@@ -101,9 +101,9 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-    scala={
-  <div>
+  }
+  scala={
+<div>
 
   ```scala
   // Create table in the metastore using DataFrame's schema and write data to it
@@ -114,21 +114,22 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
   You can also create Delta tables using the Spark DataFrameWriterV2 API.
 
 - DeltaTableBuilder API: You can also use the DeltaTableBuilder API in Delta Lake to create tables. Compared to the DataFrameWriter APIs, this API makes it easier to specify additional information like column comments, table properties, and generated columns.
 
   {" "}
+
   <Info title="Note" level="info">
     This feature is new and is in Preview.
   </Info>
 
     <CBCreateTable
-    python={
-  <div>
+  python={
+<div>
 
   ```python
   # Create table in the metastore
@@ -160,9 +161,9 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-    scala={
-  <div>
+  }
+  scala={
+<div>
 
   ```scala
   // Create table in the metastore
@@ -204,8 +205,8 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
   See the API documentation for details.
 
@@ -328,7 +329,7 @@ When you run CREATE TABLE with a LOCATION that already contains data stored usin
 
   <CBCreateTable
 sql={
-  <div>
+<div>
 
   ```sql
   CREATE TABLE default.people10m
@@ -337,7 +338,7 @@ sql={
   ```
 
     </div>
-  }
+}
 />
 
   the table in the metastore automatically inherits the schema, partitioning, and table properties of the existing data. This functionality can be used to “import” data into the metastore.
@@ -345,6 +346,7 @@ sql={
 - If you specify any configuration (schema, partitioning, or table properties), Delta Lake verifies that the specification exactly matches the configuration of the existing data.
 
   {" "}
+
   <Info title="Important!" level="warning">
     If the specified configuration does not exactly match the configuration of
     the data, Delta Lake throws an exception that describes the discrepancy.
