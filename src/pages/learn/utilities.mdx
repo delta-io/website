@@ -346,4 +346,4 @@ You can easily convert a Delta table back to a Parquet table using the following
 
 1. If you have performed Delta Lake operations that can change the data files (for example, `delete` or `merge`), run [vacuum](#delta-vacuum) with retention of 0 hours to delete all data files that do not belong to the latest version of the table.
 
-#. Delete the `_delta_log` directory in the table directory.
+2. Delete the `_delta_log` directory in the table directory.
