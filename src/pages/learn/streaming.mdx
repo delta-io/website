@@ -1,5 +1,5 @@
 ---
-title: Streaming
+title: Delta Lake on Apache Spark - Streaming operations
 width: full
 ---
 
@@ -8,10 +8,6 @@ import { ApacheSpark, DeltaLake } from "/src/components/Attributions";
 import { SparkSession } from "/src/components/DeltaLakeConcepts";
 import { CBCreateTable } from "/src/components/CodeBlocks";
 import "react-tabs/style/react-tabs.css";
-
-Learn how to use Delta tables as streaming sources and sinks.
-
-# Table streaming reads and writes
 
 <DeltaLake /> is deeply integrated with Spark Structured Streaming through
 `readStream` and `writeStream`. <DeltaLake /> overcomes many of the limitations
@@ -25,6 +21,30 @@ For many <DeltaLake /> operations on tables, you enable integration with <Apache
 ## Delta table as a source
 
 When you load a Delta table as a stream source and use it in a streaming query, the query processes all of the data present in the table as well as any new data that arrives after the stream is started.
+
+<CBCreateTable
+scala={
+  <div>
+
+```scala
+spark.readStream.format("delta")
+  .load("/tmp/delta/events")
+import io.delta.implicits._
+spark.readStream.delta("/tmp/delta/events")
+```
+
+  </div>
+  }
+  python={
+  <div>
+
+```python
+spark.readStream.format("delta").load("/tmp/delta/events")
+```
+
+  </div>
+  }
+/>
 
 ### Limit input rate
 
@@ -58,19 +78,56 @@ For example, suppose you have a table `user_events` with `date`, `user_email`, a
 
 When you delete at partition boundaries (that is, the `WHERE` is on a partition column), the files are already segmented by value so the delete just drops those files from the metadata. Thus, if you just want to delete data from some partitions, you can use:
 
+<CBCreateTable
+scala={
+  <div>
+
 ```scala
 spark.readStream.format("delta")
   .option("ignoreDeletes", "true")
   .load("/tmp/delta/user_events")
 ```
 
+  </div>
+  }
+  python={
+  <div>
+
+```python
+spark.readStream.format("delta") \
+  .option("ignoreDeletes", "true") \
+  .load("/tmp/delta/user_events")
+```
+
+  </div>
+  }
+/>
 However, if you have to delete data based on `user_email`, then you will need to use:
+
+<CBCreateTable
+scala={
+  <div>
 
 ```scala
 spark.readStream.format("delta")
   .option("ignoreChanges", "true")
   .load("/tmp/delta/user_events")
 ```
+
+  </div>
+  }
+  python={
+  <div>
+
+```python
+spark.readStream.format("delta") \
+  .option("ignoreChanges", "true") \
+  .load("/tmp/delta/user_events")
+```
+
+  </div>
+  }
+/>
 
 If you update a `user_email` with the `UPDATE` statement, the file containing the `user_email` in question is rewritten. When you use `ignoreChanges`, the new record is propagated downstream with all other unchanged records that were in the same file. Your logic should be able to handle these incoming duplicate records.
 
@@ -79,7 +136,7 @@ If you update a `user_email` with the `UPDATE` statement, the file containing th
 You can use the following options to specify the starting point of the <DeltaLake /> streaming source without processing the entire table.
 
 - `startingVersion`: The <DeltaLake /> version to start from. All table changes starting from this version (inclusive) will be read by the streaming source. You can obtain the commit versions from the `version` column of the DESCRIBE HISTORY command output.
-- To return only the latest changes, specify `latest`.
+  - To return only the latest changes, specify `latest`.
 - `startingTimestamp`: The timestamp to start from. All table changes committed at or after the timestamp (inclusive) will be read by the streaming source. One of:
 
   - A timestamp string. For example, `"2019-01-01T00:00:00.000Z"`.
@@ -100,19 +157,57 @@ You cannot set both options at the same time; you can use only one of them. They
 
 For example, suppose you have a table `user_events`. If you want to read changes since version 5, use:
 
+<CBCreateTable
+scala={
+  <div>
+
 ```scala
 spark.readStream.format("delta")
   .option("startingVersion", "5")
   .load("/tmp/delta/user_events")
 ```
 
+  </div>
+  }
+  python={
+  <div>
+
+```python
+spark.readStream.format("delta") \
+  .option("startingVersion", "5") \
+  .load("/tmp/delta/user_events")
+```
+
+  </div>
+  }
+/>
+
 If you want to read changes since 2018-10-18, use:
+
+<CBCreateTable
+scala={
+  <div>
 
 ```scala
 spark.readStream.format("delta")
   .option("startingTimestamp", "2018-10-18")
   .load("/tmp/delta/user_events")
 ```
+
+  </div>
+  }
+  python={
+  <div>
+
+```python
+spark.readStream.format("delta") \
+  .option("startingTimestamp", "2018-10-18") \
+  .load("/tmp/delta/user_events")
+```
+
+  </div>
+  }
+/>
 
 ## Delta table as a sink
 
@@ -159,7 +254,7 @@ events.writeStream
   }
 />
 
-or the `toTable` method in Spark 3.1 and higher, as follows. (In Spark versions before 3.1, use the `table` method instead.)
+or the `toTable` method in Spark 3.1 and higher, as follows.
 
 <CBCreateTable
 scala={
@@ -193,6 +288,10 @@ scala={
 
 You can also use Structured Streaming to replace the entire table with every batch. One example use case is to compute a summary using aggregation:
 
+<CBCreateTable
+scala={
+  <div>
+
 ```scala
 spark.readStream
   .format("delta")
@@ -206,6 +305,77 @@ spark.readStream
   .start("/tmp/delta/eventsByCustomer")
 ```
 
+  </div>
+  }
+  python={
+  <div>
+
+```python
+spark.readStream \
+  .format("delta") \
+  .load("/tmp/delta/events") \
+  .groupBy("customerId") \
+  .count() \
+  .writeStream \
+  .format("delta") \
+  .outputMode("complete") \
+  .option("checkpointLocation", "/tmp/delta/eventsByCustomer/_checkpoints/streaming-agg") \
+  .start("/tmp/delta/eventsByCustomer")
+```
+
+  </div>
+  }
+/>
+
 The preceding example continuously updates a table that contains the aggregate number of events by customer.
 
 For applications with more lenient latency requirements, you can save computing resources with one-time triggers. Use these to update summary aggregation tables on a given schedule, processing only new data that has arrived since the last update.
+
+### Idempotent writes
+
+Sometimes a job that writes data to a Delta table is restarted due to various reasons (for example, job encounters a failure). The failed job may or may not have written the data to Delta table before terminating. In the case where the data is written to the Delta table, the restarted job writes the same data to the Delta table which results in duplicate data.
+
+To address this, Delta tables support the following `DataFrameWriter` options to make the writes idempotent:
+
+- `txnAppId`: A unique string that you can pass on each `DataFrame` write. For example, this can be the name of the job.
+- `txnVersion`: A monotonically increasing number that acts as transaction version. This number needs to be unique for data that is being written to the Delta table(s). For example, this can be the epoch seconds of the instant when the query is attempted for the first time. Any subsequent restarts of the same job needs to have the same value for `txnVersion`.
+
+The above combination of options needs to be unique for each new data that is being ingested into the Delta table and the `txnVersion` needs to be higher than the last data that was ingested into the Delta table. For example:
+
+- Last successfully written data contains option values as `dailyETL:23423` (`txnAppId:txnVersion`)
+- Next write of data should have `txnAppId = dailyETL` and `txnVersion` as at least `23424` (one more than the last written data `txnVersion`).
+- Any attempt to write data with `txnAppId = dailyETL` and `txnVersion` as `23422` or less is ignored because the `txnVersion` is less than the last recorded `txnVersion` in the table.
+- Attempt to write data with `txnAppId:txnVersion` as `anotherETL:23424` is successful writing data to the table as it contains a different `txnAppId` compared to the same option value in last ingested data.
+
+<Info title="Warning" level="warning">
+
+This solution assumes that the data being written to Delta table(s) in multiple retries of the job is same. If a write attempt in a Delta table succeeds but due to some downstream failure there is a second write attempt with same txn options but different data, then that second write attempt will be ignored. This can cause unexpected results.
+
+</Info>
+
+#### Example
+
+<CBCreateTable
+scala={
+  <div>
+
+```scala
+val appId = ... // A unique string that is used as an application ID.
+version = ... // A monotonically increasing number that acts as transaction version.
+dataFrame.write.format(...).option("txnVersion", version).option("txnAppId", appId).save(...)
+```
+
+  </div>
+  }
+  python={
+  <div>
+
+```python
+app_id = ... # A unique string that is used as an application ID.
+version = ... # A monotonically increasing number that acts as transaction version.
+dataFrame.write.format(...).option("txnVersion", version).option("txnAppId", app_id).save(...)
+```
+
+  </div>
+  }
+/>
