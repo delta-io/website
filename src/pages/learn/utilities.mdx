@@ -521,7 +521,7 @@ deltaTable.restoreToTimestamp("2019-02-14") // restore to a specific timestamp
   }
 />
 
-<Info title="Important " level="info">
+<Info title="Important" level="info">
 
 Restore is considered a data-changing operation. <DeltaLake /> log entries added by the `RESTORE` command contain [dataChange](https://github.com/delta-io/delta/blob/master/PROTOCOL.md#add-file-and-remove-file) set to true. If there is a downstream application, such as a [Structured streaming](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) job that processes the updates to a <DeltaLake /> table, the data change log entries added by the restore operation are considered as new data updates, and processing them may result in duplicate data.
 
