@@ -31,8 +31,8 @@ You can create tables in the following ways:
 - SQL DDL commands: You can use standard SQL DDL commands supported in Apache Spark (for example, CREATE TABLE and REPLACE TABLE) to create Delta tables.
 
     <CBCreateTable
-    sql={
-  <div>
+  sql={
+<div>
 
   ```sql
   CREATE TABLE IF NOT EXISTS default.people10m (
@@ -59,14 +59,14 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
   SQL also supports creating a table at a path, without creating an entry in the Hive metastore.
 
     <CBCreateTable
-    sql={
-  <div>
+  sql={
+<div>
 
   ```sql
   -- Create or replace table with path
@@ -83,14 +83,14 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
 - DataFrameWriter API: If you want to simultaneously create a table and insert data into it from Spark DataFrames or Datasets, you can use the Spark DataFrameWriter (Scala or Java and Python).
 
     <CBCreateTable
-    python={
-  <div>
+  python={
+<div>
 
   ```python
   # Create table in the metastore using DataFrame's schema and write data to it
@@ -101,9 +101,9 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-    scala={
-  <div>
+  }
+  scala={
+<div>
 
   ```scala
   // Create table in the metastore using DataFrame's schema and write data to it
@@ -114,21 +114,22 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
   You can also create Delta tables using the Spark DataFrameWriterV2 API.
 
 - DeltaTableBuilder API: You can also use the DeltaTableBuilder API in Delta Lake to create tables. Compared to the DataFrameWriter APIs, this API makes it easier to specify additional information like column comments, table properties, and generated columns.
 
   {" "}
+
   <Info title="Note" level="info">
     This feature is new and is in Preview.
   </Info>
 
     <CBCreateTable
-    python={
-  <div>
+  python={
+<div>
 
   ```python
   # Create table in the metastore
@@ -160,9 +161,9 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-    scala={
-  <div>
+  }
+  scala={
+<div>
 
   ```scala
   // Create table in the metastore
@@ -204,8 +205,8 @@ You can create tables in the following ways:
   ```
 
     </div>
-    }
-  />
+  }
+/>
 
   See the API documentation for details.
 
@@ -217,70 +218,70 @@ You can partition data to speed up queries or DML that have predicates involving
   sql={
   <div>
 
-```sql
--- Create table in the metastore
-CREATE TABLE default.people10m (
-  id INT,
-  firstName STRING,
-  middleName STRING,
-  lastName STRING,
-  gender STRING,
-  birthDate TIMESTAMP,
-  ssn STRING,
-  salary INT
-)
-USING DELTA
-PARTITIONED BY (gender)
-```
+    ```sql
+    -- Create table in the metastore
+    CREATE TABLE default.people10m (
+      id INT,
+      firstName STRING,
+      middleName STRING,
+      lastName STRING,
+      gender STRING,
+      birthDate TIMESTAMP,
+      ssn STRING,
+      salary INT
+    )
+    USING DELTA
+    PARTITIONED BY (gender)
+    ```
 
   </div>
   }
   python={
   <div>
 
-```python
-df.write.format("delta").partitionBy("gender").saveAsTable("default.people10m")
+    ```python
+    df.write.format("delta").partitionBy("gender").saveAsTable("default.people10m")
 
-DeltaTable.create(spark) \
-  .tableName("default.people10m") \
-  .addColumn("id", "INT") \
-  .addColumn("firstName", "STRING") \
-  .addColumn("middleName", "STRING") \
-  .addColumn("lastName", "STRING", comment = "surname") \
-  .addColumn("gender", "STRING") \
-  .addColumn("birthDate", "TIMESTAMP") \
-  .addColumn("ssn", "STRING") \
-  .addColumn("salary", "INT") \
-  .partitionedBy("gender") \
-  .execute()
-```
+    DeltaTable.create(spark) \
+      .tableName("default.people10m") \
+      .addColumn("id", "INT") \
+      .addColumn("firstName", "STRING") \
+      .addColumn("middleName", "STRING") \
+      .addColumn("lastName", "STRING", comment = "surname") \
+      .addColumn("gender", "STRING") \
+      .addColumn("birthDate", "TIMESTAMP") \
+      .addColumn("ssn", "STRING") \
+      .addColumn("salary", "INT") \
+      .partitionedBy("gender") \
+      .execute()
+    ```
 
   </div>
   }
   scala={
   <div>
 
-```scala
-df.write.format("delta").partitionBy("gender").saveAsTable("default.people10m")
+    ```scala
+    df.write.format("delta").partitionBy("gender").saveAsTable("default.people10m")
 
-DeltaTable.createOrReplace(spark)
-  .tableName("default.people10m")
-  .addColumn("id", "INT")
-  .addColumn("firstName", "STRING")
-  .addColumn("middleName", "STRING")
-  .addColumn(
-    DeltaTable.columnBuilder("lastName")
-      .dataType("STRING")
-      .comment("surname")
-      .build())
-  .addColumn("lastName", "STRING", comment = "surname")
-  .addColumn("gender", "STRING")
-  .addColumn("birthDate", "TIMESTAMP")
-  .addColumn("ssn", "STRING")
-  .addColumn("salary", "INT")
-  .partitionedBy("gender")
-  .execute()
-```
+    DeltaTable.createOrReplace(spark)
+      .tableName("default.people10m")
+      .addColumn("id", "INT")
+      .addColumn("firstName", "STRING")
+      .addColumn("middleName", "STRING")
+      .addColumn(
+        DeltaTable.columnBuilder("lastName")
+          .dataType("STRING")
+          .comment("surname")
+          .build())
+      .addColumn("lastName", "STRING", comment = "surname")
+      .addColumn("gender", "STRING")
+      .addColumn("birthDate", "TIMESTAMP")
+      .addColumn("ssn", "STRING")
+      .addColumn("salary", "INT")
+      .partitionedBy("gender")
+      .execute()
+    ```
 
   </div>
   }
@@ -327,14 +328,14 @@ When you run CREATE TABLE with a LOCATION that already contains data stored usin
 - If you specify only the table name and location, for example:
 
   <CBCreateTable
-sql={
+  sql={
   <div>
 
-  ```sql
-  CREATE TABLE default.people10m
-  USING DELTA
-  LOCATION '/tmp/delta/people10m'
-  ```
+      ```sql
+      CREATE TABLE default.people10m
+      USING DELTA
+      LOCATION '/tmp/delta/people10m'
+      ```
 
     </div>
   }
@@ -344,7 +345,6 @@ sql={
 
 - If you specify any configuration (schema, partitioning, or table properties), Delta Lake verifies that the specification exactly matches the configuration of the existing data.
 
-  {" "}
   <Info title="Important!" level="warning">
     If the specified configuration does not exactly match the configuration of
     the data, Delta Lake throws an exception that describes the discrepancy.
