@@ -133,10 +133,37 @@ const footer = [
   },
 ];
 
+const docs = [
+  {
+    label: "Apache Spark",
+  },
+  {
+    label: "> Batch operations",
+    url: "/docs/spark/batch",
+  },
+  {
+    label: "> Streaming operations",
+    url: "/docs/spark/streaming",
+  },
+  {
+    label: "> Update operations",
+    url: "/docs/spark/updates",
+  },
+  {
+    label: "> Utility operations",
+    url: "/docs/spark/utilities",
+  },
+  {
+    label: "> Constraints",
+    url: "/docs/spark/constraints",
+  },
+];
+
 module.exports = {
   community,
   footer,
   learn,
   main,
   social,
+  docs,
 };
