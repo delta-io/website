@@ -1,7 +1,12 @@
 ---
 title: Delta Lake on Apache Spark - Updates, deletes, and merges
-menu: docs
+width: full
 ---
+
+import { ApacheSpark, DeltaLake } from "/src/components/Attributions";
+import { SparkSession } from "/src/components/DeltaLakeConcepts";
+import { CBCreateTable } from "/src/components/CodeBlocks";
+import "react-tabs/style/react-tabs.css";
 
 Delta Lake supports several statements to facilitate deleting data from and updating data in Delta tables.
 
@@ -11,11 +16,20 @@ Delta Lake supports several statements to facilitate deleting data from and upda
 
 You can remove data that matches a predicate from a Delta table. For instance, to delete all events from before `2017`, you can run the following:
 
+<CBCreateTable
+sql={
+  <div>
+
 ```sql
 DELETE FROM events WHERE date < '2017-01-01'
 
 DELETE FROM delta.`/data/events/` WHERE date < '2017-01-01'
 ```
+
+  </div>
+  }
+  python={
+  <div>
 
 ```python
 from delta.tables import *
@@ -27,6 +41,11 @@ deltaTable.delete("date < '2017-01-01'")        # predicate using SQL formatted 
 
 deltaTable.delete(col("date") < "2017-01-01")   # predicate using Spark SQL functions
 ```
+
+  </div>
+  }
+  scala={
+  <div>
 
 ```scala
 import io.delta.tables._
@@ -41,6 +60,11 @@ import spark.implicits._
 deltaTable.delete(col("date") < "2017-01-01")       // predicate using Spark SQL functions and implicits
 ```
 
+  </div>
+  }
+  java={
+  <div>
+
 ```java
 import io.delta.tables.*;
 import org.apache.spark.sql.functions;
@@ -52,11 +76,23 @@ deltaTable.delete("date < '2017-01-01'");            // predicate using SQL form
 deltaTable.delete(functions.col("date").lt(functions.lit("2017-01-01")));   // predicate using Spark SQL functions
 ```
 
+</div>
+  }
+/>
+See [Configure SparkSession](https://docs.delta.io/latest/delta-batch.html#-sql-support) for the steps to enable support for SQL commands.
 See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for details.
 
-`delete` removes the data from the latest version of the Delta table but does not remove it from the physical storage until the old versions are explicitly vacuumed. See [vacuum](https://delta.io/docs/spark/utilities#delta-vacuum) for details.
+<Info title="Important" level="warning">
+  `delete` removes the data from the latest version of the Delta table but does
+  not remove it from the physical storage until the old versions are explicitly
+  vacuumed. See [vacuum](https://delta.io/docs/spark/utilities#delta-vacuum) for
+  details.
+</Info>
 
-When possible, provide predicates on the partition columns for a partitioned Delta table as such predicates can significantly speed up the operation.
+<Info title="Info" level="info">
+  When possible, provide predicates on the partition columns for a partitioned
+  Delta table as such predicates can significantly speed up the operation.
+</Info>
 
 <a id="delta-update"></a>
 
@@ -64,11 +100,20 @@ When possible, provide predicates on the partition columns for a partitioned Del
 
 You can update data that matches a predicate in a Delta table. For example, to fix a spelling mistake in the `eventType`, you can run the following:
 
+<CBCreateTable
+sql={
+  <div>
+
 ```sql
 UPDATE events SET eventType = 'click' WHERE eventType = 'clck'
 
 UPDATE delta.`/data/events/` SET eventType = 'click' WHERE eventType = 'clck'
 ```
+
+  </div>
+  }
+  python={
+  <div>
 
 ```python
 from delta.tables import *
@@ -80,6 +125,11 @@ deltaTable.update("eventType = 'clck'", { "eventType": "'click'" } )   # predica
 
 deltaTable.update(col("eventType") == "clck", { "eventType": lit("click") } )   # predicate using Spark SQL functions
 ```
+
+  </div>
+  }
+  scala={
+  <div>
 
 ```scala
 import io.delta.tables._
@@ -97,6 +147,11 @@ deltaTable.update(                // predicate using Spark SQL functions and imp
   col("eventType") === "clck",
   Map("eventType" -> lit("click")));
 ```
+
+  </div>
+  }
+  java={
+  <div>
 
 ```java
 import io.delta.tables.*;
@@ -120,9 +175,16 @@ deltaTable.update(                // predicate using Spark SQL functions
 );
 ```
 
+  </div>
+  }
+/>
+See [Configure SparkSession](https://docs.delta.io/latest/delta-batch.html#-sql-support) for the steps to enable support for SQL commands.
 See the [Delta API Documentation](https://docs.delta.io/latest/delta-apidoc.html) for details.
 
-Similar to delete, update operations can get a significant speedup with predicates on partitions.
+<Info title="Info" level="info">
+  Similar to delete, update operations can get a significant speedup with
+  predicates on partitions.
+</Info>
 
 <a id="delta-merge"></a>
 
@@ -131,6 +193,10 @@ Similar to delete, update operations can get a significant speedup with predicat
 You can upsert data from a source table, view, or DataFrame into a target Delta table using the `MERGE` SQL operation. Delta Lake supports inserts, updates and deletes in `MERGE`, and supports extended syntax beyond the SQL standards to facilitate advanced use cases.
 
 Suppose you have a Spark DataFrame that contains new data for events with `eventId`. Some of these events may already be present in the `events` table. To merge the new data into the `events` table, you want to update the matching rows (that is, `eventId` already present) and insert the new rows (that is, `eventId` not present). You can run the following:
+
+<CBCreateTable
+sql={
+  <div>
 
 ```sql
 MERGE INTO events
@@ -141,6 +207,11 @@ WHEN MATCHED THEN
 WHEN NOT MATCHED
   THEN INSERT (date, eventId, data) VALUES (date, eventId, data)
 ```
+
+  </div>
+  }
+  python={
+  <div>
 
 ```python
 from delta.tables import *
@@ -160,6 +231,11 @@ deltaTable.alias("events").merge(
   ) \
   .execute()
 ```
+
+  </div>
+  }
+  scala={
+  <div>
 
 ```scala
 import io.delta.tables._
@@ -183,6 +259,11 @@ DeltaTable.forPath(spark, "/data/events/")
       "data" -> "updates.data"))
   .execute()
 ```
+
+  </div>
+  }
+  java={
+  <div>
 
 ```java
 import io.delta.tables.*;
@@ -211,6 +292,10 @@ DeltaTable.forPath(spark, "/data/events/")
   .execute();
 ```
 
+</div>
+  }
+/>
+
 See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for Scala, Java, and Python syntax details.
 
 ### Operation semantics
@@ -237,7 +322,7 @@ Here is a detailed description of the `merge` programmatic operation.
 
     for all the columns of the target Delta table. Therefore, this action assumes that the source table has the same columns as those in the target table, otherwise the query throws an analysis error.
 
-    This behavior changes when automatic schema migration is enabled. See [Automatic schema evolution](#merge-schema-evolution) for details.
+    This behavior changes when automatic schema migration is enabled. See [Automatic schema evolution](https://docs.delta.io/latest/delta-update#merge-schema-evolution) for details.
 
 - `whenNotMatched` clauses are executed when a source row does not match any target row based on the match condition. These clauses have the following semantics.
 
@@ -255,16 +340,32 @@ Here is a detailed description of the `merge` programmatic operation.
 
     for all the columns of the target Delta table. Therefore, this action assumes that the source table has the same columns as those in the target table, otherwise the query throws an analysis error.
 
-    This behavior changes when automatic schema migration is enabled. See [Automatic schema evolution](#merge-schema-evolution) for details.
+    <Info title="Info" level="info">
+      This behavior changes when automatic schema migration is enabled. See
+      [Automatic schema
+      evolution](https://docs.delta.io/latest/delta-update#merge-schema-evolution)
+      for details.
+    </Info>
+
+<Info title="Important" level="warning">
 
 - A `merge` operation can fail if multiple rows of the source dataset match and the merge attempts to update the same rows of the target Delta table. According to the SQL semantics of merge, such an update operation is ambiguous as it is unclear which source row should be used to update the matched target row. You can preprocess the source table to eliminate the possibility of multiple matches. See the [change data capture example](#write-change-data-into-a-Delta-table)---it shows how to preprocess the change dataset (that is, the source dataset) to retain only the latest change for each key before applying that change into the target Delta table.
 
-- A `merge` operation can produce incorrect results if the source dataset is non-deterministic. This is because `merge` may perform two scans of the source dataset and if the data produced by the two scans are different, the final changes made to the table can be incorrect. Non-determinism in the source can arise in many ways. Some of them are as follows:
+- A `merge` operation can produce incorrect results if the source dataset is non-deterministic. This is because `merge` may perform multiple scans of the source dataset and if the data produced by the scans are different, the final changes made to the table can be incorrect. Non-determinism in the source can arise in many ways. Some of them are as follows:
 
   - Reading from non-Delta tables. For example, reading from a CSV table where the underlying files can change between the multiple scans.
-  - Using non-deterministic operations. For example, `Dataset.filter()` operations that uses current timestamp to filter data can produce different results between the multiple scans.
+
+  - Using non-deterministic operations. For example, filtering data by functions like `current_date()` and `current_timestamp()` can produce different results between the multiple scans.
+
+  If you cannot avoid using non-deterministic functions, you can try to avoid multiple scans on the sourec by one of the following methods:
+
+  - Save the source data to storage, for example as a temporary Delta table. This will incur addition processing and storage cost.
+
+  - Cache the source data using Spark's caching mechanism. This is cheaper than saving to storage, but may not fully address the non-determinism issue. Cache invalidation due executor failure can cause the source data to be recomputed (that is, multiple scans) partially or completely.
 
 - You can apply a SQL `MERGE` operation on a SQL VIEW only if the view has been defined as `CREATE VIEW viewName AS SELECT * FROM deltaTable`.
+
+</Info>
 
 ### Schema validation
 
@@ -274,7 +375,7 @@ Here is a detailed description of the `merge` programmatic operation.
 
 - For `updateAll` and `insertAll` actions, the source dataset must have all the columns of the target Delta table. The source dataset can have extra columns and they are ignored.
 
-  If you do not want the extra columns to be ignored and instead want to update the target table schema to include new columns, see [merge schema evolution](#merge-schema-evolution).
+  If you do not want the extra columns to be ignored and instead want to update the target table schema to include new columns, see [merge schema evolution](https://docs.delta.io/latest/delta-update#merge-schema-evolution).
 
 - For all actions, if the data type generated by the expressions producing the target columns are different from the corresponding columns in the target Delta table, `merge` tries to cast them to the types in the table.
 
@@ -284,21 +385,26 @@ Here is a detailed description of the `merge` programmatic operation.
 
 By default, `updateAll` and `insertAll` assign all the columns in the target Delta table with columns of the same name from the source dataset. Any columns in the source dataset that don't match columns in the target table are ignored. However, in some use cases, it is desirable to automatically add source columns to the target Delta table. To automatically update the table schema during a `merge` operation with `updateAll` and `insertAll` (at least one of them), you can set the Spark session configuration `spark.databricks.delta.schema.autoMerge.enabled` to `true` before running the `merge` operation.
 
+<Info title="Note" level="info">
+
 - Schema evolution occurs only when there is either an `updateAll` (`UPDATE SET *`) or an `insertAll` (`INSERT *`) action, or both.
+
 - `update` and `insert` actions cannot explicitly refer to target columns that do not already exist in the target table (even it there are `updateAll` or `insertAll` as one of the clauses). See the examples below.
+
+</Info>
 
 Here are a few examples of the effects of `merge` operation with and without schema evolution.
 
-| Columns                                                                             | Query (in Scala)                                                                                                                                                                                                | Behavior without schema evolution (default)                                                                                                                                                                                                                         | Behavior with schema evolution                                                                                                                                                                                                                                      |
-| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Target columns: `key`, `value` <br></br> Source columns:` key`, `value`, `newValue` | ` targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().updateAll() .whenNotMatched().insertAll() .execute()`                                                         | The table schema remains unchanged; only columns `key`, `value` are updated/inserted. <br></br> The table schema is changed to `(key, value, newValue)`. `updateAll` updates columns `value` and `newValue`, and `insertAll` inserts rows `(key, value, newValue)`. | The table schema remains unchanged; only columns `key`, `value` are updated/inserted. <br></br> The table schema is changed to `(key, value, newValue)`. `updateAll` updates columns `value` and `newValue`, and `insertAll` inserts rows `(key, value, newValue)`. |
-| Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`          | targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().updateAll() .whenNotMatched().insertAll() .execute()                                                            | `updateAll` and `insertAll` actions throw an error because the target column `oldValue` is not in the source.                                                                                                                                                       | The table schema is changed to `(key, oldValue, newValue)`. `updateAll` updates columns `key` and `newValue` leaving `oldValue` unchanged, and `insertAll` inserts rows `(key, NULL, newValue)` (that is, `oldValue` is inserted as `NULL`).                        |
-| "Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`"        | `targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().update(Map( "newValue" -> col("s.newValue"))) .whenNotMatched().insertAll() .execute()`                        | `update` throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                              | `update` still throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                        |
-| Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`          | `targetDeltaTable.alias("t") .merge( sourceDataFrame.alias("s"), "t.key = s.key") .whenMatched().updateAll() .whenNotMatched().insert(Map( "key" -> col("s.key"), "newValue" -> col("s.newValue"))) .execute()` | `insert` throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                              | `insert` still throws an error as column `newValue` does not exist in the target table.                                                                                                                                                                             |
+| Columns                                                                             | Query (in Scala)                                                                                                                                                                                                                           | Behavior without schema evolution (default)                                                                                                                                                                                                                         | Behavior with schema evolution                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Target columns: `key`, `value` <br></br> Source columns:` key`, `value`, `newValue` | ` targetDeltaTable.alias("t")`<br/>`.merge(sourceDataFrame.alias("s"), "t.key = s.key")`<br/>` .whenMatched().updateAll()`<br/>` .whenNotMatched().insertAll()`<br/> ` .execute()`                                                         | The table schema remains unchanged; only columns `key`, `value` are updated/inserted. <br></br> The table schema is changed to `(key, value, newValue)`. `updateAll` updates columns `value` and `newValue`, and `insertAll` inserts rows `(key, value, newValue)`. | The table schema remains unchanged; only columns `key`, `value` are updated/inserted. <br></br> The table schema is changed to `(key, value, newValue)`. `updateAll` updates columns `value` and `newValue`, and `insertAll` inserts rows `(key, value, newValue)`. |
+| Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`          | `targetDeltaTable.alias("t")`<br/> `.merge(sourceDataFrame.alias("s"), "t.key = s.key")`<br/> `.whenMatched().updateAll()`<br/> `.whenNotMatched().insertAll()`<br/> `.execute()`                                                          | `updateAll` and `insertAll` actions throw an error because the target column `oldValue` is not in the source.                                                                                                                                                       | The table schema is changed to `(key, oldValue, newValue)`. `updateAll` updates columns `key` and `newValue` leaving `oldValue` unchanged, and `insertAll` inserts rows `(key, NULL, newValue)` (that is, `oldValue` is inserted as `NULL`).                        |
+| "Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`"        | `targetDeltaTable.alias("t")`<br/> `.merge(sourceDataFrame.alias("s"), "t.key = s.key")`<br/> `.whenMatched().update(Map("newValue" -> col("s.newValue")))`<br/> `.whenNotMatched().insertAll()`<br/> `.execute()`                         | `update` throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                              | `update` still throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                        |
+| Target columns: `key`, `value` <br></br> Source columns:` key`, `newValue`          | `targetDeltaTable.alias("t")`<br/> `.merge(sourceDataFrame.alias("s"), "t.key = s.key")`<br/> `.whenMatched().updateAll()`<br/> `.whenNotMatched().insert(Map( "key" -> col("s.key"), "newValue" -> col("s.newValue")))`<br/> `.execute()` | `insert` throws an error because column `newValue` does not exist in the target table.                                                                                                                                                                              | `insert` still throws an error as column `newValue` does not exist in the target table.                                                                                                                                                                             |
 
 <a id="arrays-of-structs-considerations"></a>
 
-## Special considerations for schemas that contain arrays of structs
+### Special considerations for schemas that contain arrays of structs
 
 Delta `MERGE INTO` supports resolving struct fields by name and evolving schemas for arrays of structs. With schema evolution enabled, target table schemas will evolve for arrays of structs, which also works with any nested structs inside of arrays.
 
@@ -328,7 +434,9 @@ You can reduce the time taken by merge using the following approaches:
 
 - **Repartition output data before write**: For partitioned tables, `merge` can produce a much larger number of small files than the number of shuffle partitions. This is because every shuffle task can write multiple files in multiple partitions, and can become a performance bottleneck. In many cases, it helps to repartition the output data by the table's partition columns before writing it. You enable this by setting the Spark session configuration `spark.databricks.delta.merge.repartitionBeforeWrite.enabled` to `true`.
 
-## Merge examples
+  - Since Delta 1.2, this is automatically enabled for merges on partitioned tables.
+
+### Merge examples
 
 Here are a few examples on how to use `merge` in different scenarios.
 
@@ -338,6 +446,10 @@ Here are a few examples on how to use `merge` in different scenarios.
 
 A common ETL use case is to collect logs into Delta table by appending them to a table. However, often the sources can generate duplicate log records and downstream deduplication steps are needed to take care of them. With `merge`, you can avoid inserting the duplicate records.
 
+<CBCreateTable
+sql={
+  <div>
+
 ```sql
 MERGE INTO logs
 USING newDedupedLogs
@@ -345,6 +457,11 @@ ON logs.uniqueId = newDedupedLogs.uniqueId
 WHEN NOT MATCHED
   THEN INSERT *
 ```
+
+  </div>
+  }
+  python={
+  <div>
 
 ```python
 deltaTable.alias("logs").merge(
@@ -354,6 +471,11 @@ deltaTable.alias("logs").merge(
   .execute()
 ```
 
+ </div>
+  }
+  scala={
+  <div>
+
 ```scala
 deltaTable
   .as("logs")
@@ -364,6 +486,11 @@ deltaTable
   .insertAll()
   .execute()
 ```
+
+  </div>
+  }
+  java={
+  <div>
 
 ```java
 deltaTable
@@ -376,9 +503,17 @@ deltaTable
   .execute();
 ```
 
+</div>
+  }
+/>
+
 The dataset containing the new logs needs to be deduplicated within itself. By the SQL semantics of merge, it matches and deduplicates the new data with the existing data in the table, but if there is duplicate data within the new dataset, it is inserted. Hence, deduplicate the new data before merging into the table.
 
 If you know that you may get duplicate records only for a few days, you can optimized your query further by partitioning the table by date, and then specifying the date range of the target table to match on.
+
+<CBCreateTable
+sql={
+  <div>
 
 ```sql
 MERGE INTO logs
@@ -388,6 +523,11 @@ WHEN NOT MATCHED AND newDedupedLogs.date > current_date() - INTERVAL 7 DAYS
   THEN INSERT *
 ```
 
+  </div>
+  }
+  python={
+  <div>
+
 ```python
 deltaTable.alias("logs").merge(
     newDedupedLogs.alias("newDedupedLogs"),
@@ -395,6 +535,11 @@ deltaTable.alias("logs").merge(
   .whenNotMatchedInsertAll("newDedupedLogs.date > current_date() - INTERVAL 7 DAYS") \
   .execute()
 ```
+
+  </div>
+  }
+  scala={
+  <div>
 
 ```scala
 deltaTable.as("logs").merge(
@@ -405,6 +550,11 @@ deltaTable.as("logs").merge(
   .execute()
 ```
 
+  </div>
+  }
+  java={
+  <div>
+
 ```java
 deltaTable.as("logs").merge(
     newDedupedLogs.as("newDedupedLogs"),
@@ -413,6 +563,10 @@ deltaTable.as("logs").merge(
   .insertAll()
   .execute();
 ```
+
+</div>
+  }
+/>
 
 This is more efficient than the previous command as it looks for duplicates only in the
 last 7 days of logs, not the entire table. Furthermore, you can use this insert-only merge with Structured Streaming to perform continuous deduplication of the logs.
@@ -428,6 +582,10 @@ last 7 days of logs, not the entire table. Furthermore, you can use this insert-
 Another common operation is SCD Type 2, which maintains history of all changes made to each key in a dimensional table. Such operations require updating existing rows to mark previous values of keys as old, and the inserting the new rows as the latest values. Given a source table with updates and the target table with the dimensional data, SCD Type 2 can be expressed with `merge`.
 
 Here is a concrete example of maintaining the history of addresses for a customer along with the active date range of each address. When a customer's address needs to be updated, you have to mark the previous address as not the current one, update its active date range, and add the new address as the current one.
+
+<CBCreateTable
+scala={
+  <div>
 
 ```scala
 val customersTable: DeltaTable = ...   // table with schema (customerId, address, current, effectiveDate, endDate)
@@ -468,6 +626,11 @@ customersTable
     "endDate" -> "null"))
   .execute()
 ```
+
+  </div>
+  }
+  python={
+  <div>
 
 ```python
 customersTable = ...  # DeltaTable with schema (customerId, address, current, effectiveDate, endDate)
@@ -510,6 +673,10 @@ customersTable.alias("customers").merge(
 ).execute()
 ```
 
+</div>
+  }
+/>
+
 <a id="merge-in-cdc"></a>
 
 ### Write change data into a Delta table
@@ -518,6 +685,10 @@ Similar to SCD, another common use case, often called change data capture (CDC),
 all data changes generated from an external database into a Delta table. In other words, a set
 of updates, deletes, and inserts applied to an external table needs to be applied to a Delta table.
 You can do this using `merge` as follows.
+
+<CBCreateTable
+scala={
+  <div>
 
 ```scala
 val deltaTable: DeltaTable = ... // DeltaTable with schema (key, value)
@@ -550,6 +721,11 @@ deltaTable.as("t")
   .insertExpr(Map("key" -> "s.key", "value" -> "s.newValue"))
   .execute()
 ```
+
+  </div>
+  }
+  python={
+  <div>
 
 ```python
 deltaTable = ... # DeltaTable with schema (key, value)
@@ -587,13 +763,21 @@ deltaTable.alias("t").merge(
   ).execute()
 ```
 
+  </div>
+  }
+/>
+
 <a id="merge-in-streaming"></a>
 
-### Upsert from streaming queries using `foreachBatch`
+### Upsert from streaming queries using foreachBatch()
 
 You can use a combination of `merge` and `foreachBatch` (see [foreachbatch](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#foreachbatch) for more information) to write complex upserts from a streaming query into a Delta table. For example:
 
 - **Write streaming aggregates in Update Mode**: This is much more efficient than Complete Mode.
+
+  <CBCreateTable
+  sql={
+    <div>
 
   ```scala
   import io.delta.tables.*
@@ -619,6 +803,11 @@ You can use a combination of `merge` and `foreachBatch` (see [foreachbatch](http
     .start()
   ```
 
+    </div>
+  }
+  python={
+    <div>
+
   ```python
   from delta.tables import *
 
@@ -642,12 +831,21 @@ You can use a combination of `merge` and `foreachBatch` (see [foreachbatch](http
     .start()
   ```
 
+    </div>
+  }
+  />
+
 - **Write a stream of database changes into a Delta table**: The [merge query for writing change data](#merge-in-cdc) can be used in `foreachBatch` to continuously apply a stream of changes to a Delta table.
 
 - **Write a stream data into Delta table with deduplication**: The [insert-only merge query for deduplication](#merge-in-dedup) can be used in `foreachBatch` to continuously write data (with duplicates) to a Delta table with automatic deduplication.
 
+<Info title="Important" level="info">
+
 - Make sure that your `merge` statement inside `foreachBatch` is idempotent as restarts
   of the streaming query can apply the operation on the same batch of data multiple times.
+
 - When `merge` is used in `foreachBatch`, the input data rate of the streaming query
   (reported through `StreamingQueryProgress` and visible in the notebook rate graph) may be reported
   as a multiple of the actual rate at which data is generated at the source. This is because `merge` reads the input data multiple times causing the input metrics to be multiplied. If this is a bottleneck, you can cache the batch DataFrame before `merge` and then uncache it after `merge`.
+
+</Info>

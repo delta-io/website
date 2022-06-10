@@ -1,7 +1,12 @@
 ---
 title: Delta Lake on Apache Spark - Utility operations
-menu: docs
+width: full
 ---
+
+import { ApacheSpark, DeltaLake } from "/src/components/Attributions";
+import { SparkSession } from "/src/components/DeltaLakeConcepts";
+import { CBCreateTable } from "/src/components/CodeBlocks";
+import "react-tabs/style/react-tabs.css";
 
 Delta tables support a number of utility operations.
 
@@ -15,7 +20,17 @@ You can remove files no longer referenced by a Delta table and are older than th
 threshold by running the `vacuum` command on the table. `vacuum` is not triggered automatically. The
 default retention threshold for the files is 7 days. To change this behavior, see [data retention](https://delta.io/docs/spark/batch#data-retention).
 
-- `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [table properties](https://delta.io/docs/spark/batch#table-properties). - The ability to [time travel](https://delta.io/docs/spark/batch#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
+<Info title="Important " level="warning">
+
+- The ability to [time travel](https://delta.io/docs/spark/batch#deltatimetravel) back to a version older than the retention period is lost after running `vacuum`.
+- `vacuum` deletes only data files, not log files. Log files are deleted automatically and asynchronously after checkpoint operations. The default retention period of log files is 30 days, configurable through the `delta.logRetentionDuration` property which you set with the `ALTER TABLE SET TBLPROPERTIES` SQL method. See [table properties](https://delta.io/docs/spark/batch#table-properties).
+- `vacuum` removes all files from directories not managed by Delta Lake, ignoring directories beginning with `_`. If you are storing additional metadata like Structured Streaming checkpoints within a Delta table directory, use a directory name such as `_checkpoints`.
+
+</Info>
+
+<CBCreateTable
+sql={
+  <div>
 
 ```sql
 VACUUM eventsTable   -- vacuum files not required by versions older than the default retention period
@@ -29,6 +44,11 @@ VACUUM delta.`/data/events/` RETAIN 100 HOURS  -- vacuum files not required by v
 VACUUM eventsTable DRY RUN    -- do dry run to get the list of files to be deleted
 ```
 
+  </div>
+  }
+  python={
+  <div>
+
 ```python
 from delta.tables import *
 
@@ -40,6 +60,11 @@ deltaTable.vacuum()        # vacuum files not required by versions older than th
 deltaTable.vacuum(100)     # vacuum files not required by versions more than 100 hours old
 ```
 
+  </div>
+  }
+  scala={
+  <div>
+
 ```scala
 import io.delta.tables._
 
@@ -49,6 +74,11 @@ deltaTable.vacuum()        // vacuum files not required by versions older than t
 
 deltaTable.vacuum(100)     // vacuum files not required by versions more than 100 hours old
 ```
+
+  </div>
+  }
+  java={
+  <div>
 
 ```java
 import io.delta.tables.*;
@@ -61,17 +91,27 @@ deltaTable.vacuum();        // vacuum files not required by versions older than 
 deltaTable.vacuum(100);     // vacuum files not required by versions more than 100 hours old
 ```
 
-When using `VACUUM`, to configure Spark to delete files in parallel (based on the number of shuffle partitions) set the session configuration `"spark.databricks.delta.vacuum.parallelDelete.enabled"` to `"true"` .
+  </div>
+  }
+/>
+
+See [Configure SparkSession](https://docs.delta.io/latest/delta-batch.html#-sql-support) for the steps to enable support for SQL commands.
+
+<Info title="Info" level="info">
+  When using `VACUUM`, to configure Spark to delete files in parallel (based on
+  the number of shuffle partitions) set the session configuration
+  `"spark.databricks.delta.vacuum.parallelDelete.enabled"` to `"true"` .
+</Info>
 
 See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for Scala, Java, and Python syntax details.
 
-/shared/delta-retention-warning.md
-
-Delta Lake has a safety check to prevent you from running a dangerous `VACUUM`
-command. If you are certain that there are no operations being performed on
-this table that take longer than the retention interval you plan to specify,
-you can turn off this safety check by setting the Spark configuration property
-`spark.databricks.delta.retentionDurationCheck.enabled` to `false`.
+<Info title="Info" level="warning">
+  Delta Lake has a safety check to prevent you from running a dangerous `VACUUM`
+  command. If you are certain that there are no operations being performed on
+  this table that take longer than the retention interval you plan to specify,
+  you can turn off this safety check by setting the Spark configuration property
+  `spark.databricks.delta.retentionDurationCheck.enabled` to `false`.
+</Info>
 
 <a id="delta-history"></a>
 
@@ -79,6 +119,10 @@ you can turn off this safety check by setting the Spark configuration property
 
 You can retrieve information on the operations, user, timestamp, and so on for each write to a Delta table
 by running the `history` command. The operations are returned in reverse chronological order. By default table history is retained for 30 days.
+
+<CBCreateTable
+sql={
+  <div>
 
 ```sql
 DESCRIBE HISTORY '/data/events/'          -- get the full history of the table
@@ -90,6 +134,11 @@ DESCRIBE HISTORY '/data/events/' LIMIT 1  -- get the last operation only
 DESCRIBE HISTORY eventsTable
 ```
 
+  </div>
+  }
+  python={
+  <div>
+
 ```python
 from delta.tables import *
 
@@ -99,6 +148,11 @@ fullHistoryDF = deltaTable.history()    # get the full history of the table
 
 lastOperationDF = deltaTable.history(1) # get the last operation
 ```
+
+  </div>
+  }
+  scala={
+  <div>
 
 ```scala
 import io.delta.tables._
@@ -110,6 +164,11 @@ val fullHistoryDF = deltaTable.history()    // get the full history of the table
 val lastOperationDF = deltaTable.history(1) // get the last operation
 ```
 
+  </div>
+  }
+  java={
+  <div>
+
 ```java
 import io.delta.tables.*;
 
@@ -119,6 +178,10 @@ DataFrame fullHistoryDF = deltaTable.history();       // get the full history of
 
 DataFrame lastOperationDF = deltaTable.history(1);    // fetch the last operation on the DeltaTable
 ```
+
+</div>
+  }
+/>
 
 See the [Delta API documentation](https://docs.delta.io/latest/delta-apidoc.html) for Scala/Java/Python syntax details.
 
@@ -156,7 +219,11 @@ The output of the `history` operation has the following columns.
 +-------+-------------------+------+--------+---------+--------------------+----+--------+---------+-----------+--------------+-------------+--------------------+
 ```
 
-- Some of the columns may be nulls because the corresponding information may not be available in your environment. - Columns added in the future will always be added after the last column.
+<Info title="Info" level="info">
+
+Some of the columns may be nulls because the corresponding information may not be available in your environment. - Columns added in the future will always be added after the last column.
+
+</Info>
 
 <a id="delta-history-metrics"></a>
 
@@ -165,67 +232,67 @@ The output of the `history` operation has the following columns.
 The `history` operation returns a collection of operations metrics in the `operationMetrics` column map.
 The following table lists the map key definitions by operation.
 
-| Operation                                                         | Metric Name            | Description                                                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| ----------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------------------ | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| WRITE, CREATE TABLE AS SELECT, REPLACE TABLE AS SELECT, COPY INTO |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numFiles               | Number of files written.                                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numOutputBytes         | Size in bytes of the written contents.                                         |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numOutputRows          | Number of rows written.                                                        |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| STREAMING UPDATE                                                  |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numAddedFiles          | Number of files added.                                                         |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRemovedFiles        | Number of files removed.                                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numOutputRows          | Number of rows written.                                                        |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numOutputBytes         | Size of write in bytes.                                                        |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| DELETE                                                            |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numAddedFiles          | Number of files added. Not provided when partitions of the table are deleted.  |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRemovedFiles        | Number of files removed.                                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numDeletedRows         | Number of rows removed. Not provided when partitions of the table are deleted. |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numCopiedRows          | Number of rows copied in the process of deleting files.                        |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | scanTimeMs             | Time taken to scan the files for matches.                                      |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | rewriteTimeMs          | Time taken to rewrite the matched files.                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| TRUNCATE                                                          |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRemovedFiles        | Number of files removed.                                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| MERGE                                                             |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numSourceRows          | Number of rows in the source DataFrame.                                        |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numTargetRowsInserted  | Number of rows inserted into the target table.                                 |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numTargetRowsUpdated   | Number of rows updated in the target table.                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numTargetRowsDeleted   | Number of rows deleted in the target table.                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numTargetRowsCopied    | Number of target rows copied.                                                  |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numOutputRows          | Total number of rows written out.                                              |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numTargetFilesAdded    | Number of files added to the sink(target).                                     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numTargetFilesRemoved  | Number of files removed from the sink(target).                                 |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | scanTimeMs             | Time taken to scan the files for matches.                                      |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | rewriteTimeMs          | Time taken to rewrite the matched files.                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| UPDATE                                                            |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numAddedFiles          | Number of files added.                                                         |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRemovedFiles        | Number of files removed.                                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numUpdatedRows         | Number of rows updated.                                                        |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numCopiedRows          | Number of rows just copied over in the process of updating files.              |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | scanTimeMs             | Time taken to scan the files for matches.                                      |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | rewriteTimeMs          | Time taken to rewrite the matched files.                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| FSCK                                                              | numRemovedFiles        | Number of files removed.                                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| CONVERT                                                           | numConvertedFiles      | Number of Parquet files that have been converted.                              |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| OPTIMIZE                                                          |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numAddedFiles          | Number of files added.                                                         |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRemovedFiles        | Number of files optimized.                                                     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numAddedBytes          | Number of bytes added after the table was optimized.                           |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRemovedBytes        | Number of bytes removed.                                                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | minFileSize            | Size of the smallest file after the table was optimized.                       |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | p25FileSize            | Size of the 25th percentile file after the table was optimized.                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | p50FileSize            | Median file size after the table was optimized.                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | p75FileSize            | Size of the 75th percentile file after the table was optimized.                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | maxFileSize            | Size of the largest file after the table was optimized.                        |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| RESTORE                                                           |                        |                                                                                |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | tableSizeAfterRestore  | Table size in bytes after restore.                                             |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numOfFilesAfterRestore | Number of files in the table after restore.                                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRemovedFiles        | Number of files removed by the restore operation.                              |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | numRestoredFiles       | Number of files that were added as a result of the restore.                    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | removedFilesSize       | Size in bytes of files removed by the restore.                                 |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|                                                                   | restoredFilesSize      | Size in bytes of files added by the restore.                                   |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+| Operation                                                         | Metric Name            | Description                                                                    |
+| ----------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------------------ |
+| WRITE, CREATE TABLE AS SELECT, REPLACE TABLE AS SELECT, COPY INTO |                        |                                                                                |
+|                                                                   | numFiles               | Number of files written.                                                       |
+|                                                                   | numOutputBytes         | Size in bytes of the written contents.                                         |
+|                                                                   | numOutputRows          | Number of rows written.                                                        |
+| STREAMING UPDATE                                                  |                        |                                                                                |
+|                                                                   | numAddedFiles          | Number of files added.                                                         |
+|                                                                   | numRemovedFiles        | Number of files removed.                                                       |
+|                                                                   | numOutputRows          | Number of rows written.                                                        |
+|                                                                   | numOutputBytes         | Size of write in bytes.                                                        |
+| DELETE                                                            |                        |                                                                                |
+|                                                                   | numAddedFiles          | Number of files added. Not provided when partitions of the table are deleted.  |
+|                                                                   | numRemovedFiles        | Number of files removed.                                                       |
+|                                                                   | numDeletedRows         | Number of rows removed. Not provided when partitions of the table are deleted. |
+|                                                                   | numCopiedRows          | Number of rows copied in the process of deleting files.                        |
+|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |
+|                                                                   | scanTimeMs             | Time taken to scan the files for matches.                                      |
+|                                                                   | rewriteTimeMs          | Time taken to rewrite the matched files.                                       |
+| TRUNCATE                                                          |                        |                                                                                |
+|                                                                   | numRemovedFiles        | Number of files removed.                                                       |
+|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |
+| MERGE                                                             |                        |                                                                                |
+|                                                                   | numSourceRows          | Number of rows in the source DataFrame.                                        |
+|                                                                   | numTargetRowsInserted  | Number of rows inserted into the target table.                                 |
+|                                                                   | numTargetRowsUpdated   | Number of rows updated in the target table.                                    |
+|                                                                   | numTargetRowsDeleted   | Number of rows deleted in the target table.                                    |
+|                                                                   | numTargetRowsCopied    | Number of target rows copied.                                                  |
+|                                                                   | numOutputRows          | Total number of rows written out.                                              |
+|                                                                   | numTargetFilesAdded    | Number of files added to the sink(target).                                     |
+|                                                                   | numTargetFilesRemoved  | Number of files removed from the sink(target).                                 |
+|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |
+|                                                                   | scanTimeMs             | Time taken to scan the files for matches.                                      |
+|                                                                   | rewriteTimeMs          | Time taken to rewrite the matched files.                                       |
+| UPDATE                                                            |                        |                                                                                |
+|                                                                   | numAddedFiles          | Number of files added.                                                         |
+|                                                                   | numRemovedFiles        | Number of files removed.                                                       |
+|                                                                   | numUpdatedRows         | Number of rows updated.                                                        |
+|                                                                   | numCopiedRows          | Number of rows just copied over in the process of updating files.              |
+|                                                                   | executionTimeMs        | Time taken to execute the entire operation.                                    |
+|                                                                   | scanTimeMs             | Time taken to scan the files for matches.                                      |
+|                                                                   | rewriteTimeMs          | Time taken to rewrite the matched files.                                       |
+| FSCK                                                              | numRemovedFiles        | Number of files removed.                                                       |
+| CONVERT                                                           | numConvertedFiles      | Number of Parquet files that have been converted.                              |
+| OPTIMIZE                                                          |                        |                                                                                |
+|                                                                   | numAddedFiles          | Number of files added.                                                         |
+|                                                                   | numRemovedFiles        | Number of files optimized.                                                     |
+|                                                                   | numAddedBytes          | Number of bytes added after the table was optimized.                           |
+|                                                                   | numRemovedBytes        | Number of bytes removed.                                                       |
+|                                                                   | minFileSize            | Size of the smallest file after the table was optimized.                       |
+|                                                                   | p25FileSize            | Size of the 25th percentile file after the table was optimized.                |
+|                                                                   | p50FileSize            | Median file size after the table was optimized.                                |
+|                                                                   | p75FileSize            | Size of the 75th percentile file after the table was optimized.                |
+|                                                                   | maxFileSize            | Size of the largest file after the table was optimized.                        |
+| RESTORE                                                           |                        |                                                                                |
+|                                                                   | tableSizeAfterRestore  | Table size in bytes after restore.                                             |
+|                                                                   | numOfFilesAfterRestore | Number of files in the table after restore.                                    |
+|                                                                   | numRemovedFiles        | Number of files removed by the restore operation.                              |
+|                                                                   | numRestoredFiles       | Number of files that were added as a result of the restore.                    |
+|                                                                   | removedFilesSize       | Size in bytes of files removed by the restore.                                 |
+|                                                                   | restoredFilesSize      | Size in bytes of files added by the restore.                                   |
 
 <a id="delta-detail"></a>
 
@@ -277,10 +344,19 @@ You can a generate manifest file for a Delta table that can be used by other pro
 
 See [sql support](https://delta.io/docs/spark/batch#sql-support) for the steps to enable support for SQL commands in Apache Spark.
 
+<CBCreateTable
+  python={
+  <div>
+
 ```python
 deltaTable = DeltaTable.forPath(<path-to-delta-table>)
 deltaTable.generate("symlink_format_manifest")
 ```
+
+  </div>
+  }
+  scala={
+  <div>
 
 ```scala
 val deltaTable = DeltaTable.forPath(<path-to-delta-table>)
@@ -292,6 +368,10 @@ DeltaTable deltaTable = DeltaTable.forPath(<path-to-delta-table>);
 deltaTable.generate("symlink_format_manifest");
 ```
 
+  </div>
+  }
+/>
+
 <a id="convert-to-delta"></a>
 
 ## Convert a Parquet table to a Delta table
@@ -300,6 +380,10 @@ Convert a Parquet table to a Delta table in-place. This command lists all the fi
 
 If a Parquet table was created by Structured Streaming, the listing of files can be avoided by using the `_spark_metadata` sub-directory as the source of truth for files contained in the table setting the SQL configuration `spark.databricks.delta.convert.useMetadataLog` to `true`.
 
+<CBCreateTable
+sql={
+  <div>
+
 ```sql
 -- Convert unpartitioned Parquet table at path '<path-to-table>'
 CONVERT TO DELTA parquet.`<path-to-table>`
@@ -307,6 +391,11 @@ CONVERT TO DELTA parquet.`<path-to-table>`
 -- Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
 CONVERT TO DELTA parquet.`<path-to-table>` PARTITIONED BY (part int, part2 int)
 ```
+
+  </div>
+  }
+  python={
+  <div>
 
 ```python
 from delta.tables import *
@@ -318,6 +407,11 @@ deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`")
 partitionedDeltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int")
 ```
 
+  </div>
+  }
+  scala={
+  <div>
+
 ```scala
 import io.delta.tables._
 
@@ -327,6 +421,11 @@ val deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`")
 // Convert partitioned Parquet table at path '<path-to-table>' and partitioned by integer columns named 'part' and 'part2'
 val partitionedDeltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int, part2 int")
 ```
+
+  </div>
+  }
+  java={
+  <div>
 
 ```java
 import io.delta.tables.*;
@@ -338,6 +437,11 @@ DeltaTable deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-tabl
 DeltaTable deltaTable = DeltaTable.convertToDelta(spark, "parquet.`<path-to-table>`", "part int, part2 int");
 ```
 
+</div>
+  }
+/>
+See [Configure SparkSession](https://docs.delta.io/latest/delta-batch.html#-sql-support) for the steps to enable support for SQL commands.
+
 Any file not tracked by Delta Lake is invisible and can be deleted when you run `vacuum`. You should avoid updating or appending data files during the conversion process. After the table is converted, make sure all writes go through Delta Lake.
 
 ## Convert a Delta table to a Parquet table
@@ -347,3 +451,100 @@ You can easily convert a Delta table back to a Parquet table using the following
 1. If you have performed Delta Lake operations that can change the data files (for example, `delete` or `merge`), run [vacuum](#delta-vacuum) with retention of 0 hours to delete all data files that do not belong to the latest version of the table.
 
 2. Delete the `_delta_log` directory in the table directory.
+
+<a id="restore-delta-table"></a>
+
+## Restore a Delta table to an earlier state
+
+You can restore a Delta table to its earlier state by using the `RESTORE` command. A Delta table internally maintains historic versions of the table that enable it to be restored to an earlier state.
+A version corresponding to the earlier state or a timestamp of when the earlier state was created are supported as options by the `RESTORE` command.
+
+<Info title="Important " level="info">
+
+- You can restore an already restored table.
+
+- Restoring a table to an older version where the data files were deleted manually or by `vacuum` will fail. Restoring to this version partially is still possible if `spark.sql.files.ignoreMissingFiles` is set to `true`.
+
+- The timestamp format for restoring to an earlier state is `yyyy-MM-dd HH:mm:ss`. Providing only a date(`yyyy-MM-dd`) string is also supported.
+
+</Info>
+
+<CBCreateTable
+sql={
+  <div>
+
+```sql
+RESTORE TABLE db.target_table TO VERSION AS OF <version>
+RESTORE TABLE delta.`/data/target/` TO TIMESTAMP AS OF <timestamp>
+```
+
+  </div>
+  }
+  python={
+  <div>
+
+```python
+from delta.tables import *
+deltaTable = DeltaTable.forPath(spark, <path-to-table>)  # path-based tables, or
+deltaTable = DeltaTable.forName(spark, <table-name>)    # Hive metastore-based tables
+deltaTable.restoreToVersion(0) # restore table to oldest version
+deltaTable.restoreToTimestamp('2019-02-14') # restore to a specific timestamp
+```
+
+  </div>
+  }
+  scala={
+  <div>
+
+```scala
+import io.delta.tables._
+val deltaTable = DeltaTable.forPath(spark, <path-to-table>)
+val deltaTable = DeltaTable.forName(spark, <table-name>)
+deltaTable.restoreToVersion(0) // restore table to oldest version
+deltaTable.restoreToTimestamp("2019-02-14") // restore to a specific timestamp
+```
+
+  </div>
+  }
+  java={
+  <div>
+
+```java
+import io.delta.tables.*;
+DeltaTable deltaTable = DeltaTable.forPath(spark, <path-to-table>);
+DeltaTable deltaTable = DeltaTable.forName(spark, <table-name>);
+deltaTable.restoreToVersion(0) // restore table to oldest version
+deltaTable.restoreToTimestamp("2019-02-14") // restore to a specific timestamp
+```
+
+  </div>
+  }
+/>
+
+<Info title="Important" level="info">
+
+Restore is considered a data-changing operation. <DeltaLake /> log entries added by the `RESTORE` command contain [dataChange](https://github.com/delta-io/delta/blob/master/PROTOCOL.md#add-file-and-remove-file) set to true. If there is a downstream application, such as a [Structured streaming](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) job that processes the updates to a <DeltaLake /> table, the data change log entries added by the restore operation are considered as new data updates, and processing them may result in duplicate data.
+
+For example:
+
+    | Table version | Operation          | Delta log updates                                                                                                     | Records in data change log updates                                              |
+    |---------------|--------------------|-----------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+    | 0             | INSERT             | AddFile(/path/to/file-1, dataChange = true)                                                                           | (name = Viktor, age = 29, (name = George, age = 55)                             |
+    | 1             | INSERT             | AddFile(/path/to/file-2, dataChange = true)                                                                           | (name = George, age = 39)                                                       |
+    | 2             | OPTIMIZE           | AddFile(/path/to/file-3, dataChange = false), RemoveFile(/path/to/file-1), RemoveFile(/path/to/file-2)                | (No records as Optimize compaction does not change the data in the table)       |
+    | 3             | RESTORE(version=1) | RemoveFile(/path/to/file-3), AddFile(/path/to/file-1, dataChange = true), AddFile(/path/to/file-2, dataChange = true) | (name = Viktor, age = 29), (name = George, age = 55), (name = George, age = 39) |
+
+In the preceding example, the `RESTORE` command results in updates that were already seen when reading the Delta table version 0 and 1. If a streaming query was reading this table, then these files will be considered as newly added data and will be processed again.
+
+</Info>
+
+### Restore metrics
+
+`RESTORE` reports the following metrics as a single row DataFrame once the operation is complete:
+
+- `table_size_after_restore`: The size of the table after restoring.
+- `num_of_files_after_restore`: The number of files in the table after restoring.
+- `num_removed_files`: Number of files removed (logically deleted) from the table.
+- `num_restored_files`: Number of files restored due to rolling back.
+- `removed_files_size`: Total size in bytes of the files that are removed from the table.
+- `restored_files_size`: Total size in bytes of the files that are restored.
