@@ -1,121 +1,163 @@
 [
   {
-    "name": "dlt - Delta Lake interface for SparkR",
-    "description": "This package provide readers and writers for the Delta format, DeltaTable merge API, and Delta table builder API for SparkR.",
-    "url": "https://dlt.zero323.net/",
-    "tags": ["SparkR"],
-    "thumbnail": "./images/connectors/dlt.png"
+    "name": "Apache Spark™",
+    "description": "This connector allows Apache Spark™ to read from and write to Delta Lake.",
+    "url": "https://docs.delta.io",
+    "docs": "https://docs.delta.io",
+    "source_code": "https://github.com/delta-io/delta/",
+    "tags": ["Spark"],
+    "thumbnail": "./images/connectors/apache-spark-icon.png"
   },
   {
-    "name": "Flink/Delta Sink",
-    "description": "This connector leverages the Delta Standalone project for Apache Flink to write to Delta Lake tables.",
-    "url": "https://github.com/delta-io/connectors/tree/master/flink-connector/",
-    "tags": ["Flink"],
+    "name": "Apache Flink (Preview)",
+    "description": "This connector allows Apache Flink to write to Delta Lake.",
+    "url": "https://github.com/delta-io/connectors/tree/master/flink/",
+    "docs": "https://github.com/delta-io/connectors/tree/master/flink",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/flink",
+    "tags": ["Flink", "standalone"],
     "thumbnail": "./images/connectors/apache-flink-logo.png"
   },
   {
-    "name": "Trino/Delta Reader (Preview)",
-    "description": "This connector leverages the Delta Standalone project for Trino to read from Delta Lake tables.",
-    "url": "https://github.com/vkorukanti/trino/tree/359-delta",
+    "name": "PrestoDB",
+    "description": "This connector allows PrestoDB to read from Delta Lake.",
+    "url": "https://prestodb.io/docs/current/connector/deltalake.html",
+    "docs": "https://prestodb.io/docs/current/connector/deltalake.html",
+    "source_code": "https://github.com/prestodb/presto/tree/master/presto-delta",
+    "tags": ["PrestoDB", "standalone"],
+    "thumbnail": "./images/connectors/prestodb-logo.png"
+  },
+  {
+    "name": "Trino",
+    "description": "This connector allows Trino to read from and write to Delta Lake.",
+    "url": "https://trino.io/docs/current/connector/delta-lake.html",
+    "docs": "https://trino.io/docs/current/connector/delta-lake.html",
+    "source_code": "https://github.com/trinodb/trino/tree/master/plugin/trino-delta-lake",
     "tags": ["Trino"],
     "thumbnail": "./images/connectors/trino-logo.png"
   },
   {
-    "name": "PrestoDB/Delta Reader",
-    "description": "This connector leverages the Delta Standalone project for Trino to read from Delta Lake tables.",
-    "url": "https://github.com/prestodb/presto/blob/master/presto-docs/src/main/sphinx/connector/deltalake.rst",
-    "tags": ["PrestoDB"],
-    "thumbnail": "./images/connectors/prestodb-logo.png"
-  },
-  {
-    "name": "Beam/Delta Reader (Preview)",
-    "description": "This connector leverages the Delta Standalone project for Apache Beam to read from Delta Lake tables.",
-    "url": "https://github.com/mbenenso/beam-deltalake",
-    "tags": ["Beam"],
-    "thumbnail": "./images/connectors/apache-beam.png"
-  },
-  {
-    "name": "Athena Query Federation/Delta Reader (Preview)",
-    "description": "This connector leverages the Delta Standalone project for Apache Beam to read from Delta Lake tables.",
-    "url": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
-    "tags": ["Athena Query Federation"],
-    "thumbnail": "./images/connectors/AthenaFederation1.png"
-  },
-  {
     "name": "Delta Standalone",
-    "description": "Delta Standalone project is a JVM library to read from and write to Delta Lake tables. Unlike https://github.com/delta-io/delta, this project doesn't use Spark to read tables and it has only a few transitive dependencies. It can be used by any application that cannot use an Apache Spark cluster.",
+    "description": "This library allows Scala and Java-based projects (including Apache Flink, Apache Hive, Apache Beam, and PrestoDB) to read from and write to Delta Lake.",
     "url": "https://github.com/delta-io/connectors",
-    "tags": ["Scala", "JVM"],
+    "docs": "https://docs.delta.io/latest/delta-standalone.html",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/standalone/src",
+    "tags": ["Scala", "Java", "standalone"],
     "thumbnail": "./images/connectors/delta-standalone.png"
   },
   {
-    "name": "Power BI Delta Connector",
-    "description": "Reading Delta Lake tables natively in Power BI The provided PowerQuery/M function allows you to read a Delta Lake table directly from any storage supported by PowerBI. Most common storage would be Azure Data Lake Store, Azure Blob Storage, or a local folder or file share.",
-    "url": "https://github.com/delta-io/connectors/tree/master/powerbi",
-    "tags": ["PowerBI"],
-    "thumbnail": "./images/connectors/powerbi.png"
-  },
-  {
-    "name": "Power BI Delta Sharing Connector (beta)",
-    "description": "Reading Delta Sharing tables natively in Power BI.",
-    "url": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
-    "tags": ["PowerBI"],
-    "thumbnail": "./images/connectors/powerbi.png"
-  },
-  {
-    "name": "Hive Connector",
-    "description": "This project is a library to make Hive read Delta Lake tables. The project provides a uber JAR delta-hive-assembly_-0.2|3.0.jar to use in Hive. You can use either Scala 2.11 or 2.12. The released JARs are available in the releases page. Please download the uber JAR for the corresponding Scala version you would like to use. You can also use the following instructions to build it as well.",
+    "name": "Apache Hive",
+    "description": "This connector allows Apache Hive to read from Delta Lake.",
     "url": "https://github.com/delta-io/connectors",
-    "tags": ["Hive"],
+    "docs": "https://docs.delta.io/latest/hive-integration.html",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/hive/src/main",
+    "tags": ["Hive", "standalone"],
     "thumbnail": "./images/connectors/hive.png"
   },
   {
+    "name": "Delta Rust API ",
+    "description": "This library allows Rust (with Python and Ruby bindings) low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc.",
+    "url": "https://github.com/delta-io/delta-rs",
+    "docs": "https://docs.rs/deltalake/latest/deltalake/",
+    "source_code": "https://github.com/delta-io/delta-rs/tree/main/rust",
+    "tags": ["Rust", "Python", "Ruby"],
+    "thumbnail": "./images/connectors/rust.png"
+  },
+  {
     "name": "SQL Delta Import",
-    "description": "sql-delta-import is a utility for importing data from a JDBC source into a Delta Lake table.  This project is part of the delta.io/connectors repo.  For more information, refer to https://tech.scribd.com/blog/2021/introducing-sql-delta-import.html",
-    "url": "https://github.com/delta-io/connectors",
+    "description": "This utility is for importing data from a JDBC source into a Delta Lake table.",
+    "url": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
+    "docs": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/sql-delta-import/src",
     "tags": ["SQL", "JDBC"],
     "thumbnail": "./images/connectors/sql.png"
   },
   {
     "name": "Kafka Delta Ingest",
-    "description": "The kafka-delta-ingest project aims to build a highly efficient daemon for streaming data through Apache Kafka into Delta Lake. This project is currently highly experimental and evolving in tandem with the delta-rs bindings.",
+    "description": "This project builds a highly efficient daemon for streaming data through Apache Kafka into Delta Lake.",
     "url": "https://github.com/delta-io/kafka-delta-ingest",
-    "tags": ["Kafka"],
+    "docs": "https://github.com/delta-io/kafka-delta-ingest/blob/main/doc/DESIGN.md",
+    "source_code": "https://github.com/delta-io/kafka-delta-ingest/",
+    "tags": ["Kafka", "Rust"],
     "thumbnail": "./images/connectors/kafka.png"
   },
   {
-    "name": "Delta Rust API",
-    "description": "An experimental interface to Delta Lake for Rust. This library provides low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc. It can also act as the basis for native bindings in other languages such as Python, Ruby or Golang. This project is still very early and only read operations are supported at the moment.",
-    "url": "https://github.com/delta-io/delta-rs",
-    "tags": ["Rust", "Python"],
-    "thumbnail": "./images/connectors/rust.png"
+    "name": "dlt - Delta Lake interface for SparkR",
+    "description": "This package allows SparkR to read from and write to Delta Lake.",
+    "url": "https://dlt.zero323.net/",
+    "docs": "https://dlt.zero323.net/",
+    "source_code": "https://gitlab.com/zero323/dlt/",
+    "tags": ["SparkR"],
+    "thumbnail": "./images/connectors/dlt.png"
+  },
+  {
+    "name": "Apache Beam (Preview)",
+    "description": "This connector allows Apache Beam to read from Delta Lake.",
+    "url": "https://github.com/mbenenso/beam-deltalake/",
+    "docs": "https://github.com/mbenenso/beam-deltalake/",
+    "source_code": "https://github.com/mbenenso/beam-deltalake/",
+    "tags": ["Beam", "standalone"],
+    "thumbnail": "./images/connectors/apache-beam.png"
+  },
+  {
+    "name": "Athena Query Federation (Preview)",
+    "description": "This connector allows AWS Athena to read from Delta Lake.",
+    "url": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
+    "docs": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
+    "source_code": "https://github.com/malonsocasas/aws-athena-query-federation/tree/master/athena-deltalake",
+    "tags": ["AWS", "Athena", "standalone"],
+    "thumbnail": "./images/connectors/AthenaFederation1.png"
+  },
+  {
+    "name": "Power BI",
+    "description": "This connector allows Power BI to read from Delta Lake.",
+    "url": "https://github.com/delta-io/connectors/tree/master/powerbi",
+    "docs": "https://github.com/delta-io/connectors/tree/master/powerbi",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/powerbi",
+    "tags": ["PowerBI"],
+    "thumbnail": "./images/connectors/powerbi.png"
+  },
+  {
+    "name": "Power BI | Delta Sharing Connector (Beta)",
+    "description": "This connector allows Power BI to read from Delta Sharing endpoint.",
+    "url": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
+    "docs": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
+    "tags": ["PowerBI", "Delta Sharing"],
+    "thumbnail": "./images/connectors/powerbi.png"
   },
   {
     "name": "Presto",
-    "description": "Presto supports reading from external tables using a manifest file, which is a text file containing the list of data files to read for querying a table. When an external table is defined in the Hive metastore using manifest files, Presto can use the list of files in the manifest rather than finding the files by directory listing.",
+    "description": "This utility allows Presto to read from Delta Lake using a manifest file.",
     "url": "https://docs.delta.io/latest/presto-integration.html",
-    "tags": ["Presto"],
+    "docs": "https://docs.delta.io/latest/presto-integration.html",
+    "tags": ["Presto", "manifest"],
     "thumbnail": "./images/connectors/presto.png"
   },
+
   {
     "name": "Athena",
-    "description": "Athena supports reading from external tables using a manifest file, which is a text file containing the list of data files to read for querying a table. When an external table is defined in the Hive metastore using manifest files, Athena can use the list of files in the manifest rather than finding the files by directory listing.",
+    "description": "This utility allows Athena to read from Delta Lake using a manifest file.",
     "url": "https://docs.delta.io/latest/presto-integration.html",
-    "tags": ["Athena", "AWS"],
+    "docs": "https://docs.delta.io/latest/presto-integration.html",
+    "source_code": "https://docs.delta.io/latest/presto-integration.html",
+    "tags": ["Athena", "AWS", "manifest"],
     "thumbnail": "./images/connectors/athena.png"
   },
   {
     "name": "Snowflake",
-    "description": "A Delta table can be read by Snowflake using a manifest file, which is a text file containing the list of data files to read for querying a Delta table.",
+    "description": "This utility allows Snowflake to read from Delta Lake using a manifest file.",
     "url": "https://docs.delta.io/latest/snowflake-integration.html",
-    "tags": ["Snowflake"],
+    "docs": "https://docs.delta.io/latest/snowflake-integration.html",
+    "source_code": "https://docs.delta.io/latest/snowflake-integration.html",
+    "tags": ["Snowflake", "manifest"],
     "thumbnail": "./images/connectors/snowflake.png"
   },
   {
     "name": "Redshift",
-    "description": "A Delta table can be read by Redshift Spectrum using a manifest file, which is a text file containing the list of data files to read for querying a Delta table.",
+    "description": "This utility allows AWS Redshift to read from Delta Lake using a manifest file.",
     "url": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
-    "tags": ["Redshift", "AWS"],
+    "docs": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
+    "source_code": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
+    "tags": ["Redshift", "AWS", "manifest"],
     "thumbnail": "./images/connectors/redshift.png"
   }
 ]

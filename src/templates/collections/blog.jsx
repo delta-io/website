@@ -7,7 +7,8 @@ import CardDataList from "src/components/CardDataList";
 import Section from "src/components/Section";
 
 const BlogCollectionTemplate = ({ data, pageContext }) => {
-  const { hasPreviousPage, hasNextPage, currentPage } = pageContext;
+  const { hasPreviousPage, hasNextPage, currentPage, featuredCount } =
+    pageContext;
   const { edges } = data.allMdx;
 
   if (!edges.length) {
@@ -30,16 +31,17 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 
   return (
     <>
-      <SEO title="Delta Lake Blog" pageIndex={currentPage} />
+      <SEO title="Delta Lake Blogs" pageIndex={currentPage} />
       <PageLayout>
         <Section
           padding="xxl"
-          title="Delta Lake Blog"
+          title="Delta Lake Blogs"
           primary
           background="white"
         >
           <CardDataList
             cards={cards}
+            showFeatured={featuredCount > 0}
             columns={{ xs: 1, sm: 2, lg: 3 }}
             density="relaxed"
             thumbnailRatio={[16, 9]}

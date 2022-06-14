@@ -19,6 +19,8 @@ const query = graphql`
             }
           }
           url
+          docs
+          source_code
           description
           id
         }
@@ -78,6 +80,21 @@ const query = graphql`
               gatsbyImageData(width: 500, placeholder: TRACED_SVG)
             }
           }
+        }
+      }
+    }
+    latestBlogs: allLatestBlogsJson {
+      edges {
+        node {
+          description
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(width: 700, height: 394)
+            }
+          }
+          title
+          url
+          id
         }
       }
     }

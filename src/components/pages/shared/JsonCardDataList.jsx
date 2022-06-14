@@ -6,7 +6,7 @@ import useDataList from "src/hooks/useDataList";
 const dataListProps = {
   connectors: {
     thumbnailRatio: [1, 1],
-    columns: { xs: 1, md: 2 },
+    columns: { xs: 1, md: 2, lg: 3 },
   },
   videos: {
     thumbnailRatio: [16, 9],
@@ -18,7 +18,7 @@ const dataListProps = {
   },
   tutorials: {
     thumbnailRatio: [16, 9],
-    columns: { xs: 1 },
+    columns: { xs: 1, md: 2 },
   },
 };
 

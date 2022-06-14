@@ -10,6 +10,7 @@ const mdxPageTypes = [
     path: "src/blog",
     template: "blog",
     perPage: 12,
+    featuredCount: 1,
   },
 ];
 
