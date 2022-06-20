@@ -1,5 +1,5 @@
 ---
-title: Delta Operations
+title: Delta Lake on Apache Spark - Batch operations
 width: full
 ---
 
@@ -9,26 +9,23 @@ import { CBCreateTable } from "/src/components/CodeBlocks";
 import "react-tabs/style/react-tabs.css";
 import * as React from "react";
 
-## Table Operations
+<DeltaLake /> supports all the options provided by <ApacheSpark /> for
+performing batch reads and writes on tables.
 
-<DeltaLake /> supports most of the options provided by <ApacheSpark /> DataFrame
-read and write APIs for performing batch reads and writes on tables. For
-many <DeltaLake /> operations on tables, you enable integration
-with <ApacheSpark /> DataSourceV2 and Catalog APIs (since 3.0) by setting
-configurations when you create a new <SparkSession />.
-
-<br />
-
-For many <DeltaLake /> operations on tables, you enable integration with
-
-<ApacheSpark /> DataSourceV2 and Catalog APIs (since 3.0) by setting
-configurations when you create a new <SparkSession />.
+For many <DeltaLake /> operations on tables, you have to enable integration with <ApacheSpark />
+DataSourceV2 and Catalog APIs (since 3.0) by setting [configurations when you create a
+new `SparkSession`]().
 
 ## Create a Table
 
-You can create tables in the following ways:
+Delta Lake supports creating two types of tables — tables defined in the metastore and tables defined by path.
+To work with metastore-defined tables, you have to enable integration with <ApacheSpark />
+DataSourceV2 and Catalog APIs (since 3.0) by setting [configurations when you create a
+new `SparkSession`]().
 
-- SQL DDL commands: You can use standard SQL DDL commands supported in Apache Spark (for example, CREATE TABLE and REPLACE TABLE) to create Delta tables.
+You can create tables in the following ways.
+
+- **SQL DDL commands**: You can use standard SQL DDL commands supported in Apache Spark (for example, CREATE TABLE and REPLACE TABLE) to create Delta tables.
 
       <CBCreateTable
 
@@ -65,7 +62,7 @@ You can create tables in the following ways:
   }
   />
 
-  SQL also supports creating a table at a path, without creating an entry in the Hive metastore.
+  Spark SQL also supports creating a table at a path, without creating an entry in the Hive metastore.
 
       <CBCreateTable
 
@@ -92,7 +89,9 @@ You can create tables in the following ways:
   }
   />
 
-- DataFrameWriter API: If you want to simultaneously create a table and insert data into it from Spark DataFrames or Datasets, you can use the Spark DataFrameWriter (Scala or Java and Python).
+- **DataFrameWriter API**: If you want to simultaneously create a table and insert data into it from Spark DataFrames or Datasets,
+  you can use the Spark `DataFrameWriter` ([Scala or Java](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/DataFrameWriter.html) and
+  [Python](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql.html#input-and-output)).
 
       <CBCreateTable
 
@@ -101,10 +100,10 @@ You can create tables in the following ways:
   <div>
 
   ```python
-  # Create table in the metastore using DataFrame's schema and write data to it
+  # Create table in the metastore using `DataFrame`'s schema and write data to it
   df.write.format("delta").saveAsTable("default.people10m")
 
-  # Create or replace partitioned table with path using DataFrame's schema and write/overwrite data to it
+  # Create or replace partitioned table with path using `DataFrame`'s schema and write/overwrite data to it
   df.write.format("delta").mode("overwrite").save("/tmp/delta/people10m")
   ```
 
@@ -116,10 +115,10 @@ You can create tables in the following ways:
   <div>
 
   ```scala
-  // Create table in the metastore using DataFrame's schema and write data to it
+  // Create table in the metastore using `DataFrame`'s schema and write data to it
   df.write.format("delta").saveAsTable("default.people10m")
 
-  // Create table with path using DataFrame's schema and write data to it
+  // Create table with path using `DataFrame`'s schema and write data to it
   df.write.format("delta").mode("overwrite").save("/tmp/delta/people10m")
   ```
 
@@ -128,13 +127,14 @@ You can create tables in the following ways:
   }
   />
 
-  You can also create Delta tables using the Spark DataFrameWriterV2 API.
+  You can also create Delta tables using the Spark `DataFrameWriterV2` API.
 
-- DeltaTableBuilder API: You can also use the DeltaTableBuilder API in Delta Lake to create tables. Compared to the DataFrameWriter APIs, this API makes it easier to specify additional information like column comments, table properties, and generated columns.
+- **DeltaTableBuilder API**: You can also use the `DeltaTableBuilder` API in Delta Lake to create tables. Compared to the `DataFrameWriter` APIs, this API makes it easier to specify additional information like column comments, table properties, and [generated columns]().
+
+  {" "}
 
   {" "}
 
-  {" "}
   <Info title="Note" level="info">
     This feature is new and is in Preview.
   </Info>
@@ -225,7 +225,7 @@ You can create tables in the following ways:
   }
   />
 
-  See the API documentation for details.
+  See the [API documentation]() for details.
 
 ## Partition Data
 
@@ -304,7 +304,7 @@ You can partition data to speed up queries or DML that have predicates involving
   }
 />
 
-To determine whether a table contains a specific partition, use the statement SELECT COUNT(\*) &gt; 0 FROM &lt;table-name&gt; WHERE &lt;partition-column&gt; = &lt;value&gt;. If the partition exists, true is returned. For example:
+To determine whether a table contains a specific partition, check if there are non-zero records in that partition. For example:
 
 <CBCreateTable
 sql={
@@ -316,37 +316,21 @@ SELECT COUNT(*) > 0 AS `Partition exists` FROM default.people10m WHERE gender = 
 
   </div>
   }
-  python={
-  <div>
 
-```python
-display(spark.sql("SELECT COUNT(*) > 0 AS `Partition exists` FROM default.people10m WHERE gender = 'M'"))
-```
-
-  </div>
-  }
-  scala={
-  <div>
-
-```scala
-display(spark.sql("SELECT COUNT(*) > 0 AS `Partition exists` FROM default.people10m WHERE gender = 'M'"))
-```
-
-  </div>
-  }
 />
+If the partition exists, `true` is returned.
 
-## Control Data Location
+### Control Data Location
 
-For tables defined in the metastore, you can optionally specify the LOCATION as a path. Tables created with a specified LOCATION are considered unmanaged by the metastore. Unlike a managed table, where no path is specified, an unmanaged table’s files are not deleted when you DROP the table.
+For tables defined in the metastore, you can optionally specify the path as the table location. Tables created with a specified location are considered unmanaged by the metastore. Unlike a managed table, where no path is specified, an unmanaged table’s files are not deleted when you DROP the table.
 
-When you run CREATE TABLE with a LOCATION that already contains data stored using Delta Lake, Delta Lake does the following:
+When you run `CREATE TABLE` with a `LOCATION` that already contains data stored using Delta Lake, Delta Lake does the following:
 
 - If you specify only the table name and location, for example:
 
     <CBCreateTable
-  sql={
-  <div>
+sql={
+<div>
 
         ```sql
         CREATE TABLE default.people10m
@@ -361,7 +345,7 @@ When you run CREATE TABLE with a LOCATION that already contains data stored usin
 
   the table in the metastore automatically inherits the schema, partitioning, and table properties of the existing data. This functionality can be used to “import” data into the metastore.
 
-- If you specify any configuration (schema, partitioning, or table properties), Delta Lake verifies that the specification exactly matches the configuration of the existing data:
+- If you specify _any configuration_ (schema, partitioning, or table properties), Delta Lake verifies that the specification exactly matches the configuration of the existing data:
 
   <Info title="Important!" level="warning">
     If the specified configuration does not exactly match the configuration of
@@ -384,13 +368,13 @@ When you run CREATE TABLE with a LOCATION that already contains data stored usin
   This feature is new and is in Preview.
 </Info>
 
-Delta Lake supports generated columns which are a special type of columns whose values are automatically generated based on a user-specified function over other columns in the Delta table. When you write to a table with generated columns and you do not explicitly provide values for them, Delta Lake automatically computes the values. For example, you can automatically generate a date column (for partitioning the table by date) from the timestamp column; any writes into the table need only specify the data for the timestamp column. However, if you explicitly provide values for them, the values must satisfy the constraint (&lt;value&gt; &lt;=&gt; &lt;generation expression&gt;) IS TRUE or the write will fail with an error.
+Delta Lake supports generated columns which are a special type of columns whose values are automatically generated based on a user-specified function over other columns in the Delta table. When you write to a table with generated columns and you do not explicitly provide values for them, Delta Lake automatically computes the values. For example, you can automatically generate a date column (for partitioning the table by date) from the timestamp column; any writes into the table need only specify the data for the timestamp column. However, if you explicitly provide values for them, the values must satisfy the [constraint]() `(<value> <=> <generation expression>) = TRUE` or the write will fail with an error.
 
 <Info title="Important!" level="danger">
   Tables created with generated columns have a higher table writer protocol
-  version than the default. See Table protocol versioning to understand table
-  protocol versioning and what it means to have a higher version of a table
-  protocol version.
+  version than the default. See [Table protocol versioning]() to understand
+  table protocol versioning and what it means to have a higher version of a
+  table protocol version.
 </Info>
 
 The following example shows how to create a table with generated columns:
@@ -400,9 +384,9 @@ The following example shows how to create a table with generated columns:
   - Aggregate functions.
   - Window functions.
   - Functions returning multiple rows.
-- For Delta Lake 1.1.0 and above, MERGE operations support generated columns when you set spark.databricks.delta.schema.autoMerge.enabled to true.
+- Since Delta Lake 1.1.0, `MERGE` operations support generated columns when you set `spark.databricks.delta.schema.autoMerge.enabled` to `true`.
 
-Delta Lake may be able to generate partition filters for a query whenever a partition column is defined by one of the following expressions:
+Since Delta Lake 1.2.0, it may be able to automaticallly generate partition filters from data filters if a partition column is generated from data columns by one of the following expressions:
 
 - CAST(col AS DATE) and the type of col is TIMESTAMP.
 - YEAR(col) and the type of col is TIMESTAMP.
@@ -488,90 +472,17 @@ spark.sql('SELECT * FROM default.events WHERE eventTime >= "2020-10-01 00:00:00"
   }
 />
 
-Delta Lake automatically generates a partition filter so that the preceding query only reads the data in partition year=2020/month=10/day=01 even if a partition filter is not specified.
+Delta Lake automatically generates a partition filter so that the preceding query only reads the data in partition `year=2020/month=10/day=01` even if a partition filter is not specified.
 
-You can use an EXPLAIN clause and check the provided plan to see whether Delta Lake automatically generates any partition filters.
-
-As another example, given the following table:
-
-<CBCreateTable
-  python={
-  <div>
-
-```python
-DeltaTable.create(spark) \
-  .tableName("default.events") \
-  .addColumn("eventId", "BIGINT") \
-  .addColumn("data", "STRING") \
-  .addColumn("eventType", "STRING") \
-  .addColumn("eventTime", "TIMESTAMP") \
-  .addColumn("year", "INT", generatedAlwaysAs="YEAR(eventTime)") \
-  .addColumn("month", "INT", generatedAlwaysAs="MONTH(eventTime)") \
-  .addColumn("day", "INT", generatedAlwaysAs="DAY(eventTime)") \
-  .partitionedBy("eventType", "year", "month", "day") \
-  .execute()
-```
-
-  </div>
-  }
-  sql={
-  <div>
-
-```sql
-CREATE TABLE events(
-  eventId BIGINT,
-  data STRING,
-  eventType STRING,
-  eventTime TIMESTAMP,
-  year INT GENERATED ALWAYS AS (YEAR(eventTime)),
-  month INT GENERATED ALWAYS AS (MONTH(eventTime)),
-  day INT GENERATED ALWAYS AS (DAY(eventTime))
-)
-USING DELTA
-PARTITIONED BY (eventType, year, month, day)
-```
-
-  </div>
-  }
-/>
-
-If you then run the following query:
-
-<CBCreateTable
-  python={
-  <div>
-
-```python
-spark.sql('SELECT * FROM default.events WHERE eventTime >= "2020-10-01 00:00:00" <= "2020-10-01 12:00:00"')
-```
-
-  </div>
-  }
-  sql={
-  <div>
-
-```sql
-SELECT * FROM events
-WHERE eventTime >= "2020-10-01 00:00:00" <= "2020-10-01 12:00:00"
-```
-
-  </div>
-  }
-/>
-
-<DeltaLake /> automatically generates a partition filter so that the preceding
-query only reads the data in partition `year=2020/month=10/day=01` even if a
-partition filter is not specified.
-
-You can use an EXPLAIN clause and check the provided plan to see whether <DeltaLake /> automatically generates any partition filters.
+You can use SQL [`EXPLAIN`](https://spark.apache.org/docs/latest/sql-ref-syntax-qry-explain.html) and check the provided plan to see whether Delta Lake automatically generates any partition filters.
 
 ### Use special characters in column names
 
-By default, special characters such as spaces and any of the characters `,;{}()\n\t=` are not supported in table column names. To include these special characters in a table's column name, enable column mapping.
+By default, special characters such as spaces and any of the characters `,;{}()\n\t=` are not supported in table column names. To include these special characters in a table's column name, enable [column mapping](https://docs.delta.io/latest/versioning.html#-column-mapping).
 
 ## Read a table
 
-You can load a Delta table as a DataFrame by specifying a table name or a path:
+You can load a Delta table as a `DataFrame` by specifying a table name or a path:
 
 <CBCreateTable
 scala={
@@ -612,7 +523,7 @@ SELECT * FROM delta.`/tmp/delta/people10m`  -- query table by path
   }
 />
 
-The DataFrame returned automatically reads the most recent snapshot of the table for any query; you never need to run `REFRESH TABLE`. <DeltaLake /> automatically uses partitioning and statistics to read the minimum amount of data when there are applicable predicates in the query.
+The `DataFrame` returned automatically reads the most recent snapshot of the table for any query; you never need to run `REFRESH TABLE`. <DeltaLake /> automatically uses partitioning and statistics to read the minimum amount of data when there are applicable predicates in the query.
 
 ## Query an older snapshot of a table (time travel)
 
@@ -630,24 +541,9 @@ This section describes the supported methods for querying older versions of tabl
 
 This section shows how to query an older version of a Delta table.
 
-#### SQL `AS OF` syntax
-
-<CBCreateTable
-  sql={
-  <div>
-
-```sql
-SELECT * FROM table_name TIMESTAMP AS OF timestamp_expression
-SELECT * FROM table_name VERSION AS OF version
-```
-
-  </div>
-  }
-/>
-
 #### DataFrameReader options
 
-DataFrameReader options allow you to create a DataFrame from a Delta table that is fixed to a specific version of the table.
+`DataFrameReader` options allow you to create a `DataFrame` from a Delta table that is fixed to a specific version of the table.
 
 <CBCreateTable
   python={
@@ -666,7 +562,7 @@ For `timestamp_string`, only date or timestamp strings are accepted. For example
 
 A common pattern is to use the latest state of the Delta table throughout the execution of a job to update downstream applications.
 
-Because Delta tables auto update, a DataFrame loaded from a Delta table may return different results across invocations if the underlying data is updated. By using time travel, you can fix the data returned by the DataFrame across invocations:
+Because Delta tables auto update, a `DataFrame` loaded from a Delta table may return different results across invocations if the underlying data is updated. By using time travel, you can fix the data returned by the `DataFrame` across invocations:
 
 <CBCreateTable
   python={
@@ -881,7 +777,7 @@ df.write \
   }
 />
 
-This sample code writes out the data in `df`, validates that it all matches the predicate, and performs an atomic replacement. If you want to write out data that doesn't all match the predicate, to replace the matching rows in the target table, you can disable the constraint check by setting `spark.databricks.delta.replaceWhere.constraintCheck.enabled` to false:
+This sample code writes out the data in `df`, validates that it all matches the predicate, and performs an atomic replacement. If you want to write out data that doesn't all match the predicate, to replace the matching rows in the target table, you can disable the constraint check by setting `spark.databricks.delta.replaceWhere.constraintCheck.enabled` to `false`:
 
 <CBCreateTable
 scala={
@@ -964,11 +860,160 @@ spark.conf.set("spark.databricks.delta.replaceWhere.dataColumns.enabled", False)
   the schema of an existing table.
 </Info>
 
-For <DeltaLake /> support for updating tables, see delta update.
+For <DeltaLake /> support for updating tables, see [delta update]().
+
+#### Dynamic Partition Overwrites
+
+<Delta /> 2.0 and above supports _dynamic_ partition overwrite mode for
+partitioned tables.
+
+When in dynamic partition overwrite mode, we overwrite all existing data in each logical partition for which the write will commit new data. Any existing logical partitions for which the write does not contain data will remain unchanged. This mode is only applicable when data is being written in overwrite mode: either `INSERT OVERWRITE` in SQL, or a `DataFrame` write with `df.write.mode("overwrite")`.
+
+You can configure dynamic partition overwrite mode by setting the Spark session configuration `spark.sql.sources.partitionOverwriteMode` to `dynamic`. You can also enable this by setting the `DataFrameWriter` option `partitionOverwriteMode` to `dynamic`. If present, the query-specific option overrides the mode defined in the session configuration. The default for `partitionOverwriteMode` is `static`.
+
+<CBCreateTable
+sql={
+  <div>
+
+```sql
+SET spark.sql.sources.partitionOverwriteMode=dynamic;
+INSERT OVERWRITE TABLE default.people10m SELECT * FROM morePeople;
+```
+
+  </div>
+  }
+  python={
+  <div>
+
+```python
+df.write \
+  .format("delta") \
+  .mode("overwrite") \
+  .option("partitionOverwriteMode", "dynamic") \
+  .saveAsTable("default.people10m")
+```
+
+  </div>
+  }
+  scala={
+  <div>
+
+```scala
+df.write
+  .format("delta")
+  .mode("overwrite")
+  .option("partitionOverwriteMode", "dynamic")
+  .saveAsTable("default.people10m")
+```
+
+  </div>
+  }
+/>
+
+<Info title="Note" level="info">
+Dynamic partition overwrite conflicts with the option `replaceWhere` for partitioned tables.
+- If dynamic partition overwrite is enabled in the Spark session configuration, and `replaceWhere` is provided as a `DataFrameWriter` option, data will be overwritten according to the `replaceWhere` expression (query-specific options override session configurations).
+- If both dynamic partition overwrite and `replaceWhere` are enabled in the `DataFrameWriter` options, an error will be thrown.
+<Info/>
+
+<Info title="Important" level="warning">
+Validate that the data being written with dynamic partition overwrite touches only the expected partitions. A single row in the incorrect partition can lead to unintentionally overwritting an entire partition. We strongly recommend using `replaceWhere` to explicitly specify which data to overwrite.
+
+If a partition has been accidentally overwritten, you can use the [restore operation](https://docs.delta.io/latest/delta-utility.html) to undo the change.
+
+</Info>
+
+For <Delta /> support for updating tables, see the [update operations](https://docs.delta.io/latest/delta-update.html).
+
+<a id="max-records-per-file"></a>
+
+### Limit rows written in a file
+
+You can use the SQL session configuration `spark.sql.files.maxRecordsPerFile` to specify the maximum number of records to write to a single file for a <DeltaLake /> table. Specifying a value of zero or a negative value represents no limit.
+
+<CBCreateTable
+python={
+  <div>
+
+```python
+df.write.format("delta") \
+  .mode("append") \
+  .option("maxRecordsPerFile", "10000") \
+  .save("/tmp/delta/people10m")
+```
+
+  </div>
+  }
+  scala={
+  <div>
+
+```scala
+df.write.format("delta")
+  .mode("append")
+  .option("maxRecordsPerFile", "10000")
+  .save("/tmp/delta/people10m")
+```
+
+  </div>
+  }
+/>
+
+### Idempotent writes
+
+Sometimes a job that writes data to a Delta table is restarted due to various reasons (for example, job encounters a failure). The failed job may or may not have written the data to Delta table before terminating. In the case where the data is written to the Delta table, the restarted job writes the same data to the Delta table which results in duplicate data.
+
+To address this, Delta tables support the following `DataFrameWriter` options to make the writes idempotent:
+
+- `txnAppId`: A unique string that you can pass on each `DataFrame` write. For example, this can be the name of the job.
+- `txnVersion`: A monotonically increasing number that acts as transaction version. This number needs to be unique for data that is being written to the Delta table(s). For example, this can be the epoch seconds of the instant when the query is attempted for the first time. Any subsequent restarts of the same job needs to have the same value for `txnVersion`.
+
+The above combination of options needs to be unique for each new data that is being ingested into the Delta table and the `txnVersion` needs to be higher than the last data that was ingested into the Delta table. For example:
+
+- Last successfully written data contains option values as `dailyETL:23423` (`txnAppId:txnVersion`).
+- Next write of data should have `txnAppId = dailyETL` and `txnVersion` as at least `23424` (one more than the last written data `txnVersion`).
+- Any attempt to write data with `txnAppId = dailyETL` and `txnVersion` as `23422` or less is ignored because the `txnVersion` is less than the last recorded `txnVersion` in the table.
+- Attempt to write data with `txnAppId:txnVersion` as `anotherETL:23424` is successful writing data to the table as it contains a different `txnAppId` compared to the same option value in last ingested data.
+
+<Info title="Important" level="warning">
+  This solution assumes that the data being written to Delta table(s) in
+  multiple retries of the job is same. If a write attempt in a Delta table
+  succeeds but due to some downstream failure there is a second write attempt
+  with same txn options but different data, then that second write attempt will
+  be ignored. This can cause unexpected results.
+</Info>
+
+#### Example
+
+<CBCreateTable
+python={
+  <div>
+
+```python
+app_id = ... # A unique string that is used as an application ID.
+version = ... # A monotonically increasing number that acts as transaction version.
+
+dataFrame.write.format(...).option("txnVersion", version).option("txnAppId", app_id).save(...)
+```
+
+  </div>
+  }
+  scala={
+  <div>
+
+```scala
+val appId = ... // A unique string that is used as an application ID.
+version = ... // A monotonically increasing number that acts as transaction version.
+
+dataFrame.write.format(...).option("txnVersion", version).option("txnAppId", appId).save(...)
+```
+
+  </div>
+  }
+/>
 
 ### Set user-defined commit metadata
 
-You can specify user-defined strings as metadata in commits made by these operations, either using the DataFrameWriter option `userMetadata` or the SparkSession configuration `spark.databricks.delta.commitInfo.userMetadata`. If both of them have been specified, then the option takes preference. This user-defined metadata is readable in the [history](delta-utility.md#delta-history) operation.
+You can specify user-defined strings as metadata in commits made by these operations, either using the `DataFrameWriter` option `userMetadata` or the SparkSession configuration `spark.databricks.delta.commitInfo.userMetadata`. If both of them have been specified, then the option takes preference. This user-defined metadata is readable in the [history](delta-utility.md#delta-history) operation.
 
 <CBCreateTable
 scala={
@@ -1009,14 +1054,14 @@ INSERT OVERWRITE default.people10m SELECT * FROM morePeople
 
 ## Schema validation
 
-<DeltaLake /> automatically validates that the schema of the DataFrame being
+<DeltaLake /> automatically validates that the schema of the `DataFrame` being
 written is compatible with the schema of the table. <DeltaLake /> uses the
-following rules to determine whether a write from a DataFrame to a table is
+following rules to determine whether a write from a `DataFrame` to a table is
 compatible:
 
-- All DataFrame columns must exist in the target table. If there are columns in the DataFrame not present in the table, an exception is raised. Columns present in the table but not in the DataFrame are set to null.
-- DataFrame column data types must match the column data types in the target table. If they don't match, an exception is raised.
-- DataFrame column names cannot differ only by case. This means that you cannot have columns such as "Foo" and "foo" defined in the same table. While you can use Spark in case sensitive or insensitive (default) mode, Parquet is case sensitive when storing and returning column information. <DeltaLake /> is case-preserving but insensitive when storing the schema and has this restriction to avoid potential mistakes, data corruption, or loss issues.
+- All `DataFrame` columns must exist in the target table. If there are columns in the `DataFrame` not present in the table, an exception is raised. Columns present in the table but not in the `DataFrame` are set to null.
+- `DataFrame` column data types must match the column data types in the target table. If they don't match, an exception is raised.
+- `DataFrame` column names cannot differ only by case. This means that you cannot have columns such as "Foo" and "foo" defined in the same table. While you can use Spark in case sensitive or insensitive (default) mode, Parquet is case sensitive when storing and returning column information. <DeltaLake /> is case-preserving but insensitive when storing the schema and has this restriction to avoid potential mistakes, data corruption, or loss issues.
 
 <DeltaLake /> support DDL to add new columns explicitly and the ability to
 update schema automatically.
@@ -1208,7 +1253,7 @@ the schema after is:
   This feature is available in <DeltaLake /> 1.2.0 and above.
 </Info>
 
-To rename columns without rewriting any of the columns' existing data, you must enable column mapping for the table. See enable column mapping.
+To rename columns without rewriting any of the columns' existing data, you must enable column mapping for the table. See [enable column mapping](https://docs.delta.io/latest/versioning.html#-column-mapping).
 
 To rename a column:
 
@@ -1274,6 +1319,30 @@ Then the schema after is:
 | +-field2
 ```
 
+#### Drop columns
+
+<Info title="Note" level="info">
+  This feature is available in <DeltaLake /> 2.0 and above.
+</Info>
+
+To drop columns as a metadata-only operation without rewriting any data files, you must enable column mapping for the table. See [enable column mapping](https://docs.delta.io/latest/versioning.html#-column-mapping).
+To drop a column:
+
+```sql
+ALTER TABLE table_name DROP COLUMN col_name
+```
+
+To drop multiple columns:
+
+```sql
+ALTER TABLE table_name DROP COLUMNS (col_name_1, col_name_2)
+```
+
+<Info title="Important" level="warning">
+  Dropping a column from metadata does not delete the underlying data for the
+  column in files.
+</Info>
+
 #### Change column type or name
 
 You can change a column's type or name or drop a column by rewriting the table. To do this, use the `overwriteSchema` option:
@@ -1326,7 +1395,7 @@ with the data being written.
 
 #### Add columns
 
-Columns that are present in the DataFrame but missing from the table are automatically added as part of a write transaction when:
+Columns that are present in the `DataFrame` but missing from the table are automatically added as part of a write transaction when:
 
 - `write` or `writeStream` have `.option("mergeSchema", "true")`
 
@@ -1336,7 +1405,7 @@ When both options are specified, the option from the `DataFrameWriter` takes pre
 
 #### `NullType` columns
 
-Because Parquet doesn't support `NullType`, `NullType` columns are dropped from the DataFrame when writing into Delta tables, but are still stored in the schema. When a different data type is received for that column, <DeltaLake /> merges the schema to the new data type. If <DeltaLake /> receives a `NullType` for an existing column, the old schema is retained and the new column is dropped during the write.
+Because Parquet doesn't support `NullType`, `NullType` columns are dropped from the `DataFrame` when writing into Delta tables, but are still stored in the schema. When a different data type is received for that column, <DeltaLake /> merges the schema to the new data type. If <DeltaLake /> receives a `NullType` for an existing column, the old schema is retained and the new column is dropped during the write.
 
 `NullType` in streaming is not supported. Since you must set schemas when using streaming this should be very rare. `NullType` is also not accepted for complex types such as `ArrayType` and `MapType`.
 
@@ -1393,14 +1462,6 @@ In addition, to tailor behavior and performance, <DeltaLake /> supports certain 
 - Configure the time travel retention properties: `delta.logRetentionDuration=<interval-string>` and `delta.deletedFileRetentionDuration=<interval-string>`. For details, see data retention.
 - Configure the number of columns for which statistics are collected: `delta.dataSkippingNumIndexedCols=n`. This property indicates to the writer that statistics are to be collected only for the first `n` columns in the table. Also the data skipping code ignores statistics for any column beyond this column index. This property takes affect only for new data that is written out.
 
-<Info title="AWS S3" level="warning">
-  Randomize file prefixes to avoid hot spots in S3 metadata:
-  `delta.randomizeFilePrefixes=true`. For tables that require a lot (thousands
-  of requests per second) of fast read/write operations, we strongly recommend
-  dedicating an S3 bucket to a table (locating table at the root of the bucket),
-  and enabling randomized file prefixes to get the best experience.
-</Info>
-
 <Info title="Note" level="info">
   Modifying a Delta table property is a write operation that will conflict with
   other concurrent write operations, causing them to fail. We recommend that you
@@ -1433,7 +1494,7 @@ spark.conf.set("spark.databricks.delta.properties.defaults.appendOnly", "true")
   <div>
 
 ```sql
-spark.sql("SET spark.databricks.delta.properties.defaults.appendOnly = true")
+SET spark.databricks.delta.properties.defaults.appendOnly = true
 ```
 
   </div>
@@ -1522,10 +1583,104 @@ When you start a Spark application on a cluster, you can set the Spark configura
 
 Spark SQL will pass all of the current SQL session configurations to <DeltaLake />, and <DeltaLake /> will use them to access Hadoop FileSystem APIs. For example, `SET a.b.c=x.y.z` will tell <DeltaLake /> to pass the value `x.y.z` as a Hadoop configuration `a.b.c`, and <DeltaLake /> will use it to access Hadoop FileSystem APIs.
 
+### `DataFrame` options
+
+Besides setting Hadoop file system configurations through the Spark (cluster) configurations or SQL session configurations, Delta supports reading Hadoop file system configurations from `DataFrameReader` and `DataFrameWriter` options (that is, option keys that start with the `fs.` prefix) when the table is read or written, by using `DataFrameReader.load(path)` or `DataFrameWriter.save(path)`.
+
+For example, you can pass your storage credentials through `DataFrame` options:
+
+### Spark configurations
+
+When you start a Spark application on a cluster, you can set the Spark configurations in the form of `spark.hadoop.*` to pass your custom Hadoop configurations. For example, Setting a value for `spark.hadoop.a.b.c` will pass the value as a Hadoop configuration `a.b.c`, and <DeltaLake /> will use it to access Hadoop FileSystem APIs.
+
+See [Spark doc](http://spark.apache.org/docs/latest/configuration.html#custom-hadoophive-configuration) for more details.
+
+### SQL session configurations
+
+Spark SQL will pass all of the current [SQL session configurations](http://spark.apache.org/docs/latest/configuration.html#runtime-sql-configuration) to <DeltaLake />, and <DeltaLake /> will use them to access Hadoop FileSystem APIs. For example, `SET a.b.c=x.y.z` will tell <DeltaLake /> to pass the value `x.y.z` as a Hadoop configuration `a.b.c`, and <DeltaLake /> will use it to access Hadoop FileSystem APIs.
+
+<a id="hadoop-file-system-options"></a>
+
 ### DataFrame options
 
 Besides setting Hadoop file system configurations through the Spark (cluster) configurations or SQL session configurations, Delta supports reading Hadoop file system configurations from `DataFrameReader` and `DataFrameWriter` options (that is, option keys that start with the `fs.` prefix) when the table is read or written, by using `DataFrameReader.load(path)` or `DataFrameWriter.save(path)`.
 
-For example, you can pass your storage credentials through DataFrame options:
+For example, you can pass your storage credentails through DataFrame options:
 
-{/* * TODO: make tabs component for different environments, e.g. AWS, Azure, ... * */}
+.. code-language-tabs::
+
+```python
+df1 = spark.read.format("delta") \
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-1>") \
+  .read("...")
+df2 = spark.read.format("delta") \
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-2>") \
+  .read("...")
+df1.union(df2).write.format("delta") \
+  .mode("overwrite") \
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-3>") \
+  .save("...")
+```
+
+```scala
+val df1 = spark.read.format("delta")
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-1>")
+  .read("...")
+val df2 = spark.read.format("delta")
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-2>")
+  .read("...")
+df1.union(df2).write.format("delta")
+  .mode("overwrite")
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-3>")
+  .save("...")
+```
+
+You can find the details of the Hadoop file system configurations for your storage in [\_](/delta/delta-storage-oss.md).
+
+### Spark configurations
+
+When you start a Spark application on a cluster, you can set the Spark configurations in the form of `spark.hadoop.*` to pass your custom Hadoop configurations. For example, Setting a value for `spark.hadoop.a.b.c` will pass the value as a Hadoop configuration `a.b.c`, and <DeltaLake /> will use it to access Hadoop FileSystem APIs.
+
+See [Spark doc](http://spark.apache.org/docs/latest/configuration.html#custom-hadoophive-configuration) for more details.
+
+### SQL session configurations
+
+Spark SQL will pass all of the current [SQL session configurations](http://spark.apache.org/docs/latest/configuration.html#runtime-sql-configuration) to <DeltaLake />, and <DeltaLake /> will use them to access Hadoop FileSystem APIs. For example, `SET a.b.c=x.y.z` will tell <DeltaLake /> to pass the value `x.y.z` as a Hadoop configuration `a.b.c`, and <DeltaLake /> will use it to access Hadoop FileSystem APIs.
+
+<a id="hadoop-file-system-options"></a>
+
+### DataFrame options
+
+Besides setting Hadoop file system configurations through the Spark (cluster) configurations or SQL session configurations, Delta supports reading Hadoop file system configurations from `DataFrameReader` and `DataFrameWriter` options (that is, option keys that start with the `fs.` prefix) when the table is read or written, by using `DataFrameReader.load(path)` or `DataFrameWriter.save(path)`.
+
+For example, you can pass your storage credentails through DataFrame options:
+
+.. code-language-tabs::
+
+```python
+df1 = spark.read.format("delta") \
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-1>") \
+  .read("...")
+df2 = spark.read.format("delta") \
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-2>") \
+  .read("...")
+df1.union(df2).write.format("delta") \
+  .mode("overwrite") \
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-3>") \
+  .save("...")
+```
+
+```scala
+val df1 = spark.read.format("delta")
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-1>")
+  .read("...")
+val df2 = spark.read.format("delta")
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-2>")
+  .read("...")
+df1.union(df2).write.format("delta")
+  .mode("overwrite")
+  .option("fs.azure.account.key.<storage-account-name>.dfs.core.windows.net", "<storage-account-access-key-3>")
+  .save("...")
+```
+
+You can find the details of the Hadoop file system configurations for your storage in the [storage page]().
