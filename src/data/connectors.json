@@ -81,30 +81,30 @@
     "thumbnail": "./images/connectors/kafka.png"
   },
   {
-    "name": "dlt - Delta Lake interface for SparkR",
+    "name": "dlt | SparkR",
     "description": "This package allows SparkR to read from and write to Delta Lake.",
     "url": "https://dlt.zero323.net/",
     "docs": "https://dlt.zero323.net/",
     "source_code": "https://gitlab.com/zero323/dlt/",
-    "tags": ["SparkR"],
+    "tags": ["SparkR", "community"],
     "thumbnail": "./images/connectors/dlt.png"
   },
   {
-    "name": "Apache Beam (Preview)",
+    "name": "Apache Beam (Beta)",
     "description": "This connector allows Apache Beam to read from Delta Lake.",
     "url": "https://github.com/mbenenso/beam-deltalake/",
     "docs": "https://github.com/mbenenso/beam-deltalake/",
     "source_code": "https://github.com/mbenenso/beam-deltalake/",
-    "tags": ["Beam", "standalone"],
+    "tags": ["Beam", "standalone", "community"],
     "thumbnail": "./images/connectors/apache-beam.png"
   },
   {
-    "name": "Athena Query Federation (Preview)",
+    "name": "Athena Query Federation (Beta)",
     "description": "This connector allows AWS Athena to read from Delta Lake.",
     "url": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
     "docs": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
     "source_code": "https://github.com/malonsocasas/aws-athena-query-federation/tree/master/athena-deltalake",
-    "tags": ["AWS", "Athena", "standalone"],
+    "tags": ["AWS", "Athena", "standalone", "community"],
     "thumbnail": "./images/connectors/AthenaFederation1.png"
   },
   {
@@ -113,16 +113,48 @@
     "url": "https://github.com/delta-io/connectors/tree/master/powerbi",
     "docs": "https://github.com/delta-io/connectors/tree/master/powerbi",
     "source_code": "https://github.com/delta-io/connectors/tree/master/powerbi",
-    "tags": ["PowerBI"],
+    "tags": ["PowerBI", "community"],
     "thumbnail": "./images/connectors/powerbi.png"
   },
   {
-    "name": "Power BI | Delta Sharing Connector (Beta)",
+    "name": "Power BI | Delta Sharing (Beta)",
     "description": "This connector allows Power BI to read from Delta Sharing endpoint.",
     "url": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
     "docs": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
     "tags": ["PowerBI", "Delta Sharing"],
     "thumbnail": "./images/connectors/powerbi.png"
+  },
+  {
+    "name": "node.js | Delta Sharing (Beta)",
+    "description": "This connector allows node.js to read from Delta Sharing endpoint.",
+    "url": "https://github.com/goodwillpunning/nodejs-sharing-client",
+    "source_code": "https://github.com/goodwillpunning/nodejs-sharing-client",
+    "tags": ["node.js", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/nodejs-logo.png"
+  },
+  {
+    "name": "Azure Synapse",
+    "description": "The current version of Delta Lake included with Azure Synapse has language support for Scala, PySpark, and .NET.",
+    "url": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-delta-lake-overview?pivots=programming-language-csharp",
+    "docs": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-what-is-delta-lake",
+    "tags": ["Azure", "Synapse"],
+    "thumbnail": "./images/connectors/AzureSynapseAnalytics.png"
+  },
+  {
+    "name": "Snowflake (Preview)",
+    "description": "This preview allows Snowflake to read from Delta Lake via an external table.",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
+    "docs": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
+    "tags": ["Snowflake"],
+    "thumbnail": "./images/connectors/snowflake.png"
+  },
+  {
+    "name": "Ceph",
+    "description": "This connector allows you to read and write from Delta tables on Ceph storage.",
+    "url": "https://github.com/nanhu-lab/hadoop-ceph",
+    "source_code": "https://github.com/nanhu-lab/hadoop-ceph#cephrgw",
+    "tags": ["Ceph", "community"],
+    "thumbnail": "./images/connectors/42_ceph-icon.77291086bf.png"
   },
   {
     "name": "Presto",
@@ -132,7 +164,6 @@
     "tags": ["Presto", "manifest"],
     "thumbnail": "./images/connectors/presto.png"
   },
-
   {
     "name": "Athena",
     "description": "This utility allows Athena to read from Delta Lake using a manifest file.",
