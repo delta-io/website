@@ -14,5 +14,5 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.engine_node_version }}
-      - run: npm ci
-      - run: npm run lint
+      - run: npm ci --legacy-peer-deps
+      - run: npm run lint --legacy-peer-deps

@@ -157,6 +157,14 @@
     "thumbnail": "./images/connectors/42_ceph-icon.77291086bf.png"
   },
   {
+    "name": "Datastream Connector",
+    "description": "As Datastream streams changes to files to Google Cloud Storage, this connector streams these files and writes the changes to Delta Lake.",
+    "url": "https://github.com/badal-io/datastream-deltalake-connector",
+    "source_code": "https://github.com/badal-io/datastream-deltalake-connector",
+    "tags": ["GCS", "Datastream", "badal.io", "community"],
+    "thumbnail": "./images/connectors/badal-io-logo.png"
+  },
+  {
     "name": "Presto",
     "description": "This utility allows Presto to read from Delta Lake using a manifest file.",
     "url": "https://docs.delta.io/latest/presto-integration.html",
