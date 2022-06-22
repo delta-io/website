@@ -141,6 +141,14 @@
     "thumbnail": "./images/connectors/Databricks-logo.png"
   },
   {
+    "name": "Starburst",
+    "description": "The Starburst Delta Lake connector is an extended version of the Trino/Delta Lake connector with configuration and usage identical.",
+    "url": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
+    "docs": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
+    "tags": ["Starburst", "Azure", "GCP", "AWS"],
+    "thumbnail": "./images/connectors/starburst-logo.png"
+  },
+  {
     "name": "Azure Synapse",
     "description": "The current version of Delta Lake included with Azure Synapse has language support for Scala, PySpark, and .NET.",
     "url": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-delta-lake-overview?pivots=programming-language-csharp",
