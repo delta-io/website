@@ -133,6 +133,22 @@
     "thumbnail": "./images/connectors/nodejs-logo.png"
   },
   {
+    "name": "Databricks",
+    "description": "Delta Lake is included within Databricks allowing it to read from and write to Delta Lake.",
+    "url": "https://docs.databricks.com/delta/index.html",
+    "docs": "https://docs.databricks.com/delta/index.html",
+    "tags": ["Databricks", "Azure", "GCP", "AWS"],
+    "thumbnail": "./images/connectors/Databricks-logo.png"
+  },
+  {
+    "name": "Starburst",
+    "description": "The Starburst Delta Lake connector is an extended version of the Trino/Delta Lake connector with configuration and usage identical.",
+    "url": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
+    "docs": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
+    "tags": ["Starburst", "Azure", "GCP", "AWS"],
+    "thumbnail": "./images/connectors/starburst-logo.png"
+  },
+  {
     "name": "Azure Synapse",
     "description": "The current version of Delta Lake included with Azure Synapse has language support for Scala, PySpark, and .NET.",
     "url": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-delta-lake-overview?pivots=programming-language-csharp",
@@ -141,7 +157,7 @@
     "thumbnail": "./images/connectors/AzureSynapseAnalytics.png"
   },
   {
-    "name": "Snowflake (Preview)",
+    "name": "Snowflake (Beta)",
     "description": "This preview allows Snowflake to read from Delta Lake via an external table.",
     "url": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
     "docs": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
@@ -165,14 +181,6 @@
     "thumbnail": "./images/connectors/badal-io-logo.png"
   },
   {
-    "name": "Presto",
-    "description": "This utility allows Presto to read from Delta Lake using a manifest file.",
-    "url": "https://docs.delta.io/latest/presto-integration.html",
-    "docs": "https://docs.delta.io/latest/presto-integration.html",
-    "tags": ["Presto", "manifest"],
-    "thumbnail": "./images/connectors/presto.png"
-  },
-  {
     "name": "Athena",
     "description": "This utility allows Athena to read from Delta Lake using a manifest file.",
     "url": "https://docs.delta.io/latest/presto-integration.html",
@@ -180,15 +188,6 @@
     "source_code": "https://docs.delta.io/latest/presto-integration.html",
     "tags": ["Athena", "AWS", "manifest"],
     "thumbnail": "./images/connectors/athena.png"
-  },
-  {
-    "name": "Snowflake",
-    "description": "This utility allows Snowflake to read from Delta Lake using a manifest file.",
-    "url": "https://docs.delta.io/latest/snowflake-integration.html",
-    "docs": "https://docs.delta.io/latest/snowflake-integration.html",
-    "source_code": "https://docs.delta.io/latest/snowflake-integration.html",
-    "tags": ["Snowflake", "manifest"],
-    "thumbnail": "./images/connectors/snowflake.png"
   },
   {
     "name": "Redshift",
