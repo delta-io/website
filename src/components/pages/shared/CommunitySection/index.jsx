@@ -39,7 +39,7 @@ const CommunitySection = () => (
     title="Join the Delta Lake Community"
     subtitle={
       <Typography variant="p">
-        Delta Lake is supported by more than 190 developers from over 50
+        Delta Lake is supported by more than 190 developers from over 70
         organizations across multiple repositories.
         <br />
         Chat with fellow Delta Lake users and contributors, ask questions and

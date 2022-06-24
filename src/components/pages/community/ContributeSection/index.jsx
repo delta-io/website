@@ -1,8 +1,33 @@
 /* eslint-disable react/no-danger */
 import * as React from "react";
+import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
+import styled from "styled-components";
+import GithubContributorsGrid from "src/components/pages/shared/GithubContributorsGrid";
 import ContributeGrid from "./ContributeGrid";
+
+const CenterTextSectionColumn = styled(TypographyContainer)`
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+  }
+`;
+
+const TextSectionColumn = styled(TypographyContainer)`
+  text-align: left;
+
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+  }
+`;
 
 const ContributeSection = () => (
   <Section
@@ -10,7 +35,7 @@ const ContributeSection = () => (
     subtitle={
       <>
         <Typography variant="p">
-          Help us biuld the simplest, most complete, battle-tested open-source
+          Help us build the simplest, most complete, battle-tested open-source
           storage framework ever! <br />
           Below are a few great ways to get started to contribute.
         </Typography>
@@ -50,23 +75,78 @@ const ContributeSection = () => (
           PR: "https://github.com/delta-io/delta-rs/pulls",
         },
         {
-          image: "/images/featureIcons/open-source.png",
-          name: "Open Source",
-          description:
-            "Community driven, open standards, open protocol, open discussions",
+          image: "/images/featureIcons/github_2048_black.png",
+          name: "Delta Sharing",
+          description: "An open protocol for secure data sharing.",
+          url: "https://github.com/delta-io/delta-sharing",
+          issue: "https://github.com/delta-io/delta-sharing/issues/new/choose",
+          PR: "https://github.com/delta-io/delta-sharing/pulls",
         },
         {
-          image: "/images/featureIcons/unified-batch.png",
-          name: "Unified Batch/Streaming",
+          image: "/images/featureIcons/github_2048_black.png",
+          name: "kafka-delta-ingest",
           description:
-            "Exactly once semantics ingestion to backfill to interactive queries",
+            "A highly efficient daemon for streaming data from Kafka into Delta Lake.",
+          url: "https://github.com/delta-io/kafka-delta-ingest",
+          issue:
+            "https://github.com/delta-io/kafka-delta-ingest/issues/new/choose",
+          PR: "https://github.com/delta-io/kafka-delta-ingest/pulls",
         },
         {
-          image: "/images/featureIcons/schema-evolution.png",
-          name: "Schema Evolution / Enforcement",
-          description: "Prevent bad data from causing data corruption",
+          image: "/images/featureIcons/github_2048_black.png",
+          name: "delta.io website",
+          description:
+            "Delta Lake website and documentation built on Gatsby.js framework.",
+          url: "https://github.com/delta-io/website/",
+          issue: "https://github.com/delta-io/website/issues/new/choose",
+          PR: "https://github.com/delta-io/website/pulls",
         },
       ]}
+    />
+    <Grid columns={{ md: 1 }} gutter="xxl">
+      <CenterTextSectionColumn>
+        <Typography variant="h3">Governance</Typography>
+      </CenterTextSectionColumn>
+    </Grid>
+
+    <Grid columns={{ md: 2 }} gutter="xxl">
+      <TextSectionColumn>
+        <Typography variant="p">
+          Delta Lake is an independent open-source project and not controlled by
+          any single company. To emphasize this we joined the Delta Lake Project
+          in 2019, which is a sub-project of the Linux Foundation Projects.
+          Within the project, we make decisions based on{" "}
+          <a href="https://delta.io/pdfs/delta-charter.pdf">these rules</a>.
+        </Typography>
+      </TextSectionColumn>
+      <TextSectionColumn>
+        <Typography variant="p">
+          Delta Lake is supported by a wide set of developers from over 70
+          organizations across multiple repositories. Since 2019, more than 190
+          developers have contributed to Delta Lake! The Delta Lake community is
+          growing by leaps and bounds with more than 6200 members in the{" "}
+          <a href="https://go.delta.io/slack">Delta Users slack</a>.
+        </Typography>
+      </TextSectionColumn>
+    </Grid>
+    <Grid columns={{ md: 1 }} gutter="xxl">
+      <CenterTextSectionColumn>
+        <Typography variant="p">
+          For more information, please refer to the{" "}
+          <a href="https://delta.io/pdfs/delta-charter.pdf">
+            founding technical charter
+          </a>
+          .
+        </Typography>
+      </CenterTextSectionColumn>
+    </Grid>
+    <Grid columns={{ md: 1 }} gutter="xxl">
+      <CenterTextSectionColumn>
+        <Typography variant="h3">Featured Contributors</Typography>
+      </CenterTextSectionColumn>
+    </Grid>
+    <GithubContributorsGrid
+      users={["rtyler", "houqp", "tdas", "zsxwing", "mrk-its", "koertkuipers"]}
     />
   </Section>
 );
