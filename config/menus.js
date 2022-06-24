@@ -36,20 +36,20 @@ const main = [
   {
     label: "Community",
     url: "/community",
-    submenu: [
-      {
-        url: "/community/contributing",
-        label: "Contributing",
-      },
-      {
-        url: "/community/getting-help",
-        label: "Getting Help",
-      },
-      {
-        url: "/community/adoption",
-        label: "Adoption",
-      },
-    ],
+    // submenu: [
+    //   {
+    //     url: "/community/contributing",
+    //     label: "Contributing",
+    //   },
+    //   {
+    //     url: "/community/getting-help",
+    //     label: "Getting Help",
+    //   },
+    //   {
+    //     url: "/community/adoption",
+    //     label: "Adoption",
+    //   },
+    // ],
   },
   {
     label: "Docs",

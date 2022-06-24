@@ -1,5 +1,6 @@
 /* eslint-disable react/no-danger */
 import * as React from "react";
+import Link from "src/components/Link";
 import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
@@ -103,6 +104,30 @@ const ContributeSection = () => (
         },
       ]}
     />
+
+    <Grid columns={{ md: 1 }} gutter="xxl">
+      <CenterTextSectionColumn>
+        <Typography variant="p">
+          Refer to the &nbsp;
+          <Link href="https://github.com/delta-io/delta/blob/master/CONTRIBUTING.md">
+            Contributing Guide
+          </Link>
+          &nbsp; for the latest on communication, coding style, and how to sign
+          your work.
+        </Typography>
+      </CenterTextSectionColumn>
+    </Grid>
+
+    <Grid columns={{ md: 1 }} gutter="xxl">
+      <CenterTextSectionColumn>
+        <Typography variant="h3">Want to help or to help out?</Typography>
+        <Typography variant="p">
+          Looking for ways to help or to get help? Refer to the &nbsp;
+          <Link href="getting-help">Getting Help Guide</Link>.
+        </Typography>
+      </CenterTextSectionColumn>
+    </Grid>
+
     <Grid columns={{ md: 1 }} gutter="xxl">
       <CenterTextSectionColumn>
         <Typography variant="h3">Governance</Typography>
