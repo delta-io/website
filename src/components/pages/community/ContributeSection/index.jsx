@@ -50,9 +50,11 @@ const ContributeSection = () => (
       features={[
         {
           image: "/images/featureIcons/github_2048_black.png",
-          name: "delta (Spark)",
+          name: "Delta",
           description:
-            "An open-source storage framework that enables building a Lakehouse architecture with compute engines including Spark, PrestoDB, Flink, Trino, and Hive and APIs for Scala, Java, Rust, Ruby, and Python",
+            "Delta implementation on Apache Spark™ with Scala/Java and Python APIs.",
+          contributors: "179",
+          orgs: "43",
           url: "https://github.com/delta-io/delta/",
           issue: "https://github.com/delta-io/delta/issues/new/choose",
           PR: "https://github.com/delta-io/delta/pulls",
@@ -62,6 +64,8 @@ const ContributeSection = () => (
           name: "Delta Connectors",
           description:
             "Connectors for Delta Lake including Hive, Flink, Java Standalone, etc.",
+          contributors: "21",
+          orgs: "9",
           url: "https://github.com/delta-io/connectors/",
           issue: "https://github.com/delta-io/connectors/issues/new/choose",
           PR: "https://github.com/delta-io/connectors/pulls",
@@ -71,6 +75,8 @@ const ContributeSection = () => (
           name: "Delta Rust",
           description:
             "A native Rust library for Delta Lake, with bindings into Python and Ruby.",
+          contributors: "50",
+          orgs: "26",
           url: "https://github.com/delta-io/delta-rs/",
           issue: "https://github.com/delta-io/delta-rs/issues/new/choose",
           PR: "https://github.com/delta-io/delta-rs/pulls",
@@ -78,7 +84,9 @@ const ContributeSection = () => (
         {
           image: "/images/featureIcons/github_2048_black.png",
           name: "Delta Sharing",
-          description: "An open protocol for secure data sharing.",
+          description: "An open protocol for simple and secure data sharing.",
+          contributors: "19",
+          orgs: "2",
           url: "https://github.com/delta-io/delta-sharing",
           issue: "https://github.com/delta-io/delta-sharing/issues/new/choose",
           PR: "https://github.com/delta-io/delta-sharing/pulls",
@@ -88,6 +96,8 @@ const ContributeSection = () => (
           name: "kafka-delta-ingest",
           description:
             "A highly efficient daemon for streaming data from Kafka into Delta Lake.",
+          contributors: "6",
+          orgs: "2",
           url: "https://github.com/delta-io/kafka-delta-ingest",
           issue:
             "https://github.com/delta-io/kafka-delta-ingest/issues/new/choose",
@@ -98,6 +108,8 @@ const ContributeSection = () => (
           name: "delta.io website",
           description:
             "Delta Lake website and documentation built on Gatsby.js framework.",
+          contributors: "7",
+          orgs: "3",
           url: "https://github.com/delta-io/website/",
           issue: "https://github.com/delta-io/website/issues/new/choose",
           PR: "https://github.com/delta-io/website/pulls",

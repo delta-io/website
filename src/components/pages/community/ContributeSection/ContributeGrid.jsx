@@ -24,7 +24,7 @@ const Icon = styled.img`
 
 const FeatureNameContent = styled(Typography)`
   color: ${(props) => props.theme.colors.text};
-  font-size: ${(props) => props.theme.fontSizes.h4};
+  font-size: ${(props) => props.theme.fontSizes.h3};
   margin-top: 0;
   margin-bottom: ${(props) => props.theme.spacing.xs};
   line-height: 110%;
@@ -50,22 +50,30 @@ const ContributeGrid = (props) => {
     <Grid columns={{ md: 2, lg: 3 }}>
       {features.map((feature) => (
         <FeatureContainer>
-          <Icon src={feature.image} alt="" width="50" />
+          <Icon src={feature.image} alt="" width="35" />
           <FeatureNameContent>
             <Link key={feature.url} href={feature.url} muted>
               {feature.name}
             </Link>
           </FeatureNameContent>
+          <Typography variant="p">
+            {feature.contributors} contributors | {feature.orgs} organizations
+            <br />
+          </Typography>
+          <FeatureDescContent>
+            {feature.description}
+            <br />
+            &nbsp;
+          </FeatureDescContent>
           <FeatureIssueContent>
             <Link key={feature.issue} href={feature.issue} muted>
               Report an issue
             </Link>
             <br />
             <Link key={feature.PR} href={feature.PR} muted>
-              Pull Request
+              View Pull Requests
             </Link>
           </FeatureIssueContent>
-          <FeatureDescContent>{feature.description}</FeatureDescContent>
         </FeatureContainer>
       ))}
     </Grid>
