@@ -35,7 +35,7 @@ const main = [
   },
   {
     label: "Community",
-    url: "/community",
+    url: "/community-page",
     // submenu: [
     //   {
     //     url: "/community/contributing",
