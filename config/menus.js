@@ -35,7 +35,7 @@ const main = [
   },
   {
     label: "Community",
-    url: "/community",
+    url: "/community-page",
   },
   {
     label: "Docs",
@@ -68,7 +68,7 @@ const social = [
 
 const community = [
   {
-    url: "/community",
+    url: "/community-page",
     label: "Community",
   },
   {
