@@ -52,7 +52,7 @@ const ContributeSection = () => (
           image: "/images/featureIcons/github_2048_black.png",
           name: "Delta",
           description:
-            "Delta implementation on Apache Spark™ with Scala/Java and Python APIs.",
+            "Delta Lake connector for Apache Spark™ with Scala/Java and Python APIs.",
           contributors: "179",
           orgs: "43",
           url: "https://github.com/delta-io/delta/",
@@ -63,7 +63,7 @@ const ContributeSection = () => (
           image: "/images/featureIcons/github_2048_black.png",
           name: "Delta Connectors",
           description:
-            "Connectors for Delta Lake including Hive, Flink, Java Standalone, etc.",
+            "Delta Lake connectors for non-Spark engines like Hive, Flink, Java, etc.",
           contributors: "21",
           orgs: "9",
           url: "https://github.com/delta-io/connectors/",
@@ -74,7 +74,7 @@ const ContributeSection = () => (
           image: "/images/featureIcons/github_2048_black.png",
           name: "Delta Rust",
           description:
-            "A native Rust library for Delta Lake, with bindings into Python and Ruby.",
+            "Delta Lake connector written natively in Rust, with Python and Ruby bindings.",
           contributors: "50",
           orgs: "26",
           url: "https://github.com/delta-io/delta-rs/",
@@ -95,7 +95,7 @@ const ContributeSection = () => (
           image: "/images/featureIcons/github_2048_black.png",
           name: "kafka-delta-ingest",
           description:
-            "A highly efficient daemon for streaming data from Kafka into Delta Lake.",
+            "Delta Lake connector for streaming data from Kafka into Delta tables.",
           contributors: "6",
           orgs: "2",
           url: "https://github.com/delta-io/kafka-delta-ingest",
