@@ -35,21 +35,7 @@ const main = [
   },
   {
     label: "Community",
-    url: "/community",
-    submenu: [
-      {
-        url: "/community/contributing",
-        label: "Contributing",
-      },
-      {
-        url: "/community/getting-help",
-        label: "Getting Help",
-      },
-      {
-        url: "/community/adoption",
-        label: "Adoption",
-      },
-    ],
+    url: "/community-page",
   },
   {
     label: "Docs",
@@ -82,16 +68,12 @@ const social = [
 
 const community = [
   {
-    url: "/community/contributing",
-    label: "Contributing",
+    url: "/community-page",
+    label: "Community",
   },
   {
     url: "/community/getting-help",
     label: "Getting Help",
-  },
-  {
-    url: "/community/adoption",
-    label: "Adoption",
   },
 ];
 
