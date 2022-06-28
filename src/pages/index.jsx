@@ -20,9 +20,9 @@ const HomePage = () => (
     <SEO title="Home" />
     <PageLayout>
       <AnnouncementSection
-        title="Announcing Delta Sharing"
-        description="An Open Standard for Secure Data Sharing"
-        url="/sharing"
+        title="Announcing Delta Lake 2.0 RC1"
+        description="Try out the latest release candidate today!"
+        url="https://github.com/delta-io/delta/releases/tag/v2.0.0rc1"
       />
       <HeroSection
         title="Build Lakehouses with Delta Lake"
