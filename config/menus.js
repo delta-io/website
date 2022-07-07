@@ -56,7 +56,7 @@ const social = [
   },
   {
     label: "Slack Group",
-    url: "https://go.delta.io/delta-users",
+    url: "https://go.delta.io/slack",
     icon: "slack",
   },
   {
