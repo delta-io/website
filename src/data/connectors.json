@@ -133,6 +133,14 @@
     "thumbnail": "./images/connectors/nodejs-logo.png"
   },
   {
+    "name": "Java | Delta Sharing (Beta)",
+    "description": "This connector allows as Java client to read from Delta Sharing endpoint.",
+    "url": "https://github.com/databrickslabs/delta-sharing-java-connector",
+    "source_code": "https://github.com/databrickslabs/delta-sharing-java-connector",
+    "tags": ["Java", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/java-logo.png"
+  },
+  {
     "name": "Databricks",
     "description": "Delta Lake is included within Databricks allowing it to read from and write to Delta Lake.",
     "url": "https://docs.databricks.com/delta/index.html",
@@ -171,6 +179,14 @@
     "source_code": "https://github.com/nanhu-lab/hadoop-ceph#cephrgw",
     "tags": ["Ceph", "community"],
     "thumbnail": "./images/connectors/42_ceph-icon.77291086bf.png"
+  },
+  {
+    "name": "DataHub",
+    "description": "This connector allows DataHub to extract Delta Lake metadata.",
+    "url": "https://datahubproject.io/docs/generated/ingestion/sources/delta-lake/",
+    "source_code": "https://github.com/datahub-project/datahub/tree/master/metadata-ingestion/src/datahub/ingestion/source/delta_lake",
+    "tags": ["DataHub", "community"],
+    "thumbnail": "./images/connectors/datahub-logo.png"
   },
   {
     "name": "Datastream Connector",
