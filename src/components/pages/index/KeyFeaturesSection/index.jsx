@@ -51,7 +51,7 @@ const KeyFeaturesSection = () => (
           image: "/images/featureIcons/audit-history.png",
           name: "Audit History",
           description:
-            "Delta Lake log all change details providing a fill audit trail",
+            "Delta Lake log all change details providing a full audit trail",
         },
         {
           image: "/images/featureIcons/dml-operations.png",
