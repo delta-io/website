@@ -1,0 +1,618 @@
+---
+description: Learn how to get started quickly with <DeltaLake />.
+---
+
+import { ApacheSpark, DeltaLake } from "/src/components/Attributions";
+import { CBCreateTable } from "/src/components/CodeBlocks";
+import * as React from "react";
+
+# Quickstart
+
+This guide helps you quickly explore the main features of <DeltaLake />. It
+provides code snippets that show how to read from and write to Delta tables from
+interactive, batch, and streaming queries.
+
+## Set up <ApacheSpark /> with <DeltaLake />
+
+Follow these instructions to set up <DeltaLake /> with Spark. You can run the
+steps in this guide on your local machine in the following two ways:
+
+#. Run interactively: Start the Spark shell (Scala or Python) with <DeltaLake />
+and run the code snippets interactively in the shell.
+
+#. Run as a project: Set up a Maven or SBT project (Scala or Java) with
+
+<DeltaLake />, copy the code snippets into a source file, and run the project.
+Alternatively, you can use the [examples provided in the Github
+repository](https://github.com/delta-io/delta/tree/master/examples).
+
+### Set up interactive shell
+
+To use <DeltaLake /> interactively within the Spark Scala or Python shell, you
+need a local installation of <ApacheSpark />. Depending on whether you want to
+use Python or Scala, you can set up either PySpark or the Spark shell,
+respectively.
+
+<Info title="Important" level="info">
+
+For all of the following instructions, make sure to install the
+correct version of Spark or PySpark that is compatible with <DeltaLake />
+`$VERSION$`. See the [release compatibility matrix](releases-oss.md) for
+details.
+
+</Info>
+
+#### PySpark Shell
+
+#. Install the PySpark version that is [compatible](releases-oss.md) with the
+
+<DeltaLake /> version by running the following:
+
+<CBCreateTable
+      sql={
+    <div>
+
+```bash
+pip install pyspark==<compatible-spark-version>
+```
+
+</div>
+      }
+    />
+
+#. Run PySpark with the <DeltaLake /> package and additional configurations:
+
+<CBCreateTable
+      sql={
+    <div>
+
+```bash
+pyspark --packages io.delta:delta-core_2.12:$VERSION$ --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+```
+
+</div>
+      }
+    />
+
+#### Spark Scala Shell
+
+Download the [compatible version](releases-oss.md) of <ApacheSpark /> by
+following instructions from [Downloading
+Spark](https://spark.apache.org/downloads.html), either using `pip` or by
+downloading and extracting the archive and running `spark-shell` in the
+extracted directory.
+
+<CBCreateTable
+      sql={
+    <div>
+
+```bash
+bin/spark-shell --packages io.delta:delta-core_2.12:$VERSION$ --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+```
+
+</div>
+      }
+    />
+
+### Set up project
+
+If you want to build a project using Delta Lake binaries from Maven Central
+Repository, you can use the following Maven coordinates.
+
+#### Maven
+
+You include <DeltaLake /> in your Maven project by adding it as a dependency in
+your POM file. <DeltaLake /> compiled with Scala 2.12.
+
+<CBCreateTable
+      sql={
+    <div>
+
+```xml
+<dependency>
+  <groupId>io.delta</groupId>
+  <artifactId>delta-core_2.12</artifactId>
+  <version>$VERSION$</version>
+</dependency>
+```
+
+</div>
+      }
+    />
+
+#### SBT
+
+You include <DeltaLake /> in your SBT project by adding the following line to
+your `build.sbt` file:
+
+<CBCreateTable
+      scala={
+    <div>
+
+```scala
+libraryDependencies += "io.delta" %% "delta-core" % "$VERSION$"
+```
+
+</div>
+      }
+    />
+
+#### Python
+
+To set up a Python project (for example, for unit testing), you can install
+
+<DeltaLake /> using `pip install delta-spark` and then configure the
+SparkSession with the `configure_spark_with_delta_pip()` utility function in
+<DeltaLake />.
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+import pyspark
+from delta import *
+
+builder = pyspark.sql.SparkSession.builder.appName("MyApp") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+
+spark = configure_spark_with_delta_pip(builder).getOrCreate()
+```
+
+</div>
+      }
+    />
+
+## Create a table
+
+To create a Delta table, write a DataFrame out in the `delta` format. You can
+use existing Spark SQL code and change the format from `parquet`, `csv`, `json`,
+and so on, to `delta`.
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+data = spark.range(0, 5)
+data.write.format("delta").save("/tmp/delta-table")
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      scala={
+    <div>
+
+```scala
+val data = spark.range(0, 5)
+data.write.format("delta").save("/tmp/delta-table")
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```java
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+
+SparkSession spark = ...   // create SparkSession
+
+Dataset<Row> data = spark.range(0, 5);
+data.write().format("delta").save("/tmp/delta-table");
+```
+
+</div>
+      }
+    />
+
+These operations create a new Delta table using the schema that was _inferred_
+from your DataFrame. For the full set of options available when you create a new
+Delta table, see [\_](delta-batch.md#ddlcreatetable) and
+[\_](delta-batch.md#deltadataframewrites).
+
+<Info title="Note" level="info">
+
+This quickstart uses local paths for Delta table locations. For
+configuring HDFS or cloud storage for Delta tables, see [\_](delta-storage.md).
+
+</Info>
+
+## Read data
+
+You read data in your Delta table by specifying the path to the files:
+`"/tmp/delta-table"`:
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+df = spark.read.format("delta").load("/tmp/delta-table")
+df.show()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      scala={
+    <div>
+
+```scala
+val df = spark.read.format("delta").load("/tmp/delta-table")
+df.show()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```java
+Dataset<Row> df = spark.read().format("delta").load("/tmp/delta-table");
+df.show();
+```
+
+</div>
+      }
+    />
+
+## Update table data
+
+<DeltaLake /> supports several operations to modify tables using standard
+DataFrame APIs. This example runs a batch job to overwrite the data in the
+table:
+
+### Overwrite
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+data = spark.range(5, 10)
+data.write.format("delta").mode("overwrite").save("/tmp/delta-table")
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      scala={
+    <div>
+
+```scala
+val data = spark.range(5, 10)
+data.write.format("delta").mode("overwrite").save("/tmp/delta-table")
+df.show()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```java
+Dataset<Row> data = spark.range(5, 10);
+data.write().format("delta").mode("overwrite").save("/tmp/delta-table");
+```
+
+</div>
+      }
+    />
+
+If you read this table again, you should see only the values `5-9` you have
+added because you overwrote the previous data.
+
+### Conditional update without overwrite
+
+<DeltaLake /> provides programmatic APIs to conditional update, delete, and
+merge (upsert) data into tables. Here are a few examples.
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+from delta.tables import *
+from pyspark.sql.functions import *
+
+deltaTable = DeltaTable.forPath(spark, "/tmp/delta-table")
+
+# Update every even value by adding 100 to it
+deltaTable.update(
+  condition = expr("id % 2 == 0"),
+  set = { "id": expr("id + 100") })
+
+# Delete every even value
+deltaTable.delete(condition = expr("id % 2 == 0"))
+
+# Upsert (merge) new data
+newData = spark.range(0, 20)
+
+deltaTable.alias("oldData") \
+  .merge(
+    newData.alias("newData"),
+    "oldData.id = newData.id") \
+  .whenMatchedUpdate(set = { "id": col("newData.id") }) \
+  .whenNotMatchedInsert(values = { "id": col("newData.id") }) \
+  .execute()
+
+deltaTable.toDF().show()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      scala={
+    <div>
+
+```scala
+import io.delta.tables._
+import org.apache.spark.sql.functions._
+
+val deltaTable = DeltaTable.forPath("/tmp/delta-table")
+
+// Update every even value by adding 100 to it
+deltaTable.update(
+  condition = expr("id % 2 == 0"),
+  set = Map("id" -> expr("id + 100")))
+
+// Delete every even value
+deltaTable.delete(condition = expr("id % 2 == 0"))
+
+// Upsert (merge) new data
+val newData = spark.range(0, 20).toDF
+
+deltaTable.as("oldData")
+  .merge(
+    newData.as("newData"),
+    "oldData.id = newData.id")
+  .whenMatched
+  .update(Map("id" -> col("newData.id")))
+  .whenNotMatched
+  .insert(Map("id" -> col("newData.id")))
+  .execute()
+
+deltaTable.toDF.show()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```java
+import io.delta.tables.*;
+import org.apache.spark.sql.functions;
+import java.util.HashMap;
+
+DeltaTable deltaTable = DeltaTable.forPath("/tmp/delta-table");
+
+// Update every even value by adding 100 to it
+deltaTable.update(
+  functions.expr("id % 2 == 0"),
+  new HashMap<String, Column>() {{
+    put("id", functions.expr("id + 100"));
+  }}
+);
+
+// Delete every even value
+deltaTable.delete(condition = functions.expr("id % 2 == 0"));
+
+// Upsert (merge) new data
+Dataset<Row> newData = spark.range(0, 20).toDF();
+
+deltaTable.as("oldData")
+  .merge(
+    newData.as("newData"),
+    "oldData.id = newData.id")
+  .whenMatched()
+  .update(
+    new HashMap<String, Column>() {{
+      put("id", functions.col("newData.id"));
+    }})
+  .whenNotMatched()
+  .insertExpr(
+    new HashMap<String, Column>() {{
+      put("id", functions.col("newData.id"));
+    }})
+  .execute();
+
+deltaTable.toDF().show();
+```
+
+</div>
+      }
+    />
+
+You should see that some of the existing rows have been updated and new rows
+have been inserted.
+
+For more information on these operations, see [\_](delta-update.md).
+
+## Read older versions of data using time travel
+
+You can query previous snapshots of your Delta table by using time travel. If
+you want to access the data that you overwrote, you can query a snapshot of the
+table before you overwrote the first set of data using the `versionAsOf` option.
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+df = spark.read.format("delta").option("versionAsOf", 0).load("/tmp/delta-table")
+df.show()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```scala
+val df = spark.read.format("delta").option("versionAsOf", 0).load("/tmp/delta-table")
+df.show()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```java
+Dataset<Row> df = spark.read().format("delta").option("versionAsOf", 0).load("/tmp/delta-table");
+df.show();
+```
+
+</div>
+      }
+    />
+
+You should see the first set of data, from before you overwrote it. Time travel
+takes advantage of the power of the <DeltaLake /> transaction log to access data
+that is no longer in the table. Removing the version 0 option (or specifying
+version 1) would let you see the newer data again. For more information, see
+[\_](delta-batch.md#deltatimetravel).
+
+## Write a stream of data to a table
+
+You can also write to a Delta table using Structured Streaming. The <DeltaLake
+/> transaction log guarantees exactly-once processing, even when there are other
+streams or batch queries running concurrently against the table. By default,
+streams run in append mode, which adds new records to the table:
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+streamingDf = spark.readStream.format("rate").load()
+stream = streamingDf.selectExpr("value as id").writeStream.format("delta").option("checkpointLocation", "/tmp/checkpoint").start("/tmp/delta-table")
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      scala={
+    <div>
+
+```scala
+val streamingDf = spark.readStream.format("rate").load()
+val stream = streamingDf.select($"value" as "id").writeStream.format("delta").option("checkpointLocation", "/tmp/checkpoint").start("/tmp/delta-table")
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```java
+import org.apache.spark.sql.streaming.StreamingQuery;
+
+Dataset<Row> streamingDf = spark.readStream().format("rate").load();
+StreamingQuery stream = streamingDf.selectExpr("value as id").writeStream().format("delta").option("checkpointLocation", "/tmp/checkpoint").start("/tmp/delta-table");
+```
+
+</div>
+      }
+    />
+
+While the stream is running, you can read the table using the earlier commands.
+
+<Info title="Note" level="info">
+
+If you're running this in a shell, you may see the streaming task
+progress, which make it hard to type commands in that shell. It may be useful to
+start another shell in a new terminal for querying the table.
+
+</Info>
+
+You can stop the stream by running `stream.stop()` in the same terminal that
+started the stream.
+
+For more information about <DeltaLake /> integration with Structured Streaming,
+see [\_](delta-streaming.md). See also the [Structured Streaming Programming
+Guide](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
+on the <ApacheSpark /> website.
+
+## Read a stream of changes from a table
+
+While the stream is writing to the Delta table, you can also read from that
+table as streaming source. For example, you can start another streaming query
+that prints all the changes made to the Delta table. You can specify which
+version Structured Streaming should start from by providing the
+`startingVersion` or `startingTimestamp` option to get changes from that point
+onwards. See [Structured Streaming](delta-streaming.md#specify-initial-position)
+for details.
+
+<CBCreateTable
+      python={
+    <div>
+
+```python
+stream2 = spark.readStream.format("delta").load("/tmp/delta-table").writeStream.format("console").start()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      scala={
+    <div>
+
+```scala
+val stream2 = spark.readStream.format("delta").load("/tmp/delta-table").writeStream.format("console").start()
+```
+
+</div>
+      }
+    />
+
+<CBCreateTable
+      sql={
+    <div>
+
+```java
+StreamingQuery stream2 = spark.readStream().format("delta").load("/tmp/delta-table").writeStream().format("console").start();
+```
+
+</div>
+      }
+    />
