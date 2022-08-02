@@ -53,7 +53,7 @@ const ContributeSection = () => (
           name: "Delta",
           description:
             "Delta Lake connector for Apache Spark™ with Scala/Java and Python APIs.",
-          contributors: "179",
+          contributors: "192",
           orgs: "43",
           url: "https://github.com/delta-io/delta/",
           issue: "https://github.com/delta-io/delta/issues/new/choose",
