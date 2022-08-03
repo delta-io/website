@@ -91,11 +91,7 @@ An important thing to remember is once you enable the change data feed option fo
 
 See the[ documentation](https://docs.delta.io/2.0.0/delta-change-data-feed.html) for more details.
 
-### Schema and Partition Operations: Dynamic Partition Overwrite and Drop Columns
-
-When it comes to schema and partition operations, the following new features help with data write performance.
-
-#### Support for dropping columns as a metadata operation
+### Support for dropping columns
 
 For versions of Delta Lake prior to 1.2, there was a requirement for Parquet files to store data with the same column name as the table schema. [ Delta Lake 1.2](https://github.com/delta-io/delta/releases/tag/v1.2.0) introduced a mapping between the _logical column name_ and the _physical column_ name in those Parquet files. While the physical names remain unique, the logical column renames become a simple change in the mapping _and_ logical column names can have arbitrary characters while the physical name remains Parquet-compliant.
 
