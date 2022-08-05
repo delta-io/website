@@ -31,7 +31,7 @@ const main = [
   },
   {
     label: "Roadmap",
-    url: "/roadmap",
+    url: "https://github.com/delta-io/delta/issues/1307",
   },
   {
     label: "Community",
@@ -106,7 +106,7 @@ const footer = [
     label: "Integrations",
   },
   {
-    url: "/roadmap/",
+    url: "https://github.com/delta-io/delta/issues/1307",
     label: "Roadmap",
   },
   {
