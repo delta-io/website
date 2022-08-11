@@ -1,0 +1,107 @@
+---
+title: Join the Delta Community
+width: full
+---
+
+## Governance
+
+Delta Lake is an independent open-source project and not controlled by any single company. To emphasize this we joined the Delta Lake Project in 2019, which is a sub-project of the Linux Foundation Projects. Within the project, we make decisions based on [these rules](https://delta.io/pdfs/delta-charter.pdf).
+
+Delta Lake is supported by a wide set of developers from over 70 organizations across multiple repositories. Since 2019, more than 190 developers have contributed to Delta Lake across more than 5 repositories! The Delta Lake community is growing by leaps and bounds with more than 5500 members in the [Delta Users slack](https://go.delta.io/slack)).
+
+<table cellpadding="5" width="500">
+  <tr>
+    <td
+      align="left"
+      bgcolor="#ffffe0"
+      style="border-bottom:solid 1px black; border-top:solid 1px black"
+    >
+      <b>Repository</b>
+    </td>
+    <td
+      align="right"
+      bgcolor="#ffffe0"
+      style="border-bottom:solid 1px black; border-top:solid 1px black"
+    >
+      <b>Contributors</b>
+    </td>
+    <td
+      align="right"
+      bgcolor="#ffffe0"
+      style="border-bottom:solid 1px black; border-top:solid 1px black"
+    >
+      <b>Organizations</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">connectors</td>
+    <td align="right">21</td>
+    <td align="right">9</td>
+  </tr>
+  <tr>
+    <td align="left">delta</td>
+    <td align="right">97</td>
+    <td align="right">43</td>
+  </tr>
+  <tr>
+    <td align="left">delta-rs</td>
+    <td align="right">54</td>
+    <td align="right">26</td>
+  </tr>
+  <tr>
+    <td align="left">delta-sharing</td>
+    <td align="right">19</td>
+    <td align="right">2</td>
+  </tr>
+  <tr>
+    <td align="left">kafka-delta-ingest</td>
+    <td align="right">10</td>
+    <td align="right">2</td>
+  </tr>
+</table>
+
+<br />
+For more information, please refer to the <a
+  href="https://delta.io/pdfs/delta-charter.pdf"
+  target="_blank"
+>
+  founding technical charter
+</a>
+.
+
+## Contributing
+
+Contribute and collaborate with fellow Delta Lake users and contributors, ask questions, and share tips.
+
+- [Contributing](/resources/contributing)
+- [Getting Help](/resources/getting-help)
+- [Contributing to Documentation](/resources/contributing-to-docs)
+
+<SocialTiles />
+
+## Featured Contributors
+
+View the [full list of contributors](/resources/contributors) to learn more about the people who contribute to Delta Lake.
+
+<GithubContributorsGrid
+  users={[
+    "zsxwing",
+    "brkyvz",
+    "tdas",
+    "rahulsmahadev",
+    "josetorres",
+    "liwensun",
+  ]}
+/>
+
+## Community Meetings
+
+Looking to join a meeting? Find [upcoming meetings](/community/meetings).
+
+<JsonCardDataList data="meetings" first={3} />
+
+## Organizations
+
+Learn more about the [organizations adopting and contributing to Delta Lake](/community/adoption).
+
+<OrganizationTiles columns={{ xs: 2, md: 3, lg: 5 }} first={5} />
