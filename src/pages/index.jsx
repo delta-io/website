@@ -10,7 +10,8 @@ import LatestUpdateSection from "src/components/pages/index/LatestUpdateSection"
 import ValuePropsSection from "src/components/pages/index/ValuePropsSection";
 import KeyFeaturesSection from "src/components/pages/index/KeyFeaturesSection";
 // import GetStartedSection from "src/components/pages/index/GetStartedSection";
-import OrganizationsSection from "src/components/pages/index/OrganizationsSection";
+// import OrganizationsSection from "src/components/pages/index/OrganizationsSection";
+import ContributeToDeltaSection from "src/components/pages/community/ContributeToDeltaSection";
 import WhitepaperSection from "src/components/pages/index/WhitepaperSection";
 import CommunitySection from "src/components/pages/shared/CommunitySection";
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
@@ -54,8 +55,9 @@ const HomePage = () => (
       <ValuePropsSection />
       <LatestUpdateSection />
       <KeyFeaturesSection />
-      <OrganizationsSection />
       <WhitepaperSection />
+      {/* <OrganizationsSection /> */}
+      <ContributeToDeltaSection />
       <CommunitySection />
       <ProjectGovernanceSection />
     </PageLayout>
