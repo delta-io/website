@@ -31,11 +31,11 @@ const main = [
   },
   {
     label: "Roadmap",
-    url: "https://github.com/delta-io/delta/issues/1307",
+    url: "https://go.delta.io/roadmap",
   },
   {
     label: "Community",
-    url: "/community-page",
+    url: "/community",
   },
   {
     label: "Docs",
@@ -68,11 +68,11 @@ const social = [
 
 const community = [
   {
-    url: "/community-page",
+    url: "/community",
     label: "Community",
   },
   {
-    url: "/community/getting-help",
+    url: "/resources/getting-help",
     label: "Getting Help",
   },
 ];
@@ -106,7 +106,7 @@ const footer = [
     label: "Integrations",
   },
   {
-    url: "https://github.com/delta-io/delta/issues/1307",
+    url: "https://go.delta.io/roadmap",
     label: "Roadmap",
   },
   {

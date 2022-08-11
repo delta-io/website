@@ -73,15 +73,15 @@ For more information, please refer to the <a
 
 Contribute and collaborate with fellow Delta Lake users and contributors, ask questions, and share tips.
 
-- [Contributing](/community/contributing)
-- [Getting Help](/community/getting-help)
-- [Contributing to Documentation](/community/contributing-to-docs)
+- [Contributing](/resources/contributing)
+- [Getting Help](/resources/getting-help)
+- [Contributing to Documentation](/resources/contributing-to-docs)
 
 <SocialTiles />
 
 ## Featured Contributors
 
-View the [full list of contributors](/community/contributors) to learn more about the people who contribute to Delta Lake.
+View the [full list of contributors](/resources/contributors) to learn more about the people who contribute to Delta Lake.
 
 <GithubContributorsGrid
   users={[

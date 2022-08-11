@@ -6,6 +6,6 @@
 /blog-gallery/page/1/   /blog   301
 /blog-gallery/page/2/   /blog   301
 /tutorials/* /learn/tutorials    301
-/community/contributing  /community-page 301
-/community/adoption      /community-page 301 
+/community/contributing  /community 301
+/community/adoption      /community 301 
 /connectors /integrations   301

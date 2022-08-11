@@ -23,6 +23,7 @@ const ButtonRow = styled(Typography)`
 
 const WhitepaperSection = () => (
   <Section
+    background={(theme) => theme.light.bg}
     title="Read the Lakehouse Whitepaper"
     subtitle={
       <>
@@ -40,7 +41,6 @@ const WhitepaperSection = () => (
         </ButtonRow>
       </>
     }
-    background="white"
     centeredHeader
     padding="xxxl"
   >

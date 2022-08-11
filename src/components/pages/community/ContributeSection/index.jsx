@@ -135,7 +135,7 @@ const ContributeSection = () => (
         <Typography variant="h3">Want to help or to help out?</Typography>
         <Typography variant="p">
           Looking for ways to help or to get help? Refer to the &nbsp;
-          <Link href="../community/getting-help">Getting Help Guide</Link>.
+          <Link href="../resources/getting-help">Getting Help Guide</Link>.
         </Typography>
       </CenterTextSectionColumn>
     </Grid>
