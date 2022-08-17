@@ -136,30 +136,56 @@ const footer = [
 const docs = [
   {
     label: "Apache Spark",
+    url: "/docs/spark",
+    items: [
+      {
+        label: "Batch operations",
+        url: "/docs/spark/batch",
+      },
+      {
+        label: "Streaming operations",
+        url: "/docs/spark/streaming",
+      },
+      {
+        label: "Update operations",
+        url: "/docs/spark/updates",
+      },
+      {
+        label: "Utility operations",
+        url: "/docs/spark/utilities",
+      },
+      {
+        label: "Constraints",
+        url: "/docs/spark/constraints",
+      },
+    ],
   },
   {
-    label: "> Batch operations",
-    url: "/docs/spark/batch",
+    label: "Flink",
   },
   {
-    label: "> Streaming operations",
-    url: "/docs/spark/streaming",
+    label: "Presto",
   },
   {
-    label: "> Update operations",
-    url: "/docs/spark/updates",
+    label: "Trino",
   },
   {
-    label: "> Utility operations",
-    url: "/docs/spark/utilities",
+    label: "Hive",
   },
   {
-    label: "> Constraints",
-    url: "/docs/spark/constraints",
+    label: "Standalone",
+  },
+];
+
+const utilities = [
+  {
+    label: "Removing Files",
+    url: "/learn/utilities",
   },
 ];
 
 module.exports = {
+  utilities,
   community,
   footer,
   learn,
