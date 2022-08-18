@@ -14,8 +14,8 @@ const PostMeta = styled.div`
   padding: 0 0 ${(props) => props.theme.spacing.md};
 `;
 
-const BlogMdxTemplate = ({ data }) => {
-  const { frontmatter = {}, fields = {}, body } = data.mdx;
+const BlogMdxTemplate = ({ data, children }) => {
+  const { frontmatter = {}, fields = {} } = data.mdx;
   const { title, description, author, thumbnail } = frontmatter;
 
   const renderPostMeta = () => (
@@ -36,7 +36,7 @@ const BlogMdxTemplate = ({ data }) => {
             subtitle={renderPostMeta}
           >
             <TypographyContainer>
-              <MDX>{body}</MDX>
+              <MDX>{children}</MDX>
             </TypographyContainer>
           </Section>
         </OneColumnLayout>

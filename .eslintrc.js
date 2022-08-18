@@ -15,6 +15,13 @@ module.exports = {
   rules: {
     "react/prop-types": 0,
     "import/prefer-default-export": 0,
+    "react/function-component-definition": [
+      1,
+      {
+        namedComponents: "arrow-function",
+        unnamedComponents: "function-expression",
+      },
+    ],
   },
   settings: {
     "import/resolver": {
