@@ -29,7 +29,7 @@ const mapTocItems = (items) =>
   }));
 
 const TableOfContents = (props) => {
-  const { items, className, showTitle } = props;
+  const { currentPathname, items, className, showTitle } = props;
 
   return (
     <>
@@ -40,6 +40,7 @@ const TableOfContents = (props) => {
           </TableOfContentsLinkTitle>
         )}
         <LinkList
+          currentPathname={currentPathname}
           links={mapTocItems(items)}
           linkComponent={TableOfContentsLink}
         />

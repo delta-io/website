@@ -9,7 +9,7 @@ import Section from "src/components/Section";
 import OneColumnLayout from "./components/OneColumnLayout";
 import TwoColumnLayout from "./components/TwoColumnLayout";
 
-const DefaultMdxTemplate = ({ data }) => {
+const DefaultMdxTemplate = ({ location, data }) => {
   const { frontmatter = {}, body } = data.mdx;
 
   const sidebarMenu = menus[frontmatter.menu];
@@ -31,7 +31,12 @@ const DefaultMdxTemplate = ({ data }) => {
       />
       <PageLayout>
         {sidebarMenu ? (
-          <TwoColumnLayout sidebarMenu={sidebarMenu}>{content}</TwoColumnLayout>
+          <TwoColumnLayout
+            sidebarMenu={sidebarMenu}
+            currentPathname={location.pathname}
+          >
+            {content}
+          </TwoColumnLayout>
         ) : (
           <OneColumnLayout width={frontmatter.width}>{content}</OneColumnLayout>
         )}
