@@ -49,7 +49,6 @@ module.exports = {
     {
       resolve: "gatsby-plugin-mdx",
       options: {
-        remarkPlugins: [remarkSlug, remarkGfm, remarkHighlightJs],
         gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-images",
@@ -64,6 +63,9 @@ module.exports = {
             },
           },
         ],
+        mdxOptions: {
+          remarkPlugins: [remarkSlug, remarkGfm, remarkHighlightJs],
+        },
       },
     },
     "gatsby-transformer-json",

@@ -5,6 +5,8 @@ thumbnail: ./delta-1-2-features.png
 author: Venki Korukanti, Scott Sandre, Tathagata Das, Allison Portis, Denny Lee, Vini Jaiswal
 ---
 
+export const halfWidthImageStyle = { maxWidth: "50%" };
+
 The continued innovations within [Delta Lake](https://github.com/delta-io/delta) has been a direct result of the collective effort by the entire open-source community. Recent highlights from this release include, but not limited to, the S3 multi-cluster writes contributed by [Mariusz Kryński](https://github.com/mrk-its) from [SambaTV](https://www.samba.tv/), [Fabian Paul](https://www.linkedin.com/in/fabian-paul/) from [Ververica](https://www.ververica.com/) helping the design of the [Flink/Delta Lake Connector](https://github.com/delta-io/connectors/tree/master/flink), and the contributions to the RESTORE capabilities by [Maksym Dovhal](https://github.com/Maks-D). Building on the notable improvements in [Delta Lake 1.1.0](https://github.com/delta-io/delta/releases/tag/v1.1.0) driven by our amazing community, we are pleased to announce the release of Delta Lake 1.2 ([1.2.0](https://github.com/delta-io/delta/releases/tag/v1.2.0), [1.2.1](https://github.com/delta-io/delta/releases/tag/v1.2.1)) on [Apache Spark™ 3.2](https://spark.apache.org/releases/spark-release-3-2-0.html).
 
 Delta Lake 1.2 ([1.2.0](https://github.com/delta-io/delta/releases/tag/v1.2.0), [1.2.1](https://github.com/delta-io/delta/releases/tag/v1.2.1)) introduces features focused on optimizing performance and operational efficiencies including small file compaction, advanced data skipping, version control for Delta tables, support for schema evolution operations, expanded support for arbitrary characters in column names, and more. In addition, new integrations with 3rd party tools including [Apache Flink](https://flink.apache.org/), [Presto](https://prestodb.io/), and [Trino](https://trino.io/) provide more extensibility and flexibility to fully unlock all of your data in Delta Lake.
@@ -80,7 +82,7 @@ WHERE year=2020 AND uid=24000
   <img
     src="/delta-skipping.png"
     alt="Delta-1-2-dataSkipping"
-    style="max-width: 50%;"
+    style={halfWidthImageStyle}
   />
 </center>
 &nbsp;
@@ -102,7 +104,7 @@ For a partition column with a generation expression, Delta Lake automatically ge
   <img
     src="/delta-generatedcolumns.png"
     alt="Delta-1-2-generatedcolumns"
-    style="max-width: 50%;"
+    style={halfWidthImageStyle}
   />
 </center>
 &nbsp;

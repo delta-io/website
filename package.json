@@ -31,7 +31,7 @@
     ]
   },
   "dependencies": {
-    "@mdx-js/react": "1.6.22",
+    "@mdx-js/react": "2.1.3",
     "babel-plugin-styled-components": "2.0.7",
     "bootstrap": "5.2.0",
     "color": "4.2.3",
@@ -42,7 +42,7 @@
     "gatsby-plugin-image": "2.21.0",
     "gatsby-plugin-local-search": "2.0.1",
     "gatsby-plugin-manifest": "4.21.0",
-    "gatsby-plugin-mdx": "3.6.0",
+    "gatsby-plugin-mdx": "4.0.0",
     "gatsby-plugin-react-helmet": "5.21.0",
     "gatsby-plugin-sharp": "4.21.0",
     "gatsby-plugin-sitemap": "5.21.0",
