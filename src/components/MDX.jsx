@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from "react";
 import Link from "src/components/Link";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import styled from "styled-components";
 import Typography from "src/components/Typography";
@@ -247,7 +248,9 @@ const MDX = (props) => {
 
   return (
     <MDXProvider components={mdxComponents}>
-      <MarkdownContent>{children}</MarkdownContent>
+      <MarkdownContent>
+        <MDXRenderer>{children}</MDXRenderer>
+      </MarkdownContent>
     </MDXProvider>
   );
 };

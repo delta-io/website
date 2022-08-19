@@ -68,9 +68,9 @@ export const HeaderDropDown = styled(NavDropdown)`
   `)}
 `;
 
-const HeaderNavItem = ({ items }) => {
-  if (items.submenu) {
-    return (
+const HeaderNavItem = ({ items }) => (
+  <>
+    {items.submenu ? (
       <HeaderDropDown
         id="nav-dropdown-dark-example"
         title={items.label}
@@ -88,19 +88,17 @@ const HeaderNavItem = ({ items }) => {
           </HeaderDropDown.Item>
         ))}
       </HeaderDropDown>
-    );
-  }
-
-  return (
-    <HeaderTab
-      key={items.label}
-      href={items.url}
-      activeClassName="active"
-      partiallyActive
-    >
-      {items.label}
-    </HeaderTab>
-  );
-};
+    ) : (
+      <HeaderTab
+        key={items.label}
+        href={items.url}
+        activeClassName="active"
+        partiallyActive
+      >
+        {items.label}
+      </HeaderTab>
+    )}
+  </>
+);
 
 export default HeaderNavItem;

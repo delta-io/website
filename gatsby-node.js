@@ -19,7 +19,8 @@ const getPageTypeFromAbsolutePath = (absolutePath) =>
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
-  const absolutePath = node.internal.contentFilePath;
+  const absolutePath = node.fileAbsolutePath;
+
   if (node.internal.type === "Mdx" && absolutePath) {
     const pageType = getPageTypeFromAbsolutePath(absolutePath);
 
@@ -44,14 +45,13 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     });
 
     const dateMatches = absolutePath.match(/(\d{4}-\d{2}-\d{2})/);
-    createNodeField({
-      node,
-      name: "date",
-      value:
-        dateMatches && dateMatches.length
-          ? dateMatches[dateMatches.length - 1]
-          : "1970-01-01",
-    });
+    if (dateMatches && dateMatches.length) {
+      createNodeField({
+        node,
+        name: "date",
+        value: dateMatches[dateMatches.length - 1],
+      });
+    }
   }
 };
 
@@ -67,9 +67,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             fields {
               slug
               pageType
-            }
-            internal {
-              contentFilePath
             }
           }
         }
@@ -97,9 +94,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
           createPage({
             path: node.fields.slug,
-            component: `${getMdxTemplatePath(
-              pageType.template
-            )}?__contentFilePath=${node.internal.contentFilePath}`,
+            component: getMdxTemplatePath(pageType.template),
             context: { slug: node.fields.slug },
           });
         }
@@ -116,9 +111,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         Array.from({ length: totalPages }).forEach((_, i) => {
           createPage({
             path: i === 0 ? `/${name}` : `/${name}/${i + 1}`,
-            component: `${getCollectionTemplatePath(
-              template
-            )}?__contentFilePath=${pages[i].node.internal.contentFilePath}`,
+            component: getCollectionTemplatePath(template),
             context: {
               limit: i === 0 ? perPage + featuredCount : perPage,
               skip: i !== 0 ? i * perPage + featuredCount : i * perPage,

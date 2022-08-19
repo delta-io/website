@@ -49,7 +49,7 @@ const InnerToc = styled(TableOfContents)`
 `;
 
 const TwoColumnLayout = (props) => {
-  const { currentPathname, children, sidebarMenu, tocItems } = props;
+  const { children, sidebarMenu, tocItems } = props;
   const hasSidebar = sidebarMenu || tocItems;
 
   return (
@@ -71,17 +71,12 @@ const TwoColumnLayout = (props) => {
               <LinkList
                 links={sidebarMenu}
                 linkComponent={SidebarMenuLink}
-                currentPathname={currentPathname}
                 renderInCurrentItem={() =>
                   tocItems ? <InnerToc items={tocItems} /> : null
                 }
               />
             ) : (
-              <TableOfContents
-                currentPathname={currentPathname}
-                items={tocItems}
-                showTitle
-              />
+              <TableOfContents items={tocItems} showTitle />
             )}
           </SidebarColumn>
         )}
@@ -94,13 +89,11 @@ const TwoColumnLayout = (props) => {
 };
 
 TwoColumnLayout.defaultProps = {
-  currentPathname: undefined,
   sidebarMenu: undefined,
   tocItems: undefined,
 };
 
 TwoColumnLayout.propTypes = {
-  currentPathname: string,
   // eslint-disable-next-line react/forbid-prop-types
   sidebarMenu: arrayOf(object),
   tocItems: arrayOf(
