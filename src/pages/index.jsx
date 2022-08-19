@@ -21,9 +21,9 @@ const HomePage = () => (
     <SEO title="Home" />
     <PageLayout>
       <AnnouncementSection
-        title="Announcing Delta Lake 2.0"
-        description="Try out the latest release today!"
-        url="https://github.com/delta-io/delta/releases/tag/v2.0.0"
+        title="Announcing Delta Lake 2.1 on Apache Spark™ 3.3"
+        description="Try out the latest preview release today!"
+        url="http://go.delta.io/releases"
       />
       <HeroSection
         title="Build Lakehouses with Delta Lake"
