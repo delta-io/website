@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Link from "src/components/Link";
 import { rem, spacingRem } from "config/theme";
 import { shape, string, arrayOf, func } from "prop-types";
+import { useLocation } from "@reach/router";
 
 const LinkListNav = styled.nav`
   display: grid;
@@ -12,14 +13,9 @@ const LinkListNav = styled.nav`
 `;
 
 const LinkList = (props) => {
-  const {
-    currentPathname,
-    links,
-    linkComponent,
-    renderInCurrentItem,
-    className,
-  } = props;
+  const { links, linkComponent, renderInCurrentItem, className } = props;
   const LinkComponent = linkComponent || Link;
+  const location = useLocation();
 
   const renderItems = (items, level = 0) =>
     items.map((item) => (
@@ -33,7 +29,7 @@ const LinkList = (props) => {
           {item.label}
         </LinkComponent>
         {renderInCurrentItem &&
-          currentPathname === item.url &&
+          location.pathname === item.url &&
           renderInCurrentItem(item)}
         {item.items && renderItems(item.items, level + 1)}
       </React.Fragment>
@@ -43,12 +39,10 @@ const LinkList = (props) => {
 };
 
 LinkList.defaultProps = {
-  currentPathname: undefined,
   renderInCurrentItem: undefined,
 };
 
 LinkList.propTypes = {
-  currentPathname: string,
   links: arrayOf(
     shape({
       url: string.isRequired,

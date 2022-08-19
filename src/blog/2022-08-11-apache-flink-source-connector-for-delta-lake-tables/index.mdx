@@ -15,11 +15,11 @@ The [Flink/Delta Source Connector](https://github.com/delta-io/connectors/blob/m
 
 Flink/Delta Source Connector can work in one of two modes, **Bounded** (i.e. batch) or **Continuous** (i.e. streaming).
 
-- <u>Bounded</u>
+- <span style="text-decoration:underline;">Bounded</span>
 
   This mode is mainly used for batch jobs and provides the ability to read the full data load of the latest version of the Delta table or load a specific snapshot version.
 
-- <u>Continuous</u>
+- <span style="text-decoration:underline;">Continuous</span>
 
   This mode is used for streaming jobs, where in addition to reading the Delta table contents for a specific snapshot version, it continuously checks the Delta table for new updates and versions. It can also read changes only.
 
@@ -96,7 +96,9 @@ Please refer to the linked build file examples for [maven](https://github.com/de
 
 **Batch (or Bounded) Mode**
 
-1.  <u>Reads all columns from a latest version of a Delta table</u>
+1.  <span style="text-decoration:underline;">
+      Reads all columns from a latest version of a Delta table
+    </span>
 
 ```scala
 
@@ -122,10 +124,10 @@ String deltaTablePath) {
 }
 ```
 
-2. <u>
+2. <span style="text-decoration:underline;">
      Reads all columns from a specific historical version of a Delta table using
      Time Travel
-   </u>
+   </span>
 
 ```java
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
@@ -151,7 +153,9 @@ import org.apache.hadoop.conf.Configuration;
 }
 ```
 
-3.  <u>Reads user-defined columns from the latest version of a Delta table </u>
+3.  <span style="text-decoration:underline;">
+      Reads user-defined columns from the latest version of a Delta table{" "}
+    </span>
 
 ```java
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
@@ -180,11 +184,11 @@ String[] columnNames) {
 
 **Streaming (or Continuous) Mode**
 
-1. <u>
+1. <span style="text-decoration:underline;">
      Reads all columns from Delta table from a historical version. Using Delta’s
      Time Travel, it loads all changes at and after the historical version and
      not the the full table state.
-   </u>
+   </span>
 
 ```java
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
@@ -211,10 +215,10 @@ public DataStream<RowData> createContinuousDeltaSourceWithTimeTravel(
 }
 ```
 
-2.  <u>
+2.  <span style="text-decoration:underline;">
       Reads all columns from the latest version of Delta table and continuously
       monitors for table updates
-    </u>
+    </span>
 
 ```java
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
@@ -239,10 +243,10 @@ String deltaTablePath) {
 }
 ```
 
-3. <u>
+3. <span style="text-decoration:underline;">
      Reads only user-defined columns from the latest version of the Delta table
      and continuously monitors for table updates.
-   </u>
+   </span>
 
 ```java
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
