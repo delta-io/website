@@ -35,7 +35,14 @@ Read on to learn more!
 
 The data in a lakehouse can often have a small file problem. Different file sizes can impact performance and waste valuable resources. So it’s important to have data laid out correctly for optimal query performance. To improve query speed, Delta Lake supports the ability to optimize the layout of data stored in storage. There are various ways to optimize the layout. Currently, only the [bin-packing optimization](https://docs.delta.io/1.2.0/optimizations-oss.html#compaction-bin-packing) is supported. Delta Lake can improve the speed of read queries from a table by coalescing small files into larger ones.
 
-![Delta-1-2-compaction](delta-compaction.png)
+<center>
+  <img
+    src="/delta-compaction.png"
+    alt="Delta-1-2-compaction"
+    width="248"
+    height="248"
+  />
+</center>
 
 <b>
   <center>
@@ -69,11 +76,18 @@ SELECT * FROM events
 WHERE year=2020 AND uid=24000
 ```
 
-![Delta-1-2-dataSkipping](delta-skipping.png)
-
+<center>
+  <img
+    src="/delta-skipping.png"
+    alt="Delta-1-2-dataSkipping"
+    style="max-width: 50%;"
+  />
+</center>
+&nbsp;
 <b>
   <center>Fig.2. Data Skipping</center>
 </b>
+<b></b>
 &nbsp;
 
 In the above example, our query is looking for events triggered by <code>uid “24000”</code> during the year <code>2020</code>. Because data skipping information was collected at the time of writing, it's easy for delta to skip the records that don't match the query condition, (which in this case is <code>file1.parquet</code> and <code>file2.parquet</code>) and look for the matching records in <code>file3.parquet</code>.
@@ -84,8 +98,14 @@ Delta Lake will automatically calculate generated columns when the user doesn’
 
 For a partition column with a generation expression, Delta Lake automatically generates a partition filter from any data filters on its generating column, when possible. Delta Lake automatically uses partitioning and statistics to read the minimum amount of data when there are applicable predicates in the query. With this new optimization, the DataFrame returned automatically reads the most recent snapshot of the table for any query; you never need to run <code>REFRESH TABLE</code>.
 
-![Delta-1-2-generatedcolumns](delta-generatedcolumns.png)
-
+<center>
+  <img
+    src="/delta-generatedcolumns.png"
+    alt="Delta-1-2-generatedcolumns"
+    style="max-width: 50%;"
+  />
+</center>
+&nbsp;
 <b>
   <center>Fig.3. Generated Columns</center>
 </b>
@@ -97,8 +117,10 @@ One of the key features that Delta Lake offers is its ability to handle concurre
 
 Most storage systems provide this mutual exclusion out-of-the-box. However, a known limitation of S3 is that it does not provide mutual exclusion, meaning that Delta Lake S3 integration allows multi-cluster reads but has historically restricted writes to S3 to originate from a single Spark driver.
 
-![s3-multi-cluster](delta-s3-multi-cluster.png)
-
+<center>
+  <img src="/delta-s3-multi-cluster.png" alt="s3-multi-cluster" />
+</center>
+&nbsp;
 <center>
   <b>Fig.4. s3 multi cluster writes in Delta Lake</b>
 </center>

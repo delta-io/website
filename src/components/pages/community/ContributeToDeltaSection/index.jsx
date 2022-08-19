@@ -19,10 +19,12 @@ const ContributeToDeltaSection = () => (
   <Section
     title="Organizations that have contributed to Delta Lake"
     subtitle={
-      <Typography variant="p">
-        Together we have made Delta Lake the most widely used lakehouse format
-        in the world!
-      </Typography>
+      <>
+        <Typography variant="p">
+          Together we have made Delta Lake the most widely used lakehouse format
+          in the world!
+        </Typography>
+      </>
     }
     background="white"
     centeredHeader

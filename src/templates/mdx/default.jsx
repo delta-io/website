@@ -9,15 +9,15 @@ import Section from "src/components/Section";
 import OneColumnLayout from "./components/OneColumnLayout";
 import TwoColumnLayout from "./components/TwoColumnLayout";
 
-const DefaultMdxTemplate = ({ location, data, children }) => {
-  const { frontmatter = {} } = data.mdx;
+const DefaultMdxTemplate = ({ data }) => {
+  const { frontmatter = {}, body } = data.mdx;
 
   const sidebarMenu = menus[frontmatter.menu];
 
   const content = (
     <Section title={frontmatter.title} primary container={false}>
       <TypographyContainer>
-        <MDX>{children}</MDX>
+        <MDX>{body}</MDX>
       </TypographyContainer>
     </Section>
   );
@@ -31,12 +31,7 @@ const DefaultMdxTemplate = ({ location, data, children }) => {
       />
       <PageLayout>
         {sidebarMenu ? (
-          <TwoColumnLayout
-            sidebarMenu={sidebarMenu}
-            currentPathname={location.pathname}
-          >
-            {content}
-          </TwoColumnLayout>
+          <TwoColumnLayout sidebarMenu={sidebarMenu}>{content}</TwoColumnLayout>
         ) : (
           <OneColumnLayout width={frontmatter.width}>{content}</OneColumnLayout>
         )}
