@@ -71,11 +71,7 @@ const HeroSection = (props) => {
             >
               Github
             </HeroLink>
-            <HeroLink
-              href="https://github.com/delta-io/delta/releases/tag/v2.0.0"
-              newTab
-              muted
-            >
+            <HeroLink href="http://go.delta.io/releases" newTab muted>
               Releases
             </HeroLink>
             <HeroLink
