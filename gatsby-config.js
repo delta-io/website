@@ -13,6 +13,7 @@ module.exports = {
     twitter: "@DeltaLakeOSS",
   },
   plugins: [
+    "gatsby-plugin-netlify",
     "gatsby-plugin-anchor-links",
     "gatsby-plugin-styled-components",
     "gatsby-plugin-image",
@@ -48,7 +49,6 @@ module.exports = {
     {
       resolve: "gatsby-plugin-mdx",
       options: {
-        remarkPlugins: [remarkSlug, remarkGfm, remarkHighlightJs],
         gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-images",
@@ -63,6 +63,9 @@ module.exports = {
             },
           },
         ],
+        mdxOptions: {
+          remarkPlugins: [remarkSlug, remarkGfm, remarkHighlightJs],
+        },
       },
     },
     "gatsby-transformer-json",

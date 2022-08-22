@@ -29,22 +29,21 @@ const mapTocItems = (items) =>
   }));
 
 const TableOfContents = (props) => {
-  const { items, className, showTitle } = props;
+  const { currentPathname, items, className, showTitle } = props;
 
   return (
-    <>
-      <div className={className}>
-        {showTitle && (
-          <TableOfContentsLinkTitle variant="p2">
-            On this page
-          </TableOfContentsLinkTitle>
-        )}
-        <LinkList
-          links={mapTocItems(items)}
-          linkComponent={TableOfContentsLink}
-        />
-      </div>
-    </>
+    <div className={className}>
+      {showTitle && (
+        <TableOfContentsLinkTitle variant="p2">
+          On this page
+        </TableOfContentsLinkTitle>
+      )}
+      <LinkList
+        currentPathname={currentPathname}
+        links={mapTocItems(items)}
+        linkComponent={TableOfContentsLink}
+      />
+    </div>
   );
 };
 
