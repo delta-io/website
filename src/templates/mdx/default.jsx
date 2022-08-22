@@ -48,7 +48,6 @@ const DefaultMdxTemplate = ({ location, data, children }) => {
 export const pageQuery = graphql`
   query ($slug: String!) {
     mdx(fields: { slug: { eq: $slug } }) {
-      body
       frontmatter {
         title
         description
