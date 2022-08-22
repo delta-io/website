@@ -142,9 +142,15 @@ exports.onCreatePage = ({ page, actions }) => {
   if (/\/src\/pages.*?\.mdx$/.test(page.componentPath)) {
     deletePage(page);
     createPage({
+      ...page,
       path: page.path,
-      component: getMdxTemplatePath(),
-      context: { slug: page.path },
+      component: `${getMdxTemplatePath()}?__contentFilePath=${
+        page.componentPath
+      }`,
+      context: {
+        ...page.context,
+        slug: page.path,
+      },
     });
   }
 };
