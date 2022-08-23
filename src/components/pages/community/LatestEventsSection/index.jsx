@@ -5,41 +5,39 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import thumbnail4 from "./delta-birthday.png";
-import thumbnail3 from "./ukraine-meetup.png";
-import thumbnail2 from "./module-3.jpeg";
-import thumbnail1 from "./community-ama-20220609.jpeg";
-import thumbnail0 from "./db-212-blog-img-og.png";
+import thumbnail4 from "./community-office-hours_20220818.png";
+import thumbnail3 from "./unified-source-interface.png";
+import thumbnail2 from "./michael-armbrust-keynote.png";
+import thumbnail1 from "./AUA-thumbnail.jpeg";
+import thumbnail0 from "./D3L2-thumbnail.jpeg";
 
 const updates = [
   {
-    title:
-      "Delta Lake Contributors and Committers Meet and Greet .. and Birthday Party!",
-    thumbnail: thumbnail4,
-    url: "https://www.meetup.com/spark-users/events/286738371/",
-  },
-  {
-    title: "MLflow AMA and Documenting War Crimes in Ukraine Event",
-    thumbnail: thumbnail3,
-    url: "https://www.meetup.com/spark-users/events/286738345/",
-  },
-  {
-    title: "Module 3: Delta Lake 1.2 Tutorial with Jacek Laskowski",
-    thumbnail: thumbnail2,
-    url: "https://youtu.be/u3IrYoH6Aqs",
-  },
-  {
-    title: "Delta Lake Community Office Hours (2022-06-09)",
+    title: "Simon and Denny Ask Us Anything - September 6, 2022",
     thumbnail: thumbnail1,
-    url: "https://youtu.be/ZytlhuVGxso",
+    url: "https://community.linuxfoundation.org/events/details/lfhq-delta-lake-presents-simon-denny-ask-us-anything-september-6-2022/",
+  },
+  {
+    title: "Delta Lake Community Office Hours (2022-08-18)",
+    thumbnail: thumbnail4,
+    url: "https://www.youtube.com/watch?v=lBr0UN7BEac&t=1s",
+  },
+  {
+    title: "Apache Flink Source Connector for Delta Lake tables",
+    thumbnail: thumbnail3,
+    url: "/blog/2022-08-11-apache-flink-source-connector-for-delta-lake-tables/",
+  },
+  {
+    title: "Delta 2.0 - The Foundation of your Data Lakehouse is Open",
+    thumbnail: thumbnail2,
+    url: "/blog/2022-08-02-delta-2-0-the-foundation-of-your-data-lake-is-open/",
   },
 ];
 
 const featured = [
   {
-    // title: "Guide to Delta Lake Sessions at Data + AI Summit 2022",
     thumbnail: thumbnail0,
-    url: "https://databricks.com/blog/2022/06/22/guide-to-delta-lake-sessions-at-data-ai-summit-2022.html",
+    url: "https://community.linuxfoundation.org/events/details/lfhq-delta-lake-presents-d3l2-cybersecurity-data-mesh-and-delta-lake-at-hsbc/",
   },
 ];
 
@@ -67,7 +65,7 @@ const FeaturedSectionColumn = styled(TypographyContainer)`
 const LatestEventsSection = () => (
   <Section
     background={(theme) => theme.light.bg}
-    title="Check out the latest events"
+    title="Check out the upcoming and most recent events"
     titleSize="h2"
     centeredHeader
     padding="xxxl"
@@ -79,22 +77,25 @@ const LatestEventsSection = () => (
       <FeaturedSectionColumn>
         <Typography variant="h3">
           <Link
-            href="https://databricks.com/blog/2022/06/22/guide-to-delta-lake-sessions-at-data-ai-summit-2022.html"
+            href="https://community.linuxfoundation.org/events/details/lfhq-delta-lake-presents-d3l2-cybersecurity-data-mesh-and-delta-lake-at-hsbc/"
             muted
           >
-            Guide to Delta Lake Sessions at Data + AI Summit 2022
+            D3L2: Cybersecurity, Data Mesh, and Delta Lake at HSBC
           </Link>
         </Typography>
         <Typography variant="p">
-          Looking to learn more about Delta Lake? Want to see what’s the latest
-          development in the project? Want to engage with other community
-          members? If so, we invite you to attend this year’s{" "}
-          <Link href="https://databricks.com/dataaisummit/north-america-2021">
-            Data + AI Summit
-          </Link>
-          ! This global event brings together thousands of practitioners,
-          industry leaders, and visionaries to engage in thought-provoking
-          dialogue and share the latest innovations in data and AI.
+          Due to the unique cybersecurity challenges that HSBC faces daily -
+          from high data volumes to untrustworthy sources to the privacy and
+          security restrictions of a highly regulated industry - the resulting
+          architecture was an unwieldy set of disparate data silos. So, how do
+          we build a cybersecurity advanced analytics environment to enrich and
+          transform these myriad data sources into a unified, well-documented,
+          robust, resilient, repeatable, scalable, maintainable platform that
+          will empower the cyber analysts of the future? In this session, Ryan
+          Harris, Principal Cybersecurity Engineer at HSBC, follows up on his
+          Data+AI Summit 2022 session Accidentally Building a Petabyte-Scale
+          Cybersecurity Data Mesh in Azure With Delta Lake at HSBC with Denny
+          Lee for this fun ask-us-anything technical session.
         </Typography>
       </FeaturedSectionColumn>
     </Grid>
