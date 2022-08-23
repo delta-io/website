@@ -60,7 +60,7 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 };
 
 export const pageQuery = graphql`
-  query BlogCollectionTemplateQuery($skip: Int!, $limit: Int!) {
+  query ($skip: Int!, $limit: Int!) {
     allMdx(
       sort: { fields: [fields___date], order: DESC }
       filter: { fields: { pageType: { eq: "blog" } } }

@@ -34,13 +34,11 @@ const ContributeSection = () => (
   <Section
     title="Contribute"
     subtitle={
-      <>
-        <Typography variant="p">
-          Help us build the simplest, most complete, battle-tested open-source
-          storage framework ever! <br />
-          Below are a few great ways to get started to contribute.
-        </Typography>
-      </>
+      <Typography variant="p">
+        Help us build the simplest, most complete, battle-tested open-source
+        storage framework ever! <br />
+        Below are a few great ways to get started to contribute.
+      </Typography>
     }
     background="#cdd9f4"
     centeredHeader

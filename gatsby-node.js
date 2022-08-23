@@ -19,8 +19,7 @@ const getPageTypeFromAbsolutePath = (absolutePath) =>
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
-  const absolutePath = node.fileAbsolutePath;
-
+  const absolutePath = node.internal.contentFilePath;
   if (node.internal.type === "Mdx" && absolutePath) {
     const pageType = getPageTypeFromAbsolutePath(absolutePath);
 
@@ -45,13 +44,14 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     });
 
     const dateMatches = absolutePath.match(/(\d{4}-\d{2}-\d{2})/);
-    if (dateMatches && dateMatches.length) {
-      createNodeField({
-        node,
-        name: "date",
-        value: dateMatches[dateMatches.length - 1],
-      });
-    }
+    createNodeField({
+      node,
+      name: "date",
+      value:
+        dateMatches && dateMatches.length
+          ? dateMatches[dateMatches.length - 1]
+          : "1970-01-01",
+    });
   }
 };
 
@@ -67,6 +67,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             fields {
               slug
               pageType
+            }
+            internal {
+              contentFilePath
             }
           }
         }
@@ -94,7 +97,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
           createPage({
             path: node.fields.slug,
-            component: getMdxTemplatePath(pageType.template),
+            component: `${getMdxTemplatePath(
+              pageType.template
+            )}?__contentFilePath=${node.internal.contentFilePath}`,
             context: { slug: node.fields.slug },
           });
         }
@@ -111,7 +116,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         Array.from({ length: totalPages }).forEach((_, i) => {
           createPage({
             path: i === 0 ? `/${name}` : `/${name}/${i + 1}`,
-            component: getCollectionTemplatePath(template),
+            component: `${getCollectionTemplatePath(
+              template
+            )}?__contentFilePath=${pages[i].node.internal.contentFilePath}`,
             context: {
               limit: i === 0 ? perPage + featuredCount : perPage,
               skip: i !== 0 ? i * perPage + featuredCount : i * perPage,
@@ -135,9 +142,15 @@ exports.onCreatePage = ({ page, actions }) => {
   if (/\/src\/pages.*?\.mdx$/.test(page.componentPath)) {
     deletePage(page);
     createPage({
+      ...page,
       path: page.path,
-      component: getMdxTemplatePath(),
-      context: { slug: page.path },
+      component: `${getMdxTemplatePath()}?__contentFilePath=${
+        page.componentPath
+      }`,
+      context: {
+        ...page.context,
+        slug: page.path,
+      },
     });
   }
 };
