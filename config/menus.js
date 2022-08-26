@@ -53,7 +53,7 @@ const main = [
   },
   {
     label: "Docs",
-    url: "https://docs.delta.io",
+    url: "/docs/spark",
   },
 ];
 
