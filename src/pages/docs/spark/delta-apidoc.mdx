@@ -1,6 +1,7 @@
 ---
 title: Delta API Documentation
 width: full
+menu: docs
 ---
 
 import { ApacheSpark, DeltaLake } from "/src/components/Attributions";
@@ -10,12 +11,11 @@ import * as React from "react";
 
 For most read and write operations on Delta tables, you can use <ApacheSpark />
 [reader and writer](/spark/latest/dataframes-datasets/index.md) APIs. For
-examples, see [\_](delta-batch.md) and [\_](delta-streaming.md).
+examples, see [batch](delta-batch.md) and [streaming](delta-streaming.md).
 
 However, there are some operations that are specific to <DeltaLake /> and you
-must use <DeltaLake /> APIs. For examples, see [\_](delta-utility.md).
+must use <DeltaLake /> APIs. For examples, see [utilities](delta-utility.md).
 
-{" "}
 <Info title="Note" level="info">
   Some <DeltaLake /> APIs are still evolving and are indicated with the
   **Evolving** qualifier in the API docs.

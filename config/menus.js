@@ -139,6 +139,14 @@ const docs = [
     url: "/docs/spark",
     items: [
       {
+        label: "Introduction",
+        url: "/docs/spark/delta-intro",
+      },
+      {
+        label: "Quickstart",
+        url: "/docs/spark/quick-start-oss",
+      },
+      {
         label: "Batch operations",
         url: "/docs/spark/batch",
       },
@@ -157,6 +165,46 @@ const docs = [
       {
         label: "Constraints",
         url: "/docs/spark/constraints",
+      },
+      {
+        label: "Table Versioning Control",
+        url: "/docs/spark/versioning-oss",
+      },
+      {
+        label: "Delta Lake APIs",
+        url: "/docs/spark/delta-apidoc",
+      },
+      {
+        label: "Delta Column Mapping",
+        url: "/docs/spark/delta-column-mapping",
+      },
+      {
+        label: "Storage Configuration",
+        url: "/docs/spark/delta-storage-oss",
+      },
+      {
+        label: "Concurrency Control",
+        url: "/docs/spark/concurrency-control",
+      },
+      {
+        label: "Migration Guide",
+        url: "/docs/spark/porting",
+      },
+      {
+        label: "Best Practices",
+        url: "/docs/spark/best-practices",
+      },
+      {
+        label: "Frequently Asked Questions",
+        url: "/docs/spark/delta-faq",
+      },
+      {
+        label: "Releases",
+        url: "/docs/spark/releases-oss",
+      },
+      {
+        label: "Delta Lake Resources",
+        url: "/docs/spark/delta-resources",
       },
     ],
   },
