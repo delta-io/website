@@ -8,14 +8,14 @@ import styled from "styled-components";
 import thumbnail4 from "./community-office-hours_20220818.png";
 import thumbnail3 from "./unified-source-interface.png";
 import thumbnail2 from "./michael-armbrust-keynote.png";
-import thumbnail1 from "./AUA-thumbnail.jpeg";
-import thumbnail0 from "./D3L2-thumbnail.jpeg";
+import thumbnail1 from "./d3l2-ryan_harris.png";
+import thumbnail0 from "./AUA-thumbnail.jpeg";
 
 const updates = [
   {
-    title: "Simon and Denny Ask Us Anything - September 6, 2022",
+    title: "D3L2: Cybersecurity, Data Mesh, and Delta Lake at HSBC",
     thumbnail: thumbnail1,
-    url: "https://community.linuxfoundation.org/events/details/lfhq-delta-lake-presents-simon-denny-ask-us-anything-september-6-2022/",
+    url: "https://youtu.be/ctKctx7vGW4",
   },
   {
     title: "Delta Lake Community Office Hours (2022-08-18)",
@@ -37,7 +37,7 @@ const updates = [
 const featured = [
   {
     thumbnail: thumbnail0,
-    url: "https://community.linuxfoundation.org/events/details/lfhq-delta-lake-presents-d3l2-cybersecurity-data-mesh-and-delta-lake-at-hsbc/",
+    url: "https://community.linuxfoundation.org/events/details/lfhq-delta-lake-presents-simon-denny-ask-us-anything-september-6-2022/",
   },
 ];
 
@@ -80,22 +80,18 @@ const LatestEventsSection = () => (
             href="https://community.linuxfoundation.org/events/details/lfhq-delta-lake-presents-d3l2-cybersecurity-data-mesh-and-delta-lake-at-hsbc/"
             muted
           >
-            D3L2: Cybersecurity, Data Mesh, and Delta Lake at HSBC
+            Simon and Denny Ask Us Anything - September 6, 2022
           </Link>
         </Typography>
         <Typography variant="p">
-          Due to the unique cybersecurity challenges that HSBC faces daily -
-          from high data volumes to untrustworthy sources to the privacy and
-          security restrictions of a highly regulated industry - the resulting
-          architecture was an unwieldy set of disparate data silos. So, how do
-          we build a cybersecurity advanced analytics environment to enrich and
-          transform these myriad data sources into a unified, well-documented,
-          robust, resilient, repeatable, scalable, maintainable platform that
-          will empower the cyber analysts of the future? In this session, Ryan
-          Harris, Principal Cybersecurity Engineer at HSBC, follows up on his
-          Data+AI Summit 2022 session Accidentally Building a Petabyte-Scale
-          Cybersecurity Data Mesh in Azure With Delta Lake at HSBC with Denny
-          Lee for this fun ask-us-anything technical session.
+          Join us for the brand new monthly series "Simon and Denny - Ask Us
+          Anything!" where we will answer your data engineering questions from
+          building a data platform to ingestion to ETL to analytics. With our
+          background in SQL Server and BI to Apache Spark and Delta Lake - we
+          want to show you how to build your own lakehouse. As this session is
+          interactive, come prepared to ask questions all throughout the
+          session! Be prepared for another geeky, trans-Atlantic event from two
+          data nerds.
         </Typography>
       </FeaturedSectionColumn>
     </Grid>

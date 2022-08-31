@@ -2,12 +2,17 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import thumbnail4 from "./S3-multi-cluster-writes-diagram.png";
+import thumbnail4 from "./d3l2-ryan_harris.png";
 import thumbnail3 from "./unified-source-interface.png";
 import thumbnail2 from "./community-office-hours_20220818.png";
 import thumbnail1 from "./michael-armbrust-keynote.png";
 
 const updates = [
+  {
+    title: "D3L2: Cybersecurity, Data Mesh, and Delta Lake at HSBC",
+    thumbnail: thumbnail4,
+    url: "https://youtu.be/ctKctx7vGW4",
+  },
   {
     title: "Community AMA (2022-08-18)",
     thumbnail: thumbnail2,
@@ -22,11 +27,6 @@ const updates = [
     title: "Delta Lake 2.0 - The Foundation of your Data Lakehouse is Open",
     thumbnail: thumbnail1,
     url: "/blog/2022-08-02-delta-2-0-the-foundation-of-your-data-lake-is-open/",
-  },
-  {
-    title: "Multi-cluster writes to Delta Lake Storage in S3",
-    thumbnail: thumbnail4,
-    url: "blog/2022-05-18-multi-cluster-writes-to-delta-lake-storage-in-s3/",
   },
 ];
 
