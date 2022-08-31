@@ -1,4 +1,5 @@
 ---
+title: Quickstart
 description: Learn how to get started quickly with <DeltaLake />.
 menu: docs
 ---
@@ -6,8 +7,6 @@ menu: docs
 import { ApacheSpark, DeltaLake } from "/src/components/Attributions";
 import { CBCreateTable } from "/src/components/CodeBlocks";
 import * as React from "react";
-
-# Quickstart
 
 This guide helps you quickly explore the main features of <DeltaLake />. It
 provides code snippets that show how to read from and write to Delta tables from
@@ -18,14 +17,12 @@ interactive, batch, and streaming queries.
 Follow these instructions to set up <DeltaLake /> with Spark. You can run the
 steps in this guide on your local machine in the following two ways:
 
-#. Run interactively: Start the Spark shell (Scala or Python) with <DeltaLake />
-and run the code snippets interactively in the shell.
+1. Run interactively: Start the Spark shell (Scala or Python) with <DeltaLake />
+   and run the code snippets interactively in the shell.
 
-#. Run as a project: Set up a Maven or SBT project (Scala or Java) with
-
-<DeltaLake />, copy the code snippets into a source file, and run the project.
-Alternatively, you can use the [examples provided in the Github
-repository](https://github.com/delta-io/delta/tree/master/examples).
+2. Run as a project: Set up a Maven or SBT project (Scala or Java) with <DeltaLake />, copy the code snippets into a source file, and run the project.
+   Alternatively, you can use the [examples provided in the Github
+   repository](https://github.com/delta-io/delta/tree/master/examples).
 
 ### Set up interactive shell
 
@@ -45,33 +42,31 @@ details.
 
 #### PySpark Shell
 
-#. Install the PySpark version that is [compatible](releases-oss.md) with the
+1. Install the PySpark version that is [compatible](releases-oss.md) with the <DeltaLake /> version by running the following:
 
-<DeltaLake /> version by running the following:
-
-<CBCreateTable
+   <CBCreateTable
       sql={
     <div>
 
-```bash
-pip install pyspark==<compatible-spark-version>
-```
+   ```bash
+   pip install pyspark==<compatible-spark-version>
+   ```
 
-</div>
+   </div>
       }
     />
 
-#. Run PySpark with the <DeltaLake /> package and additional configurations:
+2. Run PySpark with the <DeltaLake /> package and additional configurations:
 
-<CBCreateTable
+   <CBCreateTable
       sql={
     <div>
 
-```bash
-pyspark --packages io.delta:delta-core_2.12:$VERSION$ --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
-```
+   ```bash
+   pyspark --packages io.delta:delta-core_2.12:$VERSION$ --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+   ```
 
-</div>
+   </div>
       }
     />
 
@@ -224,7 +219,7 @@ Delta table, see [\_](delta-batch.md#ddlcreatetable) and
 <Info title="Note" level="info">
 
 This quickstart uses local paths for Delta table locations. For
-configuring HDFS or cloud storage for Delta tables, see [\_](delta-storage.md).
+configuring HDFS or cloud storage for Delta tables, see [delta storage](/docs/spark/delta-storage-oss).
 
 </Info>
 
