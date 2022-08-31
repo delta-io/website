@@ -84,14 +84,14 @@ const LatestEventsSection = () => (
           </Link>
         </Typography>
         <Typography variant="p">
-          Join us for the brand new monthly series "Simon and Denny - Ask Us
-          Anything!" where we will answer your data engineering questions from
-          building a data platform to ingestion to ETL to analytics. With our
-          background in SQL Server and BI to Apache Spark and Delta Lake - we
-          want to show you how to build your own lakehouse. As this session is
-          interactive, come prepared to ask questions all throughout the
-          session! Be prepared for another geeky, trans-Atlantic event from two
-          data nerds.
+          Join us for the brand new monthly series &quot;Simon and Denny - Ask
+          Us Anything!&quot; where we will answer your data engineering
+          questions from building a data platform to ingestion to ETL to
+          analytics. With our background in SQL Server and BI to Apache Spark
+          and Delta Lake - we want to show you how to build your own lakehouse.
+          As this session is interactive, come prepared to ask questions all
+          throughout the session! Be prepared for another geeky, trans-Atlantic
+          event from two data nerds.
         </Typography>
       </FeaturedSectionColumn>
     </Grid>
