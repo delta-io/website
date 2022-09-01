@@ -10,41 +10,40 @@ import ConnectorsSection from "src/components/pages/sharing/ConnectorsSection";
 import EcosystemSection from "src/components/pages/sharing/EcosystemSection";
 
 const SharingPage = () => (
-  <>
-    <SEO title="Delta Sharing" />
-    <PageLayout>
-      <HeroSection />
-      <FeaturedVideoSection />
-      <KeyFeaturesSection
-        features={[
-          {
-            title: "Share live data directly",
-            description:
-              "Easily share live data in your Delta Lake without copying it to another system.",
-          },
-          {
-            title: "Support diverse clients",
-            description:
-              "Data recipients can directly connect to Delta Shares from Pandas, Apache Spark™, Rust, and other systems without having to first deploy a specific compute pattern. Reduce the friction to get your data to your users.",
-          },
-          {
-            title: "Security and governance",
-            description:
-              "Delta Sharing allows you to easily govern, track, and audit access to your shared datasets.",
-          },
-          {
-            title: "Scalability",
-            description:
-              "Share terabyte-scale datasets reliably and efficiently by leveraging cloud storage systems like S3, ADLS, and GCS.",
-          },
-        ]}
-      />
-      <ConnectorsSection />
-      <EcosystemSection />
-      <CommunitySection />
-      <ProjectGovernanceSection />
-    </PageLayout>
-  </>
+  <PageLayout>
+    <HeroSection />
+    <FeaturedVideoSection />
+    <KeyFeaturesSection
+      features={[
+        {
+          title: "Share live data directly",
+          description:
+            "Easily share live data in your Delta Lake without copying it to another system.",
+        },
+        {
+          title: "Support diverse clients",
+          description:
+            "Data recipients can directly connect to Delta Shares from Pandas, Apache Spark™, Rust, and other systems without having to first deploy a specific compute pattern. Reduce the friction to get your data to your users.",
+        },
+        {
+          title: "Security and governance",
+          description:
+            "Delta Sharing allows you to easily govern, track, and audit access to your shared datasets.",
+        },
+        {
+          title: "Scalability",
+          description:
+            "Share terabyte-scale datasets reliably and efficiently by leveraging cloud storage systems like S3, ADLS, and GCS.",
+        },
+      ]}
+    />
+    <ConnectorsSection />
+    <EcosystemSection />
+    <CommunitySection />
+    <ProjectGovernanceSection />
+  </PageLayout>
 );
+
+export const Head = () => <SEO title="Delta Sharing" />;
 
 export default SharingPage;

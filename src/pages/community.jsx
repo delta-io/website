@@ -8,16 +8,15 @@ import ContributeToDeltaSection from "src/components/pages/community/ContributeT
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
 
 const CommunityPage = () => (
-  <>
-    <SEO title="Join the Delta Lake Community" />
-    <PageLayout>
-      <CommunitySection />
-      <LatestEventsSection />
-      <ContributeSection />
-      <ContributeToDeltaSection />
-      <ProjectGovernanceSection />
-    </PageLayout>
-  </>
+  <PageLayout>
+    <CommunitySection />
+    <LatestEventsSection />
+    <ContributeSection />
+    <ContributeToDeltaSection />
+    <ProjectGovernanceSection />
+  </PageLayout>
 );
+
+export const Head = () => <SEO title="Join the Delta Lake Community" />;
 
 export default CommunityPage;

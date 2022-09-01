@@ -23,25 +23,31 @@ const DefaultMdxTemplate = ({ location, data, children }) => {
   );
 
   return (
-    <>
-      <SEO
-        title={frontmatter.title}
-        description={frontmatter.description}
-        thumbnailPath={frontmatter.thumbnail?.publicURL}
-      />
-      <PageLayout>
-        {sidebarMenu ? (
-          <TwoColumnLayout
-            sidebarMenu={sidebarMenu}
-            currentPathname={location.pathname}
-          >
-            {content}
-          </TwoColumnLayout>
-        ) : (
-          <OneColumnLayout width={frontmatter.width}>{content}</OneColumnLayout>
-        )}
-      </PageLayout>
-    </>
+    <PageLayout>
+      {sidebarMenu ? (
+        <TwoColumnLayout
+          sidebarMenu={sidebarMenu}
+          currentPathname={location.pathname}
+        >
+          {content}
+        </TwoColumnLayout>
+      ) : (
+        <OneColumnLayout width={frontmatter.width}>{content}</OneColumnLayout>
+      )}
+    </PageLayout>
+  );
+};
+
+export const Head = ({ data }) => {
+  const { frontmatter = {} } = data.mdx;
+  const { title, description, thumbnail } = frontmatter;
+
+  return (
+    <SEO
+      title={title}
+      description={description}
+      thumbnailPath={thumbnail?.publicURL}
+    />
   );
 };
 
