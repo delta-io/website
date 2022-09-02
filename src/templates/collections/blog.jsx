@@ -30,33 +30,36 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
   });
 
   return (
-    <>
-      <SEO title="Delta Lake Blogs" pageIndex={currentPage} />
-      <PageLayout>
-        <Section
-          padding="xxl"
-          title="Delta Lake Blogs"
-          primary
-          background="white"
-        >
-          <CardDataList
-            cards={cards}
-            showFeatured={featuredCount > 0}
-            columns={{ xs: 1, sm: 2, lg: 3 }}
-            density="relaxed"
-            thumbnailRatio={[16, 9]}
-            clampDescriptionLines={2}
-          />
-          <Pagination
-            hasPreviousPage={hasPreviousPage}
-            hasNextPage={hasNextPage}
-            currentPage={currentPage}
-            basePath="/blog"
-          />
-        </Section>
-      </PageLayout>
-    </>
+    <PageLayout>
+      <Section
+        padding="xxl"
+        title="Delta Lake Blogs"
+        primary
+        background="white"
+      >
+        <CardDataList
+          cards={cards}
+          showFeatured={featuredCount > 0}
+          columns={{ xs: 1, sm: 2, lg: 3 }}
+          density="relaxed"
+          thumbnailRatio={[16, 9]}
+          clampDescriptionLines={2}
+        />
+        <Pagination
+          hasPreviousPage={hasPreviousPage}
+          hasNextPage={hasNextPage}
+          currentPage={currentPage}
+          basePath="/blog"
+        />
+      </Section>
+    </PageLayout>
   );
+};
+
+export const Head = ({ pageContext }) => {
+  const { currentPage } = pageContext;
+
+  return <SEO title="Delta Lake Blogs" pageIndex={currentPage} />;
 };
 
 export const pageQuery = graphql`

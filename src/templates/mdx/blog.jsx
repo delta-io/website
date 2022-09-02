@@ -16,7 +16,7 @@ const PostMeta = styled.div`
 
 const BlogMdxTemplate = ({ data, children }) => {
   const { frontmatter = {}, fields = {} } = data.mdx;
-  const { title, description, author, thumbnail } = frontmatter;
+  const { title, author } = frontmatter;
 
   const renderPostMeta = () => (
     <PostMeta>
@@ -25,23 +25,29 @@ const BlogMdxTemplate = ({ data, children }) => {
   );
 
   return (
-    <>
-      <SEO title={title} description={description} thumbnailPath={thumbnail} />
-      <PageLayout>
-        <OneColumnLayout>
-          <Section
-            title={title}
-            primary
-            container={false}
-            subtitle={renderPostMeta}
-          >
-            <TypographyContainer>
-              <MDX>{children}</MDX>
-            </TypographyContainer>
-          </Section>
-        </OneColumnLayout>
-      </PageLayout>
-    </>
+    <PageLayout>
+      <OneColumnLayout>
+        <Section
+          title={title}
+          primary
+          container={false}
+          subtitle={renderPostMeta}
+        >
+          <TypographyContainer>
+            <MDX>{children}</MDX>
+          </TypographyContainer>
+        </Section>
+      </OneColumnLayout>
+    </PageLayout>
+  );
+};
+
+export const Head = ({ data }) => {
+  const { frontmatter = {} } = data.mdx;
+  const { title, description, thumbnail } = frontmatter;
+
+  return (
+    <SEO title={title} description={description} thumbnailPath={thumbnail} />
   );
 };
 
