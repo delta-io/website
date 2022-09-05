@@ -178,7 +178,7 @@ const PageHeader = () => {
         <HeaderMenu showing={menuShowing}>
           <HeaderNav>
             {menus.main.map((link) => (
-              <HeaderNavItem items={link} />
+              <HeaderNavItem items={link} key={link.url} />
             ))}
           </HeaderNav>
           <DesktopHeaderSearchInput

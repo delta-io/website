@@ -38,7 +38,7 @@ const KeyFeaturesGrid = (props) => {
   return (
     <Grid columns={{ md: 2, lg: 4 }}>
       {features.map((feature) => (
-        <FeatureContainer>
+        <FeatureContainer key={feature.name}>
           <Icon src={feature.image} alt="" />
           <FeatureNameContent>{feature.name}</FeatureNameContent>
           <FeatureDescContent>{feature.description}</FeatureDescContent>

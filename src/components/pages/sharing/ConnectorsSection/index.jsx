@@ -111,7 +111,7 @@ const ConnectorsSection = () => (
   <Section title="Connecting to Delta Sharing" padding="xxxl" centeredHeader>
     <Grid gutter="xl" columns={{ xs: 1, md: 2, xl: 3 }}>
       {connectors.map((connector) => (
-        <ConnectorCard>
+        <ConnectorCard key={connector.name}>
           <Typography variant="p">
             <img
               src={connector.logo}
@@ -140,7 +140,7 @@ const ConnectorsSection = () => (
     >
       {comingSoonLogos.map((logo) => (
         <img
-          key={logo.alt}
+          key={logo.src}
           src={logo.src}
           alt={logo.alt}
           width={logo.width}

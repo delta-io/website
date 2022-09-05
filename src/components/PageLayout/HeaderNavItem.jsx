@@ -77,7 +77,7 @@ const HeaderNavItem = ({ items }) => {
         menuVariant="dark"
       >
         {items.submenu.map((link) => (
-          <HeaderDropDown.Item>
+          <HeaderDropDown.Item key={link.url}>
             <HeaderTab
               key={link.label}
               href={link.url}
