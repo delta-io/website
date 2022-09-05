@@ -47,7 +47,13 @@ export const Head = ({ data }) => {
   const { title, description, thumbnail } = frontmatter;
 
   return (
-    <SEO title={title} description={description} thumbnailPath={thumbnail} />
+    <SEO
+      title={title}
+      description={description}
+      thumbnailPath={
+        thumbnail?.childImageSharp?.gatsbyImageData?.images?.fallback?.src
+      }
+    />
   );
 };
 
