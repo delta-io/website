@@ -244,11 +244,12 @@ const CardDataList = (props) => {
                 )}
                 {card.docs && card.source_code && <br />}
                 {card.tags?.length && (
-                  <CardContent variant="p2">
+                  <>
                     {card.tags.map((tag) => (
                       <CardTag key={tag}>{tag}</CardTag>
                     ))}
-                  </CardContent>
+                    <br />
+                  </>
                 )}
                 {card.description}
               </CardContent>

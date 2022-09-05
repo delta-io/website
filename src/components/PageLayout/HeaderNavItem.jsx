@@ -7,7 +7,7 @@ import { NavDropdown } from "react-bootstrap";
 
 const showingMobileMenu = mediaBreakpointDown("lg");
 
-export const HeaderTab = styled(Link)`
+export const HeaderTab = styled.div`
   font-size: ${(props) => props.theme.fontSizes.secondary};
   padding: ${(props) => props.theme.spacing.xs}
     ${(props) => props.theme.spacing.sm};
@@ -30,6 +30,11 @@ export const HeaderTab = styled(Link)`
       color: ${props.theme.colors.primary};
     }
   `)}
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `;
 
 export const HeaderDropDown = styled(NavDropdown)`
@@ -77,13 +82,13 @@ const HeaderNavItem = ({ items }) => {
         menuVariant="dark"
       >
         {items.submenu.map((link) => (
-          <HeaderDropDown.Item key={link.url}>
-            <HeaderTab
-              key={link.label}
-              href={link.url}
-              activeClassName="active"
-            >
-              {link.label}
+          <HeaderDropDown.Item as="div" key={link.url}>
+            <HeaderTab key={link.label} activeClassName="active">
+              {link.url ? (
+                <Link href={link.url}>{link.label}</Link>
+              ) : (
+                link.label
+              )}
             </HeaderTab>
           </HeaderDropDown.Item>
         ))}
@@ -92,13 +97,8 @@ const HeaderNavItem = ({ items }) => {
   }
 
   return (
-    <HeaderTab
-      key={items.label}
-      href={items.url}
-      activeClassName="active"
-      partiallyActive
-    >
-      {items.label}
+    <HeaderTab key={items.label} activeClassName="active" partiallyActive>
+      {items.url ? <Link href={items.url}>{items.label}</Link> : items.label}
     </HeaderTab>
   );
 };
