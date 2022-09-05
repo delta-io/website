@@ -1,5 +1,5 @@
 import * as React from "react";
-import { arrayOf, string } from "prop-types";
+import { arrayOf, string, shape } from "prop-types";
 import styled from "styled-components";
 import Grid from "src/components/Grid";
 import Link from "src/components/Link";
@@ -81,7 +81,18 @@ const ContributeGrid = (props) => {
 };
 
 ContributeGrid.propTypes = {
-  features: arrayOf(string).isRequired,
+  features: arrayOf(
+    shape({
+      PR: string,
+      contributors: string,
+      description: string,
+      image: string,
+      issue: string,
+      name: string,
+      orgs: string,
+      url: string,
+    })
+  ).isRequired,
 };
 
 export default ContributeGrid;

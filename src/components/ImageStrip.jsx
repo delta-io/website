@@ -27,7 +27,9 @@ const ImageStrip = (props) => {
           <CardThumbnail>
             <Embed src={item.thumbnail} alt="" aspectRatio={[16, 9]} />
           </CardThumbnail>
-          <Typography variant="p2">{item.title}</Typography>
+          {item.title && item.title !== "" && (
+            <Typography variant="p2">{item.title}</Typography>
+          )}
         </Link>
       ))}
     </Grid>
@@ -37,7 +39,7 @@ const ImageStrip = (props) => {
 ImageStrip.propTypes = {
   items: arrayOf(
     shape({
-      title: string.isRequired,
+      title: string,
       thumbnail: oneOfType([string, object]).isRequired,
       url: string.isRequired,
     }).isRequired

@@ -27,7 +27,7 @@ OneColumnLayout.defaultProps = {
 };
 
 OneColumnLayout.propTypes = {
-  width: oneOf(["width"]),
+  width: oneOf(["full"]),
 };
 
 export default OneColumnLayout;
