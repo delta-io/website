@@ -1,8 +1,15 @@
-const remarkSlug = require("remark-slug");
-const remarkGfm = require("remark-gfm");
-const remarkHighlightJs = require("remark-highlight.js");
+const scala = require("highlight.js/lib/languages/scala");
 const { mdxPageTypes } = require("./config/pages");
 const { searchPluginConfig } = require("./config/search");
+
+const wrapESMPlugin =
+  (name) =>
+  (opts) =>
+  async (...args) => {
+    const mod = await import(name);
+    const plugin = mod.default(opts);
+    return plugin(...args);
+  };
 
 module.exports = {
   siteMetadata: {
@@ -63,7 +70,12 @@ module.exports = {
           },
         ],
         mdxOptions: {
-          remarkPlugins: [remarkSlug, remarkGfm, remarkHighlightJs],
+          // eslint-disable-next-line global-require
+          remarkPlugins: [require("remark-gfm")],
+          rehypePlugins: [
+            wrapESMPlugin("rehype-slug"),
+            [wrapESMPlugin("rehype-highlight"), { languages: { scala } }],
+          ],
         },
       },
     },

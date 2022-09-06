@@ -51,15 +51,16 @@
     "gatsby-source-filesystem": "4.22.0",
     "gatsby-transformer-json": "4.22.0",
     "gatsby-transformer-sharp": "4.22.0",
+    "highlight.js": "11.6.0",
     "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-bootstrap": "2.5.0",
     "react-dom": "18.2.0",
     "react-is": "18.2.0",
     "react-use-flexsearch": "0.1.1",
+    "rehype-highlight": "5.0.2",
+    "rehype-slug": "5.0.1",
     "remark-gfm": "1.0.0",
-    "remark-highlight.js": "6.0.0",
-    "remark-slug": "6.1.0",
     "styled-components": "5.3.5"
   },
   "devDependencies": {
