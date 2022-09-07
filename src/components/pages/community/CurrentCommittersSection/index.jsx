@@ -11,7 +11,6 @@ const committers = [
     organization: "Databricks",
     areas: ["delta", "connectors", "delta-sharing"],
   },
-
   {
     name: "R. Tyler Croy",
     organization: "Scribd",
