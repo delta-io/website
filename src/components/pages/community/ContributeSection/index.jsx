@@ -5,7 +5,6 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import GithubContributorsGrid from "src/components/pages/shared/GithubContributorsGrid";
 import ContributeGrid from "./ContributeGrid";
 
 const CenterTextSectionColumn = styled(TypographyContainer)`
@@ -175,14 +174,6 @@ const ContributeSection = () => (
         </Typography>
       </CenterTextSectionColumn>
     </Grid>
-    <Grid columns={{ md: 1 }} gutter="xxl">
-      <CenterTextSectionColumn>
-        <Typography variant="h3">Featured Contributors</Typography>
-      </CenterTextSectionColumn>
-    </Grid>
-    <GithubContributorsGrid
-      users={["rtyler", "houqp", "tdas", "zsxwing", "mrk-its", "koertkuipers"]}
-    />
   </Section>
 );
 
