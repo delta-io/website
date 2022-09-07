@@ -7,6 +7,12 @@ import styled from "styled-components";
 
 const committers = [
   {
+    name: "Michael Armbrust",
+    organization: "Databricks",
+    areas: ["delta", "connectors", "delta-sharing"],
+  },
+
+  {
     name: "R. Tyler Croy",
     organization: "Scribd",
     areas: ["delta", "delta-rs", "kafka-delta-ingest"],
