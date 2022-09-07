@@ -68,9 +68,9 @@ const CurrentCommittersSection = () => (
           committers!
         </Typography>
         <Typography variant="p">
-          For more information on how to become a committer, please refer to{" "}
+          For more information on how to contribute, please refer to the{" "}
           <Link href="https://github.com/delta-io/delta/blob/master/CONTRIBUTING.md">
-            Delta Lake committers
+            Delta Lake contribution guide
           </Link>
           .
         </Typography>
