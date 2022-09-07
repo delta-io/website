@@ -58,7 +58,11 @@ const Tiles = (props) => {
         const TileComponent = tile.url ? TileLink : Tile;
 
         return (
-          <TileComponent key={tile.label} dark={dark} href={tile.url}>
+          <TileComponent
+            key={tile.label}
+            dark={tile.url ? undefined : dark}
+            href={tile.url}
+          >
             <TileImage
               as={typeof tile.thumbnail === "string" ? "img" : Embed}
               src={tile.thumbnail}

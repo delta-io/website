@@ -1,5 +1,5 @@
 import * as React from "react";
-import { arrayOf, string } from "prop-types";
+import { arrayOf, shape, string } from "prop-types";
 import styled from "styled-components";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
@@ -38,7 +38,7 @@ const KeyFeaturesGrid = (props) => {
   return (
     <Grid columns={{ md: 2, lg: 4 }}>
       {features.map((feature) => (
-        <FeatureContainer>
+        <FeatureContainer key={feature.name}>
           <Icon src={feature.image} alt="" />
           <FeatureNameContent>{feature.name}</FeatureNameContent>
           <FeatureDescContent>{feature.description}</FeatureDescContent>
@@ -49,7 +49,13 @@ const KeyFeaturesGrid = (props) => {
 };
 
 KeyFeaturesGrid.propTypes = {
-  features: arrayOf(string).isRequired,
+  features: arrayOf(
+    shape({
+      name: string,
+      image: string,
+      description: string,
+    })
+  ).isRequired,
 };
 
 export default KeyFeaturesGrid;

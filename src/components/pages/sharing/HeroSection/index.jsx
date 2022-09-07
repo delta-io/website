@@ -85,8 +85,8 @@ const HeroSection = () => (
             Read more
           </Button>
         </ButtonRow>
-        <Typography variant="p2">
-          <ButtonRow columns={["60px", "60px"]} gutter="lg">
+        <ButtonRow columns={["60px", "60px"]} gutter="lg">
+          <Typography variant="p2">
             <Link
               href="https://github.com/delta-io/delta-sharing"
               style={{ textAlign: "right" }}
@@ -94,7 +94,9 @@ const HeroSection = () => (
               muted
             >
               Github
-            </Link>{" "}
+            </Link>
+          </Typography>
+          <Typography variant="p2">
             <Link
               href="https://github.com/delta-io/delta-sharing/releases"
               newTab
@@ -102,8 +104,8 @@ const HeroSection = () => (
             >
               Releases
             </Link>
-          </ButtonRow>
-        </Typography>
+          </Typography>
+        </ButtonRow>
         <HeroImageMobile src={heroMobile} />
         <HeroImageDesktop src={heroDesktop} />
       </>

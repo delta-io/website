@@ -1,5 +1,5 @@
 import * as React from "react";
-import { arrayOf, string } from "prop-types";
+import { arrayOf, string, shape } from "prop-types";
 import styled from "styled-components";
 import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
@@ -38,7 +38,7 @@ const ValuePropsGrid = (props) => {
   return (
     <Grid columns={{ md: 2, lg: 4 }}>
       {features.map((feature) => (
-        <ValuePropContainer>
+        <ValuePropContainer key={feature.name}>
           <Icon src={feature.image} alt="" />
           <ValuePropName>{feature.name}</ValuePropName>
           <ValuePropContent>{feature.description}</ValuePropContent>
@@ -49,7 +49,13 @@ const ValuePropsGrid = (props) => {
 };
 
 ValuePropsGrid.propTypes = {
-  features: arrayOf(string).isRequired,
+  features: arrayOf(
+    shape({
+      name: string,
+      image: string,
+      description: string,
+    })
+  ).isRequired,
 };
 
 export default ValuePropsGrid;

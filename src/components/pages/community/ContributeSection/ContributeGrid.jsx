@@ -1,5 +1,5 @@
 import * as React from "react";
-import { arrayOf, string } from "prop-types";
+import { arrayOf, string, shape } from "prop-types";
 import styled from "styled-components";
 import Grid from "src/components/Grid";
 import Link from "src/components/Link";
@@ -49,10 +49,10 @@ const ContributeGrid = (props) => {
   return (
     <Grid columns={{ md: 2, lg: 3 }}>
       {features.map((feature) => (
-        <FeatureContainer>
+        <FeatureContainer key={feature.url}>
           <Icon src={feature.image} alt="" width="35" />
           <FeatureNameContent>
-            <Link key={feature.url} href={feature.url} muted>
+            <Link href={feature.url} muted>
               {feature.name}
             </Link>
           </FeatureNameContent>
@@ -66,11 +66,11 @@ const ContributeGrid = (props) => {
             &nbsp;
           </FeatureDescContent>
           <FeatureIssueContent>
-            <Link key={feature.issue} href={feature.issue} muted>
+            <Link href={feature.issue} muted>
               Report an issue
             </Link>
             <br />
-            <Link key={feature.PR} href={feature.PR} muted>
+            <Link href={feature.PR} muted>
               View Pull Requests
             </Link>
           </FeatureIssueContent>
@@ -81,7 +81,18 @@ const ContributeGrid = (props) => {
 };
 
 ContributeGrid.propTypes = {
-  features: arrayOf(string).isRequired,
+  features: arrayOf(
+    shape({
+      PR: string,
+      contributors: string,
+      description: string,
+      image: string,
+      issue: string,
+      name: string,
+      orgs: string,
+      url: string,
+    })
+  ).isRequired,
 };
 
 export default ContributeGrid;

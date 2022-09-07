@@ -200,7 +200,7 @@ const CardDataList = (props) => {
 
         return (
           <Card
-            key={card.url}
+            key={card.title}
             spanColumns={isFeatured ? columns : undefined}
             gutter={gutter}
           >
@@ -244,11 +244,12 @@ const CardDataList = (props) => {
                 )}
                 {card.docs && card.source_code && <br />}
                 {card.tags?.length && (
-                  <CardContent variant="p2">
+                  <>
                     {card.tags.map((tag) => (
                       <CardTag key={tag}>{tag}</CardTag>
                     ))}
-                  </CardContent>
+                    <br />
+                  </>
                 )}
                 {card.description}
               </CardContent>

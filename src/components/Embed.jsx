@@ -41,7 +41,7 @@ const Embed = (props) => {
   if (src?.childImageSharp) {
     return (
       <div className={className}>
-        <GatsbyImage image={getImage(src)} alt={alt} />
+        <GatsbyImage image={getImage(src)} alt={alt ?? ""} />
       </div>
     );
   }

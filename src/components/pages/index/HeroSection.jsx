@@ -61,8 +61,8 @@ const HeroSection = (props) => {
             {ctaLabel}
           </HeroButton>
         </Typography>
-        <Typography variant="p">
-          <ButtonRow columns={["60px", "65px", "65px"]} gutter="lg">
+        <ButtonRow columns={["60px", "65px", "65px"]} gutter="lg">
+          <Typography variant="p">
             <HeroLink
               href="https://github.com/delta-io/delta"
               style={{ textAlign: "left" }}
@@ -71,9 +71,13 @@ const HeroSection = (props) => {
             >
               Github
             </HeroLink>
+          </Typography>
+          <Typography variant="p">
             <HeroLink href="http://go.delta.io/releases" newTab muted>
               Releases
             </HeroLink>
+          </Typography>
+          <Typography variant="p">
             <HeroLink
               href="https://go.delta.io/roadmap"
               style={{ textAlign: "right" }}
@@ -82,8 +86,8 @@ const HeroSection = (props) => {
             >
               Roadmap
             </HeroLink>
-          </ButtonRow>
-        </Typography>
+          </Typography>
+        </ButtonRow>
       </HeroSectionContent>
       <HeroSectionDiagramOffset />
     </LakeSection>

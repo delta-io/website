@@ -122,7 +122,7 @@ Section.defaultProps = {
 
 Section.propTypes = {
   padding: oneOf(Object.keys(spacing)),
-  title: string,
+  title: oneOfType([string, node]),
   titleSize: oneOf(["h1", "h2", "h3", "h4", "h5"]),
   subtitle: oneOfType([func, node]),
   primary: bool,
