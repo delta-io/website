@@ -68,9 +68,7 @@ const FooterMenuHeader = styled.div`
 `;
 
 const FooterMenuLink = styled(Link)`
-  &:not(:hover) {
-    color: ${(props) => props.theme.dark.color};
-  }
+  color: ${(props) => props.theme.dark.color};
 
   &:hover {
     color: white;

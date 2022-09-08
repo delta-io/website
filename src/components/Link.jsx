@@ -12,10 +12,8 @@ const StyledLink = styled.a`
   ${(props) =>
     props.muted === true &&
     `
-    &:not(:hover) {
-      color: inherit;
-      text-decoration: none;
-    }
+    color: inherit;
+    text-decoration: none;
   `}
 `;
 

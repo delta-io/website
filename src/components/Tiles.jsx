@@ -5,8 +5,6 @@ import Grid from "src/components/Grid";
 import Embed from "src/components/Embed";
 import { arrayOf, shape, string, bool, number } from "prop-types";
 
-const TileGrid = styled(Grid)``;
-
 const Tile = styled.div`
   padding: ${(props) => props.theme.spacing.lg};
   display: flex;
@@ -14,7 +12,7 @@ const Tile = styled.div`
   justify-content: center;
 
   ${(props) =>
-    props.dark &&
+    props.$dark &&
     `
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -35,9 +33,11 @@ const TileLabel = styled.div`
 const TileLink = styled(Tile).attrs({ as: Link, muted: true })`
   display: block;
   text-align: center;
+  color: ${(props) => props.theme.light.color};
 
-  &:not(:hover) {
+  &:hover {
     color: ${(props) => props.theme.light.color};
+    text-decoration: underline;
   }
 `;
 
@@ -53,16 +53,12 @@ const Tiles = (props) => {
   } = props;
 
   return (
-    <TileGrid columns={columns} evenRows={evenRows} className={className}>
+    <Grid columns={columns} evenRows={evenRows} className={className}>
       {tiles.map((tile) => {
         const TileComponent = tile.url ? TileLink : Tile;
 
         return (
-          <TileComponent
-            key={tile.label}
-            dark={tile.url ? undefined : dark}
-            href={tile.url}
-          >
+          <TileComponent key={tile.label} $dark={dark} href={tile.url}>
             <TileImage
               as={typeof tile.thumbnail === "string" ? "img" : Embed}
               src={tile.thumbnail}
@@ -73,7 +69,7 @@ const Tiles = (props) => {
           </TileComponent>
         );
       })}
-    </TileGrid>
+    </Grid>
   );
 };
 
