@@ -92,6 +92,7 @@ const CurrentCommittersSection = () => (
       ]}
       data={committers.map((committer) => ({
         ...committer,
+        key: committer.name,
         areas: committer.areas.join(", "),
       }))}
     />
