@@ -74,7 +74,7 @@ const CurrentCommittersSection = () => (
         </Typography>
         <Typography variant="p">
           For more information on how to contribute, please refer to the{" "}
-          <Link href="https://github.com/delta-io/delta/blob/master/CONTRIBUTING.md">
+          <Link href="../resources/contributing-to-delta">
             Delta Lake contribution guide
           </Link>
           .

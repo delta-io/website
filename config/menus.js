@@ -75,6 +75,10 @@ const community = [
     url: "/resources/getting-help",
     label: "Getting Help",
   },
+  {
+    url: "/resources/contributing-to-delta",
+    label: "Contributing to Delta",
+  },
 ];
 
 const learn = [
