@@ -27,6 +27,11 @@ const committers = [
     areas: ["delta", "delta-rs"],
   },
   {
+    name: "Venki Korukanti",
+    organization: "Databricks",
+    areas: ["delta", "connectors"],
+  },
+  {
     name: "Denny Lee",
     organization: "Databricks",
     areas: ["delta", "connectors", "delta-sharing", "delta-rs", "website"],
@@ -35,6 +40,16 @@ const committers = [
     name: "Mykhailo Osypov",
     organization: "Scribd",
     areas: ["delta-rs", "kafka-delta-ingest"],
+  },
+  {
+    name: "Allison Portis",
+    organization: "Databricks",
+    areas: ["delta", "connectors"],
+  },
+  {
+    name: "Scott Sandre",
+    organization: "Databricks",
+    areas: ["delta", "connectors"],
   },
   {
     name: "Florian Valeye",
