@@ -3,7 +3,7 @@ import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import thumbnail4 from "./d3l2-ryan_harris.png";
-import thumbnail3 from "./unified-source-interface.png";
+// import thumbnail3 from "./unified-source-interface.png";
 import thumbnail2 from "./community-office-hours_2022-09-08.jpeg";
 import thumbnail1 from "./tmo-why-lakehouse-delta-lake.png";
 import thumbnail0 from "./generic-thumbnail.png";
