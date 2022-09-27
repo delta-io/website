@@ -118,8 +118,8 @@ const ContributeSection = () => (
       <CenterTextSectionColumn>
         <Typography variant="p">
           Refer to the &nbsp;
-          <Link href="https://github.com/delta-io/delta/blob/master/CONTRIBUTING.md">
-            Contributing Guide
+          <Link href="../resources/contributing-to-delta">
+            Delta Lake contribution guide
           </Link>
           &nbsp; for the latest on communication, coding style, and how to sign
           your work.
