@@ -15,7 +15,11 @@
 
 ## :rocket: Getting up and running locally
 
-Simply check out this repo, run `npm install`, then run `npm run develop`.
+This site requires Node 16, which you can install with `brew install node@16`.
+
+Simply check out this repo, run `npm install --legacy-peer-deps`, then run `npm run develop`.
+
+To open a localhost version of the site, run `npm run start`.
 
 ### Code formatting
 
@@ -29,4 +33,31 @@ This repo runs automated checks on PRs, like the lint check above. Sometimes thi
 
 ## :handshake: Contributing
 
-All changes are proposed as a [pull request](https://github.com/jakebellacera/delta-lake/pulls). Simply create a pull request and request a review and we'll get on it.
+All changes are proposed as a [pull request](https://github.com/delta-io/website/pulls). Simply create a pull request and request a review and we'll get on it.
+
+You can add a blog by adding a directory with some files to `src/blog`. Here's an example:
+
+```
+src/
+  blog/
+    2022-09-23-convert-parquet-to-delta/
+      index.mdx
+      thumbnail.png
+```
+
+All of the images that correspond to the blog post should be saved in the respective folder.
+
+The top of the `index.mdx` file should contain the following metadata:
+
+```
+---
+title: Converting from Parquet to Delta Lake
+description: This post shows how to convert a Parquet table to a Delta Lake.
+thumbnail: ./thumbnail.png
+author: Matthew Powers
+---
+```
+
+You can also add the new blog post to the homepage by updating the `src/components/pages/index/LatestUpdateSection/index.jsx` file.
+
+[This commit](https://github.com/delta-io/website/commit/432449ad8126355aae40ef9b09e346d47f30d23c) is a good example of how to add a blog post.
