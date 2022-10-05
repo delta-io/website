@@ -5,11 +5,12 @@ import styled from "styled-components";
 import thumbnail4 from "./d3l2-ryan_harris.png";
 import thumbnail1 from "./tmo-why-lakehouse-delta-lake.png";
 import thumbnail0 from "./generic-thumbnail.png";
+import thumbnailRestore from "./restore.png";
 
 const updates = [
   {
     title: "How to Rollback a Delta Lake to a Previous Version with Restore",
-    thumbnail: thumbnail0,
+    thumbnail: thumbnailRestore,
     url: "/blog/2022-10-03-rollback-delta-lake-restore/",
   },
   {
