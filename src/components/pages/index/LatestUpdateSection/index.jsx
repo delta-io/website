@@ -3,12 +3,16 @@ import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import thumbnail4 from "./d3l2-ryan_harris.png";
-// import thumbnail3 from "./unified-source-interface.png";
-import thumbnail2 from "./community-office-hours_2022-09-08.jpeg";
 import thumbnail1 from "./tmo-why-lakehouse-delta-lake.png";
 import thumbnail0 from "./generic-thumbnail.png";
+import thumbnailRestore from "./restore.png";
 
 const updates = [
+  {
+    title: "How to Rollback a Delta Lake to a Previous Version with Restore",
+    thumbnail: thumbnailRestore,
+    url: "/blog/2022-10-03-rollback-delta-lake-restore/",
+  },
   {
     title: "Converting from Parquet to Delta Lake",
     thumbnail: thumbnail0,
@@ -29,11 +33,6 @@ const updates = [
     title: "How to drop columns from a Delta Lake table",
     thumbnail: thumbnail0,
     url: "/blog/2022-08-29-delta-lake-drop-column/",
-  },
-  {
-    title: "Community Office Hours (2022-09-08)",
-    thumbnail: thumbnail2,
-    url: "https://youtu.be/LaKcKagdwHY",
   },
 ];
 
