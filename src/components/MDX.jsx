@@ -11,6 +11,7 @@ import ImageStripDataList from "src/components/pages/shared/ImageStripDataList";
 import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
 import OrganizationTiles from "src/components/pages/shared/OrganizationTiles";
 import SocialTiles from "src/components/pages/shared/SocialTiles";
+import CodeTabs from "src/components/CodeTabs";
 
 const MarkdownContent = styled.div`
   .align-image-left .gatsby-resp-image-wrapper {
@@ -240,6 +241,7 @@ const mdxComponents = {
   JsonCardDataList,
   OrganizationTiles,
   SocialTiles,
+  CodeTabs,
 };
 
 const MDX = (props) => {
