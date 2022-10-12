@@ -10,7 +10,7 @@ import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
 
 const updates = [
   {
-    title: "Delta Sharing 0.5.0 Released",
+    title: "Sharing a Delta Table’s Change Data Feed with Delta Sharing 0.5.0",
     thumbnail: thumbnailDeltaSharingCDF,
     url: "/blog/2022-10-10-delta-sharing-0-5-0-released/",
   },
