@@ -2,13 +2,17 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import thumbnail1 from "./tmo-why-lakehouse-delta-lake.png";
 import thumbnail0 from "./generic-thumbnail.png";
 import thumbnailRestore from "./restore.png";
 import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
 import versionPandasDataset from "./versionPandasDataset.png";
 
 const updates = [
+  {
+    title: "How to Create Delta Lake tables",
+    thumbnail: howToCreateDeltaLakeTable,
+    url: "/blog/2022-10-25-create-delta-lake-tables/",
+  },
   {
     title: "How to Version Your Data with pandas and Delta Lake",
     thumbnail: versionPandasDataset,
@@ -28,12 +32,6 @@ const updates = [
     title: "Converting from Parquet to Delta Lake",
     thumbnail: thumbnail0,
     url: "/blog/2022-09-23-convert-parquet-to-delta/",
-  },
-  {
-    title:
-      "Why we migrated to a Data Lakehouse on Delta Lake for T-Mobile Data Science and Analytics Team",
-    thumbnail: thumbnail1,
-    url: "/blog/2022-09-14-why-migrate-lakehouse-delta-lake-tmo-dsna/",
   },
 ];
 
