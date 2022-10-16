@@ -13,6 +13,8 @@ All the computations in this post are in [this Jupyter Notebook](https://github.
 
 You can install Delta Lake with `pip install deltalake` and install pandas with `pip install pandas`.
 
+`deltalake` is the Python interface for the [delta-rs](https://github.com/delta-io/delta-rs/) project. delta-rs is written in Rust, but you can use it just like any other Python library via the Python bindings.
+
 Delta Lake was originally built for Spark, but the `deltalake` implementation does not have a Spark dependency. `delta-spark` depends on Spark, `deltalake` does not.
 
 ## Create a versioned Delta Lake with pandas

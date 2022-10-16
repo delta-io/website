@@ -2,13 +2,18 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import thumbnail4 from "./d3l2-ryan_harris.png";
 import thumbnail1 from "./tmo-why-lakehouse-delta-lake.png";
 import thumbnail0 from "./generic-thumbnail.png";
 import thumbnailRestore from "./restore.png";
 import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
+import versionPandasDatasets from "./versionPandasDataset.png";
 
 const updates = [
+  {
+    title: "How to Version Your Data with pandas and Delta Lake",
+    thumbnail: versionPandasDatasets,
+    url: "/blog/2022-10-15-version-pandas-dataset/",
+  },
   {
     title: "Sharing a Delta Table’s Change Data Feed with Delta Sharing 0.5.0",
     thumbnail: thumbnailDeltaSharingCDF,
@@ -29,11 +34,6 @@ const updates = [
       "Why we migrated to a Data Lakehouse on Delta Lake for T-Mobile Data Science and Analytics Team",
     thumbnail: thumbnail1,
     url: "/blog/2022-09-14-why-migrate-lakehouse-delta-lake-tmo-dsna/",
-  },
-  {
-    title: "D3L2: Cybersecurity, Data Mesh, and Delta Lake at HSBC",
-    thumbnail: thumbnail4,
-    url: "https://youtu.be/ctKctx7vGW4",
   },
 ];
 
