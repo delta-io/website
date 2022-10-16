@@ -15,8 +15,8 @@ const CopyButton = styled(Button).attrs({
 })`
   appearance: none;
   position: absolute;
-  top: ${(props) => props.theme.spacing.sm};
-  right: ${(props) => props.theme.spacing.sm};
+  top: 0.5rem;
+  right: 0.5rem;
   opacity: 0.5;
 
   &:hover {
