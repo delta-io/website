@@ -3,24 +3,39 @@ import styled from "styled-components";
 import Button from "./Button";
 import Icon from "./Icon";
 
-const CodeBlockContainer = styled.div`
-  position: relative;
-`;
-
 const CopyButton = styled(Button).attrs({
   size: "small",
   borderStyle: "outlined",
   href: "#",
   variant: "white",
+  buttonColors: {
+    text: "#212121",
+    background: "#999999",
+    border: "#999999",
+    textHover: "#212121",
+    backgroundHover: "white",
+    borderHover: "white",
+  },
 })`
   appearance: none;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  opacity: 0.5;
+  transition: opacity 100ms linear;
+  box-shadow: 0 0 0px 3px #212121;
+`;
+
+const CodeBlockContainer = styled.div`
+  position: relative;
+
+  > ${CopyButton} {
+    opacity: 0;
+  }
 
   &:hover {
-    opacity: 1;
+    > ${CopyButton} {
+      opacity: 1;
+    }
   }
 `;
 

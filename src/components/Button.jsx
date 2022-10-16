@@ -4,7 +4,11 @@ import color from "color";
 import { bool, oneOf } from "prop-types";
 
 const getButtonColors = (props) => {
-  const { variant, theme } = props;
+  const { variant, theme, buttonColors } = props;
+
+  if (buttonColors) {
+    return buttonColors;
+  }
 
   if (variant === "secondary") {
     return {
@@ -25,17 +29,6 @@ const getButtonColors = (props) => {
       textHover: theme.colors.text,
       backgroundHover: theme.colors.accent,
       borderHover: theme.colors.accent,
-    };
-  }
-
-  if (variant === "white") {
-    return {
-      text: "#212121",
-      background: "white",
-      border: "white",
-      textHover: "#212121",
-      backgroundHover: "white",
-      borderHover: "white",
     };
   }
 
@@ -61,7 +54,7 @@ const Button = styled(Link)`
   line-height: 1;
   background-color: ${(props) =>
     props.borderStyle === "outlined"
-      ? "transparent"
+      ? getButtonColors(props).text
       : getButtonColors(props).background};
   color: ${(props) =>
     props.borderStyle === "outlined"
