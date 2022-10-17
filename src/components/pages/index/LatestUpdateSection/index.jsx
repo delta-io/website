@@ -6,12 +6,12 @@ import thumbnail1 from "./tmo-why-lakehouse-delta-lake.png";
 import thumbnail0 from "./generic-thumbnail.png";
 import thumbnailRestore from "./restore.png";
 import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
-import versionPandasDatasets from "./versionPandasDataset.png";
+import versionPandasDataset from "./versionPandasDataset.png";
 
 const updates = [
   {
     title: "How to Version Your Data with pandas and Delta Lake",
-    thumbnail: versionPandasDatasets,
+    thumbnail: versionPandasDataset,
     url: "/blog/2022-10-15-version-pandas-dataset/",
   },
   {
