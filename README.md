@@ -8,8 +8,8 @@
 <p align="center">This repo contains the official source code for the <a href="https://delta.io">Delta Lake website</a>.</p>
 
 <p align="center">
-  <a href="https://app.netlify.com/sites/delta-lake/deploys">
-    <img src="https://api.netlify.com/api/v1/badges/1728ed28-4d36-4f40-9a46-a649be7bb58c/deploy-status" alt="Netlify status">
+  <a href="https://app.netlify.com/sites/delta-io-beta/deploys">
+    <img src="https://api.netlify.com/api/v1/badges/5fdc1202-ea78-42d3-b86d-e232c77e1b88/deploy-status" alt="Netlify status">
   </a>
 </p>
 
