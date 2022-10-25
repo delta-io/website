@@ -6,6 +6,7 @@ import thumbnail0 from "./generic-thumbnail.png";
 import thumbnailRestore from "./restore.png";
 import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
 import versionPandasDataset from "./versionPandasDataset.png";
+import howToCreateDeltaLakeTable from "./create-delta-lake-table.png";
 
 const updates = [
   {
