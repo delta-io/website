@@ -2,12 +2,28 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import thumbnail4 from "./d3l2-ryan_harris.png";
-import thumbnail1 from "./tmo-why-lakehouse-delta-lake.png";
 import thumbnail0 from "./generic-thumbnail.png";
 import thumbnailRestore from "./restore.png";
+import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
+import versionPandasDataset from "./versionPandasDataset.png";
+import howToCreateDeltaLakeTable from "./create-delta-lake-table.png";
 
 const updates = [
+  {
+    title: "How to Create Delta Lake tables",
+    thumbnail: howToCreateDeltaLakeTable,
+    url: "/blog/2022-10-25-create-delta-lake-tables/",
+  },
+  {
+    title: "How to Version Your Data with pandas and Delta Lake",
+    thumbnail: versionPandasDataset,
+    url: "/blog/2022-10-15-version-pandas-dataset/",
+  },
+  {
+    title: "Sharing a Delta Table’s Change Data Feed with Delta Sharing 0.5.0",
+    thumbnail: thumbnailDeltaSharingCDF,
+    url: "/blog/2022-10-10-delta-sharing-0-5-0-released/",
+  },
   {
     title: "How to Rollback a Delta Lake to a Previous Version with Restore",
     thumbnail: thumbnailRestore,
@@ -17,22 +33,6 @@ const updates = [
     title: "Converting from Parquet to Delta Lake",
     thumbnail: thumbnail0,
     url: "/blog/2022-09-23-convert-parquet-to-delta/",
-  },
-  {
-    title:
-      "Why we migrated to a Data Lakehouse on Delta Lake for T-Mobile Data Science and Analytics Team",
-    thumbnail: thumbnail1,
-    url: "/blog/2022-09-14-why-migrate-lakehouse-delta-lake-tmo-dsna/",
-  },
-  {
-    title: "D3L2: Cybersecurity, Data Mesh, and Delta Lake at HSBC",
-    thumbnail: thumbnail4,
-    url: "https://youtu.be/ctKctx7vGW4",
-  },
-  {
-    title: "How to drop columns from a Delta Lake table",
-    thumbnail: thumbnail0,
-    url: "/blog/2022-08-29-delta-lake-drop-column/",
   },
 ];
 
