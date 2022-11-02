@@ -14,7 +14,7 @@ Follow these instructions to set up Delta Lake with Spark. You can run the steps
 
 ### Set up interactive shell
 
-To use Delta Lake interactively within the Spark Scala or Python shell, you need a local installation of Apache Spark. Depending on whether you want to use Python or Scala, you can set up either PySpark or the Spark shell, respectively. For all the instructions below make sure you install the correct version of Spark or PySpark that is compatible with Delta Lake 1.0.0. See the release compatibility matrix for details.
+To use Delta Lake interactively within the Spark Scala or Python shell, you need a local installation of Apache Spark. Depending on whether you want to use Python or Scala, you can set up either PySpark or the Spark shell, respectively. For all the instructions below make sure you install the correct version of Spark or PySpark that is compatible with Delta Lake 2.1.0. See the release compatibility matrix for details.
 
 ### PySpark shell
 
@@ -27,7 +27,7 @@ To use Delta Lake interactively within the Spark Scala or Python shell, you need
 2. Run PySpark with the Delta Lake package and additional configurations:
 
    ```sh
-   pyspark --packages io.delta:delta-core_2.12:1.0.0 \
+   pyspark --packages io.delta:delta-core_2.12:2.1.0 \
      --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
      --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
    ```
@@ -37,7 +37,7 @@ To use Delta Lake interactively within the Spark Scala or Python shell, you need
 Download the compatible version of Apache Spark by following instructions from [Downloading Spark](https://spark.apache.org/downloads.html), either using `pip` or by downloading and extracting the archive and running spark-shell in the extracted directory.
 
 ```sh
-bin/spark-shell --packages io.delta:delta-core_2.12:1.0.0 \
+bin/spark-shell --packages io.delta:delta-core_2.12:2.1.0 \
   --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
   --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
 ```
@@ -54,7 +54,7 @@ You include Delta Lake in your Maven project by adding it as a dependency in you
 <dependency>
   <groupId>io.delta</groupId>
   <artifactId>delta-core_2.12</artifactId>
-  <version>1.0.0</version>
+  <version>2.1.0</version>
 </dependency>
 ```
 
@@ -63,7 +63,7 @@ You include Delta Lake in your Maven project by adding it as a dependency in you
 You include Delta Lake in your SBT project by adding the following line to your `build.sbt` file:
 
 ```scala
-libraryDependencies += "io.delta" %% "delta-core" % "1.0.0"
+libraryDependencies += "io.delta" %% "delta-core" % "2.1.0"
 ```
 
 ### Python
