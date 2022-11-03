@@ -9,10 +9,10 @@ This post explains the `append` and `overwrite` PySpark [save mode](https://spar
 
 Here’s the logical interpretation of the different [save modes](https://spark.apache.org/docs/latest/sql-data-sources-load-save-functions.html#save-modes):
 
-- Append: add additional data to an existing table
-- Overwrite: remove the existing data from the table and replace it with new data
-- Error (aka `errorifexists`): throw an error if the table exists and contains data
-- Ignore: don’t write if the table already exists, but don’t throw an error either
+- **Append**: add additional data to an existing table
+- **Overwrite**: remove the existing data from the table and replace it with new data
+- **Error** (aka `errorifexists`): throw an error if the table exists and contains data
+- **Ignore**: don’t write if the table already exists, but don’t throw an error either
 
 The Delta Lake implementation of these different save modes allows for ACID transactions and a great developer experience.
 
@@ -20,7 +20,9 @@ The limitations of Parquet tables make the developer experience less pleasant, e
 
 All the code snippets covered in this post are in [this notebook](https://github.com/MrPowers/delta-examples/blob/master/notebooks/pyspark/pyspark-append-overwrite.ipynb) if you’d like to reproduce these computations on your machine.
 
-## Parquet append and overwrite save modes
+## Parquet append save mode
+
+Let's start by showcasing how to create a DataFrame and add additional data with the `append` save mode.
 
 Create a DataFrame with a row of data and write it out in the Parquet file format.
 
@@ -41,7 +43,7 @@ tmp/singers1
 └── part-00000-ffcc616b-4009-462a-a60d-9e2bd7130083-c000.snappy.parquet
 ```
 
-We used `repartition(1)` so only one file is written and the intention of our example is clear. You normally want to write out datasets to multiple files in parallel, so `repartition(1)` is only appropriate for really small datasets.
+We used `repartition(1)` so only one file is written and the intention of this example is clear. You normally want to write out datasets to multiple files in parallel, so `repartition(1)` is only appropriate for really small datasets.
 
 We’ll refer to this as “File A” in the following diagram of operations:
 
@@ -80,6 +82,8 @@ tmp/singers1
 ```
 
 ![](image2.png)
+
+## Parquet overwrite save mode
 
 Now create a third DataFrame that will be used to overwrite the existing Parquet table. Here’s the code to create the DataFrame and overwrite the existing data.
 
@@ -123,7 +127,7 @@ Let’s look at these same operations on a Delta table and see how they’re muc
 
 Let’s perform the same operations with a Delta table with the save mode set to `append` and `overwrite` to see how they’re implemented differently.
 
-Create a separate Delta Lake with the same `df1` from earlier.
+Create a separate Delta table with the same `df1` from earlier.
 
 ```
 df1.repartition(1).write.format("delta").save("tmp/singers2")
@@ -139,7 +143,7 @@ Here are the contents of the Delta table.
 +------+--------+
 ```
 
-Here are the files in the Delta Lake:
+Here are the files in the Delta table:
 
 ```
 tmp/singers2
@@ -148,13 +152,13 @@ tmp/singers2
 └── part-00000-946ae20f-fa5a-4e92-b1c9-49322594609a-c000.snappy.parquet
 ```
 
-Now append `df2` to the Delta Lake.
+Now append `df2` to the Delta table.
 
 ```
 df2.repartition(1).write.mode("append").format("delta").save("tmp/singers2")
 ```
 
-Here are the contents of the Delta Lake:
+Here are the contents of the Delta table:
 
 ```
 +------+--------+
@@ -165,7 +169,7 @@ Here are the contents of the Delta Lake:
 +------+--------+
 ```
 
-Here are the files in the Delta Lake:
+Here are the files in the Delta table:
 
 ```
 tmp/singers2
@@ -176,13 +180,13 @@ tmp/singers2
 └── part-00000-adda870a-83a2-4f5c-82a0-c6ecc60d9d2e-c000.snappy.parquet
 ```
 
-Now overwrite the Delta Lake with `df3`.
+Now overwrite the Delta table with `df3`.
 
 ```
 df3.repartition(1).write.mode("overwrite").format("delta").save("tmp/singers2")
 ```
 
-Here are the contents of the Delta Lake:
+Here are the contents of the Delta table:
 
 ```
 +-------+--------+
@@ -221,17 +225,17 @@ For completeness, let’s look at the other PySpark save modes and how they’re
 
 ## PySpark error / errorifexists save modes in Delta Lake
 
-The default PySpark save mode is error, also known as errorifexists. This will create a Delta Lake if one doesn’t exist already and error out if the Delta Lake already exists.
+The default PySpark save mode is error, also known as `errorifexists`. This will create a Delta table if one doesn’t exist already and error out if the Delta table already exists.
 
-Let’s use `df1` to create another Delta Lake and explicitly set the save mode to `error`.
+Let’s use `df1` to create another Delta table and explicitly set the save mode to `error`.
 
 ```
 df1.repartition(1).write.mode("error").format("delta").save("tmp/singers3")
 ```
 
-That works since tmp/singers3 didn’t exist.
+That works since `tmp/singers3` didn’t exist.
 
-Now let’s see what happens when we write `df2` to `tmp/singers3`, a Delta Lake that now exists.
+Now let’s see what happens when we write `df2` to `tmp/singers3`, a Delta table that now exists.
 
 That operation errors out with the following message:
 
@@ -239,19 +243,19 @@ That operation errors out with the following message:
 AnalysisException: Cannot write to already existent path file:/Users/…/tmp/singers3 without setting OVERWRITE = 'true'.
 ```
 
-We’ve confirmed that PySpark will error when writing to an existing Delta Lake if the save mode is set to error.
+We’ve confirmed that PySpark will error when writing to an existing Delta table if the save mode is set to `error`.
 
 ## PySpark ignore save mode with Delta Lake
 
-The PySpark ignore save mode will create the Delta Lake if it doesn’t exist yet. If the Delta Lake exists, the PySpark ignore save mode won’t do anything (it won’t write data or error out).
+The PySpark ignore save mode will create the Delta table if it doesn’t exist yet. If the Delta table exists, the PySpark ignore save mode won’t do anything (it won’t write data or error out).
 
-Let’s write out the contents of `df1` to a new Delta Lake with save mode set to ignore.
+Let’s write out the contents of `df1` to a new Delta table with save mode set to `ignore`.
 
 ```
 df1.repartition(1).write.mode("ignore").format("delta").save("tmp/singers4")
 ```
 
-Here are the contents of the Delta Lake:
+Here are the contents of the Delta table:
 
 ```
 spark.read.format("delta").load("tmp/singers4").show()
@@ -263,7 +267,7 @@ spark.read.format("delta").load("tmp/singers4").show()
 +------+--------+
 ```
 
-Let’s append `df2` to this Delta Lake. Recall that `df2` contains the following data:
+Let’s append `df2` to this Delta table. Recall that `df2` contains the following data:
 
 ```
 df2.show()
@@ -275,13 +279,13 @@ df2.show()
 +------+-------+
 ```
 
-Now let’s write out the contents of `df2` to a new Delta Lake with save mode set to ignore:
+Now let’s write out the contents of `df2` to a new Delta table with save mode set to `ignore`:
 
 ```
 df2.repartition(1).write.mode("ignore").format("delta").save("tmp/singers4")
 ```
 
-Here are the contents of the Delta Lake after the write with save mode set to ignore:
+Here are the contents of the Delta table after the write with save mode set to `ignore`:
 
 ```
 +------+--------+
@@ -291,9 +295,9 @@ Here are the contents of the Delta Lake after the write with save mode set to ig
 +------+--------+
 ```
 
-When the save mode is set to ignore, the data in `df2` is not appended and an error is not thrown.
+When the save mode is set to `ignore`, the data in `df2` is not appended and an error is not thrown.
 
-Here’s the entry that’s made to the transaction log for the second write operation with save mode set to ignore:
+Here’s the entry that’s made to the transaction log for the second write operation with save mode set to `ignore`:
 
 ```
 {
@@ -323,7 +327,7 @@ This transaction log entry doesn’t add or remove files. It’s a no-op.
 
 PySpark’s save operations are implemented differently in Parquet tables and Delta Lake. In particular, Parquet overwrite operations physically delete files from storage, whereas Delta Lake overwrite operations only tombstone files in the transaction log.
 
-Delta Lake supports versioned data and time travel. It only physically removes files from disk when you run the vacuum command to remove unneeded old files to save your storage cost.
+Delta Lake supports versioned data and time travel. It only physically removes files from disk when you run the `vacuum` command to remove unneeded old files to save your storage cost.
 
 PySpark operations on Parquet tables can be quite dangerous. Suppose you’d like to append a small DataFrame to an existing dataset and accidentally run `df.write.mode("overwrite").format("parquet").save("some/lake")` instead of `df.write.mode("append").format("parquet").save("some/lake")`. That relatively small mistake causes you to delete all your existing data. You’ll only be able to recover the data if it’s been backed up, but that could be a huge hassle as well.
 
