@@ -2,13 +2,19 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import thumbnail0 from "./generic-thumbnail.png";
 import thumbnailRestore from "./restore.png";
 import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
 import versionPandasDataset from "./versionPandasDataset.png";
 import howToCreateDeltaLakeTable from "./create-delta-lake-table.png";
+import pysparkSaveModes from "./pysparkSaveModes.png";
 
 const updates = [
+  {
+    title:
+      "Why PySpark append and overwrite write operations are safer in Delta Lake than Parquet tables",
+    thumbnail: pysparkSaveModes,
+    url: "/blog/2022-11-01-pyspark-save-mode-append-overwrite-error/",
+  },
   {
     title: "How to Create Delta Lake tables",
     thumbnail: howToCreateDeltaLakeTable,
@@ -28,11 +34,6 @@ const updates = [
     title: "How to Rollback a Delta Lake to a Previous Version with Restore",
     thumbnail: thumbnailRestore,
     url: "/blog/2022-10-03-rollback-delta-lake-restore/",
-  },
-  {
-    title: "Converting from Parquet to Delta Lake",
-    thumbnail: thumbnail0,
-    url: "/blog/2022-09-23-convert-parquet-to-delta/",
   },
 ];
 
