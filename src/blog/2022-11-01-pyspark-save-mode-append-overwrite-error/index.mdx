@@ -24,7 +24,7 @@ All the code snippets covered in this post are in [this notebook](https://github
 
 Let's start by showcasing how to create a DataFrame and add additional data with the `append` save mode.
 
-Create a DataFrame with a row of data and write it out in the Parquet file format.
+Here's how to create a DataFrame with a row of data and write it out in the Parquet file format.
 
 ```
 columns = ["singer", "country"]
@@ -118,8 +118,8 @@ tmp/singers1
 When the save mode is set to `overwrite`, Parquet will write out the new files and delete all of the existing files. There are several downsides to this implementation:
 
 - The old data is deleted, so there is no way to perform a rollback and undo a mistake if your storage format doesn’t support versioning or enable versioning. The changes are permanent.
-- The Parquet table is in an unusable state for readers while the overwrite operation is being performed. For example, a concurrent reader may see a “mid-computation state”: file A gets deleted but file B still exists, which is not a valid table state.
-- If the compute cluster performing the overwrite dies while the operation is being performed, your data lake is left in a “mid-computation state” and will likely be corrupted. The corruption type depends on how much the overwrite operation had completed when the error occurred.
+- The Parquet table is in an unusable state for readers while the overwrite operation is being performed. For example, a concurrent reader may see a "mid-computation state": file A gets deleted but file B still exists, which is not a valid table state.
+- If the compute cluster performing the overwrite dies while the operation is being performed, your data lake is left in a "mid-computation state" and will likely be corrupted. The corruption type depends on how much the overwrite operation had completed when the error occurred.
 
 Let’s look at these same operations on a Delta table and see how they’re much more robust and user-friendly.
 
@@ -247,7 +247,7 @@ We’ve confirmed that PySpark will error when writing to an existing Delta tabl
 
 ## PySpark ignore save mode with Delta Lake
 
-The PySpark ignore save mode will create the Delta table if it doesn’t exist yet. If the Delta table exists, the PySpark ignore save mode won’t do anything (it won’t write data or error out).
+The PySpark `ignore` save mode will create the Delta table if it doesn’t exist yet. If the Delta table exists, the PySpark ignore save mode won’t do anything (it won’t write data or error out).
 
 Let’s write out the contents of `df1` to a new Delta table with save mode set to `ignore`.
 
