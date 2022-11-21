@@ -3,12 +3,17 @@ import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import schemaEnforcement from "./schemaEnforcement.png";
-import thumbnailDeltaSharingCDF from "./delta-sharing-cdf.png";
 import versionPandasDataset from "./versionPandasDataset.png";
 import howToCreateDeltaLakeTable from "./create-delta-lake-table.png";
 import pysparkSaveModes from "./pysparkSaveModes.png";
+import deltaConstraints from "./deltaConstraints.png";
 
 const updates = [
+  {
+    title: "Delta Lake Constraints and Checks",
+    thumbnail: deltaConstraints,
+    url: "/blog/2022-11-21-delta-lake-contraints-check/",
+  },
   {
     title: "Delta Lake Schema Enforcement",
     thumbnail: schemaEnforcement,
@@ -29,11 +34,6 @@ const updates = [
     title: "How to Version Your Data with pandas and Delta Lake",
     thumbnail: versionPandasDataset,
     url: "/blog/2022-10-15-version-pandas-dataset/",
-  },
-  {
-    title: "Sharing a Delta Table’s Change Data Feed with Delta Sharing 0.5.0",
-    thumbnail: thumbnailDeltaSharingCDF,
-    url: "/blog/2022-10-10-delta-sharing-0-5-0-released/",
   },
 ];
 
