@@ -50,6 +50,11 @@ const social = [
     icon: "stackOverflow",
   },
   {
+    label: "GitHub",
+    url: "https://go.delta.io/github",
+    icon: "github",
+  },
+  {
     label: "Twitter",
     url: "https://twitter.com/DeltaLakeOSS",
     icon: "twitter",
