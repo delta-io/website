@@ -192,8 +192,10 @@ const PageHeader = () => {
               const { label, url, icon } = link;
 
               return (
-                <HeaderTab key={label} href={url} newTab>
-                  <HeaderIcon icon={icon} />{" "}
+                <HeaderTab key={label} newTab>
+                  <a href={url}>
+                    <HeaderIcon icon={icon} />{" "}
+                  </a>
                 </HeaderTab>
               );
             })}
