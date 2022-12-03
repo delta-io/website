@@ -29,6 +29,7 @@ export const light = {
 export const fontSizeBase = 16;
 export const rem = (size) => `${size / fontSizeBase}rem`;
 export const fontSizes = {
+  small: rem(14),
   primary: rem(18),
   secondary: rem(16),
   h1: rem(54),
