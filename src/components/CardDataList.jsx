@@ -242,7 +242,8 @@ const CardDataList = (props) => {
                     source code{" "}
                   </Link>
                 )}
-                {card.docs && card.source_code && <br />}
+                {card.docs && card.source_code && " "}
+                <br />
                 {card.tags?.length && (
                   <>
                     {card.tags.map((tag) => (
