@@ -5,7 +5,7 @@ import Grid from "src/components/Grid";
 import Typography from "src/components/Typography";
 import { community, footer, learn, social } from "config/menus";
 import Link from "src/components/Link";
-import logo from "./delta-lake-logo.svg";
+import logo from "./DL-stacked-rev-RGB.svg";
 import theLinuxFoundationLogo from "./the-linux-foundation-logo.svg";
 
 const menus = [
@@ -82,7 +82,7 @@ const PageFooter = () => (
         columns={{ xs: 1, lg: ["min-content", "auto", "min-content"] }}
         gutter={{ xs: "lg", lg: "xl" }}
       >
-        <FooterLogo src={logo} alt="Delta Lake" width={160} height={34} />
+        <FooterLogo src={logo} alt="Delta Lake" width={100} height={78} />
         <Grid columns={{ xs: 1, md: 4 }}>
           {menus.map((menu) => (
             <FooterMenu key={menu.title}>

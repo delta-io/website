@@ -5,7 +5,8 @@ import { mediaBreakpointUp, mediaBreakpointDown } from "config/theme";
 import styled from "styled-components";
 import Section from "src/components/Section";
 import Icon from "src/components/Icon";
-import logo from "./delta-lake-logo.svg";
+// import logo from "./delta-lake-logo.svg";
+import logo from "./DL-badge.svg";
 import PageHeaderSearchInput from "./PageHeaderSearchInput";
 import HeaderNavItem, { HeaderTab } from "./HeaderNavItem";
 
@@ -170,7 +171,7 @@ const PageHeader = () => {
           <HeaderIcon icon="search" />
         </HeaderSearchToggle>
         <HeaderLogo href="/">
-          <img src={logo} alt="Delta Lake" width="133" height="28" />
+          <img src={logo} alt="Delta Lake" width="29" height="28" />
         </HeaderLogo>
         <HeaderMenuToggle as="button" onClick={() => setMenuShowing(true)}>
           <HeaderIcon icon="menu" />
