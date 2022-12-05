@@ -123,6 +123,17 @@ const ContributeSection = () => (
           </Link>
           &nbsp; for the latest on communication, coding style, and how to sign
           your work.
+          <br />
+          <br />
+          Refer to the &nbsp;
+          <Link href="https://github.com/delta-io/delta/blob/master/PROTOCOL.md">
+            Delta Lake Protocol
+          </Link>
+          &nbsp; for the specification for the Delta Transaction Protocol, which
+          brings &nbsp;
+          <Link href="https://en.wikipedia.org/wiki/ACID">ACID properties</Link>
+          &nbsp; to large collections of data, stored as files, in a distributed
+          file system or object store.
         </Typography>
       </CenterTextSectionColumn>
     </Grid>
