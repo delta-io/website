@@ -3,12 +3,17 @@ import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import schemaEnforcement from "./schemaEnforcement.png";
-import versionPandasDataset from "./versionPandasDataset.png";
 import howToCreateDeltaLakeTable from "./create-delta-lake-table.png";
 import pysparkSaveModes from "./pysparkSaveModes.png";
 import deltaConstraints from "./deltaConstraints.png";
+import deleteRows from "./deleteRows.png";
 
 const updates = [
+  {
+    title: "How to Delete Rows from a Delta Lake Table",
+    thumbnail: deleteRows,
+    url: "/blog/2022-12-07-delete-rows-from-delta-lake-table/",
+  },
   {
     title: "Delta Lake Constraints and Checks",
     thumbnail: deltaConstraints,
@@ -29,11 +34,6 @@ const updates = [
     title: "How to Create Delta Lake tables",
     thumbnail: howToCreateDeltaLakeTable,
     url: "/blog/2022-10-25-create-delta-lake-tables/",
-  },
-  {
-    title: "How to Version Your Data with pandas and Delta Lake",
-    thumbnail: versionPandasDataset,
-    url: "/blog/2022-10-15-version-pandas-dataset/",
   },
 ];
 
