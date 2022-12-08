@@ -19,11 +19,13 @@ The Delta Sharing platform comprises two components: the client and the server. 
 
 ![](image1.png)
 
-In the USCIS implementation, the [Delta Sharing server](https://github.com/delta-io/delta-sharing) is deployed using an [EKS cluster.](https://aws.amazon.com/eks/) The Delta Sharing server sits behind an [Apigee envoy sidecar proxy](https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v1.0.x/concepts), which itself sits behind Apigee. Apigee handles token management. \
+In the USCIS implementation, the [Delta Sharing server](https://github.com/delta-io/delta-sharing) is deployed using an [EKS cluster.](https://aws.amazon.com/eks/) The Delta Sharing server sits behind an [Apigee envoy sidecar proxy](https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v1.0.x/concepts), which itself sits behind Apigee. Apigee handles token management.
 
-- **<span style="text-decoration:underline;">Step 1: Get a JWT</span>**: The Data Recipient (client) will need to request a JWT from Apigee. JSON Web Token (JWT) is an open standard that defines how to transmit information between parties as a JSON object securely.
-- **<span style="text-decoration:underline;">Step 2: Retrieve pre-signed S3 URLs from Delta Sharing Server</span>**: The client will send that token with the request for data sharing. The deployed Delta Sharing server accesses the underlying cloud storage by assuming the IAM role associated with the service account of the pod. No credentials and secrets are hard coded with the sharing server deployment.
-- **<span style="text-decoration:underline;">Step 3: Retrieve files from S3 via pre-signed S3 URLs</span>**: A request for data access is authenticated, the sharing server will create a list of pre-signed file URLs for the requested objects and send them back as a response to the client. The client will create Dataframes from the S3 URLs retrieved.
+- **Step 1: Get a JWT**: The Data Recipient (client) will need to request a JWT from Apigee. JSON Web Token (JWT) is an open standard that defines how to transmit information between parties as a JSON object securely.
+
+- **Step 2: Retrieve pre-signed S3 URLs from Delta Sharing Server**: The client will send that token with the request for data sharing. The deployed Delta Sharing server accesses the underlying cloud storage by assuming the IAM role associated with the service account of the pod. No credentials and secrets are hard coded with the sharing server deployment.
+
+- **Step 3: Retrieve files from S3 via pre-signed S3 URLs**: A request for data access is authenticated, the sharing server will create a list of pre-signed file URLs for the requested objects and send them back as a response to the client. The client will create Dataframes from the S3 URLs retrieved.
 
 ## Data Access Control
 
