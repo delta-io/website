@@ -3,12 +3,17 @@ import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import schemaEnforcement from "./schemaEnforcement.png";
-import howToCreateDeltaLakeTable from "./create-delta-lake-table.png";
+import deltaSharing from "./deltaSharing.png";
 import pysparkSaveModes from "./pysparkSaveModes.png";
 import deltaConstraints from "./deltaConstraints.png";
 import deleteRows from "./deleteRows.png";
 
 const updates = [
+  {
+    title: "Data Sharing across Government Agencies using Delta Sharing",
+    thumbnail: deltaSharing,
+    url: "/blog/2022-12-08-data-sharing-across-government-delta-sharing/",
+  },
   {
     title: "How to Delete Rows from a Delta Lake Table",
     thumbnail: deleteRows,
@@ -29,11 +34,6 @@ const updates = [
       "Why PySpark append and overwrite write operations are safer in Delta Lake than Parquet tables",
     thumbnail: pysparkSaveModes,
     url: "/blog/2022-11-01-pyspark-save-mode-append-overwrite-error/",
-  },
-  {
-    title: "How to Create Delta Lake tables",
-    thumbnail: howToCreateDeltaLakeTable,
-    url: "/blog/2022-10-25-create-delta-lake-tables/",
   },
 ];
 
