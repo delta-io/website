@@ -121,25 +121,32 @@ exports.sourceNodes = async ({
   createNodeId,
   createContentDigest,
 }) => {
-  Promise.all(createListOfPromises(STREAM_LIST.videos)).then((response) => {
-    createNodesFromList({
-      response,
-      createNode,
-      createNodeId,
-      createContentDigest,
-      listName: "Videos",
-    });
-  });
+  const a = await Promise.all(createListOfPromises(STREAM_LIST.videos)).then(
+    (response) => {
+      return createNodesFromList({
+        response,
+        createNode,
+        createNodeId,
+        createContentDigest,
+        listName: "Videos",
+      });
+    }
+  );
 
-  Promise.all(createListOfPromises(STREAM_LIST.tutorials)).then((response) => {
-    createNodesFromList({
-      response,
-      createNode,
-      createNodeId,
-      createContentDigest,
-      listName: "Tutorials",
-    });
-  });
+  console.log("2");
+  const b = await Promise.all(createListOfPromises(STREAM_LIST.tutorials)).then(
+    (response) => {
+      return createNodesFromList({
+        response,
+        createNode,
+        createNodeId,
+        createContentDigest,
+        listName: "Tutorials",
+      });
+    }
+  );
+  console.log("3");
+  return { a, b };
 };
 
 const getMdxTemplatePath = (templateName = "default") =>
