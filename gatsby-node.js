@@ -100,10 +100,12 @@ const createNodesFromList = ({
   const getAllList = createListOfVideos(joinedList);
 
   const listWithImage = getAllList.filter((item) => item.thumbnail);
+
+  console.log("+++++++++++++++", listWithImage.length, listName);
   listWithImage.map((listItem, i) =>
     createNode({
       ...listItem,
-      id: createNodeId(listItem.id + i),
+      id: createNodeId(listName + i),
       internal: {
         type: `${listName}Youtube`,
         contentDigest: createContentDigest(listItem),
