@@ -63,7 +63,7 @@ const fetchStream = async (id) => {
 const createListOfPromises = (streamListCategory) => {
   const promises = [];
 
-  streamListCategory.forEach((item) => {
+  streamListCategory?.forEach((item) => {
     const promiseItem = fetchStream(item.stream_id);
 
     promises.push(promiseItem);
@@ -73,10 +73,10 @@ const createListOfPromises = (streamListCategory) => {
 };
 
 const sortedVideoByCreatedDateList = (list) =>
-  list.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  list?.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 
 const createListOfVideos = (list) => {
-  const getAllList = list.map((item) => ({
+  const getAllList = list?.map((item) => ({
     id: item.id,
     publishedAt: item?.snippet?.publishedAt,
     title: item?.snippet?.title,
@@ -95,14 +95,13 @@ const createNodesFromList = ({
   createContentDigest,
   listName,
 }) => {
-  const joinedList = response.map((list) => list.data.items).flat();
+  const joinedList = response?.map((list) => list.data.items).flat();
 
   const getAllList = createListOfVideos(joinedList);
 
-  const listWithImage = getAllList.filter((item) => item.thumbnail);
+  const listWithImage = getAllList?.filter((item) => item.thumbnail);
 
-  console.log("+++++++++++++++", listWithImage.length, listName);
-  listWithImage.map((listItem, i) =>
+  listWithImage?.map((listItem, i) =>
     createNode({
       ...listItem,
       id: createNodeId(listName + i),
@@ -114,39 +113,33 @@ const createNodesFromList = ({
   );
 };
 
-// --------------------- !!!!!!!!! ------------------------- //
-
 exports.sourceNodes = async ({
   actions: { createNode },
   createNodeId,
   createContentDigest,
 }) => {
-  const a = await Promise.all(createListOfPromises(STREAM_LIST.videos)).then(
-    (response) => {
-      return createNodesFromList({
-        response,
-        createNode,
-        createNodeId,
-        createContentDigest,
-        listName: "Videos",
-      });
-    }
+  const videosResponse = await Promise.all(
+    createListOfPromises(STREAM_LIST.videos)
+  );
+  const tutorialsResponse = await Promise.all(
+    createListOfPromises(STREAM_LIST.tutorials)
   );
 
-  console.log("2");
-  const b = await Promise.all(createListOfPromises(STREAM_LIST.tutorials)).then(
-    (response) => {
-      return createNodesFromList({
-        response,
-        createNode,
-        createNodeId,
-        createContentDigest,
-        listName: "Tutorials",
-      });
-    }
-  );
-  console.log("3");
-  return { a, b };
+  createNodesFromList({
+    response: videosResponse,
+    createNode,
+    createNodeId,
+    createContentDigest,
+    listName: "Videos",
+  });
+
+  createNodesFromList({
+    response: tutorialsResponse,
+    createNode,
+    createNodeId,
+    createContentDigest,
+    listName: "Tutorials",
+  });
 };
 
 const getMdxTemplatePath = (templateName = "default") =>
