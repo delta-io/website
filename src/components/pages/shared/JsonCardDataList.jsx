@@ -12,12 +12,20 @@ const dataListProps = {
     thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2 },
   },
+  videosYoutube: {
+    // thumbnailRatio: [16, 9],
+    columns: { xs: 1, md: 2 },
+  },
   meetings: {
     thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2, lg: 3 },
   },
   tutorials: {
     thumbnailRatio: [16, 9],
+    columns: { xs: 1, md: 2 },
+  },
+  tutorialsYoutube: {
+    // thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2 },
   },
 };

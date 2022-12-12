@@ -41,6 +41,17 @@ const query = graphql`
         }
       }
     }
+    videosYoutube: allVideosYoutube {
+      edges {
+        node {
+          url
+          title
+          thumbnail
+          description
+          id
+        }
+      }
+    }
     tutorials: allTutorialsJson {
       edges {
         node {
@@ -52,6 +63,17 @@ const query = graphql`
           }
           title
           url
+          id
+        }
+      }
+    }
+    tutorialsYoutube: allTutorialsYoutube {
+      edges {
+        node {
+          url
+          title
+          thumbnail
+          description
           id
         }
       }

@@ -1,10 +1,146 @@
 const path = require("path");
+const axios = require("axios");
 const { createFilePath } = require("gatsby-source-filesystem");
 const {
   mdxPageTypes,
   mdxTemplatesBasePath,
   collectionTemplatesBasePath,
 } = require("./config/pages");
+
+// Create Nodes for allVideosYoutube and for allTutorialsYoutube
+
+const YOUTUBE_PLAYLIST_ITEMS_API =
+  "https://www.googleapis.com/youtube/v3/playlistItems";
+
+const STREAM_LIST = {
+  videos: [
+    {
+      stream_title: "Delta Rust",
+      stream_id: "PLzxP01GQMpjeBlOKv7iOXOJIw5aFdx1B5",
+    },
+    {
+      stream_title: "Delta Lake Community Office Hours",
+      stream_id: "PLzxP01GQMpjeqxQl1A33U-hBeGmM4ozZP",
+    },
+    {
+      stream_title: "Delta Lake Discussions with Denny Lee (D3L2)",
+      stream_id: "PLzxP01GQMpjfcwFdzBpnZrQIUHxhOddq7",
+    },
+    {
+      stream_title: "Simon & Denny Ask Us Anything",
+      stream_id: "PLzxP01GQMpjeY2XTCTxPLPKEl4SONqgrO",
+    },
+    {
+      stream_title: "Delta Lake Tech Talks",
+      stream_id: "PLzxP01GQMpjfA3tHZFx6214URO-6jrIw5",
+    },
+  ],
+  tutorials: [
+    {
+      stream_title: "Getting Started with Delta Lake",
+      stream_id: "PLzxP01GQMpjd0zVTuLYJCaR2nZgKsZQcX",
+    },
+    {
+      stream_title: "Under the Sediments: Diving into Delta Lake",
+      stream_id: "PLzxP01GQMpjcRSjgOqYpT84f8JiTT-rcd",
+    },
+    {
+      stream_title: "Delta Lake DW Techniques",
+      stream_id: "PLzxP01GQMpjdN1HvcdgFW00fLMx8XCN8F",
+    },
+    {
+      stream_title: "Delta Lake Tutorials",
+      stream_id: "PLzxP01GQMpjfxBXBVmzOL43mLLdH0E4TE",
+    },
+  ],
+};
+
+const fetchStream = async (id) => {
+  const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${id}&key=${process.env.YOUTUBE_API_KEY}`;
+  return axios.get(URL);
+};
+
+const createListOfPromises = (streamListCategory) => {
+  const promises = [];
+
+  streamListCategory?.forEach((item) => {
+    const promiseItem = fetchStream(item.stream_id);
+
+    promises.push(promiseItem);
+  });
+
+  return promises;
+};
+
+const sortedVideoByCreatedDateList = (list) =>
+  list?.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+
+const createListOfVideos = (list) => {
+  const getAllList = list?.map((item) => ({
+    id: item.id,
+    publishedAt: item?.snippet?.publishedAt,
+    title: item?.snippet?.title,
+    description: item?.snippet?.description,
+    thumbnail: item?.snippet?.thumbnails?.maxres?.url,
+    url: `https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`,
+  }));
+
+  return sortedVideoByCreatedDateList(getAllList);
+};
+
+const createNodesFromList = ({
+  response,
+  createNode,
+  createNodeId,
+  createContentDigest,
+  listName,
+}) => {
+  const joinedList = response?.map((list) => list.data.items).flat();
+
+  const getAllList = createListOfVideos(joinedList);
+
+  const listWithImage = getAllList?.filter((item) => item.thumbnail);
+
+  listWithImage?.map((listItem, i) =>
+    createNode({
+      ...listItem,
+      id: createNodeId(listName + i),
+      internal: {
+        type: `${listName}Youtube`,
+        contentDigest: createContentDigest(listItem),
+      },
+    })
+  );
+};
+
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createNodeId,
+  createContentDigest,
+}) => {
+  const videosResponse = await Promise.all(
+    createListOfPromises(STREAM_LIST.videos)
+  );
+  const tutorialsResponse = await Promise.all(
+    createListOfPromises(STREAM_LIST.tutorials)
+  );
+
+  createNodesFromList({
+    response: videosResponse,
+    createNode,
+    createNodeId,
+    createContentDigest,
+    listName: "Videos",
+  });
+
+  createNodesFromList({
+    response: tutorialsResponse,
+    createNode,
+    createNodeId,
+    createContentDigest,
+    listName: "Tutorials",
+  });
+};
 
 const getMdxTemplatePath = (templateName = "default") =>
   path.resolve(mdxTemplatesBasePath, `${templateName}.jsx`);
