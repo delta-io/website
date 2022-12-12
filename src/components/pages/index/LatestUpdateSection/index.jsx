@@ -4,11 +4,17 @@ import Section from "src/components/Section";
 import styled from "styled-components";
 import schemaEnforcement from "./schemaEnforcement.png";
 import deltaSharing from "./deltaSharing.png";
-import pysparkSaveModes from "./pysparkSaveModes.png";
 import deltaConstraints from "./deltaConstraints.png";
 import deleteRows from "./deleteRows.png";
+import deltaLakeSagemakerEMR from "./delta-lake-sagemaker-emr.png";
 
 const updates = [
+  {
+    title:
+      "Building a more efficient data infrastructure for machine learning with Open Source using Delta Lake, Amazon SageMaker, and EMR",
+    thumbnail: deltaLakeSagemakerEMR,
+    url: "/blog/2022-12-13-sagemaker-emr-delta-lake/",
+  },
   {
     title: "Data Sharing across Government Agencies using Delta Sharing",
     thumbnail: deltaSharing,
@@ -28,12 +34,6 @@ const updates = [
     title: "Delta Lake Schema Enforcement",
     thumbnail: schemaEnforcement,
     url: "/blog/2022-11-16-delta-lake-schema-enforcement/",
-  },
-  {
-    title:
-      "Why PySpark append and overwrite write operations are safer in Delta Lake than Parquet tables",
-    thumbnail: pysparkSaveModes,
-    url: "/blog/2022-11-01-pyspark-save-mode-append-overwrite-error/",
   },
 ];
 
