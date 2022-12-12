@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 const embedStyles = `
-  position: absolute;
+  // position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -12,7 +12,7 @@ const embedStyles = `
 `;
 
 const EmbedContainer = styled.div`
-  position: relative;
+  //position: relative;
   ${(props) =>
     !props.src?.childImageSharp &&
     props.aspectRatio &&
@@ -27,7 +27,7 @@ const OtherEmbed = styled.div`
   ${embedStyles}
 `;
 
-const determineEmbedComponent = (src, alt) => {
+const determineEmbedComponent = (src, alt = " ") => {
   if (/\.(jpe?g|gif|png)/.test(src)) {
     return <EmbedImage src={src} alt={alt} />;
   }

@@ -16,6 +16,14 @@ import Grid from "src/components/Grid";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import Embed from "src/components/Embed";
 
+const shortDescription = (title, count) => {
+  const arrWords = title.split(" ");
+
+  return arrWords.length <= count
+    ? arrWords.join(" ")
+    : `${arrWords.slice(0, count).join(" ")}...`;
+};
+
 const applyFeaturedColumnStyles = ({ spanColumns, theme }, styles) => {
   if (spanColumns) {
     const columnsMap = Object.entries(spanColumns).reduce(
@@ -252,7 +260,7 @@ const CardDataList = (props) => {
                     <br />
                   </>
                 )}
-                {card.description}
+                {shortDescription(card.description, 40)}
               </CardContent>
             </ContentContainer>
           </Card>
