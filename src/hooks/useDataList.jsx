@@ -41,17 +41,6 @@ const query = graphql`
         }
       }
     }
-    videosYoutube: allVideosYoutube {
-      edges {
-        node {
-          url
-          title
-          thumbnail
-          description
-          id
-        }
-      }
-    }
     tutorials: allTutorialsJson {
       edges {
         node {
