@@ -1,70 +1,28 @@
 const path = require("path");
-const axios = require("axios");
 const { createFilePath } = require("gatsby-source-filesystem");
 const {
   mdxPageTypes,
   mdxTemplatesBasePath,
   collectionTemplatesBasePath,
 } = require("./config/pages");
+const { STREAM_LIST, API } = require("./apiDataYoutube");
 
-// Create Nodes for allVideosYoutube and for allTutorialsYoutube
+// const createPlayListPromise = (categoryList) => {
+//   const promises = [];
+//
+//   categoryList?.forEach(item => {
+//     const promiseItem = API.fetchPlaylist(item.stream_id);
+//
+//     promises.push(promiseItem);
+//   })
+//   return promises;
+// }
 
-const YOUTUBE_PLAYLIST_ITEMS_API =
-  "https://www.googleapis.com/youtube/v3/playlistItems";
-
-const STREAM_LIST = {
-  videos: [
-    {
-      stream_title: "Delta Rust",
-      stream_id: "PLzxP01GQMpjeBlOKv7iOXOJIw5aFdx1B5",
-    },
-    {
-      stream_title: "Delta Lake Community Office Hours",
-      stream_id: "PLzxP01GQMpjeqxQl1A33U-hBeGmM4ozZP",
-    },
-    {
-      stream_title: "Delta Lake Discussions with Denny Lee (D3L2)",
-      stream_id: "PLzxP01GQMpjfcwFdzBpnZrQIUHxhOddq7",
-    },
-    {
-      stream_title: "Simon & Denny Ask Us Anything",
-      stream_id: "PLzxP01GQMpjeY2XTCTxPLPKEl4SONqgrO",
-    },
-    {
-      stream_title: "Delta Lake Tech Talks",
-      stream_id: "PLzxP01GQMpjfA3tHZFx6214URO-6jrIw5",
-    },
-  ],
-  tutorials: [
-    {
-      stream_title: "Getting Started with Delta Lake",
-      stream_id: "PLzxP01GQMpjd0zVTuLYJCaR2nZgKsZQcX",
-    },
-    {
-      stream_title: "Under the Sediments: Diving into Delta Lake",
-      stream_id: "PLzxP01GQMpjcRSjgOqYpT84f8JiTT-rcd",
-    },
-    {
-      stream_title: "Delta Lake DW Techniques",
-      stream_id: "PLzxP01GQMpjdN1HvcdgFW00fLMx8XCN8F",
-    },
-    {
-      stream_title: "Delta Lake Tutorials",
-      stream_id: "PLzxP01GQMpjfxBXBVmzOL43mLLdH0E4TE",
-    },
-  ],
-};
-
-const fetchStream = async (id) => {
-  const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${id}&key=${process.env.YOUTUBE_API_KEY}`;
-  return axios.get(URL);
-};
-
-const createListOfPromises = (streamListCategory) => {
+const createPlayListItemPromise = (categoryList) => {
   const promises = [];
 
-  streamListCategory?.forEach((item) => {
-    const promiseItem = fetchStream(item.stream_id);
+  categoryList?.forEach((item) => {
+    const promiseItem = API.fetchPlaylistItems(item.stream_id);
 
     promises.push(promiseItem);
   });
@@ -82,7 +40,7 @@ const createListOfVideos = (list) => {
     title: item?.snippet?.title,
     description: item?.snippet?.description,
     thumbnail: item?.snippet?.thumbnails?.maxres?.url,
-    url: `https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`,
+    url: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
   }));
 
   return sortedVideoByCreatedDateList(getAllList);
@@ -113,17 +71,41 @@ const createNodesFromList = ({
   );
 };
 
+// const matchedArr = (streamInfo, listVideos) => {
+//   const streamArr = streamInfo.data.items.forEach((stream) => {
+//     listVideos.data.items.forEach(videoObj => {
+//       if (stream.items[0].id === videoObj.items[0].snippet.playlistId) {
+//         return {
+//           streamId: stream.items[0].id,
+//           streamTitle: stream.items[0].snippet.localized.title,
+//           streamVideoList: videoObj.items,
+//         }
+//       }
+//       return videoObj;
+//     })
+//   })
+//
+//   return streamArr;
+// }
+
 exports.sourceNodes = async ({
   actions: { createNode },
   createNodeId,
   createContentDigest,
 }) => {
+  // const videosStreamData = await Promise.all(createPlayListPromise(STREAM_LIST.videos));
   const videosResponse = await Promise.all(
-    createListOfPromises(STREAM_LIST.videos)
+    createPlayListItemPromise(STREAM_LIST.videos)
   );
+
+  // const dataForVideos = matchedArr(videosStreamData, videosResponse);
+
+  // const tutorialsStreamData = await Promise.all(createPlayListPromise(STREAM_LIST.tutorials));
   const tutorialsResponse = await Promise.all(
-    createListOfPromises(STREAM_LIST.tutorials)
+    createPlayListItemPromise(STREAM_LIST.tutorials)
   );
+
+  // const dataForTutorials = matchedArr(tutorialsStreamData, tutorialsResponse);
 
   createNodesFromList({
     response: videosResponse,
