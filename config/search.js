@@ -3,7 +3,9 @@ const types = {
   blog: "Blogs",
   allConnectorsJson: "Connector",
   allVideosJson: "Video",
+  allVideosYoutube: "VideosYoutube",
   allTutorialsJson: "Tutorials",
+  allTutorialsYoutube: "TutorialsYoutube",
 };
 
 const searchPluginConfig = {
@@ -49,6 +51,17 @@ const searchPluginConfig = {
             }
           }
         }
+        allVideosYoutube {
+        edges {
+        node {
+          url
+          title
+          thumbnail
+          description
+          id
+        }
+      }
+    }
         allTutorialsJson {
           edges {
             node {
@@ -59,6 +72,17 @@ const searchPluginConfig = {
             }
           }
         }
+        allTutorialsYoutube {
+      edges {
+        node {
+          url
+          title
+          thumbnail
+          description
+          id
+        }
+      }
+    }
       }
     `,
     index: ["title"],
