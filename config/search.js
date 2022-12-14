@@ -51,17 +51,6 @@ const searchPluginConfig = {
             }
           }
         }
-        allVideosYoutube {
-        edges {
-        node {
-          url
-          title
-          thumbnail
-          description
-          id
-        }
-      }
-    }
         allTutorialsJson {
           edges {
             node {
@@ -72,17 +61,6 @@ const searchPluginConfig = {
             }
           }
         }
-        allTutorialsYoutube {
-      edges {
-        node {
-          url
-          title
-          thumbnail
-          description
-          id
-        }
-      }
-    }
       }
     `,
     index: ["title"],

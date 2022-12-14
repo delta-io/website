@@ -10,275 +10,80 @@ import {
   object,
   bool,
 } from "prop-types";
-import Link from "src/components/Link";
 import styled from "styled-components";
-import Grid from "src/components/Grid";
-import Typography, { TypographyContainer } from "src/components/Typography";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
+
+import "swiper/css";
+import "swiper/css/navigation";
 import Embed from "src/components/Embed";
+import Link from "src/components/Link";
 
-const shortDescription = (title, count) => {
-  const arrWords = title.split(" ");
+const PageContainer = styled.div`
+  display: grid;
+  gap: 2rem;
+`;
 
-  return arrWords.length <= count
-    ? arrWords.join(" ")
-    : `${arrWords.slice(0, count).join(" ")}...`;
-};
+const PlayListSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 
-const applyFeaturedColumnStyles = ({ spanColumns, theme }, styles) => {
-  if (spanColumns) {
-    const columnsMap = Object.entries(spanColumns).reduce(
-      (obj, [size, numColumns]) => ({
-        ...obj,
-        [size]: numColumns > 1 ? styles({ size, numColumns }) : undefined,
-      }),
-      {}
-    );
+const CardTitle = styled.h2`
+  font-size: 24px;
+  margin-bottom: 0;
+`;
 
-    return theme.mediaBreakpointMap(columnsMap);
-  }
-
-  return "";
-};
+const WrapperList = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  overflow: hidden;
+`;
 
 const Card = styled.div`
-  ${(props) => {
-    const { spanColumns, gutter, theme } = props;
-
-    return applyFeaturedColumnStyles(
-      { spanColumns, theme },
-      ({ numColumns, size }) => `
-        grid-column: span ${numColumns};
-        margin-bottom: ${theme.spacing.xl};
-        border: 1px solid ${theme.colors.border};
-        padding: ${numColumns > 2 ? theme.spacing.xl : theme.spacing.lg};
-
-        ${
-          theme.breakpointGreaterThan("md")(size) &&
-          `
-          display: grid;
-          grid-auto-flow: column;
-          grid-gap: ${theme.spacing[gutter]};
-          align-items: center;
-          grid-auto-columns: ${numColumns > 2 ? "4fr 6fr" : "1fr 1fr"};
-        `
-        }
-        
-      `
-    );
-  }}
+  width: 250px;
 `;
 
-const ThumbnailContainer = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing.sm};
-
-  a {
-    margin-top: auto;
-    display: block;
-  }
-
-  &:hover ~ ${TypographyContainer} a {
-    text-decoration: underline;
-  }
-
-  ${(props) => {
-    const { spanColumns, theme } = props;
-
-    return applyFeaturedColumnStyles({ spanColumns, theme }, ({ size }) => {
-      if (theme.breakpointGreaterThan("md")(size)) {
-        return `
-          min-height: 100%;
-          margin-bottom: 0;
-          display: flex;
-          align-items: center;
-
-          a {
-          margin-top: 0;
-          background-color: white;
-          }
-        `;
-      }
-
-      return `
-        margin-bottom: ${theme.spacing.lg};
-        max-width: 480px;
-      `;
-    });
-  }}
-`;
-
-const ContentContainer = styled(TypographyContainer)`
-  ${(props) => {
-    const { spanColumns, theme } = props;
-
-    return applyFeaturedColumnStyles(
-      { spanColumns, theme },
-      () => `
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-      `
-    );
-  }}
-`;
-
-const CardTitle = styled(Typography)`
-  margin-top: 0;
-  margin-bottom: ${(props) => props.theme.spacing.xs};
-
-  ${(props) => {
-    const { spanColumns, theme } = props;
-    const { fontSizes } = theme;
-
-    return applyFeaturedColumnStyles(
-      { spanColumns, theme },
-      ({ size }) =>
-        `
-        display: flex;
-        flex-flow: column;
-
-        &::before {
-          width: fit-content;
-          content: 'Latest post';
-          padding: .35em .5em;
-          background-color: ${theme.colors.accent};
-          font-size: 12px;
-          font-weight: ${theme.fontWeightBold};
-          z-index: 2;
-          margin-bottom: ${theme.spacing.xs};
-        }
-
-        ${
-          theme.breakpointGreaterThan("md")(size) &&
-          `font-size: ${fontSizes.h3};`
-        }
-        `
-    );
-  }}
-`;
-
-const CardContent = styled(Typography)`
-  color: ${(props) => props.theme.colors.textSecondary};
-  margin-top: 0;
-  margin-bottom: ${(props) => props.theme.spacing.xs};
-  ${(props) =>
-    props.lineClamp &&
-    `
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: ${props.lineClamp};
-  overflow: hidden;
-  `}
-`;
-
-const CardTag = styled.span`
-  display: inline-block;
-  margin-right: ${(props) => props.theme.spacing.md};
-  font-weight: ${(props) => props.theme.fontWeightBold};
-`;
-
-const YoutubeCardDataList = (props) => {
-  const {
-    columns,
-    cards,
-    density,
-    thumbnailRatio,
-    maxWidth,
-    clampDescriptionLines,
-    showFeatured,
-  } = props;
-
-  if (!cards.length) {
-    return null;
-  }
-
-  let gutter = "lg";
-
-  if (density === "dense") {
-    gutter = "md";
-  }
-
-  if (density === "relaxed") {
-    gutter = "xl";
-  }
-
+const CardDataList = ({ cards }) => {
+  console.log("CardDataList_cards", cards);
   return (
-    <Grid columns={columns} gutter={gutter}>
-      {cards.map((card, i) => {
-        const isFeatured = showFeatured && i === 0;
-
-        return (
-          <Card
-            key={card.title}
-            spanColumns={isFeatured ? columns : undefined}
-            gutter={gutter}
-          >
-            <ThumbnailContainer spanColumns={isFeatured ? columns : undefined}>
-              <Link href={card.url}>
-                <Embed
-                  src={card.thumbnail}
-                  aspectRatio={thumbnailRatio}
-                  maxWidth={maxWidth}
-                />
-              </Link>
-            </ThumbnailContainer>
-            <ContentContainer spanColumns={isFeatured ? columns : undefined}>
-              <CardTitle
-                variant="h4"
-                spanColumns={isFeatured ? columns : undefined}
-              >
-                <Link href={card.url} muted>
-                  {card.title}
-                </Link>
-              </CardTitle>
-              {card.meta && (
-                <>
-                  <CardContent variant="p2">{card.meta}</CardContent>
-                  <Typography variant="hr" density="dense" />
-                </>
-              )}
-              <CardContent variant="p2" lineClamp={clampDescriptionLines}>
-                {card.docs && (
-                  <Link href={card.docs} muted>
-                    {" "}
-                    docs{" "}
-                  </Link>
-                )}
-                {card.docs && card.source_code && " | "}
-                {card.source_code && (
-                  <Link href={card.source_code} muted>
-                    {" "}
-                    source code{" "}
-                  </Link>
-                )}
-                {card.docs && card.source_code && " "}
-                <br />
-                {card.tags?.length && (
-                  <>
-                    {card.tags.map((tag) => (
-                      <CardTag key={tag}>{tag}</CardTag>
-                    ))}
-                    <br />
-                  </>
-                )}
-                {shortDescription(card.description, 40)}
-              </CardContent>
-            </ContentContainer>
-          </Card>
-        );
-      })}
-    </Grid>
+    <PageContainer>
+      {cards.map((item) => (
+        <PlayListSection>
+          <CardTitle>{item.playlistTitle}</CardTitle>
+          <WrapperList>
+            <Swiper
+              modules={[Navigation]}
+              // spaceBetween={32}
+              slidesPerView={4}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => console.log(swiper)}
+            >
+              {item.videoCollection.map((slide) => (
+                <SwiperSlide key={slide.id}>
+                  <Card>
+                    <Link href={slide.url}>
+                      <Embed
+                        src={slide.thumbnails.high.url}
+                        // aspectRatio={thumbnailRatio}
+                        // maxWidth={maxWidth}
+                      />
+                    </Link>
+                    <div>{slide.title}</div>
+                  </Card>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </WrapperList>
+        </PlayListSection>
+      ))}
+    </PageContainer>
   );
 };
 
-CardDataList.defaultProps = {
-  clampDescriptionLines: undefined,
-  density: undefined,
-  maxWidth: undefined,
-  showFeatured: false,
-};
-
-YoutubeCardDataList.propTypes = {
-  columns: objectOf(number).isRequired,
+CardDataList.propTypes = {
   cards: arrayOf(
     shape({
       title: string.isRequired,
@@ -297,11 +102,6 @@ YoutubeCardDataList.propTypes = {
       tags: arrayOf(string),
     })
   ).isRequired,
-  clampDescriptionLines: number,
-  density: oneOf(["dense", "relaxed"]),
-  thumbnailRatio: arrayOf(number).isRequired,
-  maxWidth: string,
-  showFeatured: bool,
 };
 
-export default YoutubeCardDataList;
+export default CardDataList;
