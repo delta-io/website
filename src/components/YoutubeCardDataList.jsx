@@ -22,10 +22,14 @@ import Link from "src/components/Link";
 const PageContainer = styled.div`
   display: grid;
   gap: 2rem;
+
+  width: 100%;
+  grid-template-columns: 100%;
 `;
 
 const PlayListSection = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 1rem;
 `;
@@ -43,7 +47,10 @@ const WrapperList = styled.div`
 `;
 
 const Card = styled.div`
-  width: 250px;
+  width: 100%;
+  padding: 10px;
+  border: solid red 1px;
+  height: 400px;
 `;
 
 const CardDataList = ({ cards }) => {
@@ -56,6 +63,7 @@ const CardDataList = ({ cards }) => {
           <WrapperList>
             <Swiper
               modules={[Navigation]}
+              loop
               // spaceBetween={32}
               slidesPerView={4}
               onSlideChange={() => console.log("slide change")}
