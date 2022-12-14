@@ -63,7 +63,8 @@
     "rehype-highlight": "5.0.2",
     "rehype-slug": "5.0.1",
     "remark-gfm": "1.0.0",
-    "styled-components": "5.3.6"
+    "styled-components": "5.3.6",
+    "swiper": "^8.4.5"
   },
   "devDependencies": {
     "eslint": "7.32.0",

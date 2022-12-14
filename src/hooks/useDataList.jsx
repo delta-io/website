@@ -41,17 +41,6 @@ const query = graphql`
         }
       }
     }
-    videosYoutube: allVideosYoutube {
-      edges {
-        node {
-          url
-          title
-          thumbnail
-          description
-          id
-        }
-      }
-    }
     tutorials: allTutorialsJson {
       edges {
         node {
@@ -63,17 +52,6 @@ const query = graphql`
           }
           title
           url
-          id
-        }
-      }
-    }
-    tutorialsYoutube: allTutorialsYoutube {
-      edges {
-        node {
-          url
-          title
-          thumbnail
-          description
           id
         }
       }
@@ -120,11 +98,60 @@ const query = graphql`
         }
       }
     }
+    videosYoutube: allVideosYoutube {
+      edges {
+        node {
+          playlistId
+          playlistTitle
+          id
+          videoCollection {
+            description
+            id
+            playlistId
+            publishedAt
+            title
+            url
+            thumbnails {
+              high {
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+    }
+    tutorialsYoutube: allTutorialsYoutube {
+      edges {
+        node {
+          id
+          playlistId
+          playlistTitle
+          videoCollection {
+            description
+            id
+            playlistId
+            publishedAt
+            title
+            url
+            thumbnails {
+              high {
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
 const useDataList = (list) => {
   const data = useStaticQuery(query);
+  console.log("NODES", data);
   const nodes = data[list]?.edges.map(({ node }) => ({ ...node }));
 
   return nodes;

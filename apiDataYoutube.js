@@ -48,13 +48,17 @@ const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
 
 const API = {
-  fetchPlaylist: async (listId) => {
-    const URL = `${YOUTUBE_PLAYLIST_API}?part=snippet&maxResults=50&id=${listId}&key=${process.env.YOUTUBE_API_KEY}`;
-    return axios.get(URL);
+  playListsByChanelId: async (chanelId) => {
+    const URL = `${YOUTUBE_PLAYLIST_API}?part=snippet%2CcontentDetails&channelId=${chanelId}&maxResults=50&key=${process.env.YOUTUBE_API_KEY}`;
+
+    const response = await axios.get(URL);
+
+    return response.data.items;
   },
 
-  fetchPlaylistItems: async (id) => {
-    const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${id}&key=${process.env.YOUTUBE_API_KEY}`;
+  videoListByPlayListId: async (listId) => {
+    const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${listId}&key=${process.env.YOUTUBE_API_KEY}`;
+
     return axios.get(URL);
   },
 };

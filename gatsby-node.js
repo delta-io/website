@@ -1,49 +1,95 @@
 const path = require("path");
 const { createFilePath } = require("gatsby-source-filesystem");
+const axios = require("axios");
 const {
   mdxPageTypes,
   mdxTemplatesBasePath,
   collectionTemplatesBasePath,
 } = require("./config/pages");
-const { STREAM_LIST, API } = require("./apiDataYoutube");
+// const { API } = require("./apiDataYoutube");
 
-// const createPlayListPromise = (categoryList) => {
-//   const promises = [];
-//
-//   categoryList?.forEach(item => {
-//     const promiseItem = API.fetchPlaylist(item.stream_id);
-//
-//     promises.push(promiseItem);
-//   })
-//   return promises;
-// }
+const YOUTUBE_CHANNEL_ID = "UCSKhDO79MNcX4pIIRFD0UVg";
+const YOUTUBE_PLAYLIST_API = "https://www.googleapis.com/youtube/v3/playlists";
+const YOUTUBE_PLAYLIST_ITEMS_API =
+  "https://www.googleapis.com/youtube/v3/playlistItems";
+const YOUTUBE_API_KEY = "AIzaSyAvCt91PvL80P_y8FxgVHewi6-FycxFrcQ";
 
-const createPlayListItemPromise = (categoryList) => {
-  const promises = [];
+// const sortedVideoByCreatedDateList = list => list?.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 
-  categoryList?.forEach((item) => {
-    const promiseItem = API.fetchPlaylistItems(item.stream_id);
+const playListsByChanelId = async (chanelId) => {
+  const URL = `${YOUTUBE_PLAYLIST_API}?part=snippet%2CcontentDetails&channelId=${chanelId}&maxResults=50&key=${YOUTUBE_API_KEY}`;
 
-    promises.push(promiseItem);
-  });
+  const response = await axios.get(URL);
 
-  return promises;
+  return response.data.items;
+};
+const videoListByPlayListId = async (listId) => {
+  const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${listId}&key=${YOUTUBE_API_KEY}`;
+
+  return axios.get(URL);
 };
 
-const sortedVideoByCreatedDateList = (list) =>
-  list?.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+const createPlayList = async () => {
+  const data = await playListsByChanelId(YOUTUBE_CHANNEL_ID);
+  const newArr = data.map((el) => ({
+    playlistId: el.id,
+    playlistTitle: el.snippet.title,
+  }));
+  return newArr;
+};
 
-const createListOfVideos = (list) => {
-  const getAllList = list?.map((item) => ({
-    id: item.id,
-    publishedAt: item?.snippet?.publishedAt,
-    title: item?.snippet?.title,
-    description: item?.snippet?.description,
-    thumbnail: item?.snippet?.thumbnails?.maxres?.url,
-    url: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
+const createVideosListForPlayList = async () => {
+  const getPlayList = await createPlayList();
+
+  return getPlayList;
+};
+
+const getVideoListPromise = async () => {
+  const playLists = await createVideosListForPlayList();
+  const promiseList = playLists.map((playList) =>
+    videoListByPlayListId(playList.playlistId)
+  );
+
+  const [...data] = await Promise.all(promiseList);
+
+  const collectionVideos = data.map((item) => item.data.items);
+
+  const getCollectionVideoWithIMage = collectionVideos.map((item) =>
+    item.filter((sub) => Object.keys(sub.snippet.thumbnails).length !== 0)
+  );
+
+  const filteredArr = getCollectionVideoWithIMage.map((item) =>
+    item.map((subItem) => ({
+      id: subItem.id,
+      playlistId: subItem?.snippet?.playlistId,
+      publishedAt: subItem?.snippet?.publishedAt,
+      title: subItem?.snippet?.title,
+      description: subItem?.snippet?.description,
+      thumbnails: subItem?.snippet?.thumbnails,
+      url: `https://www.youtube.com/watch?v=${subItem.snippet.resourceId.videoId}`,
+    }))
+  );
+
+  const createArrWithCollectionVideo = filteredArr.map((el) => ({
+    playlistId: el[0].playlistId,
+    videoCollection: [...el],
   }));
 
-  return sortedVideoByCreatedDateList(getAllList);
+  const newArr = [];
+
+  playLists.forEach((item) => {
+    createArrWithCollectionVideo.forEach((el) => {
+      if (item.playlistId === el.playlistId) {
+        const obj = {
+          ...item,
+          ...el,
+        };
+        newArr.push(obj);
+      }
+    });
+  });
+
+  return newArr;
 };
 
 const createNodesFromList = ({
@@ -53,13 +99,8 @@ const createNodesFromList = ({
   createContentDigest,
   listName,
 }) => {
-  const joinedList = response?.map((list) => list.data.items).flat();
-
-  const getAllList = createListOfVideos(joinedList);
-
-  const listWithImage = getAllList?.filter((item) => item.thumbnail);
-
-  listWithImage?.map((listItem, i) =>
+  console.log("+++++++++++++++++", response);
+  return response?.map((listItem, i) =>
     createNode({
       ...listItem,
       id: createNodeId(listName + i),
@@ -71,52 +112,25 @@ const createNodesFromList = ({
   );
 };
 
-// const matchedArr = (streamInfo, listVideos) => {
-//   const streamArr = streamInfo.data.items.forEach((stream) => {
-//     listVideos.data.items.forEach(videoObj => {
-//       if (stream.items[0].id === videoObj.items[0].snippet.playlistId) {
-//         return {
-//           streamId: stream.items[0].id,
-//           streamTitle: stream.items[0].snippet.localized.title,
-//           streamVideoList: videoObj.items,
-//         }
-//       }
-//       return videoObj;
-//     })
-//   })
-//
-//   return streamArr;
-// }
-
 exports.sourceNodes = async ({
   actions: { createNode },
   createNodeId,
   createContentDigest,
 }) => {
-  // const videosStreamData = await Promise.all(createPlayListPromise(STREAM_LIST.videos));
-  const videosResponse = await Promise.all(
-    createPlayListItemPromise(STREAM_LIST.videos)
-  );
+  // TODO Here I need to get data for node...
 
-  // const dataForVideos = matchedArr(videosStreamData, videosResponse);
+  const dataForNodes = await getVideoListPromise();
 
-  // const tutorialsStreamData = await Promise.all(createPlayListPromise(STREAM_LIST.tutorials));
-  const tutorialsResponse = await Promise.all(
-    createPlayListItemPromise(STREAM_LIST.tutorials)
-  );
-
-  // const dataForTutorials = matchedArr(tutorialsStreamData, tutorialsResponse);
-
-  createNodesFromList({
-    response: videosResponse,
+  await createNodesFromList({
+    response: dataForNodes,
     createNode,
     createNodeId,
     createContentDigest,
     listName: "Videos",
   });
 
-  createNodesFromList({
-    response: tutorialsResponse,
+  await createNodesFromList({
+    response: dataForNodes,
     createNode,
     createNodeId,
     createContentDigest,

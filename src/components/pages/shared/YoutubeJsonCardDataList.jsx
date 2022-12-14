@@ -1,6 +1,7 @@
 import * as React from "react";
 import { number, string } from "prop-types";
-import CardDataList from "src/components/CardDataList";
+// import CardDataList from "src/components/CardDataList";
+import YoutubeCardDataList from "src/components/YoutubeCardDataList";
 import useDataList from "src/hooks/useDataList";
 
 const dataListProps = {
@@ -43,7 +44,7 @@ const YoutubeJsonCardDataList = (props) => {
   }
 
   return (
-    <CardDataList
+    <YoutubeCardDataList
       cards={cards}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...dataListProps[dataList]}
