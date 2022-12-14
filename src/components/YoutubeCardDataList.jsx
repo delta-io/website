@@ -18,6 +18,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Embed from "src/components/Embed";
 import Link from "src/components/Link";
+import { ControlSwiperButton } from "src/components/ControlSwiperButton";
 
 const PageContainer = styled.div`
   display: grid;
@@ -44,14 +45,18 @@ const WrapperList = styled.div`
   display: flex;
   gap: 1rem;
   overflow: hidden;
+  position: relative;
+  padding: 0 1rem;
 `;
 
 const Card = styled.div`
   width: 100%;
-  padding: 10px;
-  border: solid red 1px;
-  height: 400px;
+  //padding: 10px;
+  //border: solid red 1px;
+  height: 300px;
 `;
+
+// "bg-white hidden smd:flex cursor-pointer transition w-8 h-8 shadow-dashBoardCard rounded-full absolute top-1/2 -mt-4 z-10";
 
 const CardDataList = ({ cards }) => {
   console.log("CardDataList_cards", cards);
@@ -61,29 +66,27 @@ const CardDataList = ({ cards }) => {
         <PlayListSection>
           <CardTitle>{item.playlistTitle}</CardTitle>
           <WrapperList>
+            <ControlSwiperButton direction="left" />
             <Swiper
               modules={[Navigation]}
               loop
-              // spaceBetween={32}
+              spaceBetween={16}
               slidesPerView={4}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
+              // onSlideChange={() => console.log("slide change")}
+              // onSwiper={(swiper) => console.log(swiper)}
             >
               {item.videoCollection.map((slide) => (
                 <SwiperSlide key={slide.id}>
                   <Card>
                     <Link href={slide.url}>
-                      <Embed
-                        src={slide.thumbnails.high.url}
-                        // aspectRatio={thumbnailRatio}
-                        // maxWidth={maxWidth}
-                      />
+                      <Embed src={slide.thumbnails.high.url} />
                     </Link>
                     <div>{slide.title}</div>
                   </Card>
                 </SwiperSlide>
               ))}
             </Swiper>
+            <ControlSwiperButton direction="right" />
           </WrapperList>
         </PlayListSection>
       ))}
