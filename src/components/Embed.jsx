@@ -13,11 +13,10 @@ const embedStyles = `
 `;
 
 const EmbedContainer = styled.div`
-  //position: relative;
-  ${(props) =>
-    !props.src?.childImageSharp &&
-    props.aspectRatio &&
-    `padding-top: ${(props.aspectRatio[1] / props.aspectRatio[0]) * 100}%;`}
+  aspect-ratio: 16/9;
+  img {
+    object-fit: cover;
+  }
 `;
 
 const EmbedImage = styled.img`
@@ -37,7 +36,7 @@ const determineEmbedComponent = (src, alt = " ") => {
 };
 
 const Embed = (props) => {
-  const { alt, aspectRatio, src, maxWidth, className } = props;
+  const { alt, aspectRatio, src, className } = props;
 
   if (src?.childImageSharp) {
     return (
@@ -50,25 +49,20 @@ const Embed = (props) => {
   const embeddedComponent = determineEmbedComponent(src, alt);
 
   return (
-    <div className={className} style={{ maxWidth }}>
-      <EmbedContainer aspectRatio={aspectRatio}>
-        {embeddedComponent}
-      </EmbedContainer>
-    </div>
+    <EmbedContainer aspectRatio={aspectRatio}>
+      {embeddedComponent}
+    </EmbedContainer>
   );
 };
 
 Embed.defaultProps = {
   alt: undefined,
-  maxWidth: "none",
 };
 
 Embed.propTypes = {
   alt: string,
-  aspectRatio: arrayOf(number.isRequired).isRequired,
   // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
   src: any,
-  maxWidth: string,
 };
 
 export default Embed;
