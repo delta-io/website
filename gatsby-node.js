@@ -13,12 +13,13 @@ const YOUTUBE_CHANNEL_ID = "UCSKhDO79MNcX4pIIRFD0UVg";
 const YOUTUBE_PLAYLIST_API = "https://www.googleapis.com/youtube/v3/playlists";
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
-const YOUTUBE_API_KEY = "AIzaSyAvCt91PvL80P_y8FxgVHewi6-FycxFrcQ";
+const YOUTUBE_API_KEY = "AIzaSyDxu5no-wVL0Fif5pZDe4tj1CtkaI_ZHbM";
 const YOUTUBE_CHANNEL_SECTION =
   "https://youtube.googleapis.com/youtube/v3/channelSections";
 
 // const sortedVideoByCreatedDateList = list => list?.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 
+// Requests
 const playListsByChanelId = async (chanelId) => {
   const URL = `${YOUTUBE_PLAYLIST_API}?part=snippet%2CcontentDetails&channelId=${chanelId}&maxResults=50&key=${YOUTUBE_API_KEY}`;
 
@@ -62,24 +63,17 @@ const getMeetingsList = async () => {
 
   return response.data.items;
 };
+const getSectionLists = async () => {
+  const URL = `${YOUTUBE_CHANNEL_SECTION}?part=contentDetails&part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&key=${YOUTUBE_API_KEY}`;
+  const response = await axios.get(URL);
 
-const getVideoListPromise = async () => {
-  const playLists = await createVideosListForPlayList();
+  return response.data.items;
+};
 
-  // Get promises iterated playlistId
-  const promiseList = playLists.map((playList) =>
-    videoListByPlayListId(playList.playlistId)
-  );
+// Helpers
 
-  const [...data] = await Promise.all(promiseList);
-
-  const collectionVideos = data.map((item) => item.data.items);
-
-  const getCollectionVideoWithIMage = collectionVideos.map((item) =>
-    item.filter((sub) => Object.keys(sub.snippet.thumbnails).length !== 0)
-  );
-
-  const filteredArr = getCollectionVideoWithIMage.map((item) =>
+const reduceArrItems = (collection) =>
+  collection.map((item) =>
     item.map((subItem) => ({
       id: subItem.id,
       playlistId: subItem?.snippet?.playlistId,
@@ -91,15 +85,11 @@ const getVideoListPromise = async () => {
     }))
   );
 
-  const createArrWithCollectionVideo = filteredArr.map((el) => ({
-    playlistId: el[0].playlistId,
-    videoCollection: [...el],
-  }));
-
+const matchedArrByPlaylistId = (arr1, arr2) => {
   const newArr = [];
 
-  playLists.forEach((item) => {
-    createArrWithCollectionVideo.forEach((el) => {
+  arr1.forEach((item) => {
+    arr2.forEach((el) => {
       if (item.playlistId === el.playlistId) {
         const obj = {
           ...item,
@@ -113,74 +103,78 @@ const getVideoListPromise = async () => {
   return newArr;
 };
 
-const getTutorialListPromise = async () => {
-  const multipleList = await getMultipleListForTutorial();
+const createListIdForEachSection = async () => {
+  const list = await getSectionLists();
 
-  const getTechniquesTutorialsList = multipleList
-    ?.filter((item) => item.snippet.title === "Techniques and Tutorials")
+  const arr = list
+    ?.filter((el) => el.contentDetails)
     .map((item) => ({
-      title: item.snippet.title,
-      contentDetails: item.contentDetails,
+      type: item.snippet.type,
+      playlists: item.contentDetails.playlists,
+      sectionTitle: item.snippet.title,
     }));
 
-  const tutorialsPlaylistsIdPromise =
-    getTechniquesTutorialsList[0].contentDetails.playlists.map((playlistId) =>
-      videoListByPlayListId(playlistId)
-    );
-  const tutorialsPlaylistsTitlePromise =
-    getTechniquesTutorialsList[0].contentDetails.playlists.map((playlistId) =>
-      getPlaylistById(playlistId)
-    );
+  const tutorialPlaylists = arr
+    .filter((item) => item.sectionTitle === "Techniques and Tutorials")
+    .map((el) => el.playlists)
+    .flat();
+  const videosPlaylist = arr
+    .filter((el) => el.type === "singleplaylist")
+    .map((item) => item.playlists)
+    .flat();
 
-  const [...tutorialsListTitle] = await Promise.all(
-    tutorialsPlaylistsTitlePromise
+  const playlistsId = {
+    videosPlaylist: [...videosPlaylist, ...tutorialPlaylists],
+    tutorialPlaylists,
+  };
+
+  return playlistsId;
+};
+
+const dataForSeparatedSection = async (playListsAll, playlistType) => {
+  const promisesList = playlistType.map((playlistId) =>
+    videoListByPlayListId(playlistId)
   );
+  const [...data] = await Promise.all(promisesList);
 
-  const createMapTutorialsTitle = tutorialsListTitle.map((item) => ({
-    playlistId: item.items[0].id,
-    playlistTitle: item.items[0].snippet?.title,
-  }));
+  const collectionVideos = data.map((item) => item.data.items);
 
-  const [...tutorialsList] = await Promise.all(tutorialsPlaylistsIdPromise);
-
-  const collectionTutorials = tutorialsList?.map((item) => item.data.items);
-
-  const getCollectionTutorialWithIMage = collectionTutorials.map((item) =>
+  const getCollectionVideosWithImage = collectionVideos?.map((item) =>
     item.filter((sub) => Object.keys(sub.snippet.thumbnails).length !== 0)
   );
 
-  const filteredArr = getCollectionTutorialWithIMage.map((item) =>
-    item.map((subItem) => ({
-      id: subItem.id,
-      playlistId: subItem?.snippet?.playlistId,
-      publishedAt: subItem?.snippet?.publishedAt,
-      title: subItem?.snippet?.title,
-      description: subItem?.snippet?.description,
-      thumbnails: subItem?.snippet?.thumbnails,
-      url: `https://www.youtube.com/watch?v=${subItem.snippet.resourceId.videoId}`,
-    }))
-  );
+  const reducedObjList = reduceArrItems(getCollectionVideosWithImage);
 
-  const createArrWithCollectionVideo = filteredArr.map((el) => ({
-    playlistId: el[0].playlistId,
+  const createArrWithPlaylistId = reducedObjList.map((el) => ({
+    playlistId: el[0]?.playlistId,
     videoCollection: [...el],
   }));
 
-  const newArr = [];
+  const resultListForNodes = matchedArrByPlaylistId(
+    playListsAll,
+    createArrWithPlaylistId
+  );
 
-  createMapTutorialsTitle.forEach((item) => {
-    createArrWithCollectionVideo.forEach((el) => {
-      if (item.playlistId === el.playlistId) {
-        const obj = {
-          ...item,
-          ...el,
-        };
-        newArr.push(obj);
-      }
-    });
-  });
+  return resultListForNodes;
+};
 
-  return newArr;
+// Get collections
+
+const getVideoListPromise = async () => {
+  const playListsAll = await createVideosListForPlayList();
+
+  const playlistForSection = await createListIdForEachSection();
+
+  const videosList = dataForSeparatedSection(
+    playListsAll,
+    playlistForSection.videosPlaylist
+  );
+  const tutorialsList = dataForSeparatedSection(
+    playListsAll,
+    playlistForSection.tutorialPlaylists
+  );
+
+  return [videosList, tutorialsList];
 };
 
 const getArrForMeetingsNodes = async () => {
@@ -205,9 +199,8 @@ const createNodesFromList = ({
   createNodeId,
   createContentDigest,
   listName,
-}) => {
-  console.log("+++++++++++++++++", response);
-  return response?.map((listItem, i) =>
+}) =>
+  response?.map((listItem, i) =>
     createNode({
       ...listItem,
       id: createNodeId(listName + i),
@@ -217,16 +210,20 @@ const createNodesFromList = ({
       },
     })
   );
-};
 
 exports.sourceNodes = async ({
   actions: { createNode },
   createNodeId,
   createContentDigest,
 }) => {
-  const dataForVideos = await getVideoListPromise();
-  const dataForTutorials = await getTutorialListPromise();
-  const dataForMeetings = await getArrForMeetingsNodes();
+  const [videoSectionPromise, tutorialSectionPromise] =
+    await getVideoListPromise();
+
+  const [dataForVideos, dataForTutorials, dataForMeetings] = await Promise.all([
+    videoSectionPromise,
+    tutorialSectionPromise,
+    getArrForMeetingsNodes(),
+  ]);
 
   await createNodesFromList({
     response: dataForVideos,
