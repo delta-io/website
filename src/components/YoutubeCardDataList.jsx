@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useRef, useState } from "react";
 import {
   arrayOf,
   oneOfType,
@@ -18,7 +19,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Embed from "src/components/Embed";
 import Link from "src/components/Link";
-import { ControlSwiperButton } from "src/components/ControlSwiperButton";
+import { MdChevronLeft } from "@react-icons/all-files/md/MdChevronLeft";
+import { MdChevronRight } from "@react-icons/all-files/md/MdChevronRight";
 
 const PageContainer = styled.div`
   display: grid;
@@ -56,20 +58,42 @@ const Card = styled.div`
   height: 300px;
 `;
 
-// "bg-white hidden smd:flex cursor-pointer transition w-8 h-8 shadow-dashBoardCard rounded-full absolute top-1/2 -mt-4 z-10";
+const ButtonControl = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  cursor: pointer;
+  top: 25%;
+  z-index: 10;
+  ${(props) => (props.direction === "left" ? `left: 0.5rem` : "right: 0.5rem")}
+`;
 
 const CardDataList = ({ cards }) => {
-  console.log("CardDataList_cards", cards);
+  const navigationPrevRef = useRef(null);
+  const navigationNextRef = useRef(null);
+
   return (
     <PageContainer>
       {cards.map((item) => (
         <PlayListSection>
           <CardTitle>{item.playlistTitle}</CardTitle>
           <WrapperList>
-            <ControlSwiperButton direction="left" />
             <Swiper
               modules={[Navigation]}
-              loop
+              navigation={{
+                prevEl: navigationPrevRef.current,
+                nextEl: navigationNextRef.current,
+              }}
+              onBeforeInit={(swiper) => {
+                swiper.params.navigation.prevEl = navigationPrevRef.current;
+                swiper.params.navigation.nextEl = navigationNextRef.current;
+              }}
+              // loop
               spaceBetween={16}
               slidesPerView={1}
               breakpoints={{
@@ -81,6 +105,9 @@ const CardDataList = ({ cards }) => {
               // onSlideChange={() => console.log("slide change")}
               // onSwiper={(swiper) => console.log(swiper)}
             >
+              <ButtonControl direction="left" ref={navigationPrevRef}>
+                <MdChevronLeft />
+              </ButtonControl>
               {item.videoCollection.map((slide) => (
                 <SwiperSlide key={slide.id}>
                   <Card>
@@ -91,8 +118,10 @@ const CardDataList = ({ cards }) => {
                   </Card>
                 </SwiperSlide>
               ))}
+              <ButtonControl direction="right" ref={navigationNextRef}>
+                <MdChevronRight />
+              </ButtonControl>
             </Swiper>
-            <ControlSwiperButton direction="right" />
           </WrapperList>
         </PlayListSection>
       ))}
