@@ -71,7 +71,13 @@ const CardDataList = ({ cards }) => {
               modules={[Navigation]}
               loop
               spaceBetween={16}
-              slidesPerView={4}
+              slidesPerView={1}
+              breakpoints={{
+                576: { slidesPerView: 1.5 },
+                768: { slidesPerView: 3 },
+                992: { slidesPerView: 3.5 },
+                1200: { slidesPerView: 4 },
+              }}
               // onSlideChange={() => console.log("slide change")}
               // onSwiper={(swiper) => console.log(swiper)}
             >
