@@ -167,6 +167,7 @@ const getArrForMeetingsNodes = async () => {
 
   const arr = list?.map((item) => ({
     videoId: item.id.videoId,
+    url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
     channelId: item.snippet.channelId,
     title: item.snippet.title,
     description: item.snippet.description,

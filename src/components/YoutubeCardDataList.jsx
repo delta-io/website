@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useRef } from "react";
-import { arrayOf, shape, string } from "prop-types";
+import { arrayOf, shape, string, oneOfType } from "prop-types";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -32,7 +32,7 @@ const PageContainer = styled.div`
   }
 `;
 
-const PlayListSection = styled.div`
+export const PlayListSection = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -44,13 +44,13 @@ const CardTitle = styled.h2`
   margin-bottom: 0;
 `;
 
-const WrapperList = styled.div`
+export const WrapperList = styled.div`
   width: 100%;
   position: relative;
   padding: 0 30px;
 `;
 
-const Card = styled.div`
+export const Card = styled.div`
   width: 100%;
   display: inline-block;
 
@@ -70,7 +70,7 @@ const controlMedia = Object.entries(breakpoints).map(
     ` @media (min-width: ${item[0]}px) {  margin-top: calc((50% - ${item[1].slidesPerView}rem) / ${item[1].slidesPerView} *  ${imageAspectRatio});  };`
 );
 
-const ButtonControl = styled.button`
+export const ButtonControl = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,7 +125,7 @@ const ButtonControl = styled.button`
   }
 `;
 
-const CardDataList = ({ cards }) => {
+const YoutubeCardDataList = ({ cards }) => {
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
 
@@ -133,7 +133,9 @@ const CardDataList = ({ cards }) => {
     <PageContainer>
       {cards.map((item) => (
         <PlayListSection key={item.id}>
-          <CardTitle>{item.playlistTitle}</CardTitle>
+          <CardTitle>
+            {item.playlistTitle ? item.playlistTitle : "Scheduled broadcasts"}
+          </CardTitle>
           <WrapperList>
             <ButtonControl direction="left" ref={navigationPrevRef}>
               slide left
@@ -160,21 +162,22 @@ const CardDataList = ({ cards }) => {
               // onSlideChange={() => console.log("slide change")}
               // onSwiper={(swiper) => console.log(swiper)}
             >
-              {item.videoCollection.map((slide) => (
-                <SwiperSlide key={slide.id}>
-                  <Card>
-                    <Link href={slide.url}>
-                      <Embed src={slide.thumbnails.high.url} />
-                    </Link>
-                    <h6>{slide.title}</h6>
-                    <p>
-                      {slide.description.length > 80
-                        ? `${slide.description.slice(0, 80)}... `
-                        : slide.description.length}
-                    </p>
-                  </Card>
-                </SwiperSlide>
-              ))}
+              {item.videoCollection ||
+                item.map((slide) => (
+                  <SwiperSlide key={slide.id}>
+                    <Card>
+                      <Link href={slide.url}>
+                        <Embed src={slide.thumbnails?.high?.url} />
+                      </Link>
+                      <h6>{slide.title}</h6>
+                      <p>
+                        {slide.description.length > 80
+                          ? `${slide.description.slice(0, 80)}... `
+                          : slide.description.length}
+                      </p>
+                    </Card>
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </WrapperList>
         </PlayListSection>
@@ -183,11 +186,11 @@ const CardDataList = ({ cards }) => {
   );
 };
 
-CardDataList.propTypes = {
-  cards: arrayOf(
+YoutubeCardDataList.propTypes = {
+  cards: oneOfType([
     shape({
-      id: string.isRequired,
-      playlistTitle: string.isRequired,
+      id: string,
+      playlistTitle: string,
       videoCollection: arrayOf(
         shape({
           description: string,
@@ -195,7 +198,16 @@ CardDataList.propTypes = {
           url: string,
         })
       ),
-    })
-  ).isRequired,
+    }),
+    arrayOf(
+      shape({
+        videoId: string,
+        url: string,
+        title: string,
+        description: string,
+      })
+    ),
+  ]).isRequired,
 };
-export default CardDataList;
+
+export default YoutubeCardDataList;
