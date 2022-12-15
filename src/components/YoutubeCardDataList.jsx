@@ -1,31 +1,17 @@
 import * as React from "react";
-import { useRef, useState } from "react";
-import {
-  arrayOf,
-  oneOfType,
-  oneOf,
-  shape,
-  string,
-  number,
-  objectOf,
-  object,
-  bool,
-} from "prop-types";
+import { useRef } from "react";
+import { arrayOf, shape, string } from "prop-types";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
 import "swiper/css";
-import "swiper/css/navigation";
 import Embed from "src/components/Embed";
 import Link from "src/components/Link";
-import { MdChevronLeft } from "@react-icons/all-files/md/MdChevronLeft";
-import { MdChevronRight } from "@react-icons/all-files/md/MdChevronRight";
 
 const PageContainer = styled.div`
   display: grid;
   gap: 2rem;
-
   width: 100%;
   grid-template-columns: 100%;
 `;
@@ -44,18 +30,19 @@ const CardTitle = styled.h2`
 
 const WrapperList = styled.div`
   width: 100%;
-  display: flex;
-  gap: 1rem;
-  overflow: hidden;
   position: relative;
-  padding: 0 1rem;
+  padding: 0 30px;
 `;
 
 const Card = styled.div`
   width: 100%;
-  //padding: 10px;
-  //border: solid red 1px;
-  height: 300px;
+  h6 {
+    margin: 10px 0;
+  }
+  p {
+    word-break: break-all;
+    word-wrap: break-word;
+  }
 `;
 
 const ButtonControl = styled.button`
@@ -65,24 +52,84 @@ const ButtonControl = styled.button`
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
+  border: #efefef;
   background-color: white;
   position: absolute;
   cursor: pointer;
-  top: 25%;
+  transform: translateY(-50%);
+  margin-top: calc((50% - 2rem) * 9 / 16);
+
+  //16/9 - image size
+  @media (min-width: 576px) {
+    margin-top: calc((50% - 1.5rem) / 1.5 * 9 / 16);
+  }
+  @media (min-width: 768px) {
+    margin-top: calc((50% - 3rem) / 3 * 9 / 16);
+  }
+  @media (min-width: 992px) {
+    margin-top: calc((50% - 3.5rem) / 3.5 * 9 / 16);
+  }
+  @media (min-width: 1200px) {
+    margin-top: calc((50% - 4rem) / 4 * 9 / 16);
+  }
+
+  top: 0;
+
+  font-size: 0;
   z-index: 10;
-  ${(props) => (props.direction === "left" ? `left: 0.5rem` : "right: 0.5rem")}
+  box-shadow: 0 4px 4px rgb(0 0 0 / 30%), 0 0 4px rgb(0 0 0 / 20%);
+  ${(props) => (props.direction === "left" ? `left: -5px ` : "right:-5px")};
+
+  &::before,
+  ::after {
+    content: "";
+    height: 1px;
+    background-color: #5d5d5d;
+    position: absolute;
+    left: 40%;
+    width: 33%;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+    ${(props) =>
+      props.direction === "left"
+        ? ` transform-origin: left; `
+        : " transform-origin: right;"};
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+    ${(props) =>
+      props.direction === "left"
+        ? ` transform-origin: left; `
+        : " transform-origin: right;"};
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &:disabled {
+    display: none;
+  }
 `;
 
 const CardDataList = ({ cards }) => {
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
-
   return (
     <PageContainer>
       {cards.map((item) => (
-        <PlayListSection>
+        <PlayListSection key={item.id}>
           <CardTitle>{item.playlistTitle}</CardTitle>
           <WrapperList>
+            <ButtonControl direction="left" ref={navigationPrevRef}>
+              slide left
+            </ButtonControl>
+            <ButtonControl direction="right" ref={navigationNextRef}>
+              slide right
+            </ButtonControl>
             <Swiper
               modules={[Navigation]}
               navigation={{
@@ -90,37 +137,39 @@ const CardDataList = ({ cards }) => {
                 nextEl: navigationNextRef.current,
               }}
               onBeforeInit={(swiper) => {
+                // eslint-disable-next-line no-param-reassign
                 swiper.params.navigation.prevEl = navigationPrevRef.current;
+                // eslint-disable-next-line no-param-reassign
                 swiper.params.navigation.nextEl = navigationNextRef.current;
               }}
-              // loop
+              watchOverflow
               spaceBetween={16}
               slidesPerView={1}
               breakpoints={{
+                200: { slidesPerView: 1, slidesPerGroup: 1 },
                 576: { slidesPerView: 1.5 },
-                768: { slidesPerView: 3 },
+                768: { slidesPerView: 3, slidesPerGroup: 3 },
                 992: { slidesPerView: 3.5 },
-                1200: { slidesPerView: 4 },
+                1200: { slidesPerView: 4, slidesPerGroup: 4 },
               }}
               // onSlideChange={() => console.log("slide change")}
               // onSwiper={(swiper) => console.log(swiper)}
             >
-              <ButtonControl direction="left" ref={navigationPrevRef}>
-                <MdChevronLeft />
-              </ButtonControl>
               {item.videoCollection.map((slide) => (
                 <SwiperSlide key={slide.id}>
                   <Card>
                     <Link href={slide.url}>
                       <Embed src={slide.thumbnails.high.url} />
                     </Link>
-                    <div>{slide.title}</div>
+                    <h6>{slide.title}</h6>
+                    <p>
+                      {slide.description.length > 80
+                        ? `${slide.description.slice(0, 80)}... `
+                        : slide.description.length}
+                    </p>
                   </Card>
                 </SwiperSlide>
               ))}
-              <ButtonControl direction="right" ref={navigationNextRef}>
-                <MdChevronRight />
-              </ButtonControl>
             </Swiper>
           </WrapperList>
         </PlayListSection>
@@ -132,22 +181,16 @@ const CardDataList = ({ cards }) => {
 CardDataList.propTypes = {
   cards: arrayOf(
     shape({
-      title: string.isRequired,
-      url: string.isRequired,
-      thumbnail: oneOfType([
-        string,
+      id: string.isRequired,
+      playlistTitle: string.isRequired,
+      videoCollection: arrayOf(
         shape({
-          // eslint-disable-next-line react/forbid-prop-types
-          childImageSharp: object,
-        }),
-      ]).isRequired,
-      description: string.isRequired,
-      docs: string,
-      source_code: string,
-      meta: string,
-      tags: arrayOf(string),
+          description: string,
+          title: string,
+          url: string,
+        })
+      ),
     })
   ).isRequired,
 };
-
 export default CardDataList;
