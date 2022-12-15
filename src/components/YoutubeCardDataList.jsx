@@ -9,11 +9,27 @@ import "swiper/css";
 import Embed from "src/components/Embed";
 import Link from "src/components/Link";
 
+const breakpoints = {
+  " 0": { slidesPerView: 1, slidesPerGroup: 1 },
+  " 576": { slidesPerView: 1.5 },
+  " 768": { slidesPerView: 3, slidesPerGroup: 3 },
+  " 992": { slidesPerView: 3.5 },
+  " 1200": { slidesPerView: 4, slidesPerGroup: 4 },
+};
+const cardMedia = Object.entries(breakpoints).map(
+  (item) =>
+    ` @media (min-width: ${item[0]}px) {  width: calc(100% / ${item[1].slidesPerView} )    };  `
+);
+
 const PageContainer = styled.div`
   display: grid;
   gap: 2rem;
   width: 100%;
   grid-template-columns: 100%;
+  .swiper-slide {
+    ${cardMedia};
+    margin-right: 16px;
+  }
 `;
 
 const PlayListSection = styled.div`
@@ -36,6 +52,8 @@ const WrapperList = styled.div`
 
 const Card = styled.div`
   width: 100%;
+  display: inline-block;
+
   h6 {
     margin: 10px 0;
   }
@@ -44,6 +62,13 @@ const Card = styled.div`
     word-wrap: break-word;
   }
 `;
+
+const imageAspectRatio = "9 / 16";
+
+const controlMedia = Object.entries(breakpoints).map(
+  (item) =>
+    ` @media (min-width: ${item[0]}px) {  margin-top: calc((50% - ${item[1].slidesPerView}rem) / ${item[1].slidesPerView} *  ${imageAspectRatio});  };`
+);
 
 const ButtonControl = styled.button`
   display: flex;
@@ -57,24 +82,9 @@ const ButtonControl = styled.button`
   position: absolute;
   cursor: pointer;
   transform: translateY(-50%);
+  ${controlMedia};
   margin-top: calc((50% - 2rem) * 9 / 16);
-
-  //16/9 - image size
-  @media (min-width: 576px) {
-    margin-top: calc((50% - 1.5rem) / 1.5 * 9 / 16);
-  }
-  @media (min-width: 768px) {
-    margin-top: calc((50% - 3rem) / 3 * 9 / 16);
-  }
-  @media (min-width: 992px) {
-    margin-top: calc((50% - 3.5rem) / 3.5 * 9 / 16);
-  }
-  @media (min-width: 1200px) {
-    margin-top: calc((50% - 4rem) / 4 * 9 / 16);
-  }
-
   top: 0;
-
   font-size: 0;
   z-index: 10;
   box-shadow: 0 4px 4px rgb(0 0 0 / 30%), 0 0 4px rgb(0 0 0 / 20%);
@@ -118,6 +128,7 @@ const ButtonControl = styled.button`
 const CardDataList = ({ cards }) => {
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
+
   return (
     <PageContainer>
       {cards.map((item) => (
@@ -145,13 +156,7 @@ const CardDataList = ({ cards }) => {
               watchOverflow
               spaceBetween={16}
               slidesPerView={1}
-              breakpoints={{
-                200: { slidesPerView: 1, slidesPerGroup: 1 },
-                576: { slidesPerView: 1.5 },
-                768: { slidesPerView: 3, slidesPerGroup: 3 },
-                992: { slidesPerView: 3.5 },
-                1200: { slidesPerView: 4, slidesPerGroup: 4 },
-              }}
+              breakpoints={breakpoints}
               // onSlideChange={() => console.log("slide change")}
               // onSwiper={(swiper) => console.log(swiper)}
             >

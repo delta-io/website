@@ -151,7 +151,6 @@ const query = graphql`
 
 const useDataList = (list) => {
   const data = useStaticQuery(query);
-  console.log("NODES", data);
   const nodes = data[list]?.edges.map(({ node }) => ({ ...node }));
 
   return nodes;
