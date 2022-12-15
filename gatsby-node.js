@@ -8,6 +8,7 @@ const {
 } = require("./config/pages");
 // const { API } = require("./apiDataYoutube");
 
+const YOUTUBE_SEARCH_API = "https://www.googleapis.com/youtube/v3/search";
 const YOUTUBE_CHANNEL_ID = "UCSKhDO79MNcX4pIIRFD0UVg";
 const YOUTUBE_PLAYLIST_API = "https://www.googleapis.com/youtube/v3/playlists";
 const YOUTUBE_PLAYLIST_ITEMS_API =
@@ -54,6 +55,12 @@ const getPlaylistById = async (playlistId) => {
   const response = await axios.get(URL);
 
   return response.data;
+};
+const getMeetingsList = async () => {
+  const URL = `${YOUTUBE_SEARCH_API}/?type=video&maxResults=50&eventType=upcoming&part=snippet&key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}`;
+  const response = await axios.get(URL);
+
+  return response.data.items;
 };
 
 const getVideoListPromise = async () => {
@@ -176,6 +183,22 @@ const getTutorialListPromise = async () => {
   return newArr;
 };
 
+const getArrForMeetingsNodes = async () => {
+  const list = await getMeetingsList();
+
+  const arr = list?.map((item) => ({
+    videoId: item.id.videoId,
+    channelId: item.snippet.channelId,
+    title: item.snippet.title,
+    description: item.snippet.description,
+    publishTime: item.snippet.publishTime,
+    publishedAt: item.snippet.publishedAt,
+    thumbnails: item.snippet.thumbnails,
+  }));
+
+  return arr;
+};
+
 const createNodesFromList = ({
   response,
   createNode,
@@ -203,6 +226,7 @@ exports.sourceNodes = async ({
 }) => {
   const dataForVideos = await getVideoListPromise();
   const dataForTutorials = await getTutorialListPromise();
+  const dataForMeetings = await getArrForMeetingsNodes();
 
   await createNodesFromList({
     response: dataForVideos,
@@ -218,6 +242,14 @@ exports.sourceNodes = async ({
     createNodeId,
     createContentDigest,
     listName: "Tutorials",
+  });
+
+  await createNodesFromList({
+    response: dataForMeetings,
+    createNode,
+    createNodeId,
+    createContentDigest,
+    listName: "Meetings",
   });
 };
 
