@@ -31,17 +31,12 @@ const videoListByPlayListId = async (listId) => {
 };
 const createPlayList = async () => {
   const data = await playListsByChanelId(YOUTUBE_CHANNEL_ID);
-  const newArr = data.map((el) => ({
+  return data.map((el) => ({
     playlistId: el.id,
     playlistTitle: el.snippet.title,
   }));
-  return newArr;
 };
-const createVideosListForPlayList = async () => {
-  const getPlayList = await createPlayList();
 
-  return getPlayList;
-};
 const getMeetingsList = async () => {
   const URL = `${YOUTUBE_SEARCH_API}/?type=video&maxResults=50&eventType=upcoming&part=snippet&key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}`;
   const response = await axios.get(URL);
@@ -108,12 +103,10 @@ const createListIdForEachSection = async () => {
     .map((item) => item.playlists)
     .flat();
 
-  const playlistsId = {
+  return {
     videosPlaylist: [...videosPlaylist, ...tutorialPlaylists],
     tutorialPlaylists,
   };
-
-  return playlistsId;
 };
 
 const dataForSeparatedSection = async (playListsAll, playlistType) => {
@@ -146,7 +139,7 @@ const dataForSeparatedSection = async (playListsAll, playlistType) => {
 // Get collections
 
 const getVideoListPromise = async () => {
-  const playListsAll = await createVideosListForPlayList();
+  const playListsAll = await createPlayList();
 
   const playlistForSection = await createListIdForEachSection();
 

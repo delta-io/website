@@ -170,7 +170,7 @@ const YoutubeCardDataList = ({ cards }) => {
                     <p>
                       {slide.description.length > 80
                         ? `${slide.description.slice(0, 80)}... `
-                        : slide.description.length}
+                        : slide.description}
                     </p>
                   </Card>
                 </SwiperSlide>
