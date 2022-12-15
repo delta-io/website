@@ -3,23 +3,28 @@ import SEO from "src/components/SEO";
 import PageLayout from "src/components/PageLayout";
 import CommunitySection from "src/components/pages/shared/CommunitySection";
 import LatestEventsSection from "src/components/pages/community/LatestEventsSection";
+import LatestEventsSectionYoutube from "src/components/pages/community/LatestEventsSectionYoutube";
 import D3L2podcastSection from "src/components/pages/community/D3L2podcastSection";
 import ContributeSection from "src/components/pages/community/ContributeSection";
 import ContributeToDeltaSection from "src/components/pages/community/ContributeToDeltaSection";
 import CurrentCommittersSection from "src/components/pages/community/CurrentCommittersSection";
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
+import { graphql } from "gatsby";
 
-const CommunityPage = () => (
-  <PageLayout>
-    <CommunitySection />
-    <LatestEventsSection />
-    <D3L2podcastSection />
-    <ContributeSection />
-    <CurrentCommittersSection />
-    <ContributeToDeltaSection />
-    <ProjectGovernanceSection />
-  </PageLayout>
-);
+const CommunityPage = () => {
+  return (
+    <PageLayout>
+      <CommunitySection />
+      <LatestEventsSectionYoutube />
+      {/*<LatestEventsSection />*/}
+      <D3L2podcastSection />
+      <ContributeSection />
+      <CurrentCommittersSection />
+      <ContributeToDeltaSection />
+      <ProjectGovernanceSection />
+    </PageLayout>
+  );
+};
 
 export const Head = () => <SEO title="Join the Delta Lake Community" />;
 
