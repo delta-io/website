@@ -2,10 +2,6 @@ const scala = require("highlight.js/lib/languages/scala");
 const { mdxPageTypes } = require("./config/pages");
 const { searchPluginConfig } = require("./config/search");
 
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
-
 const wrapESMPlugin =
   (name) =>
   (opts) =>
