@@ -36,7 +36,12 @@ const LatestEventsSectionYoutube = () => {
 
   const listMeetings = data?.allMeetingsYoutube?.edges.map((item) => item.node);
 
-  const fitData = [listMeetings];
+  const fitData = [
+    {
+      playlistTitle: "Scheduled broadcasts",
+      videoCollection: listMeetings,
+    },
+  ];
 
   return (
     <Section>
