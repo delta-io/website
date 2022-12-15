@@ -1,5 +1,12 @@
 import * as React from "react";
 import { graphql, useStaticQuery } from "gatsby";
+import YoutubeCardDataList from "src/components/YoutubeCardDataList";
+import Section from "src/components/Section";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  padding: 2.5rem 0;
+`;
 
 const LatestEventsSectionYoutube = () => {
   const data = useStaticQuery(graphql`
@@ -8,11 +15,19 @@ const LatestEventsSectionYoutube = () => {
         edges {
           node {
             videoId
+            url
             title
             publishedAt
             description
             id
             publishTime
+            thumbnails {
+              high {
+                height
+                url
+                width
+              }
+            }
           }
         }
       }
@@ -21,19 +36,14 @@ const LatestEventsSectionYoutube = () => {
 
   const listMeetings = data?.allMeetingsYoutube?.edges.map((item) => item.node);
 
+  const fitData = [listMeetings];
+
   return (
-    <div>
-      {listMeetings.map((item) => (
-        <div>
-          <div>id: {item.id}</div>
-          <div>Title: {item.title}</div>
-          <div>VideoId: {item.videoId}</div>
-          <div>publishedAt: {item.publishedAt}</div>
-          <div>publishTime: {item.publishTime}</div>
-          <div>description: {item.description}</div>
-        </div>
-      ))}
-    </div>
+    <Section>
+      <Wrapper>
+        <YoutubeCardDataList cards={fitData} />
+      </Wrapper>
+    </Section>
   );
 };
 
