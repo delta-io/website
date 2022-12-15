@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useRef } from "react";
-import { arrayOf, shape, string, oneOfType } from "prop-types";
+import { arrayOf, shape, string } from "prop-types";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -133,9 +133,7 @@ const YoutubeCardDataList = ({ cards }) => {
     <PageContainer>
       {cards.map((item) => (
         <PlayListSection key={item.id}>
-          <CardTitle>
-            {item.playlistTitle ? item.playlistTitle : "Scheduled broadcasts"}
-          </CardTitle>
+          <CardTitle>{item.playlistTitle}</CardTitle>
           <WrapperList>
             <ButtonControl direction="left" ref={navigationPrevRef}>
               slide left
@@ -162,22 +160,21 @@ const YoutubeCardDataList = ({ cards }) => {
               // onSlideChange={() => console.log("slide change")}
               // onSwiper={(swiper) => console.log(swiper)}
             >
-              {item.videoCollection ||
-                item.map((slide) => (
-                  <SwiperSlide key={slide.id}>
-                    <Card>
-                      <Link href={slide.url}>
-                        <Embed src={slide.thumbnails?.high?.url} />
-                      </Link>
-                      <h6>{slide.title}</h6>
-                      <p>
-                        {slide.description.length > 80
-                          ? `${slide.description.slice(0, 80)}... `
-                          : slide.description.length}
-                      </p>
-                    </Card>
-                  </SwiperSlide>
-                ))}
+              {item.videoCollection.map((slide) => (
+                <SwiperSlide key={slide.id}>
+                  <Card>
+                    <Link href={slide.url}>
+                      <Embed src={slide.thumbnails?.high?.url} />
+                    </Link>
+                    <h6>{slide.title}</h6>
+                    <p>
+                      {slide.description.length > 80
+                        ? `${slide.description.slice(0, 80)}... `
+                        : slide.description.length}
+                    </p>
+                  </Card>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </WrapperList>
         </PlayListSection>
@@ -187,7 +184,7 @@ const YoutubeCardDataList = ({ cards }) => {
 };
 
 YoutubeCardDataList.propTypes = {
-  cards: oneOfType([
+  cards: arrayOf(
     shape({
       id: string,
       playlistTitle: string,
@@ -198,16 +195,7 @@ YoutubeCardDataList.propTypes = {
           url: string,
         })
       ),
-    }),
-    arrayOf(
-      shape({
-        videoId: string,
-        url: string,
-        title: string,
-        description: string,
-      })
-    ),
-  ]).isRequired,
+    })
+  ).isRequired,
 };
-
 export default YoutubeCardDataList;
