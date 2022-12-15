@@ -6,7 +6,6 @@ const {
   mdxTemplatesBasePath,
   collectionTemplatesBasePath,
 } = require("./config/pages");
-// const { API } = require("./apiDataYoutube");
 
 const YOUTUBE_SEARCH_API = "https://www.googleapis.com/youtube/v3/search";
 const YOUTUBE_CHANNEL_ID = "UCSKhDO79MNcX4pIIRFD0UVg";
@@ -16,8 +15,6 @@ const YOUTUBE_PLAYLIST_ITEMS_API =
 const YOUTUBE_API_KEY = "AIzaSyDxu5no-wVL0Fif5pZDe4tj1CtkaI_ZHbM";
 const YOUTUBE_CHANNEL_SECTION =
   "https://youtube.googleapis.com/youtube/v3/channelSections";
-
-// const sortedVideoByCreatedDateList = list => list?.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 
 // Requests
 const playListsByChanelId = async (chanelId) => {
@@ -44,18 +41,6 @@ const createVideosListForPlayList = async () => {
   const getPlayList = await createPlayList();
 
   return getPlayList;
-};
-const getMultipleListForTutorial = async () => {
-  const URL = `${YOUTUBE_CHANNEL_SECTION}?part=contentDetails&part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&key=${YOUTUBE_API_KEY}`;
-  const response = await axios.get(URL);
-
-  return response.data.items;
-};
-const getPlaylistById = async (playlistId) => {
-  const URL = `${YOUTUBE_PLAYLIST_API}?part=snippet&maxResults=50&id=${playlistId}&key=${YOUTUBE_API_KEY}`;
-  const response = await axios.get(URL);
-
-  return response.data;
 };
 const getMeetingsList = async () => {
   const URL = `${YOUTUBE_SEARCH_API}/?type=video&maxResults=50&eventType=upcoming&part=snippet&key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}`;
