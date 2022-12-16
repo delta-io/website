@@ -1,4 +1,4 @@
-import { arrayOf, number, string, any } from "prop-types";
+import { string, any } from "prop-types";
 import * as React from "react";
 import styled from "styled-components";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
