@@ -36,6 +36,7 @@
     "babel-plugin-styled-components": "2.0.7",
     "bootstrap": "5.2.2",
     "color": "4.2.3",
+    "dotenv": "^16.0.3",
     "gatsby": "4.24.1",
     "gatsby-plugin-anchor-links": "1.2.1",
     "gatsby-plugin-google-fonts": "1.0.1",
