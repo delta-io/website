@@ -2,7 +2,6 @@ const scala = require("highlight.js/lib/languages/scala");
 const { mdxPageTypes } = require("./config/pages");
 const { searchPluginConfig } = require("./config/search");
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
