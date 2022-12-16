@@ -12,20 +12,19 @@ const YOUTUBE_CHANNEL_ID = "UCSKhDO79MNcX4pIIRFD0UVg";
 const YOUTUBE_PLAYLIST_API = "https://www.googleapis.com/youtube/v3/playlists";
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
-const YOUTUBE_API_KEY = "AIzaSyDxu5no-wVL0Fif5pZDe4tj1CtkaI_ZHbM";
 const YOUTUBE_CHANNEL_SECTION =
   "https://youtube.googleapis.com/youtube/v3/channelSections";
 
 // Requests
 const playListsByChanelId = async (chanelId) => {
-  const URL = `${YOUTUBE_PLAYLIST_API}?part=snippet%2CcontentDetails&channelId=${chanelId}&maxResults=50&key=${YOUTUBE_API_KEY}`;
+  const URL = `${YOUTUBE_PLAYLIST_API}?part=snippet%2CcontentDetails&channelId=${chanelId}&maxResults=50&key=${process.env.YOUTUBE_API_KEY}`;
 
   const response = await axios.get(URL);
 
   return response.data.items;
 };
 const videoListByPlayListId = async (listId) => {
-  const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${listId}&key=${YOUTUBE_API_KEY}`;
+  const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${listId}&key=${process.env.YOUTUBE_API_KEY}`;
 
   return axios.get(URL);
 };
@@ -36,15 +35,14 @@ const createPlayList = async () => {
     playlistTitle: el.snippet.title,
   }));
 };
-
 const getMeetingsList = async () => {
-  const URL = `${YOUTUBE_SEARCH_API}/?type=video&maxResults=50&eventType=upcoming&part=snippet&key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}`;
+  const URL = `${YOUTUBE_SEARCH_API}/?type=video&maxResults=50&eventType=upcoming&part=snippet&key=${process.env.YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}`;
   const response = await axios.get(URL);
 
   return response.data.items;
 };
 const getSectionLists = async () => {
-  const URL = `${YOUTUBE_CHANNEL_SECTION}?part=contentDetails&part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&key=${YOUTUBE_API_KEY}`;
+  const URL = `${YOUTUBE_CHANNEL_SECTION}?part=contentDetails&part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&key=${process.env.YOUTUBE_API_KEY}`;
   const response = await axios.get(URL);
 
   return response.data.items;
