@@ -98,14 +98,60 @@ const query = graphql`
         }
       }
     }
+    videosYoutube: allVideosYoutube {
+      edges {
+        node {
+          playlistId
+          playlistTitle
+          id
+          videoCollection {
+            description
+            id
+            playlistId
+            publishedAt
+            title
+            url
+            thumbnails {
+              high {
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+    }
+    tutorialsYoutube: allTutorialsYoutube {
+      edges {
+        node {
+          id
+          playlistId
+          playlistTitle
+          videoCollection {
+            description
+            id
+            playlistId
+            publishedAt
+            title
+            url
+            thumbnails {
+              high {
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
 const useDataList = (list) => {
   const data = useStaticQuery(query);
-  const nodes = data[list]?.edges.map(({ node }) => ({ ...node }));
-
-  return nodes;
+  return data[list]?.edges.map(({ node }) => ({ ...node }));
 };
 
 export default useDataList;
