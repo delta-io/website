@@ -186,7 +186,6 @@ const YoutubeCardDataList = ({ cards }) => {
 YoutubeCardDataList.propTypes = {
   cards: arrayOf(
     shape({
-      id: string,
       playlistTitle: string,
       videoCollection: arrayOf(
         shape({

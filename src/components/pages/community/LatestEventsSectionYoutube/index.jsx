@@ -14,13 +14,11 @@ const LatestEventsSectionYoutube = () => {
       allMeetingsYoutube {
         edges {
           node {
-            videoId
             url
             title
             publishedAt
             description
             id
-            publishTime
             thumbnails {
               high {
                 height
@@ -31,15 +29,48 @@ const LatestEventsSectionYoutube = () => {
           }
         }
       }
+      allVideosYoutube {
+        edges {
+          node {
+            playlistId
+            playlistTitle
+            videoCollection {
+              publishedAt
+              playlistId
+              title
+              url
+              description
+              id
+              thumbnails {
+                high {
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+        }
+      }
     }
   `);
 
   const listMeetings = data?.allMeetingsYoutube?.edges.map((item) => item.node);
+  const listVideos = data?.allVideosYoutube?.edges
+    .map((item) => item.node)
+    .map((item) => item.videoCollection)
+    .flat();
+
+  const sortedListOfVideosByPublishedDate = [...listVideos].sort(
+    (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt)
+  );
+
+  const lastVideos = sortedListOfVideosByPublishedDate.slice(0, 4);
 
   const fitData = [
     {
-      playlistTitle: "Scheduled broadcasts",
-      videoCollection: listMeetings,
+      playlistTitle: "",
+      videoCollection: [...listMeetings, ...lastVideos],
     },
   ];
 
