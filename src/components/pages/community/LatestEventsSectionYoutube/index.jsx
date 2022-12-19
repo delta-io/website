@@ -69,6 +69,7 @@ const LatestEventsSectionYoutube = () => {
 
   const fitData = [
     {
+      id: "communityId",
       playlistTitle: "",
       videoCollection: [...listMeetings, ...lastVideos],
     },
