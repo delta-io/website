@@ -36,6 +36,7 @@ const LatestEventsSectionYoutube = () => {
             playlistTitle
             videoCollection {
               publishedAt
+              videoUploadDate
               playlistId
               title
               url
@@ -62,16 +63,20 @@ const LatestEventsSectionYoutube = () => {
     .flat();
 
   const sortedListOfVideosByPublishedDate = [...listVideos].sort(
-    (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt)
+    (a, b) => Date.parse(b.videoUploadDate) - Date.parse(a.videoUploadDate)
   );
 
   const lastVideos = sortedListOfVideosByPublishedDate.slice(0, 4);
+  const emptyMeet = listMeetings[0].url === "";
+  const collection = emptyMeet
+    ? lastVideos
+    : [[...listMeetings, ...lastVideos]];
 
   const fitData = [
     {
       id: "communityId",
       playlistTitle: "",
-      videoCollection: [...listMeetings, ...lastVideos],
+      videoCollection: collection,
     },
   ];
 
