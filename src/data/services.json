@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Athena",
+    "description": "This utility allows Athena to natively read from Delta Lake starting with Athena SQL 3.0 ",
+    "url": "https://docs.aws.amazon.com/athena/latest/ug/delta-lake-tables.html",
+    "docs": "https://docs.aws.amazon.com/athena/latest/ug/delta-lake-tables.html",
+    "tags": ["Athena", "AWS"],
+    "thumbnail": "./images/connectors/athena.png"
+  },
+  {
+    "name": "aws-pandas-sdk",
+    "description": "pandas on AWS - Easy integration with AWS services including optional dependency with Delta Lake",
+    "url": "https://github.com/aws/aws-sdk-pandas",
+    "source_code": "https://github.com/aws/aws-sdk-pandas/pull/1834",
+    "docs": "https://aws-sdk-pandas.readthedocs.io/en/stable/",
+    "tags": ["pandas", "AWS", "awswrangler", "aws-pandas-sdk"],
+    "thumbnail": "./images/connectors/aws-pandas-sdk-logo.png"
+  },
+  {
+    "name": "Databricks",
+    "description": "Delta Lake is included within Databricks allowing it to read from and write to Delta Lake.",
+    "url": "https://docs.databricks.com/delta/index.html",
+    "docs": "https://docs.databricks.com/delta/index.html",
+    "tags": ["Databricks", "Azure", "GCP", "AWS"],
+    "thumbnail": "./images/connectors/Databricks-logo.png"
+  },
+  {
+    "name": "AWS EMR",
+    "description": "Starting with Amazon EMR release 6.9.0, you can use Apache Spark 3.x on Amazon EMR clusters with Delta Lake tables. ",
+    "url": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
+    "docs": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
+    "tags": ["AWS", "EMR"],
+    "thumbnail": "./images/connectors/aws-emr.png"
+  },
+  {
+    "name": "AWS Glue",
+    "description": "AWS Glue 3.0 and later supports the Linux Foundation Delta Lake framework",
+    "url": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
+    "docs": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
+    "tags": ["AWS", "Glue"],
+    "thumbnail": "./images/connectors/aws-glue.png"
+  },
+  {
+    "name": "Power BI",
+    "description": "This connector allows Power BI to read from Delta Lake.",
+    "url": "https://github.com/delta-io/connectors/tree/master/powerbi",
+    "docs": "https://github.com/delta-io/connectors/tree/master/powerbi",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/powerbi",
+    "tags": ["PowerBI", "community"],
+    "thumbnail": "./images/connectors/powerbi.png"
+  },
+  {
+    "name": "Redshift",
+    "description": "This utility allows AWS Redshift to read from Delta Lake using a manifest file.",
+    "url": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
+    "docs": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
+    "source_code": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
+    "tags": ["Redshift", "AWS", "manifest"],
+    "thumbnail": "./images/connectors/redshift.png"
+  },
+  {
+    "name": "Snowflake (Beta)",
+    "description": "This preview allows Snowflake to read from Delta Lake via an external table.",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
+    "docs": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
+    "tags": ["Snowflake"],
+    "thumbnail": "./images/connectors/snowflake.png"
+  },
+  {
+    "name": "Starburst",
+    "description": "The Starburst Delta Lake connector is an extended version of the Trino/Delta Lake connector with configuration and usage identical.",
+    "url": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
+    "docs": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
+    "tags": ["Starburst", "Azure", "GCP", "AWS"],
+    "thumbnail": "./images/connectors/starburst-logo.png"
+  },
+  {
+    "name": "StarTree",
+    "description": "StarTree Cloud includes the Apache Pinot / Delta Lake connector.",
+    "url": "https://startree.ai/blog/delta-lake-managed-ingestion-with-startree-s-deltaconnector-for-apache-pinot",
+    "docs": "https://startree.ai/blog/delta-lake-managed-ingestion-with-startree-s-deltaconnector-for-apache-pinot",
+    "tags": ["StarTree", "Pinot"],
+    "thumbnail": "./images/connectors/startree-logo.png"
+  },
+  {
+    "name": "Azure Synapse",
+    "description": "The current version of Delta Lake included with Azure Synapse has language support for Scala, PySpark, and .NET.",
+    "url": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-delta-lake-overview?pivots=programming-language-csharp",
+    "docs": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-what-is-delta-lake",
+    "tags": ["Azure", "Synapse"],
+    "thumbnail": "./images/connectors/AzureSynapseAnalytics.png"
+  }
+]
