@@ -133,7 +133,7 @@ const YoutubeCardDataList = ({ cards }) => {
     <PageContainer>
       {cards.map((item) => (
         <PlayListSection key={item.id}>
-          <CardTitle>{item.playlistTitle}</CardTitle>
+          {item.playlistTitle && <CardTitle>{item.playlistTitle}</CardTitle>}
           <WrapperList>
             <ButtonControl direction="left" ref={navigationPrevRef}>
               slide left
