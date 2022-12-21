@@ -2,7 +2,7 @@ import * as React from "react";
 import PageLayout from "src/components/PageLayout";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import Typography, { TypographyContainer } from "src/components/Typography";
+import Typography from "src/components/Typography";
 import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
 
 const Wrapper = styled.div`
