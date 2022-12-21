@@ -61,7 +61,7 @@ const HeroSection = (props) => {
             {ctaLabel}
           </HeroButton>
         </Typography>
-        <ButtonRow columns={["60px", "65px", "65px"]} gutter="lg">
+        <ButtonRow columns={["75px", "75px", "75px"]} gutter="lg">
           <Typography variant="p">
             <HeroLink
               href="https://github.com/delta-io/delta"

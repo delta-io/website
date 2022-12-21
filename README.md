@@ -17,6 +17,17 @@
 
 This site requires Node 16, which you can install with `brew install node@16`.
 
+This site requires a development `YOUTUBE_API_KEY` which populates the YouTube videos in the learn > videos, learn > tutorials, and community pages. That is, ensure you have created a `.env.development` file in the root folder; the file should look like:
+
+```
+//.env.development
+
+YOUTUBE_API_KEY = $API_KEY$
+```
+
+- To generate an API key, refer to [How to Get a YouTube API Key [Tutorial + Examples]](https://blog.hubspot.com/website/how-to-get-youtube-api-key)
+- For more information on Gatsby environment files, please refer to [How to implement '.env' variables in Gatsby and React](https://dev.to/steeeeeph/how-to-implement-env-variables-in-gatsby-and-react-252d)
+
 Simply check out this repo, run `npm install --legacy-peer-deps`, then run `npm run develop`.
 
 To open a localhost version of the site, run `npm run start`.

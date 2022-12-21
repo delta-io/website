@@ -27,6 +27,11 @@ const committers = [
     areas: ["delta", "delta-rs"],
   },
   {
+    name: "Will Jones",
+    organization: "Voltron Data",
+    areas: ["delta", "delta-rs"],
+  },
+  {
     name: "Venki Korukanti",
     organization: "Databricks",
     areas: ["delta", "connectors"],
@@ -40,6 +45,11 @@ const committers = [
     name: "Mykhailo Osypov",
     organization: "Scribd",
     areas: ["delta-rs", "kafka-delta-ingest"],
+  },
+  {
+    name: "Robert Pack",
+    organization: "BASF",
+    areas: ["delta", "delta-rs"],
   },
   {
     name: "Allison Portis",
@@ -80,12 +90,12 @@ const CommittersTable = styled(Table)`
 const CurrentCommittersSection = () => (
   <Section
     background={(theme) => theme.light.bg}
-    title="Current Committers"
+    title="Project Maintainers"
     subtitle={
       <TypographyContainer>
         <Typography variant="p">
           Want to dive deeper into Delta Lake, please chat with any of our
-          committers!
+          maintainers!
         </Typography>
         <Typography variant="p">
           For more information on how to contribute, please refer to the{" "}
@@ -97,7 +107,7 @@ const CurrentCommittersSection = () => (
       </TypographyContainer>
     }
     centeredHeader
-    padding="xxxl"
+    padding="xxl"
   >
     <CommittersTable
       headers={[

@@ -5,7 +5,7 @@ import Typography from "src/components/Typography";
 import spotifyImg from "./d3l2-podcast-spotify.png";
 
 const D3L2podcastSection = () => (
-  <Section background="white" centerHeader padding="xl">
+  <Section background="white" centerHeader padding="large">
     <table border="0" align="center" cellPadding="20" cellSpacing="10">
       <tr>
         <td>
