@@ -1,0 +1,86 @@
+[
+  {
+    "name": "C++",
+    "description": "This connector allows a C++ client to read from Delta Sharing endpoint.",
+    "url": "https://github.com/magpierre/cpp_delta_sharing_client",
+    "docs": "https://github.com/magpierre/cpp_delta_sharing_client#delta-sharing-client-for-c",
+    "source_code": "https://github.com/magpierre/cpp_delta_sharing_client",
+    "tags": ["C++", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/ISO_C++_Logo.svg.png"
+  },
+  {
+    "name": "Excel",
+    "description": "This connector allows a Excel client to read from Delta Sharing endpoint.",
+    "url": "https://www.exponam.com/exponam-launches-delta-sharing-excel-add-in/",
+    "docs": "https://www.exponam.com/solutions/",
+    "tags": ["Excel", "Delta Sharing"],
+    "thumbnail": "./images/connectors/excel.png"
+  },
+  {
+    "name": "Go",
+    "description": "This connector allows a Go client to read from Delta Sharing endpoint.",
+    "url": "https://github.com/magpierre/delta-sharing/tree/golangdev/golang/delta_sharing_go",
+    "source_code": "https://github.com/magpierre/delta-sharing/tree/golangdev/golang/delta_sharing_go",
+    "tags": ["Go", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/Go-Logo_Blue.png"
+  },
+  {
+    "name": "Java",
+    "description": "This connector allows a Java client to read from Delta Sharing endpoint.",
+    "url": "https://github.com/databrickslabs/delta-sharing-java-connector",
+    "source_code": "https://github.com/databrickslabs/delta-sharing-java-connector",
+    "tags": ["Java", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/java-logo.png"
+  },
+  {
+    "name": "MLflow",
+    "description": "Perform model exchange via Delta Sharing and MLflow",
+    "url": "https://github.com/databrickslabs/arcuate",
+    "docs": "https://github.com/databrickslabs/arcuate#how-to-use",
+    "source_code": "https://github.com/databrickslabs/arcuate",
+    "tags": ["MLflow", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/MLflow-logo-pos-TM-1.png"
+  },
+  {
+    "name": "node.js",
+    "description": "This connector allows node.js to read from Delta Sharing endpoint.",
+    "url": "https://github.com/goodwillpunning/nodejs-sharing-client",
+    "docs": "https://github.com/goodwillpunning/nodejs-sharing-client#quickstart",
+    "source_code": "https://github.com/goodwillpunning/nodejs-sharing-client",
+    "tags": ["node.js", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/nodejs-logo.png"
+  },
+  {
+    "name": "Power BI",
+    "description": "This connector allows Power BI to read from Delta Sharing endpoint.",
+    "url": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
+    "docs": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
+    "tags": ["PowerBI", "Delta Sharing"],
+    "thumbnail": "./images/connectors/powerbi.png"
+  },
+  {
+    "name": "R",
+    "description": "This connector allows a R client to read from Delta Sharing endpoint.",
+    "url": "https://github.com/zacdav-db/delta-sharing-r",
+    "source_code": "https://github.com/zacdav-db/delta-sharing-r",
+    "tags": ["R", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/K5JPp_Y7.jpg"
+  },
+  {
+    "name": "Rust",
+    "description": "This connector allows a Rust client to read from Delta Sharing endpoint.",
+    "url": "https://github.com/r3stl355/delta-sharing-rust-client",
+    "docs": "https://github.com/r3stl355/delta-sharing-rust-client#delta-sharing-client-library-for-rust",
+    "source_code": "https://github.com/r3stl355/delta-sharing-rust-client",
+    "tags": ["Rust", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/rust.png"
+  },
+  {
+    "name": "Terminal",
+    "description": "Terminal application for browsing Delta Sharing Metadata.",
+    "url": "https://github.com/magpierre/dsmb",
+    "source_code": "https://github.com/magpierre/dsmb",
+    "tags": ["Terminal", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/terminal-dsmb.png"
+  }
+]

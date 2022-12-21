@@ -26,6 +26,78 @@ const query = graphql`
         }
       }
     }
+    community: allCommunityJson {
+      edges {
+        node {
+          title: name
+          tags
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(
+                width: 70
+                height: 70
+                placeholder: NONE
+                transformOptions: { fit: CONTAIN }
+                backgroundColor: "#FFFFFF"
+              )
+            }
+          }
+          url
+          docs
+          source_code
+          description
+          id
+        }
+      }
+    }
+    services: allServicesJson {
+      edges {
+        node {
+          title: name
+          tags
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(
+                width: 70
+                height: 70
+                placeholder: NONE
+                transformOptions: { fit: CONTAIN }
+                backgroundColor: "#FFFFFF"
+              )
+            }
+          }
+          url
+          docs
+          source_code
+          description
+          id
+        }
+      }
+    }
+    sharing: allSharingJson {
+      edges {
+        node {
+          title: name
+          tags
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(
+                width: 70
+                height: 70
+                placeholder: NONE
+                transformOptions: { fit: CONTAIN }
+                backgroundColor: "#FFFFFF"
+              )
+            }
+          }
+          url
+          docs
+          source_code
+          description
+          id
+        }
+      }
+    }
     videos: allVideosJson {
       edges {
         node {
