@@ -81,7 +81,7 @@ const LatestEventsSectionYoutube = () => {
   ];
 
   return (
-    <Section>
+    <Section title="Scheduled and Latest Videos" centeredHeader padding="xl">
       <Wrapper>
         <YoutubeCardDataList cards={fitData} />
       </Wrapper>
