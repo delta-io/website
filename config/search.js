@@ -3,7 +3,9 @@ const types = {
   blog: "Blogs",
   allConnectorsJson: "Connector",
   allVideosJson: "Video",
+  allVideosYoutube: "VideosYoutube",
   allTutorialsJson: "Tutorials",
+  allTutorialsYoutube: "TutorialsYoutube",
 };
 
 const searchPluginConfig = {

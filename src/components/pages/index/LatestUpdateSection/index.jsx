@@ -3,12 +3,28 @@ import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
 import schemaEnforcement from "./schemaEnforcement.png";
-import versionPandasDataset from "./versionPandasDataset.png";
-import howToCreateDeltaLakeTable from "./create-delta-lake-table.png";
-import pysparkSaveModes from "./pysparkSaveModes.png";
+import deltaSharing from "./deltaSharing.png";
 import deltaConstraints from "./deltaConstraints.png";
+import deleteRows from "./deleteRows.png";
+import deltaLakeSagemakerEMR from "./delta-lake-sagemaker-emr.png";
 
 const updates = [
+  {
+    title:
+      "Building a more efficient data infrastructure for machine learning with Open Source using Delta Lake, Amazon SageMaker, and EMR",
+    thumbnail: deltaLakeSagemakerEMR,
+    url: "/blog/2022-12-13-sagemaker-emr-delta-lake/",
+  },
+  {
+    title: "Data Sharing across Government Agencies using Delta Sharing",
+    thumbnail: deltaSharing,
+    url: "/blog/2022-12-08-data-sharing-across-government-delta-sharing/",
+  },
+  {
+    title: "How to Delete Rows from a Delta Lake Table",
+    thumbnail: deleteRows,
+    url: "/blog/2022-12-07-delete-rows-from-delta-lake-table/",
+  },
   {
     title: "Delta Lake Constraints and Checks",
     thumbnail: deltaConstraints,
@@ -18,22 +34,6 @@ const updates = [
     title: "Delta Lake Schema Enforcement",
     thumbnail: schemaEnforcement,
     url: "/blog/2022-11-16-delta-lake-schema-enforcement/",
-  },
-  {
-    title:
-      "Why PySpark append and overwrite write operations are safer in Delta Lake than Parquet tables",
-    thumbnail: pysparkSaveModes,
-    url: "/blog/2022-11-01-pyspark-save-mode-append-overwrite-error/",
-  },
-  {
-    title: "How to Create Delta Lake tables",
-    thumbnail: howToCreateDeltaLakeTable,
-    url: "/blog/2022-10-25-create-delta-lake-tables/",
-  },
-  {
-    title: "How to Version Your Data with pandas and Delta Lake",
-    thumbnail: versionPandasDataset,
-    url: "/blog/2022-10-15-version-pandas-dataset/",
   },
 ];
 

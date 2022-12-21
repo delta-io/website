@@ -81,6 +81,15 @@
     "thumbnail": "./images/connectors/kafka.png"
   },
   {
+    "name": "Apache Pulsar",
+    "description": "This connector allows Apache Pulsar to read from and write to Delta Lake.",
+    "url": "https://streamnative.io/blog/release/2022-08-17-announcing-the-delta-lake-sink-connector-for-apache-pulsar/",
+    "docs": "https://github.com/streamnative/pulsar-io-lakehouse/blob/master/docs/delta-lake-demo.md",
+    "source_code": "https://github.com/streamnative/pulsar-io-lakehouse",
+    "tags": ["Pulsar", "community"],
+    "thumbnail": "./images/connectors/wFcLUbwd_400x400.jpg"
+  },
+  {
     "name": "dlt | SparkR",
     "description": "This package allows SparkR to read from and write to Delta Lake.",
     "url": "https://dlt.zero323.net/",
@@ -128,17 +137,26 @@
     "name": "node.js | Delta Sharing (Beta)",
     "description": "This connector allows node.js to read from Delta Sharing endpoint.",
     "url": "https://github.com/goodwillpunning/nodejs-sharing-client",
+    "docs": "https://github.com/goodwillpunning/nodejs-sharing-client#quickstart",
     "source_code": "https://github.com/goodwillpunning/nodejs-sharing-client",
     "tags": ["node.js", "Delta Sharing", "community"],
     "thumbnail": "./images/connectors/nodejs-logo.png"
   },
   {
     "name": "Java | Delta Sharing (Beta)",
-    "description": "This connector allows as Java client to read from Delta Sharing endpoint.",
+    "description": "This connector allows a Java client to read from Delta Sharing endpoint.",
     "url": "https://github.com/databrickslabs/delta-sharing-java-connector",
     "source_code": "https://github.com/databrickslabs/delta-sharing-java-connector",
     "tags": ["Java", "Delta Sharing", "community"],
     "thumbnail": "./images/connectors/java-logo.png"
+  },
+  {
+    "name": "R | Delta Sharing (Beta)",
+    "description": "This connector allows a R client to read from Delta Sharing endpoint.",
+    "url": "https://github.com/zacdav-db/delta-sharing-r",
+    "source_code": "https://github.com/zacdav-db/delta-sharing-r",
+    "tags": ["R", "Delta Sharing", "community"],
+    "thumbnail": "./images/connectors/K5JPp_Y7.jpg"
   },
   {
     "name": "Databricks",
@@ -155,6 +173,22 @@
     "docs": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
     "tags": ["Starburst", "Azure", "GCP", "AWS"],
     "thumbnail": "./images/connectors/starburst-logo.png"
+  },
+  {
+    "name": "AWS EMR",
+    "description": "Starting with Amazon EMR release 6.9.0, you can use Apache Spark 3.x on Amazon EMR clusters with Delta Lake tables. ",
+    "url": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
+    "docs": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
+    "tags": ["AWS", "EMR"],
+    "thumbnail": "./images/connectors/aws-emr.png"
+  },
+  {
+    "name": "AWS Glue",
+    "description": "AWS Glue 3.0 and later supports the Linux Foundation Delta Lake framework",
+    "url": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
+    "docs": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
+    "tags": ["AWS", "Glue"],
+    "thumbnail": "./images/connectors/aws-glue.png"
   },
   {
     "name": "Azure Synapse",

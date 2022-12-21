@@ -10,6 +10,7 @@ import ImageStrip from "src/components/ImageStrip";
 import GithubContributorsGrid from "src/components/pages/shared/GithubContributorsGrid";
 import ImageStripDataList from "src/components/pages/shared/ImageStripDataList";
 import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
+import YoutubeJsonCardDataList from "src/components/pages/shared/YoutubeJsonCardDataList";
 import OrganizationTiles from "src/components/pages/shared/OrganizationTiles";
 import SocialTiles from "src/components/pages/shared/SocialTiles";
 import CodeTabs from "src/components/CodeTabs";
@@ -65,6 +66,7 @@ const mdxComponents = {
   ImageStrip,
   ImageStripDataList,
   JsonCardDataList,
+  YoutubeJsonCardDataList,
   OrganizationTiles,
   SocialTiles,
   CodeTabs,
