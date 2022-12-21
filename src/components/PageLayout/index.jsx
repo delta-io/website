@@ -37,6 +37,10 @@ const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
 
+  p {
+    word-break: break-word;
+  }
+
   code {
     font-family: ${(props) => props.theme.fontFamilyCode};
     font-size: ${(props) => props.theme.fontSizes.code};
