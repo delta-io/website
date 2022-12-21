@@ -41,6 +41,36 @@ const searchPluginConfig = {
             }
           }
         }
+        allCommunityJson {
+          edges {
+            node {
+              id
+              title: name
+              description
+              url
+            }
+          }
+        }
+        allServicesJson {
+          edges {
+            node {
+              id
+              title: name
+              description
+              url
+            }
+          }
+        }
+        allSharingJson {
+          edges {
+            node {
+              id
+              title: name
+              description
+              url
+            }
+          }
+        }
         allVideosJson {
           edges {
             node {
