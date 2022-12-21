@@ -19,7 +19,7 @@ import ProjectGovernanceSection from "src/components/pages/shared/ProjectGoverna
 const HomePage = () => (
   <PageLayout>
     <AnnouncementSection
-      title="Announcing Delta Lake 2.1.1 on Apache Spark™ 3.3"
+      title="Announcing Delta Lake 2.2.0 on Apache Spark™ 3.3"
       description="Try out the latest release today!"
       url="http://go.delta.io/latest"
     />

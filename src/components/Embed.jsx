@@ -1,22 +1,22 @@
-import { arrayOf, number, string, any } from "prop-types";
+import { string, any } from "prop-types";
 import * as React from "react";
 import styled from "styled-components";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 const embedStyles = `
-  position: absolute;
+  // position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: 0.5rem;
 `;
 
 const EmbedContainer = styled.div`
-  position: relative;
-  ${(props) =>
-    !props.src?.childImageSharp &&
-    props.aspectRatio &&
-    `padding-top: ${(props.aspectRatio[1] / props.aspectRatio[0]) * 100}%;`}
+  aspect-ratio: 16/9;
+  img {
+    object-fit: cover;
+  }
 `;
 
 const EmbedImage = styled.img`
@@ -27,7 +27,7 @@ const OtherEmbed = styled.div`
   ${embedStyles}
 `;
 
-const determineEmbedComponent = (src, alt) => {
+const determineEmbedComponent = (src, alt = " ") => {
   if (/\.(jpe?g|gif|png)/.test(src)) {
     return <EmbedImage src={src} alt={alt} />;
   }
@@ -36,7 +36,7 @@ const determineEmbedComponent = (src, alt) => {
 };
 
 const Embed = (props) => {
-  const { alt, aspectRatio, src, maxWidth, className } = props;
+  const { alt, aspectRatio, src, className } = props;
 
   if (src?.childImageSharp) {
     return (
@@ -49,25 +49,20 @@ const Embed = (props) => {
   const embeddedComponent = determineEmbedComponent(src, alt);
 
   return (
-    <div className={className} style={{ maxWidth }}>
-      <EmbedContainer aspectRatio={aspectRatio}>
-        {embeddedComponent}
-      </EmbedContainer>
-    </div>
+    <EmbedContainer aspectRatio={aspectRatio}>
+      {embeddedComponent}
+    </EmbedContainer>
   );
 };
 
 Embed.defaultProps = {
   alt: undefined,
-  maxWidth: "none",
 };
 
 Embed.propTypes = {
   alt: string,
-  aspectRatio: arrayOf(number.isRequired).isRequired,
   // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
   src: any,
-  maxWidth: string,
 };
 
 export default Embed;
