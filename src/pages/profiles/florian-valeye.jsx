@@ -5,12 +5,11 @@ import Link from "src/components/Link";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import ImageStrip from "src/components/ImageStrip";
 import profileImg from "./florian-valeye.jpeg";
 import d3l2Img from "./d3l2-florian-valeye.jpg";
 import blogImg from "./subscriptions-on-a-delta-lake.png";
 
-const Wrapper = styled.div`
+const QuoteWrapper = styled.div`
   padding: xxxl;
   padding-left: 20px;
   padding-top: 20px;
@@ -27,71 +26,58 @@ const ImgWrapper = styled.div`
   width: 303px;
 `;
 
-const FeaturedImageStrip = styled(ImageStrip)`
-  align: right;
-  text-align: right;
-  max-width: 200px;
-`;
-
-const featured = [
-  {
-    thumbnail: profileImg,
-  },
-];
-
-const FeaturedProfile = styled(TypographyContainer)`
-  width: 800px;
-  align: center;
-`;
-
-const FeaturedProfileColumn = styled(TypographyContainer)`
-  align: right;
-  width: 200px;
-
+const ColumnWrapper = styled(TypographyContainer)`
+  text-align: left;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
   img {
     align: right;
-    width: 200px;
+    text-align: right;
+    width: 250px;
     height: auto;
   }
 `;
 
-const FeaturedSectionColumn = styled(TypographyContainer)`
-  text-align: left;
-  width: 600px;
+const NameWrapper = styled(TypographyContainer)`
+  font-size: 2.5rem;
+`;
+
+const TitleWrapper = styled(TypographyContainer)`
+  font-size: 1.5rem;
 `;
 
 const profileFlorianValeye = () => (
   <PageLayout>
     <Section background="white" padding="xl">
       <center>
-        <FeaturedProfile>
-          <Grid columns={{ xs: 1, sm: 2, md: 2 }} gutter="xxl">
-            <FeaturedProfileColumn>
-              <FeaturedImageStrip items={featured} />
-            </FeaturedProfileColumn>
-            <FeaturedSectionColumn>
-              <Typography variant="p">
-                <h2>Florian Valeye</h2>
-                <h5>
-                  Delta Lake Maintainer, Staff Data Engineer at Back Market
-                </h5>
-                <Wrapper>
-                  <em>
-                    &#34;Contributing to open source is key to learning how to
-                    solve problems within worldwide, benevolent communities of
-                    people.&#34;
-                  </em>
-                  <br />
-                  <br />
-                  Source: &nbsp;
-                  <Link href="https://project.linuxfoundation.org/hubfs/LF%20Research/2022%20Linux%20Foundation%20Annual%20Report.pdf?hsLang=en">
-                    Linux Foundation 2022 Annual Report
-                  </Link>
-                </Wrapper>
-              </Typography>
-            </FeaturedSectionColumn>
-          </Grid>
-        </FeaturedProfile>
+        <Grid columns={{ xs: 1, sm: 1, md: 4 }} gutter="xl">
+          <ColumnWrapper>
+            <img src={profileImg} alt="Florian Valeye" />
+          </ColumnWrapper>
+          <ColumnWrapper style={{ gridColumn: "span 3" }}>
+            <NameWrapper>Florian Valeye</NameWrapper>
+            <TitleWrapper>
+              Delta Lake Maintainer, Staff Data Engineer at Back Market
+            </TitleWrapper>
+            <Typography variant="p">
+              <br />
+              <QuoteWrapper>
+                <em>
+                  &#34;Contributing to open source is key to learning how to
+                  solve problems within worldwide, benevolent communities of
+                  people.&#34;
+                </em>
+                <br />
+                <br />
+                Source: &nbsp;
+                <Link href="https://project.linuxfoundation.org/hubfs/LF%20Research/2022%20Linux%20Foundation%20Annual%20Report.pdf?hsLang=en">
+                  Linux Foundation 2022 Annual Report
+                </Link>
+              </QuoteWrapper>
+            </Typography>
+          </ColumnWrapper>
+        </Grid>
       </center>
     </Section>
     <Section backkground="grey" centerHeader padding="xl">
