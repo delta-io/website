@@ -3,8 +3,9 @@ import PageLayout from "src/components/PageLayout";
 import Grid from "src/components/Grid";
 import Link from "src/components/Link";
 import Section from "src/components/Section";
-import Typography from "src/components/Typography";
+import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
+import ImageStrip from "src/components/ImageStrip";
 import profileImg from "./florian-valeye.jpeg";
 import d3l2Img from "./d3l2-florian-valeye.jpg";
 import blogImg from "./subscriptions-on-a-delta-lake.png";
@@ -15,7 +16,6 @@ const Wrapper = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
   padding-right: 20px;
-  width: 75%;
   background-color: hsl(191, 100%, 97.7%);
 `;
 
@@ -27,36 +27,72 @@ const ImgWrapper = styled.div`
   width: 303px;
 `;
 
+const FeaturedImageStrip = styled(ImageStrip)`
+  align: right;
+  text-align: right;
+  max-width: 200px;
+`;
+
+const featured = [
+  {
+    thumbnail: profileImg,
+  },
+];
+
+const FeaturedProfile = styled(TypographyContainer)`
+  width: 800px;
+  align: center;
+`;
+
+const FeaturedProfileColumn = styled(TypographyContainer)`
+  align: right;
+  width: 200px;
+
+  img {
+    align: right;
+    width: 200px;
+    height: auto;
+  }
+`;
+
+const FeaturedSectionColumn = styled(TypographyContainer)`
+  text-align: left;
+  width: 600px;
+`;
+
 const profileFlorianValeye = () => (
   <PageLayout>
-    <Section background="white" centerHeader padding="large">
-      <table border="0" align="center" cellPadding="20" cellSpacing="10">
-        <tr>
-          <td>
-            <img src={profileImg} alt="" width="200" />
-          </td>
-          <td valign="top">
-            <br />
-            <Typography variant="p">
-              <h2>Florian Valeye</h2>
-              <h4>Delta Lake Maintainer, Staff Data Engineer at Back Market</h4>
-              <Wrapper>
-                <em>
-                  &#34;Contributing to open source is key to learning how to
-                  solve problems within worldwide, benevolent communities of
-                  people.&#34;
-                </em>
-                <br />
-                <br />
-                Source: &nbsp;
-                <Link href="https://project.linuxfoundation.org/hubfs/LF%20Research/2022%20Linux%20Foundation%20Annual%20Report.pdf?hsLang=en">
-                  Linux Foundation 2022 Annual Report
-                </Link>
-              </Wrapper>
-            </Typography>
-          </td>
-        </tr>
-      </table>
+    <Section background="white" padding="xl">
+      <center>
+        <FeaturedProfile>
+          <Grid columns={{ xs: 1, sm: 2, md: 2 }} gutter="xxl">
+            <FeaturedProfileColumn>
+              <FeaturedImageStrip items={featured} />
+            </FeaturedProfileColumn>
+            <FeaturedSectionColumn>
+              <Typography variant="p">
+                <h2>Florian Valeye</h2>
+                <h5>
+                  Delta Lake Maintainer, Staff Data Engineer at Back Market
+                </h5>
+                <Wrapper>
+                  <em>
+                    &#34;Contributing to open source is key to learning how to
+                    solve problems within worldwide, benevolent communities of
+                    people.&#34;
+                  </em>
+                  <br />
+                  <br />
+                  Source: &nbsp;
+                  <Link href="https://project.linuxfoundation.org/hubfs/LF%20Research/2022%20Linux%20Foundation%20Annual%20Report.pdf?hsLang=en">
+                    Linux Foundation 2022 Annual Report
+                  </Link>
+                </Wrapper>
+              </Typography>
+            </FeaturedSectionColumn>
+          </Grid>
+        </FeaturedProfile>
+      </center>
     </Section>
     <Section backkground="grey" centerHeader padding="xl">
       <Typography>
