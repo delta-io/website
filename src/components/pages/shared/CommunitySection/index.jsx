@@ -15,7 +15,7 @@ const CommunitySection = () => (
         share tips.
       </Typography>
     }
-    padding="xxxl"
+    padding="xxl"
     centeredHeader
   >
     <SocialTiles alignCenter dark />

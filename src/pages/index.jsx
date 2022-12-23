@@ -57,6 +57,11 @@ const HomePage = () => (
     {/* <OrganizationsSection /> */}
     <ContributeToDeltaSection />
     <CommunitySection />
+    <AnnouncementSection
+      title="Check out Last Week in a Byte newsletter"
+      description="for the latest Delta events...a week late!"
+      url="http://go.delta.io/lastweek"
+    />
     <ProjectGovernanceSection />
   </PageLayout>
 );
