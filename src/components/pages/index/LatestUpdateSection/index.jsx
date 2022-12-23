@@ -2,13 +2,18 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import schemaEnforcement from "./schemaEnforcement.png";
+import deltaPolars from "./deltaPolars.png";
 import deltaSharing from "./deltaSharing.png";
 import deltaConstraints from "./deltaConstraints.png";
 import deleteRows from "./deleteRows.png";
 import deltaLakeSagemakerEMR from "./delta-lake-sagemaker-emr.png";
 
 const updates = [
+  {
+    title: "Reading Delta Lake Tables into Polars DataFrames",
+    thumbnail: deltaPolars,
+    url: "/blog/2022-12-22-reading-delta-lake-tables-polars-dataframe/",
+  },
   {
     title:
       "Building a more efficient data infrastructure for machine learning with Open Source using Delta Lake, Amazon SageMaker, and EMR",
@@ -29,11 +34,6 @@ const updates = [
     title: "Delta Lake Constraints and Checks",
     thumbnail: deltaConstraints,
     url: "/blog/2022-11-21-delta-lake-contraints-check/",
-  },
-  {
-    title: "Delta Lake Schema Enforcement",
-    thumbnail: schemaEnforcement,
-    url: "/blog/2022-11-16-delta-lake-schema-enforcement/",
   },
 ];
 
