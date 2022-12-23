@@ -5,7 +5,6 @@ const types = {
   allVideosJson: "Video",
   allVideosYoutube: "VideosYoutube",
   allTutorialsJson: "Tutorials",
-  allTutorialsYoutube: "TutorialsYoutube",
 };
 
 const searchPluginConfig = {
