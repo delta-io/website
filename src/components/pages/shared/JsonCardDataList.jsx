@@ -8,6 +8,18 @@ const dataListProps = {
     thumbnailRatio: [1, 1],
     columns: { xs: 1, md: 2, lg: 3 },
   },
+  community: {
+    thumbnailRatio: [1, 1],
+    columns: { xs: 1, md: 2, lg: 3 },
+  },
+  services: {
+    thumbnailRatio: [1, 1],
+    columns: { xs: 1, md: 2, lg: 3 },
+  },
+  sharing: {
+    thumbnailRatio: [1, 1],
+    columns: { xs: 1, md: 2, lg: 3 },
+  },
   videos: {
     thumbnailRatio: [16, 9],
     columns: { xs: 1, md: 2 },

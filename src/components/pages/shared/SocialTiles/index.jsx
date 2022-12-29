@@ -6,28 +6,33 @@ import slack from "./logos/slack.png";
 import googleGroups from "./logos/google-groups.png";
 import youtube from "./logos/youtube.png";
 import linkedin from "./logos/linkedin.png";
+import spotify from "./logos/d3l2-crab-spotify.png";
 
 const communities = [
   {
     thumbnail: slack,
-    label: "Slack Channel",
+    label: "Slack",
     url: "https://go.delta.io/slack",
   },
   {
     thumbnail: googleGroups,
-    label: "Google Group",
-    url: "https://groups.google.com/forum/#!forum/delta-users",
+    label: "Google Groups",
+    url: "https://go.delta.io/groups",
   },
   {
     thumbnail: linkedin,
     label: "LinkedIn",
-    url: "https://linkedin.com/company/deltalake",
+    url: "https://go.delta.io/linkedin",
   },
-
   {
     thumbnail: youtube,
     label: "YouTube",
-    url: "http://youtube.com/c/deltalake",
+    url: "https://go.delta.io/youtube",
+  },
+  {
+    thumbnail: spotify,
+    label: "D3L2 | Spotify",
+    url: "https://go.delta.io/spotify",
   },
 ];
 

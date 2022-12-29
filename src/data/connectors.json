@@ -1,14 +1,5 @@
 [
   {
-    "name": "Apache Spark™",
-    "description": "This connector allows Apache Spark™ to read from and write to Delta Lake.",
-    "url": "https://docs.delta.io",
-    "docs": "https://docs.delta.io",
-    "source_code": "https://github.com/delta-io/delta/",
-    "tags": ["Spark"],
-    "thumbnail": "./images/connectors/apache-spark-icon.png"
-  },
-  {
     "name": "Apache Flink",
     "description": "This connector allows Apache Flink to write to Delta Lake.",
     "url": "https://github.com/delta-io/connectors/tree/master/flink/",
@@ -16,33 +7,6 @@
     "source_code": "https://github.com/delta-io/connectors/tree/master/flink",
     "tags": ["Flink", "standalone"],
     "thumbnail": "./images/connectors/apache-flink-logo.png"
-  },
-  {
-    "name": "PrestoDB",
-    "description": "This connector allows PrestoDB to read from Delta Lake.",
-    "url": "https://prestodb.io/docs/current/connector/deltalake.html",
-    "docs": "https://prestodb.io/docs/current/connector/deltalake.html",
-    "source_code": "https://github.com/prestodb/presto/tree/master/presto-delta",
-    "tags": ["PrestoDB", "standalone"],
-    "thumbnail": "./images/connectors/prestodb-logo.png"
-  },
-  {
-    "name": "Trino",
-    "description": "This connector allows Trino to read from and write to Delta Lake.",
-    "url": "https://trino.io/docs/current/connector/delta-lake.html",
-    "docs": "https://trino.io/docs/current/connector/delta-lake.html",
-    "source_code": "https://github.com/trinodb/trino/tree/master/plugin/trino-delta-lake",
-    "tags": ["Trino"],
-    "thumbnail": "./images/connectors/trino-logo.png"
-  },
-  {
-    "name": "Delta Standalone",
-    "description": "This library allows Scala and Java-based projects (including Apache Flink, Apache Hive, Apache Beam, and PrestoDB) to read from and write to Delta Lake.",
-    "url": "https://github.com/delta-io/connectors",
-    "docs": "https://docs.delta.io/latest/delta-standalone.html",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/standalone/src",
-    "tags": ["Scala", "Java", "standalone"],
-    "thumbnail": "./images/connectors/delta-standalone.png"
   },
   {
     "name": "Apache Hive",
@@ -54,6 +18,15 @@
     "thumbnail": "./images/connectors/hive.png"
   },
   {
+    "name": "Apache Spark™",
+    "description": "This connector allows Apache Spark™ to read from and write to Delta Lake.",
+    "url": "https://docs.delta.io",
+    "docs": "https://docs.delta.io",
+    "source_code": "https://github.com/delta-io/delta/",
+    "tags": ["Spark"],
+    "thumbnail": "./images/connectors/apache-spark-icon.png"
+  },
+  {
     "name": "Delta Rust API ",
     "description": "This library allows Rust (with Python and Ruby bindings) low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc.",
     "url": "https://github.com/delta-io/delta-rs",
@@ -63,13 +36,13 @@
     "thumbnail": "./images/connectors/rust.png"
   },
   {
-    "name": "SQL Delta Import",
-    "description": "This utility is for importing data from a JDBC source into a Delta Lake table.",
-    "url": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
-    "docs": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/sql-delta-import/src",
-    "tags": ["SQL", "JDBC"],
-    "thumbnail": "./images/connectors/sql.png"
+    "name": "Delta Standalone",
+    "description": "This library allows Scala and Java-based projects (including Apache Flink, Apache Hive, Apache Beam, and PrestoDB) to read from and write to Delta Lake.",
+    "url": "https://github.com/delta-io/connectors",
+    "docs": "https://docs.delta.io/latest/delta-standalone.html",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/standalone/src",
+    "tags": ["Scala", "Java", "standalone"],
+    "thumbnail": "./images/connectors/delta-standalone.png"
   },
   {
     "name": "Kafka Delta Ingest",
@@ -81,6 +54,15 @@
     "thumbnail": "./images/connectors/kafka.png"
   },
   {
+    "name": "PrestoDB",
+    "description": "This connector allows PrestoDB to read from Delta Lake.",
+    "url": "https://prestodb.io/docs/current/connector/deltalake.html",
+    "docs": "https://prestodb.io/docs/current/connector/deltalake.html",
+    "source_code": "https://github.com/prestodb/presto/tree/master/presto-delta",
+    "tags": ["PrestoDB", "standalone"],
+    "thumbnail": "./images/connectors/prestodb-logo.png"
+  },
+  {
     "name": "Apache Pulsar",
     "description": "This connector allows Apache Pulsar to read from and write to Delta Lake.",
     "url": "https://streamnative.io/blog/release/2022-08-17-announcing-the-delta-lake-sink-connector-for-apache-pulsar/",
@@ -90,171 +72,21 @@
     "thumbnail": "./images/connectors/wFcLUbwd_400x400.jpg"
   },
   {
-    "name": "dlt | SparkR",
-    "description": "This package allows SparkR to read from and write to Delta Lake.",
-    "url": "https://dlt.zero323.net/",
-    "docs": "https://dlt.zero323.net/",
-    "source_code": "https://gitlab.com/zero323/dlt/",
-    "tags": ["SparkR", "community"],
-    "thumbnail": "./images/connectors/dlt.png"
+    "name": "SQL Delta Import",
+    "description": "This utility is for importing data from a JDBC source into a Delta Lake table.",
+    "url": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
+    "docs": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
+    "source_code": "https://github.com/delta-io/connectors/tree/master/sql-delta-import/src",
+    "tags": ["SQL", "JDBC"],
+    "thumbnail": "./images/connectors/sql.png"
   },
   {
-    "name": "Apache Beam (Beta)",
-    "description": "This connector allows Apache Beam to read from Delta Lake.",
-    "url": "https://github.com/mbenenso/beam-deltalake/",
-    "docs": "https://github.com/mbenenso/beam-deltalake/",
-    "source_code": "https://github.com/mbenenso/beam-deltalake/",
-    "tags": ["Beam", "standalone", "community"],
-    "thumbnail": "./images/connectors/apache-beam.png"
-  },
-  {
-    "name": "Athena Query Federation (Beta)",
-    "description": "This connector allows AWS Athena to read from Delta Lake.",
-    "url": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
-    "docs": "https://github.com/awslabs/aws-athena-query-federation/pull/509",
-    "source_code": "https://github.com/malonsocasas/aws-athena-query-federation/tree/master/athena-deltalake",
-    "tags": ["AWS", "Athena", "standalone", "community"],
-    "thumbnail": "./images/connectors/AthenaFederation1.png"
-  },
-  {
-    "name": "Power BI",
-    "description": "This connector allows Power BI to read from Delta Lake.",
-    "url": "https://github.com/delta-io/connectors/tree/master/powerbi",
-    "docs": "https://github.com/delta-io/connectors/tree/master/powerbi",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/powerbi",
-    "tags": ["PowerBI", "community"],
-    "thumbnail": "./images/connectors/powerbi.png"
-  },
-  {
-    "name": "Power BI | Delta Sharing (Beta)",
-    "description": "This connector allows Power BI to read from Delta Sharing endpoint.",
-    "url": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
-    "docs": "https://docs.microsoft.com/en-us/power-query/connectors/deltasharing",
-    "tags": ["PowerBI", "Delta Sharing"],
-    "thumbnail": "./images/connectors/powerbi.png"
-  },
-  {
-    "name": "node.js | Delta Sharing (Beta)",
-    "description": "This connector allows node.js to read from Delta Sharing endpoint.",
-    "url": "https://github.com/goodwillpunning/nodejs-sharing-client",
-    "docs": "https://github.com/goodwillpunning/nodejs-sharing-client#quickstart",
-    "source_code": "https://github.com/goodwillpunning/nodejs-sharing-client",
-    "tags": ["node.js", "Delta Sharing", "community"],
-    "thumbnail": "./images/connectors/nodejs-logo.png"
-  },
-  {
-    "name": "Java | Delta Sharing (Beta)",
-    "description": "This connector allows a Java client to read from Delta Sharing endpoint.",
-    "url": "https://github.com/databrickslabs/delta-sharing-java-connector",
-    "source_code": "https://github.com/databrickslabs/delta-sharing-java-connector",
-    "tags": ["Java", "Delta Sharing", "community"],
-    "thumbnail": "./images/connectors/java-logo.png"
-  },
-  {
-    "name": "R | Delta Sharing (Beta)",
-    "description": "This connector allows a R client to read from Delta Sharing endpoint.",
-    "url": "https://github.com/zacdav-db/delta-sharing-r",
-    "source_code": "https://github.com/zacdav-db/delta-sharing-r",
-    "tags": ["R", "Delta Sharing", "community"],
-    "thumbnail": "./images/connectors/K5JPp_Y7.jpg"
-  },
-  {
-    "name": "Databricks",
-    "description": "Delta Lake is included within Databricks allowing it to read from and write to Delta Lake.",
-    "url": "https://docs.databricks.com/delta/index.html",
-    "docs": "https://docs.databricks.com/delta/index.html",
-    "tags": ["Databricks", "Azure", "GCP", "AWS"],
-    "thumbnail": "./images/connectors/Databricks-logo.png"
-  },
-  {
-    "name": "Starburst",
-    "description": "The Starburst Delta Lake connector is an extended version of the Trino/Delta Lake connector with configuration and usage identical.",
-    "url": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
-    "docs": "https://docs.starburst.io/latest/connector/starburst-delta-lake.html",
-    "tags": ["Starburst", "Azure", "GCP", "AWS"],
-    "thumbnail": "./images/connectors/starburst-logo.png"
-  },
-  {
-    "name": "AWS EMR",
-    "description": "Starting with Amazon EMR release 6.9.0, you can use Apache Spark 3.x on Amazon EMR clusters with Delta Lake tables. ",
-    "url": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
-    "docs": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
-    "tags": ["AWS", "EMR"],
-    "thumbnail": "./images/connectors/aws-emr.png"
-  },
-  {
-    "name": "AWS Glue",
-    "description": "AWS Glue 3.0 and later supports the Linux Foundation Delta Lake framework",
-    "url": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
-    "docs": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
-    "tags": ["AWS", "Glue"],
-    "thumbnail": "./images/connectors/aws-glue.png"
-  },
-  {
-    "name": "Azure Synapse",
-    "description": "The current version of Delta Lake included with Azure Synapse has language support for Scala, PySpark, and .NET.",
-    "url": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-delta-lake-overview?pivots=programming-language-csharp",
-    "docs": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-what-is-delta-lake",
-    "tags": ["Azure", "Synapse"],
-    "thumbnail": "./images/connectors/AzureSynapseAnalytics.png"
-  },
-  {
-    "name": "Snowflake (Beta)",
-    "description": "This preview allows Snowflake to read from Delta Lake via an external table.",
-    "url": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
-    "docs": "https://docs.snowflake.com/en/user-guide/tables-external-intro.html#delta-lake-support",
-    "tags": ["Snowflake"],
-    "thumbnail": "./images/connectors/snowflake.png"
-  },
-  {
-    "name": "Ceph",
-    "description": "This connector allows you to read and write from Delta tables on Ceph storage.",
-    "url": "https://github.com/nanhu-lab/hadoop-ceph",
-    "source_code": "https://github.com/nanhu-lab/hadoop-ceph#cephrgw",
-    "tags": ["Ceph", "community"],
-    "thumbnail": "./images/connectors/42_ceph-icon.77291086bf.png"
-  },
-  {
-    "name": "MinIO",
-    "description": "This connector allows you to read and write from Delta tables on MinIO storage.",
-    "url": "https://min.io/download#/kubernetes",
-    "docs": "https://blog.min.io/delta-lake-minio-multi-cloud/",
-    "source_code": "https://github.com/minio/minio",
-    "tags": ["MinIO", "community"],
-    "thumbnail": "./images/connectors/MINIO_wordmark.png"
-  },
-  {
-    "name": "DataHub",
-    "description": "This connector allows DataHub to extract Delta Lake metadata.",
-    "url": "https://datahubproject.io/docs/generated/ingestion/sources/delta-lake/",
-    "source_code": "https://github.com/datahub-project/datahub/tree/master/metadata-ingestion/src/datahub/ingestion/source/delta_lake",
-    "tags": ["DataHub", "community"],
-    "thumbnail": "./images/connectors/datahub-logo.png"
-  },
-  {
-    "name": "Datastream Connector",
-    "description": "As Datastream streams changes to files to Google Cloud Storage, this connector streams these files and writes the changes to Delta Lake.",
-    "url": "https://github.com/badal-io/datastream-deltalake-connector",
-    "source_code": "https://github.com/badal-io/datastream-deltalake-connector",
-    "tags": ["GCS", "Datastream", "badal.io", "community"],
-    "thumbnail": "./images/connectors/badal-io-logo.png"
-  },
-  {
-    "name": "Athena",
-    "description": "This utility allows Athena to read from Delta Lake using a manifest file.",
-    "url": "https://docs.delta.io/latest/presto-integration.html",
-    "docs": "https://docs.delta.io/latest/presto-integration.html",
-    "source_code": "https://docs.delta.io/latest/presto-integration.html",
-    "tags": ["Athena", "AWS", "manifest"],
-    "thumbnail": "./images/connectors/athena.png"
-  },
-  {
-    "name": "Redshift",
-    "description": "This utility allows AWS Redshift to read from Delta Lake using a manifest file.",
-    "url": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
-    "docs": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
-    "source_code": "https://docs.delta.io/latest/redshift-spectrum-integration.html",
-    "tags": ["Redshift", "AWS", "manifest"],
-    "thumbnail": "./images/connectors/redshift.png"
+    "name": "Trino",
+    "description": "This connector allows Trino to read from and write to Delta Lake.",
+    "url": "https://trino.io/docs/current/connector/delta-lake.html",
+    "docs": "https://trino.io/docs/current/connector/delta-lake.html",
+    "source_code": "https://github.com/trinodb/trino/tree/master/plugin/trino-delta-lake",
+    "tags": ["Trino"],
+    "thumbnail": "./images/connectors/trino-logo.png"
   }
 ]

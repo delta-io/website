@@ -41,7 +41,7 @@ const ContributeSection = () => (
     }
     background="#cdd9f4"
     centeredHeader
-    padding="xxxl"
+    padding="xl"
   >
     <ContributeGrid
       features={[

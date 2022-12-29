@@ -31,20 +31,59 @@ const LatestEventsSectionYoutube = () => {
           }
         }
       }
+      allVideosYoutube {
+        edges {
+          node {
+            playlistId
+            playlistTitle
+            videoCollection {
+              publishedAt
+              videoUploadDate
+              playlistId
+              title
+              url
+              description
+              id
+              thumbnails {
+                high {
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+        }
+      }
     }
   `);
 
   const listMeetings = data?.allMeetingsYoutube?.edges.map((item) => item.node);
+  const listVideos = data?.allVideosYoutube?.edges
+    .map((item) => item.node)
+    .map((item) => item.videoCollection)
+    .flat();
+
+  const sortedListOfVideosByPublishedDate = [...listVideos].sort(
+    (a, b) => Date.parse(b.videoUploadDate) - Date.parse(a.videoUploadDate)
+  );
+
+  const lastVideos = sortedListOfVideosByPublishedDate.slice(0, 4);
+  const emptyMeet = listMeetings[0].url === "";
+  const collection = emptyMeet
+    ? lastVideos
+    : [[...listMeetings, ...lastVideos]];
 
   const fitData = [
     {
-      playlistTitle: "Scheduled broadcasts",
-      videoCollection: listMeetings,
+      id: "communityId",
+      playlistTitle: "",
+      videoCollection: collection,
     },
   ];
 
   return (
-    <Section>
+    <Section title="Scheduled and Latest Videos" centeredHeader padding="xl">
       <Wrapper>
         <YoutubeCardDataList cards={fitData} />
       </Wrapper>

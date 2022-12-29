@@ -24,7 +24,7 @@ const playListsByChanelId = async (chanelId) => {
   return response.data.items;
 };
 const videoListByPlayListId = async (listId) => {
-  const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${listId}&key=${process.env.YOUTUBE_API_KEY}`;
+  const URL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&part=contentDetails&playlistId=${listId}&key=${process.env.YOUTUBE_API_KEY}`;
 
   return axios.get(URL);
 };
@@ -60,6 +60,7 @@ const reduceArrItems = (collection) =>
       description: subItem?.snippet?.description,
       thumbnails: subItem?.snippet?.thumbnails,
       url: `https://www.youtube.com/watch?v=${subItem.snippet.resourceId.videoId}`,
+      videoUploadDate: subItem?.contentDetails?.videoPublishedAt,
     }))
   );
 
@@ -156,6 +157,25 @@ const getVideoListPromise = async () => {
 const getArrForMeetingsNodes = async () => {
   const list = await getMeetingsList();
 
+  const mock = [
+    {
+      videoId: "",
+      url: "",
+      channelId: "",
+      title: "",
+      description: "",
+      publishTime: "",
+      publishedAt: "",
+      thumbnails: {
+        high: {
+          height: "",
+          url: "",
+          width: "",
+        },
+      },
+    },
+  ];
+
   const arr = list?.map((item) => ({
     videoId: item.id.videoId,
     url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
@@ -167,7 +187,7 @@ const getArrForMeetingsNodes = async () => {
     thumbnails: item.snippet.thumbnails,
   }));
 
-  return arr;
+  return arr.length > 0 ? arr : mock;
 };
 
 const createNodesFromList = ({
