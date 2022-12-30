@@ -15,6 +15,7 @@ module.exports = {
   rules: {
     "react/prop-types": 0,
     "import/prefer-default-export": 0,
+    "jsx-a11y/label-has-associated-control": 0,
     "react/function-component-definition": [
       1,
       {

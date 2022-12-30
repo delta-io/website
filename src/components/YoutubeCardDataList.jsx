@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { arrayOf, shape, string } from "prop-types";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,7 +7,8 @@ import { Navigation } from "swiper";
 
 import "swiper/css";
 import Embed from "src/components/Embed";
-import Link from "src/components/Link";
+import { Modal } from "src/components/Modal/Modal";
+import { YoutubeEmbed } from "src/components/YoutubeEmbed";
 
 const breakpoints = {
   " 0": { slidesPerView: 1, slidesPerGroup: 1 },
@@ -26,6 +27,7 @@ const PageContainer = styled.div`
   gap: 2rem;
   width: 100%;
   grid-template-columns: 100%;
+
   .swiper-slide {
     ${cardMedia};
     margin-right: 16px;
@@ -50,16 +52,28 @@ export const WrapperList = styled.div`
   padding: 0 30px;
 `;
 
+export const CardButton = styled.button`
+  display: inline-block;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+export const CardDescription = styled.p`
+  word-break: ${({ playlistId }) =>
+    playlistId === "manually_added_playlist_id" ? "normal" : "break-all"};
+  word-wrap: ${({ playlistId }) =>
+    playlistId === "manually_added_playlist_id" ? "unset" : "break-word"};
+  text-align: ${({ playlistId }) =>
+    playlistId === "manually_added_playlist_id" && "justify"};
+`;
+
 export const Card = styled.div`
   width: 100%;
   display: inline-block;
 
   h6 {
     margin: 10px 0;
-  }
-  p {
-    word-break: break-all;
-    word-wrap: break-word;
   }
 `;
 
@@ -126,60 +140,89 @@ export const ButtonControl = styled.button`
 `;
 
 const YoutubeCardDataList = ({ cards }) => {
+  console.log("CARDS_FOR_EMBED_ID", cards);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isEmbedId, setIsEmbedId] = useState(null);
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
 
+  const modalOpenHandler = () => setIsOpenModal(true);
+  const modalCloseHandler = () => setIsOpenModal(false);
+
+  const embedIdHandler = (embedId) => {
+    setIsEmbedId(embedId);
+    modalOpenHandler();
+  };
+
   return (
-    <PageContainer>
-      {cards.map((item) => (
-        <PlayListSection key={item.id}>
-          {item.playlistTitle && <CardTitle>{item.playlistTitle}</CardTitle>}
-          <WrapperList>
-            <ButtonControl direction="left" ref={navigationPrevRef}>
-              slide left
-            </ButtonControl>
-            <ButtonControl direction="right" ref={navigationNextRef}>
-              slide right
-            </ButtonControl>
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: navigationPrevRef.current,
-                nextEl: navigationNextRef.current,
-              }}
-              onBeforeInit={(swiper) => {
-                // eslint-disable-next-line no-param-reassign
-                swiper.params.navigation.prevEl = navigationPrevRef.current;
-                // eslint-disable-next-line no-param-reassign
-                swiper.params.navigation.nextEl = navigationNextRef.current;
-              }}
-              watchOverflow
-              spaceBetween={16}
-              slidesPerView={1}
-              breakpoints={breakpoints}
-              // onSlideChange={() => console.log("slide change")}
-              // onSwiper={(swiper) => console.log(swiper)}
-            >
-              {item.videoCollection.map((slide) => (
-                <SwiperSlide key={slide.id}>
-                  <Card>
-                    <Link href={slide.url}>
-                      <Embed src={slide.thumbnails?.high?.url} />
-                    </Link>
-                    <h6>{slide.title}</h6>
-                    <p>
-                      {slide.description.length > 80
-                        ? `${slide.description.slice(0, 80)}... `
-                        : slide.description}
-                    </p>
-                  </Card>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </WrapperList>
-        </PlayListSection>
-      ))}
-    </PageContainer>
+    <>
+      <PageContainer>
+        {cards.map((item) => (
+          <PlayListSection key={item.id}>
+            {item.playlistTitle && <CardTitle>{item.playlistTitle}</CardTitle>}
+            <WrapperList>
+              <ButtonControl direction="left" ref={navigationPrevRef}>
+                slide left
+              </ButtonControl>
+              <ButtonControl direction="right" ref={navigationNextRef}>
+                slide right
+              </ButtonControl>
+              <Swiper
+                modules={[Navigation]}
+                navigation={{
+                  prevEl: navigationPrevRef.current,
+                  nextEl: navigationNextRef.current,
+                }}
+                onBeforeInit={(swiper) => {
+                  // eslint-disable-next-line no-param-reassign
+                  swiper.params.navigation.prevEl = navigationPrevRef.current;
+                  // eslint-disable-next-line no-param-reassign
+                  swiper.params.navigation.nextEl = navigationNextRef.current;
+                }}
+                watchOverflow
+                spaceBetween={16}
+                slidesPerView={1}
+                breakpoints={breakpoints}
+                // onSlideChange={() => console.log("slide change")}
+                // onSwiper={(swiper) => console.log(swiper)}
+              >
+                {item.videoCollection.map((slide) => (
+                  <SwiperSlide key={slide.id}>
+                    <Card>
+                      {item.playlistId === "manually_added_playlist_id" ? (
+                        <a href={slide.url}>
+                          <Embed src={slide.thumbnail} />
+                        </a>
+                      ) : (
+                        <CardButton
+                          onClick={() => embedIdHandler(slide.videoId)}
+                        >
+                          <Embed src={slide.thumbnail?.high?.url} />
+                        </CardButton>
+                      )}
+                      <h6>{slide.title}</h6>
+                      <CardDescription playlistId={item.playlistId}>
+                        {/* eslint-disable-next-line no-nested-ternary */}
+                        {item.playlistId === "manually_added_playlist_id"
+                          ? slide.description
+                          : slide.description.length > 80
+                          ? `${slide.description.slice(0, 80)}... `
+                          : slide.description}
+                      </CardDescription>
+                    </Card>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </WrapperList>
+          </PlayListSection>
+        ))}
+      </PageContainer>
+      {isOpenModal && (
+        <Modal open={isOpenModal} onClose={modalCloseHandler}>
+          <YoutubeEmbed embedId={isEmbedId} />
+        </Modal>
+      )}
+    </>
   );
 };
 

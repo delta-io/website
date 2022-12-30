@@ -58,7 +58,8 @@ const reduceArrItems = (collection) =>
       publishedAt: subItem?.snippet?.publishedAt,
       title: subItem?.snippet?.title,
       description: subItem?.snippet?.description,
-      thumbnails: subItem?.snippet?.thumbnails,
+      thumbnail: subItem?.snippet?.thumbnails,
+      videoId: subItem.snippet.resourceId.videoId,
       url: `https://www.youtube.com/watch?v=${subItem.snippet.resourceId.videoId}`,
       videoUploadDate: subItem?.contentDetails?.videoPublishedAt,
     }))
@@ -166,7 +167,7 @@ const getArrForMeetingsNodes = async () => {
       description: "",
       publishTime: "",
       publishedAt: "",
-      thumbnails: {
+      thumbnail: {
         high: {
           height: "",
           url: "",
@@ -184,7 +185,7 @@ const getArrForMeetingsNodes = async () => {
     description: item.snippet.description,
     publishTime: item.snippet.publishTime,
     publishedAt: item.snippet.publishedAt,
-    thumbnails: item.snippet.thumbnails,
+    thumbnail: item.snippet.thumbnail,
   }));
 
   return arr.length > 0 ? arr : mock;
