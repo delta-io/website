@@ -9,7 +9,7 @@ author: Matthew Powers
 
 This blog post explains how to remove files marked for deletion (aka “tombstoned files”) from storage with the Delta Lake vacuum command. Delta Lake doesn't physically remove files from storage when operations “delete” the files. The vacuum command is used to physically remove files from storage that have been marked for deletion and are older than the retention period.
 
-The main benefit of vacuuming is to save on storage costs. Vacuuming does not make your queries run any faster and can limit your ability to time travel to certain Delta table versions. You need to weigh the costs / benefits for each of your tables to develop an optimal vacuum strategy.
+The main benefit of vacuuming is to save on storage costs. Vacuuming does not make your queries run any faster and can limit your ability to time travel to certain Delta table versions. You need to weigh the costs/benefits for each of your tables to develop an optimal vacuum strategy.
 
 Let's start with a simple example and then dig into some of the edge cases. Then we'll look at the costs/benefits of vacuuming so you can weigh the tradeoffs and make an informed decision on how to best manage your Delta tables.
 
@@ -19,7 +19,7 @@ See [this notebook](https://github.com/MrPowers/delta-examples/blob/master/noteb
 
 Let's start by creating a Delta table:
 
-```
+```python
 df = spark.createDataFrame([("bob", 3), ("sue", 5)]).toDF("first_name", "age")
 df.repartition(1).write.format("delta").saveAsTable("some_people")
 ```
@@ -28,14 +28,14 @@ Note: `repartition(1)` is used to output a single file to make the demonstration
 
 Now append some more data to the Delta table:
 
-```
+```python
 df = spark.createDataFrame([("ingrid", 58), ("luisa", 87)]).toDF("first_name", "age")
 df.repartition(1).write.format("delta").mode("append").saveAsTable("some_people")
 ```
 
 Here is the current content of the Delta table:
 
-```
+```python
 spark.table("some_people").show()
 
 +----------+---+
@@ -63,15 +63,14 @@ some_people
 
 Let's overwrite the existing Delta table with some new data, which will tombstone the existing data. Overwrite operations mark all the existing data for removal in the transaction log (aka “tombstones all the existing files”).
 
-```
+```python
 df = spark.createDataFrame([("jordana", 26), ("fred", 25)]).toDF("first_name", "age")
 df.repartition(1).write.format("delta").mode("overwrite").saveAsTable("some_people")
-
 ```
 
 Here are the contents of the Delta table after the overwrite operation:
 
-```
+```python
 spark.table("some_people").show()
 
 +----------+---+
@@ -157,7 +156,7 @@ Vacuuming will never remove files that the latest Delta table version relies on,
 
 Check that the latest version of the Delta table is still accessible, even after the vacuum command was run:
 
-```
+```python
 spark.sql("SELECT * FROM some_people").show()
 
 +----------+---+
