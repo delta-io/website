@@ -2,6 +2,7 @@ import * as React from "react";
 import ImageStrip from "src/components/ImageStrip";
 import Section from "src/components/Section";
 import styled from "styled-components";
+
 import { graphql, useStaticQuery } from "gatsby";
 
 const CenteredImageStrip = styled(ImageStrip)`
