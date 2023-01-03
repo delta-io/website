@@ -140,7 +140,6 @@ export const ButtonControl = styled.button`
 `;
 
 const YoutubeCardDataList = ({ cards }) => {
-  console.log("CARDS_FOR_EMBED_ID", cards);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isEmbedId, setIsEmbedId] = useState(null);
   const navigationPrevRef = useRef(null);
