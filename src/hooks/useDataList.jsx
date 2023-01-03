@@ -264,8 +264,6 @@ const useDataList = (list) => {
     return [playlistConference, ...allPlaylistsForVideos];
   }
 
-  console.log("OUR_LIST", getList(list));
-
   return getList(list);
 };
 
