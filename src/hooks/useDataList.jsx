@@ -194,6 +194,30 @@ const query = graphql`
         }
       }
     }
+    tutorialsYoutube: allTutorialsYoutube {
+      edges {
+        node {
+          id
+          playlistId
+          playlistTitle
+          videoCollection {
+            description
+            id
+            playlistId
+            publishedAt
+            title
+            url
+            thumbnails {
+              high {
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
