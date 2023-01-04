@@ -1,14 +1,14 @@
 [
   {
     "title": "Building a Better Delta Lake with Talend and Databricks",
-    "description": "With the introduction of Delta Lake last year, a well-tested pattern of building out the bronze, silver, and gold data architecture approach has proven useful. This session will review how to use Talend Data Fabric to accelerate the development of a Delta Lake using highly productive, scalable, and enterprise ready data flow tools.",
-    "thumbnail": "./images/videos/building-a-better-delta-lake-with-talend-and-databricks.jpg",
+    "description": "With the introduction of Delta Lake last year, a well-tested pattern of building out the bronze, silver, and gold data architecture approach has proven useful.",
+    "thumbnail": "./images/conferences/template.jpg",
     "url": "https://databricks.com/session_na20/building-a-better-delta-lake-with-talend-and-databricks"
   },
   {
     "title": "Delta from a Data Engineer's Perspective",
     "description": "Take a walk through the daily struggles of a data engineer in this presentation as we cover what is truly needed to create robust end to end Big Data solutions.",
-    "thumbnail": "./images/videos/delta-from-a-data-engineers-perspective.jpg",
+    "thumbnail": "./images/conferences/template.jpg",
     "url": "https://databricks.com/session_na20/delta-from-a-data-engineers-perspective"
   }
 ]

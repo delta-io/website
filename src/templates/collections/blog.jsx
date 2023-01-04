@@ -14,7 +14,6 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
   if (!edges.length) {
     return <div>No articles found!</div>;
   }
-  console.log("PAGE_CONTEXT", data);
 
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;

@@ -69,7 +69,7 @@ const Content = styled.div`
   width: 90%;
 `;
 
-export function Modal({ open, onClose, children }) {
+export const Modal = ({ open, onClose, children }) => {
   const [active, setActive] = useState(false);
   const backdropRef = useRef(null);
   const contentRef = useRef(null);
@@ -102,11 +102,11 @@ export function Modal({ open, onClose, children }) {
   }, [open, onClose]);
 
   return (
-    <Backdrop className={[active && open && "active"]}>
+    <Backdrop className={[active && open && "active"].join(" ")}>
       <CloseButton>
         <CrossIcon src={crossIcon} alt="crossIcon" width={20} height={20} />
       </CloseButton>
       <Content ref={contentRef}>{children}</Content>
     </Backdrop>
   );
-}
+};

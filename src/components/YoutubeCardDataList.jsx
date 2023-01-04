@@ -12,9 +12,9 @@ import { YoutubeEmbed } from "src/components/YoutubeEmbed";
 
 const breakpoints = {
   " 0": { slidesPerView: 1, slidesPerGroup: 1 },
-  " 576": { slidesPerView: 1.5 },
+  " 576": { slidesPerView: 2 },
   " 768": { slidesPerView: 3, slidesPerGroup: 3 },
-  " 992": { slidesPerView: 3.5 },
+  " 992": { slidesPerView: 3 },
   " 1200": { slidesPerView: 4, slidesPerGroup: 4 },
 };
 const cardMedia = Object.entries(breakpoints).map(
@@ -57,23 +57,40 @@ export const CardButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  text-align: start;
+
+  .title {
+    display: block;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
 `;
 
-export const CardDescription = styled.p`
-  word-break: ${({ playlistId }) =>
-    playlistId === "manually_added_playlist_id" ? "normal" : "break-all"};
-  word-wrap: ${({ playlistId }) =>
-    playlistId === "manually_added_playlist_id" ? "unset" : "break-word"};
-  text-align: ${({ playlistId }) =>
-    playlistId === "manually_added_playlist_id" && "justify"};
+export const CardDescription = styled.span`
+  display: block;
+  margin-top: 10px;
 `;
 
 export const Card = styled.div`
   width: 100%;
   display: inline-block;
 
-  h6 {
-    margin: 10px 0;
+  a {
+    text-decoration: none;
+    color: black;
+
+    &:hover,
+    :focus {
+      color: black;
+    }
+  }
+
+  .title {
+    display: block;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 600;
   }
 `;
 
@@ -92,7 +109,7 @@ export const ButtonControl = styled.button`
   height: 2rem;
   border-radius: 50%;
   border: #efefef;
-  background-color: white;
+  background-color: ${(props) => props.theme.dark.color};
   position: absolute;
   cursor: pointer;
   transform: translateY(-50%);
@@ -102,13 +119,13 @@ export const ButtonControl = styled.button`
   font-size: 0;
   z-index: 10;
   box-shadow: 0 4px 4px rgb(0 0 0 / 30%), 0 0 4px rgb(0 0 0 / 20%);
-  ${(props) => (props.direction === "left" ? `left: -5px ` : "right:-5px")};
+  ${(props) => (props.direction === "left" ? `left: 20px ` : "right:20px")};
 
   &::before,
   ::after {
     content: "";
     height: 1px;
-    background-color: #5d5d5d;
+    background-color: ${(props) => props.theme.colors.textSecondary};
     position: absolute;
     left: 40%;
     width: 33%;
@@ -131,13 +148,27 @@ export const ButtonControl = styled.button`
   }
 
   &:hover {
-    background-color: #f5f5f5;
+    background-color: ${(props) => props.theme.colors.bgLight};
+
+    &::before,
+    &::after {
+      background-color: ${(props) => props.theme.colors.primary};
+    }
   }
 
   &:disabled {
     display: none;
   }
 `;
+
+const shortedDescription = (str, characters) => {
+  const shortedStr = str.slice(0, characters);
+
+  const arr = shortedStr.split(" ");
+  arr.pop();
+
+  return `${arr.join(" ")}...`;
+};
 
 const YoutubeCardDataList = ({ cards }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -191,23 +222,22 @@ const YoutubeCardDataList = ({ cards }) => {
                       {item.playlistId === "manually_added_playlist_id" ? (
                         <a href={slide.url}>
                           <Embed src={slide.thumbnail} />
+                          <span className="title">{slide.title}</span>
+                          <CardDescription playlistId={item.playlistId}>
+                            {slide.description}
+                          </CardDescription>
                         </a>
                       ) : (
                         <CardButton
                           onClick={() => embedIdHandler(slide.videoId)}
                         >
                           <Embed src={slide.thumbnail?.high?.url} />
+                          <span className="title">{slide.title}</span>
+                          <CardDescription playlistId={item.playlistId}>
+                            {shortedDescription(slide.description, 100)}
+                          </CardDescription>
                         </CardButton>
                       )}
-                      <h6>{slide.title}</h6>
-                      <CardDescription playlistId={item.playlistId}>
-                        {/* eslint-disable-next-line no-nested-ternary */}
-                        {item.playlistId === "manually_added_playlist_id"
-                          ? slide.description
-                          : slide.description.length > 80
-                          ? `${slide.description.slice(0, 80)}... `
-                          : slide.description}
-                      </CardDescription>
                     </Card>
                   </SwiperSlide>
                 ))}
