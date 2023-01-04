@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -6,14 +6,14 @@ const Wrapper = styled.div`
 `;
 
 export const OrderFormComponent = () => {
-  const [isForm, setIsForm] = useState(false);
+  const formRef = useRef(null);
   useEffect(() => {
-    const initialScript = document.createElement("script");
-    initialScript.src =
+    const script1 = document.createElement("script");
+    script1.src =
       "https://my.amplifier.com/tools/campaigns/lib/2.0/amplifier.campaigns.js";
-    initialScript.type = "text/javascript";
+    script1.type = "text/javascript";
 
-    const scriptStr = `amplifier.campaigns.init({
+    const contentScript2 = `amplifier.campaigns.init({
             //By default links to the page hosting this form would look like this: https://mydomain.com/form?offer_code=<offerCode>
             //If you want to change how the offer code is included in the link just change the following line accordingly
             offerCode: location.search.split('offer_code=')[1],
@@ -91,28 +91,27 @@ export const OrderFormComponent = () => {
             }
         });`;
 
-    const actionScript = document.createElement("script");
+    const script2 = document.createElement("script");
 
-    actionScript.innerHTML = scriptStr;
+    script2.innerHTML = contentScript2;
 
-    document.head.append(initialScript);
+    document.head.append(script1);
 
-    initialScript.onload = function () {
-      document.head.append(actionScript);
-      setIsForm(true);
+    script1.onload = () => {
+      document.head.append(script2);
+
+      script2.onload = () => {
+        formRef.current.onsubmit = "return amplifier.campaigns.onSubmit()";
+      };
     };
 
     // eslint-disable-next-line no-restricted-globals
     return () => location.reload();
   }, []);
 
-  if (!isForm) {
-    return <div>...</div>;
-  }
-
   return (
     <Wrapper>
-      <form method="post" onSubmit="return amplifier.campaigns.onSubmit();">
+      <form ref={formRef} method="post">
         <h2>Select Reward</h2>
         <label>
           <input type="radio" name="item" value="SPARK-ON-ACID-ASPH-S" />
@@ -240,7 +239,7 @@ export const OrderFormComponent = () => {
           data-default-value="US"
           data-value="shortcode"
           required
-        ></select>
+        />
         <br />
         <label>Zip</label>
         <input type="text" name="postal_code" placeholder="Zip" required />
