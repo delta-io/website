@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useOnClickOutside } from "src/hooks/useOnClickOutside";
 import crossIcon from "./cross_icon.svg";
 
 const Backdrop = styled.div`
@@ -17,8 +16,11 @@ const Backdrop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
   overflow: hidden;
+
+  ${(props) =>
+    props.theme.mediaBreakpointUp("sm")(`
+    padding: 0 70px`)}
 
   & .modal-content {
     transform: translateY(100px);
@@ -32,14 +34,19 @@ const Backdrop = styled.div`
     transition-delay: 0ms;
     opacity: 1;
     height: 100%;
-
-    & .modal-content {
-      transform: translateY(0);
-      opacity: 1;
-      transition-delay: 150ms;
-      transition-duration: 350ms;
+      & .modal-content {
+        transform: translateY(0);
+        opacity: 1;
+        transition-delay: 150ms;
+        transition-duration: 350ms;
+      }
     }
-  }
+  
+  &.not-active {
+    transition-duration: 500ms;
+    transition-delay: 0ms;
+    opacity: 0;
+    height: 100%;
 `;
 
 const CloseButton = styled.button`
@@ -69,44 +76,33 @@ const Content = styled.div`
   width: 90%;
 `;
 
-export const Modal = ({ open, onClose, children }) => {
+export const Modal = ({ isOpenModal, onClose, children }) => {
   const [active, setActive] = useState(false);
-  const backdropRef = useRef(null);
-  const contentRef = useRef(null);
 
-  useOnClickOutside(contentRef, onClose);
+  const closeModalHandler = () => {
+    setActive(false);
+
+    window.setTimeout(() => {
+      onClose();
+    }, 1000);
+  };
 
   useEffect(() => {
-    const { current } = backdropRef;
-
-    const transitionEnd = () => setActive(open);
-
-    if (current) {
-      current.addEventListener("transitionend", transitionEnd);
-      window.addEventListener("keyup", onClose);
-    }
-
-    if (open) {
+    if (isOpenModal) {
       window.setTimeout(() => {
-        setActive(open);
+        setActive(isOpenModal);
       }, 10);
     }
-
-    return () => {
-      if (current) {
-        current.removeEventListener("transitionend", transitionEnd);
-      }
-
-      window.removeEventListener("keyup", onClose);
-    };
-  }, [open, onClose]);
+  }, [isOpenModal, onClose]);
 
   return (
-    <Backdrop className={[active && open && "active"].join(" ")}>
-      <CloseButton>
+    <Backdrop
+      className={[active && isOpenModal ? "active" : "not-active"].join(" ")}
+    >
+      <CloseButton onClick={closeModalHandler}>
         <CrossIcon src={crossIcon} alt="crossIcon" width={20} height={20} />
       </CloseButton>
-      <Content ref={contentRef}>{children}</Content>
+      <Content>{children}</Content>
     </Backdrop>
   );
 };

@@ -4,10 +4,11 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   width: 100%;
   margin: 0 auto;
+  padding: 10vh 0;
 
   iframe {
-    width: 100%;
     aspect-ratio: 16/9;
+    width: 100%;
   }
 `;
 

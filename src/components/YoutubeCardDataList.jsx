@@ -9,6 +9,8 @@ import "swiper/css";
 import Embed from "src/components/Embed";
 import { Modal } from "src/components/Modal/Modal";
 import { YoutubeEmbed } from "src/components/YoutubeEmbed";
+import { useNoScroll } from "src/hooks/useNoScroll";
+import { useOpen } from "src/hooks/useOpen";
 
 const breakpoints = {
   " 0": { slidesPerView: 1, slidesPerGroup: 1 },
@@ -171,18 +173,17 @@ const shortedDescription = (str, characters) => {
 };
 
 const YoutubeCardDataList = ({ cards }) => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const { isOpen, onClose, onOpen } = useOpen(false);
   const [isEmbedId, setIsEmbedId] = useState(null);
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
 
-  const modalOpenHandler = () => setIsOpenModal(true);
-  const modalCloseHandler = () => setIsOpenModal(false);
-
   const embedIdHandler = (embedId) => {
     setIsEmbedId(embedId);
-    modalOpenHandler();
+    onOpen();
   };
+
+  useNoScroll(isOpen);
 
   return (
     <>
@@ -246,8 +247,8 @@ const YoutubeCardDataList = ({ cards }) => {
           </PlayListSection>
         ))}
       </PageContainer>
-      {isOpenModal && (
-        <Modal open={isOpenModal} onClose={modalCloseHandler}>
+      {isOpen && (
+        <Modal isOpenModal={isOpen} onClose={onClose}>
           <YoutubeEmbed embedId={isEmbedId} />
         </Modal>
       )}
