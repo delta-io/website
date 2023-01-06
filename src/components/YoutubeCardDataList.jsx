@@ -221,7 +221,7 @@ const YoutubeCardDataList = ({ cards }) => {
                   <SwiperSlide key={slide.id}>
                     <Card>
                       {item.playlistId === "manually_added_playlist_id" ? (
-                        <a href={slide.url}>
+                        <a href={slide.url} rel="noreferrer" target="_blank">
                           <Embed src={slide.thumbnail} />
                           <span className="title">{slide.title}</span>
                           <CardDescription playlistId={item.playlistId}>

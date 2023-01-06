@@ -17,11 +17,13 @@ const Backdrop = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-
+  padding: 20px;
+  
   ${(props) =>
     props.theme.mediaBreakpointUp("sm")(`
-    padding: 0 70px`)}
-
+    padding: 20px 80px`)}
+  
+  
   & .modal-content {
     transform: translateY(100px);
     transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -34,14 +36,15 @@ const Backdrop = styled.div`
     transition-delay: 0ms;
     opacity: 1;
     height: 100%;
-      & .modal-content {
-        transform: translateY(0);
-        opacity: 1;
-        transition-delay: 150ms;
-        transition-duration: 350ms;
-      }
+
+    & .modal-content {
+      transform: translateY(0);
+      opacity: 1;
+      transition-delay: 150ms;
+      transition-duration: 350ms;
     }
-  
+  }
+
   &.not-active {
     transition-duration: 500ms;
     transition-delay: 0ms;
@@ -69,13 +72,6 @@ const CloseButton = styled.button`
 
 const CrossIcon = styled.img``;
 
-const Content = styled.div`
-  position: relative;
-  left: 0;
-  right: 0;
-  width: 90%;
-`;
-
 export const Modal = ({ isOpenModal, onClose, children }) => {
   const [active, setActive] = useState(false);
 
@@ -102,7 +98,7 @@ export const Modal = ({ isOpenModal, onClose, children }) => {
       <CloseButton onClick={closeModalHandler}>
         <CrossIcon src={crossIcon} alt="crossIcon" width={20} height={20} />
       </CloseButton>
-      <Content>{children}</Content>
+      {children}
     </Backdrop>
   );
 };
