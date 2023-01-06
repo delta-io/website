@@ -10,18 +10,17 @@ export const useOpen = (init = false) => {
     setIsOpen(false);
   }, []);
   const onToggle = useCallback(() => {
-    setIsOpen((prev) => {
-      return !prev;
-    });
+    setIsOpen((prev) => !prev);
   }, []);
 
-  return useMemo(() => {
-    return {
+  return useMemo(
+    () => ({
       isOpen,
       setIsOpen,
       onOpen,
       onClose,
       onToggle,
-    };
-  }, [isOpen, setIsOpen, onOpen, onClose, onToggle]);
+    }),
+    [isOpen, setIsOpen, onOpen, onClose, onToggle]
+  );
 };
