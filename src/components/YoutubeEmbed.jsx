@@ -1,24 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  width: 100%;
-  margin: 0 auto;
-  padding: 10vh 0;
-
-  iframe {
-    aspect-ratio: 16/9;
-    width: 100%;
-  }
+const Iframe = styled.iframe`
+  aspect-ratio: 16/9;
+  max-height: 100%;
+  max-width: 100%;
+  flex-grow: 1;
 `;
 
 export const YoutubeEmbed = ({ embedId }) => (
-  <Wrapper>
-    <iframe
-      src={`https://www.youtube.com/embed/${embedId}?autoplay=1&mute=1`}
-      title="YouTube video player"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-  </Wrapper>
+  <Iframe
+    src={`https://www.youtube.com/embed/${embedId}?autoplay=1&mute=1`}
+    title="YouTube video player"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
 );
