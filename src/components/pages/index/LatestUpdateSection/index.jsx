@@ -4,16 +4,11 @@ import Section from "src/components/Section";
 import styled from "styled-components";
 import deltaPolars from "./deltaPolars.png";
 import deltaSharing from "./deltaSharing.png";
+import deltaConstraints from "./deltaConstraints.png";
 import deleteRows from "./deleteRows.png";
 import deltaLakeSagemakerEMR from "./delta-lake-sagemaker-emr.png";
-import deltaVacuum from "./deltaVacuum.png";
 
 const updates = [
-  {
-    title: "Delta Lake Vacuum Command",
-    thumbnail: deltaVacuum,
-    url: "/blog/2023-01-03-delta-lake-vacuum-command/",
-  },
   {
     title: "Reading Delta Lake Tables into Polars DataFrames",
     thumbnail: deltaPolars,
@@ -34,6 +29,11 @@ const updates = [
     title: "How to Delete Rows from a Delta Lake Table",
     thumbnail: deleteRows,
     url: "/blog/2022-12-07-delete-rows-from-delta-lake-table/",
+  },
+  {
+    title: "Delta Lake Constraints and Checks",
+    thumbnail: deltaConstraints,
+    url: "/blog/2022-11-21-delta-lake-contraints-check/",
   },
 ];
 
