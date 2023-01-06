@@ -56,17 +56,17 @@ const social = [
   },
   {
     label: "Twitter",
-    url: "https://twitter.com/DeltaLakeOSS",
+    url: "https://go.delta.io/twitter",
     icon: "twitter",
   },
   {
-    label: "Slack Group",
+    label: "Slack",
     url: "https://go.delta.io/slack",
     icon: "slack",
   },
   {
     label: "LinkedIn",
-    url: "https://www.linkedin.com/company/deltalake",
+    url: "https://go.delta.io/linkedin",
     icon: "linkedin",
   },
 ];
