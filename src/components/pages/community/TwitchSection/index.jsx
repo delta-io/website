@@ -2,7 +2,7 @@ import * as React from "react";
 import Grid from "src/components/Grid";
 import Link from "src/components/Link";
 import Section from "src/components/Section";
-import Typography, { TypographyContainer } from "src/components/Typography";
+import { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
 import twitchImg from "./twitch-logo-4931D91F85-seeklogo.com.png";
 import profileImg from "./Tyler-Croy-min.jpg";
