@@ -50,7 +50,7 @@ export const HeaderDropDown = styled(NavDropdown)`
   .nav-link,
   .nav-link:focus,
   .nav-link:hover {
-    padding: 12px 16px;
+    padding: 12px 8px;
 
     & + div {
       transform: translate3d(0px, 46px, 0px) !important;
