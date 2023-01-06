@@ -73,7 +73,7 @@ export const HeaderDropDown = styled(NavDropdown)`
 const MainLinkMenu = styled(Link)`
   display: block;
   text-decoration: none;
-  padding: 12px 16px;
+  padding: 12px 8px;
   color: ${(props) => props.theme.dark.color};
   transition: 0.3s ease-in-out;
   color: inherit;
@@ -83,7 +83,7 @@ const MainLinkMenu = styled(Link)`
 const SubLinkMenu = styled(Link)`
   display: block;
   text-decoration: none;
-  padding: 12px 16px;
+  padding: 12px 12px;
   color: ${(props) => props.theme.colors.linkSubMenu};
   transition: 0.3s ease-in-out;
 
