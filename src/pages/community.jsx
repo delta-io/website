@@ -4,6 +4,7 @@ import PageLayout from "src/components/PageLayout";
 import AnnouncementSection from "src/components/pages/index/AnnouncementSection";
 import CommunitySection from "src/components/pages/shared/CommunitySection";
 import LatestEventsSectionYoutube from "src/components/pages/community/LatestEventsSectionYoutube";
+import TwitchSection from "src/components/pages/community/TwitchSection";
 import ContributeSection from "src/components/pages/community/ContributeSection";
 import ContributeToDeltaSection from "src/components/pages/community/ContributeToDeltaSection";
 import CurrentCommittersSection from "src/components/pages/community/CurrentCommittersSection";
@@ -19,6 +20,7 @@ const CommunityPage = () => (
       url="http://go.delta.io/lastweek"
     />
     <LatestEventsSectionYoutube />
+    <TwitchSection />
     <ContributeSection />
     <MaintainerProfileSection />
     <CurrentCommittersSection />
