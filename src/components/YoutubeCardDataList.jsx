@@ -164,15 +164,17 @@ export const ButtonControl = styled.button`
 `;
 
 const shortedDescription = (str, characters) => {
-  const shortedStr = str.slice(0, characters);
-
-  const arr = shortedStr.split(" ");
-  arr.pop();
-
-  return `${arr.join(" ")}...`;
+  if (str) {
+    const shortedStr = str?.slice(0, characters);
+    const arr = shortedStr?.split(" ");
+    arr?.pop();
+    return `${arr.join(" ")}...`;
+  }
+  return " ";
 };
 
 const YoutubeCardDataList = ({ cards }) => {
+  console.log("Cards", cards);
   const { isOpen, onClose, onOpen } = useOpen(false);
   const [isEmbedId, setIsEmbedId] = useState(null);
   const navigationPrevRef = useRef(null);
@@ -217,31 +219,34 @@ const YoutubeCardDataList = ({ cards }) => {
                 // onSlideChange={() => console.log("slide change")}
                 // onSwiper={(swiper) => console.log(swiper)}
               >
-                {item.videoCollection.map((slide) => (
-                  <SwiperSlide key={slide.id}>
-                    <Card>
-                      {item.playlistId === "manually_added_playlist_id" ? (
-                        <a href={slide.url} rel="noreferrer" target="_blank">
-                          <Embed src={slide.thumbnail} />
-                          <span className="title">{slide.title}</span>
-                          <CardDescription playlistId={item.playlistId}>
-                            {slide.description}
-                          </CardDescription>
-                        </a>
-                      ) : (
-                        <CardButton
-                          onClick={() => embedIdHandler(slide.videoId)}
-                        >
-                          <Embed src={slide.thumbnail?.high?.url} />
-                          <span className="title">{slide.title}</span>
-                          <CardDescription playlistId={item.playlistId}>
-                            {shortedDescription(slide.description, 100)}
-                          </CardDescription>
-                        </CardButton>
-                      )}
-                    </Card>
-                  </SwiperSlide>
-                ))}
+                {item?.videoCollection.map((slide) => {
+                  console.log("Slide", slide);
+                  return (
+                    <SwiperSlide key={slide.id}>
+                      <Card>
+                        {item.playlistId === "manually_added_playlist_id" ? (
+                          <a href={slide.url} rel="noreferrer" target="_blank">
+                            <Embed src={slide?.thumbnail} />
+                            <span className="title">{slide.title}</span>
+                            <CardDescription playlistId={item.playlistId}>
+                              {slide.description}
+                            </CardDescription>
+                          </a>
+                        ) : (
+                          <CardButton
+                            onClick={() => embedIdHandler(slide.videoId)}
+                          >
+                            <Embed src={slide?.thumbnail?.high?.url} />
+                            <span className="title">{slide?.title}</span>
+                            <CardDescription playlistId={item.playlistId}>
+                              {shortedDescription(slide?.description, 100)}
+                            </CardDescription>
+                          </CardButton>
+                        )}
+                      </Card>
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </WrapperList>
           </PlayListSection>

@@ -1,14 +1,14 @@
 [
   {
-    "title": "Building a Better Delta Lake with Talend and Databricks",
-    "description": "With the introduction of Delta Lake last year, a well-tested pattern of building out the bronze, silver, and gold data architecture approach has proven useful.",
-    "thumbnail": "./images/conferences/template.jpg",
-    "url": "https://databricks.com/session_na20/building-a-better-delta-lake-with-talend-and-databricks"
+    "title": "Cinco de Trino > Building Reliable Lakehouses with Delta Lake",
+    "description": "Data Lakehouses combines the best of both worlds for databases and data lakes. Databases provide relative simplicity and ACID transactional protection for your data while data lakes provide flexibility, scalability, and support for non-structured data on cheap object stores. In this session, we describe Delta Lake, which brings reliability by providing a transactional layer on top of data lakes. We will talk about key features of Delta Lake that enable the Lakehouse Architecture. Finally, we will talk about the work we are doing to build the ecosystem around Delta Lake including supporting multiple languages (Python, Rust, Java, etc) as well as data processing systems such as Trino, Apache Flink, and Apache Spark™.",
+    "thumbnail": "./images/conferences/cinco_de_trino.jpg",
+    "url": "https://www.starburst.io/info/cinco-de-trino/?wchannelid=ak5dhl6ju8&wmediaid=il87tsd0sv"
   },
   {
-    "title": "Delta from a Data Engineer's Perspective",
-    "description": "Take a walk through the daily struggles of a data engineer in this presentation as we cover what is truly needed to create robust end to end Big Data solutions.",
-    "thumbnail": "./images/conferences/template.jpg",
-    "url": "https://databricks.com/session_na20/delta-from-a-data-engineers-perspective"
+    "title": "Building Reliable Lakehouses with Apache Flink and Delta Lake",
+    "description": "Apache Flink and Delta Lake together allow you to build the foundation for your data lakehouses by ensuring the reliability of your concurrent streams from processing to the underlying cloud object-store.",
+    "thumbnail": "./images/conferences/reliable_lakehouse.jpg",
+    "url": "https://www.slideshare.net/FlinkForward/building-reliable-lakehouses-with-apache-flink-and-delta-lake"
   }
 ]

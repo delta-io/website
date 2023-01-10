@@ -185,7 +185,7 @@ const getArrForMeetingsNodes = async () => {
     description: item.snippet.description,
     publishTime: item.snippet.publishTime,
     publishedAt: item.snippet.publishedAt,
-    thumbnail: item.snippet.thumbnail,
+    thumbnail: item.snippet.thumbnail || item.snippet.thumbnails,
   }));
 
   return arr.length > 0 ? arr : mock;

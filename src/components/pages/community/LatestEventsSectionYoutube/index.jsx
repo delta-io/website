@@ -73,9 +73,7 @@ const LatestEventsSectionYoutube = () => {
   const lastVideos = sortedListOfVideosByPublishedDate.slice(0, 4);
 
   const emptyMeet = listMeetings[0].url === "";
-  const collection = emptyMeet
-    ? lastVideos
-    : [[...listMeetings, ...lastVideos]];
+  const collection = emptyMeet ? lastVideos : [...listMeetings, ...lastVideos];
 
   const fitData = [
     {
