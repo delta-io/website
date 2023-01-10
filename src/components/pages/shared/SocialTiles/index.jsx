@@ -49,7 +49,7 @@ const SocialTiles = (props) => {
     <TilesComponent
       columns={{
         xs: 1,
-        md: communities.map(() => "160px"),
+        md: communities.map(() => "140px"),
       }}
       gutter="xl"
       maxImageWidth={65}

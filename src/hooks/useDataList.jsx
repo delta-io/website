@@ -261,7 +261,7 @@ const useDataList = (list) => {
         conferenceVideoList.length > 0 ? conferenceVideoList : [],
     };
 
-    return [playlistConference, ...allPlaylistsForVideos];
+    return [...allPlaylistsForVideos, playlistConference];
   }
 
   return getList(list);
