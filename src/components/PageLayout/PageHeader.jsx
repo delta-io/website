@@ -80,6 +80,7 @@ const HeaderMenu = styled.div`
 
 const HeaderNav = styled.div`
   display: flex;
+  align-items: center;
   flex: 0 0 auto;
   padding: 0 ${(props) => props.theme.spacing.md};
 
@@ -88,6 +89,7 @@ const HeaderNav = styled.div`
     min-width: 200px;
     flex-flow: column;
     padding: 0 ${props.theme.spacing.sm};
+    align-items: start;
   `)}
 `;
 
