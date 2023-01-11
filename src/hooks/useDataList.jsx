@@ -1,4 +1,4 @@
-import { useStaticQuery, graphql } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 
 const query = graphql`
   query JsonCardDataListQuery {
@@ -170,7 +170,24 @@ const query = graphql`
         }
       }
     }
-    videosYoutube: allVideosYoutube {
+    conferences: allConferencesJson {
+      edges {
+        node {
+          description
+          thumbnail {
+            childImageSharp {
+              gatsbyImageData(width: 700, height: 394)
+            }
+          }
+          title
+          url
+          id
+        }
+      }
+    }
+    videosYoutube: allVideosYoutube(
+      sort: { fields: videoCollection___videoUploadDate, order: DESC }
+    ) {
       edges {
         node {
           playlistId
@@ -183,18 +200,22 @@ const query = graphql`
             publishedAt
             title
             url
-            thumbnails {
+            thumbnail {
               high {
                 height
                 url
                 width
               }
             }
+            videoUploadDate
+            videoId
           }
         }
       }
     }
-    tutorialsYoutube: allTutorialsYoutube {
+    tutorialsYoutube: allTutorialsYoutube(
+      sort: { fields: videoCollection___videoUploadDate, order: DESC }
+    ) {
       edges {
         node {
           id
@@ -207,13 +228,15 @@ const query = graphql`
             publishedAt
             title
             url
-            thumbnails {
+            thumbnail {
               high {
                 height
                 url
                 width
               }
             }
+            videoUploadDate
+            videoId
           }
         }
       }
@@ -223,7 +246,25 @@ const query = graphql`
 
 const useDataList = (list) => {
   const data = useStaticQuery(query);
-  return data[list]?.edges.map(({ node }) => ({ ...node }));
+
+  const getList = (listName) =>
+    data[listName]?.edges.map(({ node }) => ({ ...node }));
+
+  if (list === "videosYoutube") {
+    const allPlaylistsForVideos = getList(list);
+    const conferenceVideoList = getList("conferences");
+
+    const playlistConference = {
+      playlistId: "manually_added_playlist_id",
+      playlistTitle: "Conference Talks",
+      videoCollection:
+        conferenceVideoList.length > 0 ? conferenceVideoList : [],
+    };
+
+    return [...allPlaylistsForVideos, playlistConference];
+  }
+
+  return getList(list);
 };
 
 export default useDataList;

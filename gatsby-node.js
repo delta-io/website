@@ -58,7 +58,8 @@ const reduceArrItems = (collection) =>
       publishedAt: subItem?.snippet?.publishedAt,
       title: subItem?.snippet?.title,
       description: subItem?.snippet?.description,
-      thumbnails: subItem?.snippet?.thumbnails,
+      thumbnail: subItem?.snippet?.thumbnails,
+      videoId: subItem.snippet.resourceId.videoId,
       url: `https://www.youtube.com/watch?v=${subItem.snippet.resourceId.videoId}`,
       videoUploadDate: subItem?.contentDetails?.videoPublishedAt,
     }))
@@ -156,6 +157,7 @@ const getVideoListPromise = async () => {
 
 const getArrForMeetingsNodes = async () => {
   const list = await getMeetingsList();
+
   const mock = [
     {
       videoId: "",
@@ -165,7 +167,7 @@ const getArrForMeetingsNodes = async () => {
       description: "",
       publishTime: "",
       publishedAt: "",
-      thumbnails: {
+      thumbnail: {
         high: {
           height: "",
           url: "",
@@ -174,6 +176,7 @@ const getArrForMeetingsNodes = async () => {
       },
     },
   ];
+
   const arr = list?.map((item) => ({
     videoId: item.id.videoId,
     url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
@@ -182,7 +185,7 @@ const getArrForMeetingsNodes = async () => {
     description: item.snippet.description,
     publishTime: item.snippet.publishTime,
     publishedAt: item.snippet.publishedAt,
-    thumbnails: item.snippet.thumbnails,
+    thumbnail: item.snippet.thumbnail || item.snippet.thumbnails,
   }));
 
   return arr.length > 0 ? arr : mock;
