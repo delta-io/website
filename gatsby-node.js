@@ -157,6 +157,7 @@ const getVideoListPromise = async () => {
 
 const getArrForMeetingsNodes = async () => {
   const list = await getMeetingsList();
+
   const mock = [
     {
       videoId: "",
@@ -175,6 +176,7 @@ const getArrForMeetingsNodes = async () => {
       },
     },
   ];
+
   const arr = list?.map((item) => ({
     videoId: item.id.videoId,
     url: `https://www.youtube.com/watch?v=${item.id.videoId}`,

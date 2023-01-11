@@ -14,6 +14,7 @@ const LatestEventsSectionYoutube = () => {
       allMeetingsYoutube {
         edges {
           node {
+            videoId
             url
             title
             publishedAt
@@ -74,7 +75,6 @@ const LatestEventsSectionYoutube = () => {
   const emptyMeet = listMeetings[0].url === "";
   const collection = emptyMeet ? lastVideos : [...listMeetings, ...lastVideos];
 
-  // Delete scheduled videos duplicated in the playlist
   const withoutDuplication = collection.filter(
     (obj, i) =>
       collection.findIndex((item) => item.videoId === obj.videoId) === i
