@@ -17,12 +17,20 @@
     "thumbnail": "./images/connectors/aws-pandas-sdk-logo.png"
   },
   {
+    "name": "Azure Stream Analytics",
+    "description": "Azure Stream Analytics provides native read and write support of Delta Lake",
+    "url": "https://learn.microsoft.com/en-us/azure/stream-analytics/write-to-delta-lake",
+    "docs": "https://learn.microsoft.com/en-us/azure/stream-analytics/write-to-delta-lake",
+    "tags": ["Azure", "ASA", "Stream Analytics"],
+    "thumbnail": "./images/connectors/azure-stream-analytics-logo.png"
+  },
+  {
     "name": "Databricks",
     "description": "Delta Lake is included within Databricks allowing it to read from and write to Delta Lake.",
     "url": "https://docs.databricks.com/delta/index.html",
     "docs": "https://docs.databricks.com/delta/index.html",
     "tags": ["Databricks", "Azure", "GCP", "AWS"],
-    "thumbnail": "./images/connectors/Databricks-logo.png"
+    "thumbnail": "./images/connectors/azure-stream-analytics-logo.png"
   },
   {
     "name": "AWS EMR",
