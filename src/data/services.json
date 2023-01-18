@@ -30,7 +30,7 @@
     "url": "https://docs.databricks.com/delta/index.html",
     "docs": "https://docs.databricks.com/delta/index.html",
     "tags": ["Databricks", "Azure", "GCP", "AWS"],
-    "thumbnail": "./images/connectors/azure-stream-analytics-logo.png"
+    "thumbnail": "./images/connectors/Databricks-logo.png"
   },
   {
     "name": "AWS EMR",
