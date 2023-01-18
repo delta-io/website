@@ -5,8 +5,6 @@ thumbnail: ./thumbnail.png
 author: Matthew Powers, Nick Karpov
 ---
 
-# Delta Lake Vacuum Command
-
 This blog post explains how to remove files marked for deletion (aka “tombstoned files”) from storage with the Delta Lake vacuum command. Delta Lake doesn't physically remove files from storage when operations “delete” the files. The vacuum command is used to physically remove files from storage that have been marked for deletion and are older than the retention period.
 
 The main benefit of vacuuming is to save on storage costs. Vacuuming does not make your queries run any faster and can limit your ability to time travel to certain Delta table versions. You need to weigh the costs/benefits for each of your tables to develop an optimal vacuum strategy.
