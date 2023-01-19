@@ -18,7 +18,7 @@
   },
   {
     "name": "Azure Stream Analytics",
-    "description": "Azure Stream Analytics provides native read and write support of Delta Lake",
+    "description": "Azure Stream Analytics provides native write support for Delta Lake",
     "url": "https://learn.microsoft.com/en-us/azure/stream-analytics/write-to-delta-lake",
     "docs": "https://learn.microsoft.com/en-us/azure/stream-analytics/write-to-delta-lake",
     "tags": ["Azure", "ASA", "Stream Analytics"],
