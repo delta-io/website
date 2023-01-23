@@ -126,9 +126,9 @@ deltaTable.optimize().where("date='2021-11-18'").executeCompaction()
 
 This is a good way to structure a compaction job on a Delta table that’s updated incrementally because it saves you from having to scan files that have already been compacted. You should compact the minimal dataset whenever possible.
 
-## Delta Lake small file compaction pre-Delta 2.0
+## Delta Lake small file compaction pre-Delta 1.2
 
-`OPTIMIZE` was added to Delta Lake as of version 2.0. Here’s how you can manually compact small files in Delta Lake versions prior to version 2.0. Let’s create some files to demonstrate with an example.
+`OPTIMIZE` was added to Delta Lake as of version 1.2 (Python bindings were added in version 2.0). Here’s how you can manually compact small files in Delta Lake versions prior to version 1.2. Let’s create some files to demonstrate with an example.
 
 Create a separate Delta table with a bunch of small files:
 
