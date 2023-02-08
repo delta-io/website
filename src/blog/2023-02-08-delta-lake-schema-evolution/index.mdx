@@ -283,7 +283,7 @@ When Spark reads the Parquet files with `mergeSchema` set to `true`, you get a s
 
 Data professionals usually read multiple Parquet tables and they shouldn’t be expected to figure out when `mergeSchema` is necessary. You don’t want to enable it by default because that’ll slow down all reads, even when it’s not necessary. The individuals that write mismatched schemas to Parquet lakes might forget to inform all the readers. It’s a dangerous design pattern to implement.
 
-**Reiterating an important note**: The the `mergeSchema` in `spark.read.format("parquet").option("mergeSchema", "true")` is completely different from the `mergeSchema` in `df.write.format("parquet").option("mergeSchema", "true").` One is for enabling schema resolution when reading Parquet lakes with different schemas. Another is to allow for schema evolution when writing to Delta tables. Don’t get them confused.
+**Reiterating an important note**: The the `mergeSchema` in `spark.read.format("parquet").option("mergeSchema", "true")` is completely different from the `mergeSchema` in `df.write.format("delta").option("mergeSchema", "true").` One is for enabling schema resolution when reading Parquet lakes with different schemas. Another is to allow for schema evolution when writing to Delta tables. Don’t get them confused.
 
 ## Delta Lake schema evolution vs. data lakes
 
