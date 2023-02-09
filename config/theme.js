@@ -11,6 +11,7 @@ export const colors = {
   info: "#00add4",
   warning: "#ffda47",
   danger: "red",
+  linkSubMenu: "#dee2e6",
 };
 
 // Color mixins

@@ -21,13 +21,14 @@ const LatestEventsSectionYoutube = () => {
             description
             id
             publishTime
-            thumbnails {
+            thumbnail {
               high {
                 height
                 url
                 width
               }
             }
+            videoId
           }
         }
       }
@@ -44,13 +45,14 @@ const LatestEventsSectionYoutube = () => {
               url
               description
               id
-              thumbnails {
+              thumbnail {
                 high {
                   height
                   url
                   width
                 }
               }
+              videoId
             }
           }
         }
@@ -69,10 +71,9 @@ const LatestEventsSectionYoutube = () => {
   );
 
   const lastVideos = sortedListOfVideosByPublishedDate.slice(0, 4);
+
   const emptyMeet = listMeetings[0].url === "";
-  const collection = emptyMeet
-    ? lastVideos
-    : [[...listMeetings, ...lastVideos]];
+  const collection = emptyMeet ? lastVideos : [...listMeetings, ...lastVideos];
 
   const fitData = [
     {

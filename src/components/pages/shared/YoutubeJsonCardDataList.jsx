@@ -33,6 +33,7 @@ const dataListProps = {
 
 const YoutubeJsonCardDataList = (props) => {
   const { data: dataList, first } = props;
+
   let cards = useDataList(dataList);
 
   if (first) {
