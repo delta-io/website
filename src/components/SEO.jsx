@@ -18,40 +18,27 @@ const query = graphql`
 const SEO = (props) => {
   const { title, description, thumbnailPath, pageIndex, children } = props;
 
-  console.log("inside of", props);
-
   const { site } = useStaticQuery(query);
-
-  console.log("site", site);
-
-  const urlImage = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
-  console.log("url image", urlImage);
 
   const documentTitle = `${
     pageIndex > 1 ? `${title} - Page ${pageIndex}` : title
   } | ${site.siteMetadata.title}`;
 
+  const urlImage = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
+
   return (
     <>
       <title>{documentTitle}</title>
       {description && <meta name="description" content={description} />}
-      <meta
-        name="image"
-        content={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
-      />
+      <meta name="image" content={urlImage} />
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
-      <meta
-        name="og:image"
-        property={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
-      />
+      <meta name="og:image" content={urlImage} />
+      <meta property="og:url" content={urlImage} />
       <meta name="og:type" property="website" />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
-      <meta
-        name="twitter:image"
-        content={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
-      />
+      <meta name="twitter:image" content={urlImage} />
       <meta name="twitter:title" content={title} />
       {description && <meta name="twitter:description" content={description} />}
       {children}
