@@ -1,8 +1,9 @@
 import * as React from "react";
-import { oneOf, bool, string, node, oneOfType, func } from "prop-types";
+import { bool, func, node, oneOf, oneOfType, string } from "prop-types";
 import styled from "styled-components";
 import { breakpoints, rem, spacing } from "config/theme";
 import Typography from "src/components/Typography";
+import Logo from "src/components/Logo";
 
 export const containerPadding = spacing.sm;
 export const containerWidth = {
@@ -76,6 +77,7 @@ const Section = (props) => {
     centeredHeader,
     className,
     children,
+    logo,
   } = props;
 
   const ContainerComponent = container ? Container : React.Fragment;
@@ -86,6 +88,7 @@ const Section = (props) => {
       className={className}
       background={background}
     >
+      {logo && <Logo />}
       <ContainerComponent>
         {(title || subtitle) && (
           <SectionHeader centered={centeredHeader}>
@@ -121,6 +124,7 @@ Section.defaultProps = {
 };
 
 Section.propTypes = {
+  logo: bool,
   padding: oneOf(Object.keys(spacing)),
   title: oneOfType([string, node]),
   titleSize: oneOf(["h1", "h2", "h3", "h4", "h5"]),

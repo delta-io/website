@@ -42,6 +42,8 @@ export const Head = ({ data }) => {
   const { frontmatter = {} } = data.mdx;
   const { title, description, thumbnail } = frontmatter;
 
+  console.log(thumbnail);
+
   return (
     <SEO
       title={title}

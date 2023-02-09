@@ -21,6 +21,7 @@ const IntegrationsPage = () => (
       }
       centeredHeader
       padding="xl"
+      logo
     />
     <Section
       title="Frameworks"
