@@ -43,8 +43,16 @@ export const PlayListSection = styled.div`
   gap: 1rem;
 `;
 
+const TitleWrapper = styled.div``;
+
 const CardTitle = styled.h2`
   font-size: 24px;
+  margin-bottom: 0;
+`;
+
+const CollectionDescription = styled.p`
+  font-size: 20px;
+  font-weight: 500;
   margin-bottom: 0;
 `;
 
@@ -191,7 +199,16 @@ const YoutubeCardDataList = ({ cards }) => {
       <PageContainer>
         {cards.map((item) => (
           <PlayListSection key={item.id}>
-            {item.playlistTitle && <CardTitle>{item.playlistTitle}</CardTitle>}
+            <TitleWrapper>
+              {item.playlistTitle && (
+                <CardTitle>{item.playlistTitle}</CardTitle>
+              )}
+              {item.playlistDescription && (
+                <CollectionDescription>
+                  {item.playlistDescription}
+                </CollectionDescription>
+              )}
+            </TitleWrapper>
             <WrapperList>
               <ButtonControl direction="left" ref={navigationPrevRef}>
                 slide left
@@ -262,6 +279,7 @@ YoutubeCardDataList.propTypes = {
     shape({
       id: string,
       playlistTitle: string,
+      playlistDescription: string,
       videoCollection: arrayOf(
         shape({
           description: string,

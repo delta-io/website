@@ -18,6 +18,8 @@ const query = graphql`
 const SEO = (props) => {
   const { title, description, thumbnailPath, pageIndex, children } = props;
 
+  console.log(props);
+
   const { site } = useStaticQuery(query);
 
   const documentTitle = `${
@@ -37,6 +39,10 @@ const SEO = (props) => {
       <meta name="og:type" property="website" />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
+      <meta
+        name="twitter:image"
+        content={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
+      />
       <meta name="twitter:title" content={title} />
       {description && <meta name="twitter:description" content={description} />}
       {children}
