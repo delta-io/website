@@ -18,9 +18,14 @@ const query = graphql`
 const SEO = (props) => {
   const { title, description, thumbnailPath, pageIndex, children } = props;
 
-  console.log(props);
+  console.log("inside of", props);
 
   const { site } = useStaticQuery(query);
+
+  console.log("site", site);
+
+  const urlImage = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
+  console.log("url image", urlImage);
 
   const documentTitle = `${
     pageIndex > 1 ? `${title} - Page ${pageIndex}` : title
@@ -30,6 +35,10 @@ const SEO = (props) => {
     <>
       <title>{documentTitle}</title>
       {description && <meta name="description" content={description} />}
+      <meta
+        name="image"
+        content={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
+      />
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
       <meta
