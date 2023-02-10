@@ -1,6 +1,7 @@
 import { arrayOf, shape, string } from "prop-types";
 import * as React from "react";
 import styled from "styled-components";
+import { Link } from "gatsby";
 
 const StyledTable = styled.table`
   th,
@@ -28,9 +29,18 @@ const Table = (props) => {
       <tbody>
         {data.map((row) => (
           <tr key={row.key}>
-            {columns.map((column) => (
-              <td key={column}>{row[column]}</td>
-            ))}
+            {columns.map((column, idx) => {
+              if (idx === 0) {
+                return row.link ? (
+                  <td key={column}>
+                    <Link to={row.link}>{row[column]}</Link>
+                  </td>
+                ) : (
+                  <td>{row[column]}</td>
+                );
+              }
+              return <td key={column}>{row[column]}</td>;
+            })}
           </tr>
         ))}
       </tbody>

@@ -5,8 +5,7 @@ const chatService = {
 
   createChat() {
     const bodyRef = document.body;
-    const id = "hs-script-loader";
-    if (document.querySelector("#" + id)) {
+    if (document.querySelector("#hs-script-loader")) {
       return;
     }
     const scriptEl = document.createElement("script");

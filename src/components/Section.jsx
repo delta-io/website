@@ -114,6 +114,7 @@ const Section = (props) => {
 };
 
 Section.defaultProps = {
+  logo: undefined,
   padding: undefined,
   title: undefined,
   titleSize: "h2",
