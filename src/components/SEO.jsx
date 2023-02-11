@@ -25,24 +25,25 @@ const SEO = (props) => {
     pageIndex > 1 ? `${title} - Page ${pageIndex}` : title
   } | ${site.siteMetadata.title}`;
 
-  const urlImage = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
+  const image = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
   const url = `${site.siteMetadata.siteUrl}${slug}`;
 
   return (
     <>
       <title>{documentTitle}</title>
-      {description && <meta name="description" content={description} />}
-      <meta name="image" content={urlImage} />
+      <meta name="description" content={description} />
+      <meta name="image" content={image} />
       <meta property="og:title" content={title} />
-      {description && <meta property="og:description" content={description} />}
-      <meta name="og:image" content={urlImage} />
+      <meta property="og:description" content={description} />
+      <meta name="image" property="og:image" content={image} />
       <meta property="og:url" content={url} />
-      <meta name="og:type" property="website" />
+      <meta name="og:type" property="article" />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
-      <meta name="twitter:image" content={urlImage} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:url" content={url} />
       <meta name="twitter:title" content={title} />
-      {description && <meta name="twitter:description" content={description} />}
+      <meta name="twitter:description" content={description} />
       {children}
     </>
   );
@@ -52,6 +53,7 @@ SEO.defaultProps = {
   pageIndex: 0,
   description: "",
   thumbnailPath: undefined,
+  slug: "",
 };
 
 SEO.propTypes = {
@@ -59,6 +61,7 @@ SEO.propTypes = {
   description: string,
   thumbnailPath: string,
   pageIndex: number,
+  slug: string,
 };
 
 export default SEO;
