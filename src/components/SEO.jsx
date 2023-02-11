@@ -25,8 +25,12 @@ const SEO = (props) => {
     pageIndex > 1 ? `${title} - Page ${pageIndex}` : title
   } | ${site.siteMetadata.title}`;
 
-  const urlImage = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
-  const url = `${site.siteMetadata.siteUrl}${slug}`;
+  const BASE_URL = "https://website-git-main-dev-smart-ui.vercel.app";
+
+  // const urlImage = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
+  // const url = `${site.siteMetadata.siteUrl}${slug}`;
+  const urlImage = `${BASE_URL}${thumbnailPath}`;
+  const url = `${BASE_URL}${slug}`;
 
   return (
     <>
