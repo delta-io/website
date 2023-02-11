@@ -16,7 +16,8 @@ const query = graphql`
 `;
 
 const SEO = (props) => {
-  const { title, description, thumbnailPath, pageIndex, children } = props;
+  const { title, description, thumbnailPath, pageIndex, children, slug } =
+    props;
 
   const { site } = useStaticQuery(query);
 
@@ -25,6 +26,7 @@ const SEO = (props) => {
   } | ${site.siteMetadata.title}`;
 
   const urlImage = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
+  const url = `${site.siteMetadata.siteUrl}${slug}`;
 
   return (
     <>
@@ -34,7 +36,7 @@ const SEO = (props) => {
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
       <meta name="og:image" content={urlImage} />
-      <meta property="og:url" content={urlImage} />
+      <meta property="og:url" content={url} />
       <meta name="og:type" property="website" />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />

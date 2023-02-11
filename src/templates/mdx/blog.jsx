@@ -43,13 +43,15 @@ const BlogMdxTemplate = ({ data, children }) => {
 };
 
 export const Head = ({ data }) => {
-  const { frontmatter = {} } = data.mdx;
+  const { frontmatter = {}, fields } = data.mdx;
   const { title, description, thumbnail } = frontmatter;
+  const { slug } = fields;
 
   return (
     <SEO
       title={title}
       description={description}
+      slug={slug}
       thumbnailPath={
         thumbnail?.childImageSharp?.gatsbyImageData?.images?.fallback?.src
       }
@@ -67,11 +69,12 @@ export const pageQuery = graphql`
         author
         thumbnail {
           childImageSharp {
-            gatsbyImageData(width: 1368, height: 770)
+            gatsbyImageData
           }
         }
       }
       fields {
+        slug
         date(formatString: "MMMM D, YYYY")
       }
     }
