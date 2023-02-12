@@ -9,6 +9,7 @@ const KeyFeaturesSection = () => (
     background="white"
     centeredHeader
     padding="xxxl"
+    logo
   >
     <KeyFeaturesGrid
       features={[

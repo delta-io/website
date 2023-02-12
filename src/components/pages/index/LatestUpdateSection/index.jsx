@@ -23,7 +23,7 @@ const LatestUpdateSection = () => {
               author
               thumbnail {
                 childImageSharp {
-                  gatsbyImageData(width: 700, height: 394)
+                  gatsbyImageData
                 }
               }
             }
@@ -51,7 +51,7 @@ const LatestUpdateSection = () => {
     <Section
       background={(theme) => theme.light.bg}
       title="The Latest"
-      titleSize="h5"
+      titleSize="h2"
       centeredHeader
       padding="xxxl"
     >
