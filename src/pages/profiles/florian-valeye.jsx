@@ -47,7 +47,7 @@ const TitleWrapper = styled(TypographyContainer)`
   font-size: 1.5rem;
 `;
 
-const profileFlorianValeye = () => (
+const ProfileFlorianValeye = () => (
   <PageLayout>
     <Section background="white" padding="xl">
       <center>
@@ -175,4 +175,4 @@ const profileFlorianValeye = () => (
   </PageLayout>
 );
 
-export default profileFlorianValeye;
+export default ProfileFlorianValeye;
