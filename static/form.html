@@ -166,6 +166,7 @@
         //If you want to change how the offer code is included in the link just change the following line accordingly
         offerCode: location.search.split("offer_code=")[1],
         load: function (offer) {
+          console.log(window.location);
           //Called when the offer loads successfully
           /*
       {
