@@ -7,12 +7,8 @@ const {
   collectionTemplatesBasePath,
 } = require("./config/pages");
 
-// Denny channel id: UCSKhDO79MNcX4pIIRFD0UVg
-
-// My channel id: UCj9_icE31f8qX4c9N3Ph7Pg
-
 const YOUTUBE_SEARCH_API = "https://www.googleapis.com/youtube/v3/search";
-const YOUTUBE_CHANNEL_ID = "UCj9_icE31f8qX4c9N3Ph7Pg";
+const YOUTUBE_CHANNEL_ID = "UCSKhDO79MNcX4pIIRFD0UVg";
 const YOUTUBE_PLAYLIST_API = "https://www.googleapis.com/youtube/v3/playlists";
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
