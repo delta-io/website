@@ -57,7 +57,7 @@ const TitleWrapper = styled(TypographyContainer)`
 `;
 
 const getThumnbail = (videoId) =>
-  `http://i3.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+  `https://i3.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
 const videoCollection = [
   {
