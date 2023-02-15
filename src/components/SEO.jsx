@@ -30,22 +30,19 @@ const SEO = (props) => {
       <meta name="name" content={documentTitle} />
       <meta
         name="image"
-        property={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
+        property="og:image"
+        content={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
       />
       {description && <meta name="description" content={description} />}
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
-      <meta
-        name="og:image"
-        property={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
-      />
       <meta name="og:type" property="website" />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
       <meta name="twitter:title" content={title} />
       <meta
         name="twitter:image"
-        property={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
+        content={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
       />
       {description && <meta name="twitter:description" content={description} />}
       {children}
