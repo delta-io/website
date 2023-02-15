@@ -27,6 +27,11 @@ const SEO = (props) => {
   return (
     <>
       <title>{documentTitle}</title>
+      <meta name="name" content={documentTitle} />
+      <meta
+        name="image"
+        property={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
+      />
       {description && <meta name="description" content={description} />}
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
@@ -38,6 +43,10 @@ const SEO = (props) => {
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
       <meta name="twitter:title" content={title} />
+      <meta
+        name="twitter:image"
+        property={`${site.siteMetadata.siteUrl}${thumbnailPath}`}
+      />
       {description && <meta name="twitter:description" content={description} />}
       {children}
     </>
