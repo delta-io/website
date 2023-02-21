@@ -73,7 +73,7 @@ const HeroSection = (props) => {
               newTab
               muted
             >
-              Github
+              GitHub
             </HeroLink>
           </Typography>
           <Typography variant="p">
