@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Button from "src/components/Button";
 import ButtonRow from "src/components/ButtonRow";
 import LakeSection from "src/components/pages/shared/LakeSection";
-import Logo from "src/components/Logo";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import { string, node } from "prop-types";
 import Link from "src/components/Link";
@@ -52,12 +51,11 @@ const HeroSectionDiagramOffset = styled.div`
 `;
 
 const HeroSection = (props) => {
-  const { title, description, ctaLabel, ctaUrl, logo } = props;
+  const { title, description, ctaLabel, ctaUrl } = props;
 
   return (
     <LakeSection padding="xxxl" primary>
       <HeroSectionContent>
-        {logo && <Logo />}
         <HeroSectionTitle variant="h1">{title}</HeroSectionTitle>
         <HeroSectionDescription variant="p">
           {description}

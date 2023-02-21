@@ -26,7 +26,7 @@ const cardMedia = Object.entries(breakpoints).map(
 
 const PageContainer = styled.div`
   display: grid;
-  gap: 2rem;
+  gap: 2.5rem;
   width: 100%;
   grid-template-columns: 100%;
 
@@ -46,7 +46,7 @@ export const PlayListSection = styled.div`
 const TitleWrapper = styled.div``;
 
 const CardTitle = styled.h2`
-  font-size: 24px;
+  font-size: 32px;
   margin-bottom: 0;
 `;
 

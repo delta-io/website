@@ -3,9 +3,8 @@ import * as React from "react";
 import styled from "styled-components";
 
 const LogoWrapper = styled.div`
-  margin: 0 auto 1rem;
+  margin: 0 auto 1.2rem;
   width: 150px;
-  height: 122px;
 `;
 
 const Logo = () => (
