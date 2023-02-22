@@ -4,7 +4,7 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import profileImg from "./florian-valeye.jpeg";
+import profileImg from "./gerhard-brueckl.jpg";
 
 const QuoteWrapper = styled.div`
   padding: xxxl;
@@ -20,6 +20,7 @@ const ColumnWrapper = styled(TypographyContainer)`
   vertical-align: top;
   margin: 0;
   padding: 0;
+
   img {
     align: right;
     text-align: right;
@@ -43,25 +44,26 @@ const profileMaintainer = () => (
       <center>Contributor of the Month</center>
     </h1>
 
-    <Link href="/profiles/florian-valeye" muted>
+    <Link href="/profiles/gerhard-brueckl" muted>
       <Section background="white" padding="xl">
         <center>
           <Grid columns={{ xs: 1, sm: 1, md: 4 }} gutter="xl">
             <ColumnWrapper>
-              <img src={profileImg} alt="Florian Valeye" />
+              <img src={profileImg} alt="Gerhard Brueckl" />
             </ColumnWrapper>
             <ColumnWrapper style={{ gridColumn: "span 3" }}>
-              <NameWrapper>Florian Valeye</NameWrapper>
+              <NameWrapper>Gerhard Brueckl</NameWrapper>
               <TitleWrapper>
-                Delta Lake Maintainer, Staff Data Engineer at Back Market
+                Lead Data Engineer / Cloud Solution Architect at{" "}
+                <a href="https://paiqo.com/en/">paiqo GmbH</a>
               </TitleWrapper>
               <Typography variant="p">
                 <br />
                 <QuoteWrapper>
                   <em>
-                    &#34;Contributing to open source is key to learning how to
-                    solve problems within worldwide, benevolent communities of
-                    people.&#34;
+                    &#34;Contributing to something you use on a daily basis not
+                    only makes you learn the topic in depth but also further
+                    drives it and thereby also your success.&#34;
                   </em>
                   <br />
                   <br />

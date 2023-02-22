@@ -84,9 +84,9 @@ const matchedArrByPlaylistId = (arr1, arr2) => {
 };
 
 const createListIdForEachSection = async () => {
-  const list = await getSectionLists();
+  const playlistsDividedBySection = await getSectionLists();
 
-  const arr = list
+  const arr = playlistsDividedBySection
     ?.filter((el) => el.contentDetails)
     .map((item) => ({
       type: item.snippet.type,
@@ -98,6 +98,7 @@ const createListIdForEachSection = async () => {
     .filter((item) => item.sectionTitle === "Techniques and Tutorials")
     .map((el) => el.playlists)
     .flat();
+
   const videosPlaylist = arr
     .filter((el) => el.type === "singleplaylist")
     .map((item) => item.playlists)
@@ -110,9 +111,20 @@ const createListIdForEachSection = async () => {
 };
 
 const dataForSeparatedSection = async (playListsAll, playlistType) => {
-  const promisesList = playlistType.map((playlistId) =>
-    videoListByPlayListId(playlistId)
-  );
+  // if we do not have dividing for section and do not have playlistType
+
+  let promisesList;
+
+  if (playlistType.length > 0) {
+    promisesList = playlistType.map((playlistId) =>
+      videoListByPlayListId(playlistId)
+    );
+  } else {
+    promisesList = playListsAll
+      .map((item) => item.playlistId)
+      .map((playlistId) => videoListByPlayListId(playlistId));
+  }
+
   const [...data] = await Promise.all(promisesList);
 
   const collectionVideos = data.map((item) => item.data.items);
@@ -147,6 +159,7 @@ const getVideoListPromise = async () => {
     playListsAll,
     playlistForSection.videosPlaylist
   );
+
   const tutorialsList = dataForSeparatedSection(
     playListsAll,
     playlistForSection.tutorialPlaylists

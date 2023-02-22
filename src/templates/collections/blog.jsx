@@ -78,7 +78,7 @@ export const pageQuery = graphql`
             author
             thumbnail {
               childImageSharp {
-                gatsbyImageData(width: 700, height: 394)
+                gatsbyImageData
               }
             }
           }

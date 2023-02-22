@@ -2,11 +2,6 @@ import * as React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import YoutubeCardDataList from "src/components/YoutubeCardDataList";
 import Section from "src/components/Section";
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  padding: 2.5rem 0;
-`;
 
 const LatestEventsSectionYoutube = () => {
   const data = useStaticQuery(graphql`
@@ -70,7 +65,10 @@ const LatestEventsSectionYoutube = () => {
     (a, b) => Date.parse(b.videoUploadDate) - Date.parse(a.videoUploadDate)
   );
 
-  const lastVideos = sortedListOfVideosByPublishedDate.slice(0, 4);
+  const lastVideos = sortedListOfVideosByPublishedDate.slice(
+    0,
+    4 + listMeetings.length
+  );
 
   const emptyMeet = listMeetings[0].url === "";
   const collection = emptyMeet ? lastVideos : [...listMeetings, ...lastVideos];
@@ -90,9 +88,7 @@ const LatestEventsSectionYoutube = () => {
 
   return (
     <Section title="Scheduled and Latest Videos" centeredHeader padding="xl">
-      <Wrapper>
-        <YoutubeCardDataList cards={fitData} />
-      </Wrapper>
+      <YoutubeCardDataList cards={fitData} />
     </Section>
   );
 };

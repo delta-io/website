@@ -12,6 +12,10 @@ const HeroSectionContent = styled(TypographyContainer)`
   text-align: center;
 `;
 
+const HeroSectionTitle = styled(Typography)`
+  margin-top: 0;
+`;
+
 const HeroSectionDescription = styled(Typography)`
   max-width: ${(props) => props.theme.rem(props.theme.breakpoints.md)};
   margin-left: auto;
@@ -52,7 +56,7 @@ const HeroSection = (props) => {
   return (
     <LakeSection padding="xxxl" primary>
       <HeroSectionContent>
-        <Typography variant="h1">{title}</Typography>
+        <HeroSectionTitle variant="h1">{title}</HeroSectionTitle>
         <HeroSectionDescription variant="p">
           {description}
         </HeroSectionDescription>
