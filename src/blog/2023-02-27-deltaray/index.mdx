@@ -7,14 +7,14 @@ author: Jim Hibbard
 
 Delta Lake and Ray are two open-source technologies that can be used to build scalable and reliable data
 processing and machine learning pipelines. This article will explain the role each of these tools play and
-show you how to use the new `deltaray` library to easily integrate the two technologies.
+show you how to use the new [`deltaray`](https://github.com/delta-incubator/deltaray) library to easily integrate the two technologies.
 
 Delta Lake continues to be the most reliable, scalable, and performant table storage format for the lakehouse.
 It’s a perfect choice for ML applications as it enables the storage of large amounts of structured and
 unstructured data, supports data quality checks in the form of constraints, and manages metadata. Delta Lake
 also provides features for versioning data and for handling data consistency and transactional guarantees.
 
-Ray, on the other hand, is a popular distributed computing framework that enables you to build and run
+[Ray](https://docs.ray.io/en/latest/), on the other hand, is a popular distributed computing framework that enables you to build and run
 parallel and distributed applications across a cluster of machines. With Ray, you can easily distribute
 machine learning and Python workloads across multiple nodes, speeding up training times and enabling the
 processing of larger datasets. Ray also provides functionality for reinforcement learning, state of the
@@ -29,10 +29,11 @@ You can install the libraries required for this article’s example using pip:
 pip install deltalake deltaray pandas
 ```
 
-deltalake is the Python interface for the delta-rs project, a Native Delta Lake implementation in Rust.
+[deltalake](https://github.com/delta-io/delta-rs) is the Python interface for the delta-rs project, a Native Delta Lake implementation in Rust.
 While delta-rs is written in Rust, you’ll be able to use it just like any other Python library and will
 benefit from the continued innovation of Rust’s OSS community. We’ll be using the deltalake library to
-create dummy Delta Tables because deltaray hasn’t yet implemented Ray’s write APIs.
+create dummy Delta Tables because `deltaray` hasn’t yet implemented Ray’s write APIs. This is an active area of
+development where the community can help enhance Delta Lake and Ray's integration.
 
 Delta Lake was originally built for Spark, but the deltalake implementation does not have a Spark dependency,
 making it a lighter-weight library. delta-spark depends on Spark while deltalake does not. Similarly,
@@ -58,7 +59,7 @@ cwd = pathlib.Path().resolve()
 table_uri = f'{cwd}/tmp/delta-table'
 ```
 
-Then you’ll create an initial Delta Table and update it twice so that they’ll be multiple versions of the same table.
+Then you’ll create an initial Delta Table and update it twice so that there will be multiple versions of the same table.
 
 ```python
 # create initial Delta Table
@@ -76,7 +77,7 @@ dl.write_deltalake(table_uri, df, mode='overwrite')
 
 ## Read a Versioned Delta Lake with Ray
 
-The deltaray library makes it easy to read Delta Tables from Ray. By passing in a `table_uri` and
+The `deltaray` library makes it easy to read Delta Tables from Ray. By passing in a `table_uri` and
 `version` we’re able to access our Delta Table at a specific point in time as long as the underlying
 parquet files are available. The use of the vacuum command to save on storage costs would be one
 example of why a previous version of the Delta Table could become unavailable.
