@@ -126,11 +126,6 @@ const ProfileGerhardBrueckl = () => {
                     drives it and thereby also your success.&#34;
                   </em>
                   <br />
-                  <br />
-                  Source: &nbsp;
-                  <Link href="https://project.linuxfoundation.org/hubfs/LF%20Research/2022%20Linux%20Foundation%20Annual%20Report.pdf?hsLang=en">
-                    Linux Foundation 2022 Annual Report
-                  </Link>
                 </QuoteWrapper>
               </Typography>
             </ColumnWrapper>
@@ -140,10 +135,9 @@ const ProfileGerhardBrueckl = () => {
       <Section backkground="grey" centerHeader padding="xl">
         <Typography>
           We are excited to share that the Delta Lake contributor of the month
-          for February is Gerhard Brueckl, Lead Data Engineer / Cloud Solution
-          Architect at <Link href="https://paiqo.com/en/">paiqo GmbH</Link>!/
-          Located in Wolkersdorf, Austria, Gerhard is the key maintainer of the
-          official{" "}
+          is Gerhard Brueckl, Lead Data Engineer / Cloud Solution Architect at{" "}
+          <Link href="https://paiqo.com/en/">paiqo GmbH</Link>! Located in
+          Wolkersdorf, Austria, Gerhard is the key maintainer of the official{" "}
           <Link href="https://github.com/delta-io/connectors/tree/master/powerbi">
             PowerBI connector for Delta Lake
           </Link>{" "}
