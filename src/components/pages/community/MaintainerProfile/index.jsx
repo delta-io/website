@@ -66,11 +66,6 @@ const profileMaintainer = () => (
                     drives it and thereby also your success.&#34;
                   </em>
                   <br />
-                  <br />
-                  Source: &nbsp;
-                  <Link href="https://project.linuxfoundation.org/hubfs/LF%20Research/2022%20Linux%20Foundation%20Annual%20Report.pdf?hsLang=en">
-                    Linux Foundation 2022 Annual Report
-                  </Link>
                 </QuoteWrapper>
               </Typography>
             </ColumnWrapper>
