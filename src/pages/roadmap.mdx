@@ -3,94 +3,22 @@ title: Delta Lake Roadmap
 width: full
 ---
 
-<Info title="Important" level="info">
-  The following is the Delta Lake 2022 H2 Roadmap; for the latest updates,
-  comments, and discussions; please refer to the [Github
-  source](https://github.com/delta-io/delta/issues/1307).
-</Info>
+Delta Lake is a vast ecosystem of several code repositories. The roadmaps for each project can be found in the GitHub issues / milestones of the respective repository.
 
-<br />
+- [delta-io/delta](https://github.com/delta-io/delta)
+- [delta-io/delta-sharing](https://github.com/delta-io/delta-sharing)
+- [delta-io/delta-rs](https://github.com/delta-io/delta-rs)
+- [delta-io/connectors](https://github.com/delta-io/connectors)
+- [delta-io/website](https://github.com/delta-io/website)
+- [delta-io/delta-kafka-ingest](https://github.com/delta-io/kafka-delta-ingest)
 
-This is a **working issue** for folks to provide feedback on the prioritization of the Delta Lake priorities spanning July to December 2022. With the release of Delta Lake 2.0, we wanted to take the opportunity to discuss other vital features for prioritization with the community based on the feedback from the Delta Users [Slack](https://go.delta.io/slack), [Google Groups](https://go.delta.io/groups), Community AMAs (on [Delta Lake YouTube](https://go.delta.io/youtube)), the [Roadmap 2022H2 (discussion)](https://github.com/delta-io/delta/issues/1307), and more.
+The Delta Lake ecosystem also has a variety of projects that are incubating. These projects are promoted to the [delta-io](https://github.com/delta-io/) GitHub organization when they're sufficiently mature. Here's the list of incubating projects:
 
-<Info title="Note" level="info">
-  - Tasks that are crossed out (i.e., ~00~) have been completed. - We're
-  currently clarifying the Delta Rust roadmap, please refer to [this
-  document](https://docs.google.com/document/d/1iKVdnilMCS6qziBBVohXw2-UX_Ld2K6AAjLTZHcYhQ0/edit#)
-  for more information.
-</Info>
+- [riverbank](https://github.com/delta-incubator/riverbank)
+- [dat](https://github.com/delta-incubator/dat)
+- [deltaray](https://github.com/delta-incubator/deltaray)
+- [delta-sharing-connectors](https://github.com/delta-incubator/delta-sharing-connectors)
 
-## Priority 0
+We encourage you to look at the open issues and contribute.
 
----
-
-We will focus on these issues and continue to deliver parts (or all of the issue) over the next six months
-
-| Issue                                                                                                              | Category   | Task                                                                         | Description                                                                                                                                                                    |
-| :----------------------------------------------------------------------------------------------------------------- | :--------- | :--------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ~[256](https://github.com/delta-io/connectors/pull/256)~                                                           | Flink      | Flink Source                                                                 | Build Flink source to read Delta tables in batch and streaming jobs                                                                                                            |
-| [238](https://github.com/delta-io/connectors/issues/238)                                                           | Flink      | Flink SQL+ Table API + Catalog Support                                       | After Flink Sink and Source, build support for Flink Catalog, SQL, and Table API                                                                                               |
-| [411](https://github.com/delta-io/connectors/issues/411), [410](https://github.com/delta-io/connectors/issues/410) | Flink      | Productionize support for all cloud object stores                            | Make sure that Flink Sink can write robustly to S3, GCS, ADLS2 with full transactional guarantees                                                                              |
-|                                                                                                                    | Rust       | Integrate with a common object-store abstraction from arrow / Rust ecosystem | This will allow us to provide a more convenient and performant API on the Rust and python side                                                                                 |
-|                                                                                                                    | Rust       | Support V2 writer protocol                                                   | Utilize PyArrow-based writer function (write_deltalake) support writer protocol V2 and object stores S3, GCS, and ADLS2.                                                       |
-|                                                                                                                    | Rust       | Expand write support for cloud object stores                                 | Write to object stores S3, GCS, and ADLS2 from multiple clusters with full transactional guarantees                                                                            |
-| ~[1257](https://github.com/delta-io/delta/pull/1257)~                                                              | Spark      | Release Delta 2.1 on Apache Spark 3.3                                        | Ensure the latest version of Delta Lake works with the latest version of Apache Spark™                                                                                         |
-| [1367](https://github.com/delta-io/delta/pull/1367)                                                                | Spark      | Support reading tables with Deletion Vectors                                 | Allow reads on tables that have deletion vectors to mark rows in parquet files as removed.                                                                                     |
-| ~[1242](https://github.com/delta-io/delta/pull/1242)~                                                              | Spark      | Support time travel SQL syntax                                               | Delta currently supports time travel via Python and Scala APIs. We would like to extend support for the SQL syntax `VERSION AS OF` and `TIMESTAMP AS OF` in SELECT statements. |
-|                                                                                                                    | Standalone | Extend Delta Standalone for higher protocol versions                         | Extend Delta Standalone to support logs using higher protocol versions and advanced features like constraints, generated columns, column mapping, etc.                         |
-|                                                                                                                    | Standalone | Expand support for data skipping in Delta Standalone                         | Extend the current data skipping to skip file using column stats and more expressions                                                                                          |
-|                                                                                                                    | Website    | Updated Delta Lake documentation                                             | Move Delta Lake documentation to the website GitHub repo to allow easier community collaboration                                                                               |
-|                                                                                                                    | Website    | Consolidate all connector documentation                                      | Consolidate docs of all connectors in the website Github repo                                                                                                                  |
-
-<br />
-
-## Priority 1
-
----
-
-We should be able to deliver parts (or all of the issue) over the next six months
-
-| Issue                                                   | Category           | Task                                                      | Description                                                                                                                                                                                                                                           |
-| :------------------------------------------------------ | :----------------- | :-------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [4](https://github.com/delta-incubator/dat/pull/4)      | Core               | Delta Acceptance Testing (DAT)                            | With various languages interacting with the Delta protocol (e.g., Delta Standalone, Delta Spark, Delta Rust, Trino, etc.), we propose to have the same reference tables and library of reference tests to ensure all Delta APIs remain in compliance. |
-| [1347](https://github.com/delta-io/delta/issues/1347)   | Core               | Support Bloom filters                                     | Improve query performance by utilizing bloom filters. The approach is TBD due to recent updates to Apache Parquet to support bloom filters.                                                                                                           |
-| [1387](https://github.com/delta-io/delta/issues/1387)   | Core               | Enable Delta clone                                        | Clones a source Delta table to a target destination at a specific version. A clone can be either deep or shallow: deep clones copy over the data from the source and shallow clones do not.                                                           |
-|                                                         | Delta connectors   | GoLang Delta connector                                    | Support GoLang reading a Delta Lake table natively                                                                                                                                                                                                    |
-|                                                         | Delta connectors   | Improve partition filtering in Power BI client            | Improved partition filtering using built-in UI filters in Power BI                                                                                                                                                                                    |
-|                                                         | Delta connectors   | Pulsar Source connector                                   | Support Apache Pulsar reading a Delta Lake table natively                                                                                                                                                                                             |
-|                                                         | Flink              | Column stats generation in Flink Sink                     | Make the Flink Delta sink generate column stats                                                                                                                                                                                                       |
-|                                                         | Presto/Trino       | Support higher protocol versions in Presto and Trino      | Use Standalone to support higher protocol versions                                                                                                                                                                                                    |
-|                                                         | Rust               | Delta Rust API Updates                                    | Update APIs and support more high-level operations on top of delta; this includes better conflict resolution                                                                                                                                          |
-|                                                         | Rust               | Better support for large logs                             | Better support for handling large Delta logs/snapshots                                                                                                                                                                                                |
-|                                                         | Sharing Connectors | GoLang Delta Sharing client                               | Support GoLang client for Delta Sharing                                                                                                                                                                                                               |
-|                                                         | Sharing Connectors | R Delta Sharing client                                    | Support R client for Delta Sharing                                                                                                                                                                                                                    |
-| [1072](https://github.com/delta-io/delta/pull/1072)     | Spark              | Support for Identity columns                              | Create an identity column that will be automatically assigned a unique and statistically increasing (or decreasing if the step is negative) value.                                                                                                    |
-|                                                         | Spark              | Support querying Change Data Feed (CDF) using SQL queries | To support querying CDF using SQL queries in Apache Spark, we need to allow custom TVFs to be resolved using injected rules.                                                                                                                          |
-| [1156](https://github.com/delta-io/delta/pull/1156)     | Spark              | Support Auto Compaction                                   | Provide auto compaction functionality to simplify compaction tasks                                                                                                                                                                                    |
-| [1198](https://github.com/delta-io/delta/pull/1198)     | Spark              | Support Optimize Writes                                   | Optimize Spark to Delta Lake writes                                                                                                                                                                                                                   |
-| ~[1349](https://github.com/delta-io/delta/issues/1349)~ | Spark              | Improve semantics of column mapping and Change Data Feed  | Improve semantics of how column renames/drops (aka column mapping) interact with CDF and streaming                                                                                                                                                    |
-
-## Priority 2
-
----
-
-Nice to have
-| Issue | Category | Task | Description |
-| :---- | :--------- | :--- | :---------- |
-| | Sharing | Share individual partitions | Support Sharing individual partitions in Delta Sharing |
-| | Sharing Connectors | Rust Delta Sharing client | Support Rust client for Delta Sharing |
-| | Sharing Connectors | Starburst/Trino Delta Sharing connector | Support Starburst/Trino client for Delta Sharing |
-| | Sharing Connectors | Airflow Delta Sharing connector | Support sharing data from Airflow sensor |
-
-<br />
-
-## History
-
-- 2022-08-01: Initial creation
-- 2022-08-02: Delta Sharing updates
-- 2022-08-08: Include Identity columns in the roadmap
-- 2022-09-13: Update issues and include into roadmap auto compaction, optimize writes, and bloom filters.
-- 2022-09-19: Update to include Delta Clone
-- 2022-09-22: Including working Delta Rust roadmap document
-
-<br />
+You can also feel free to message us in Slack if you have an idea for a new project. We're always happy to start incubating good new ideas that will be valuable for the Delta Lake community.
