@@ -1,11 +1,12 @@
 ---
-title: Reading Delta Lake with Ray
+title: Running ML Workflows with Delta Lake and Ray, Part 1
+subtitle: Reading Delta Lake with Ray
 description: This post explains how you can read Delta Lake with the Ray compute framework
 thumbnail: ./thumbnail.png
 author: Jim Hibbard
 ---
 
-Delta Lake and Ray are two open-source technologies that can be used to build scalable and reliable data processing and machine learning pipelines. This article will explain the role each of these tools play and show you how to use the new [`deltaray`](https://github.com/delta-incubator/deltaray) library to easily integrate the two technologies. In addition to the code covered in this blog post, [this notebook](https://github.com/JHibbard/deltaray-demo-001) provides additional examples of using `deltaray` within an ML workflow.
+Delta Lake and Ray are two open-source technologies that can be used to build scalable and reliable data processing and machine learning pipelines. This article will explain the role each of these tools play and show you how to use the new [`deltaray`](https://github.com/delta-incubator/deltaray) library to easily integrate the two technologies. [This notebook](https://github.com/delta-incubator/deltaray/blob/main/notebooks/deltaray-demo.ipynb) contains all the code used in this blog post if you want to follow along.
 
 Delta Lake continues to be the most reliable, scalable, and performant table storage format for the lakehouse. It’s a perfect choice for ML applications as it enables the storage of large amounts of structured and unstructured data, supports data quality checks in the form of constraints, and manages metadata. Delta Lake also provides features for versioning data and for handling data consistency and transactional guarantees.
 
@@ -13,7 +14,7 @@ Delta Lake continues to be the most reliable, scalable, and performant table sto
 
 ## Installing Libraries
 
-You can install the libraries required for this article’s example using pip:
+You can install the libraries required for this article’s examples using pip:
 
 ```shell
 pip install deltalake deltaray pandas
