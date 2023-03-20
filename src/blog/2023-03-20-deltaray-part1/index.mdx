@@ -7,11 +7,11 @@ author: Jim Hibbard
 
 ## Part 1: Reading Delta Lake with Ray
 
-Delta Lake and Ray are two open-source technologies that can be used to build scalable and reliable data processing and machine learning pipelines. This article will explain the role each of these tools play and show you how to use the new [`deltaray`](https://github.com/delta-incubator/deltaray) library to easily integrate the two technologies. [This notebook](https://github.com/delta-incubator/deltaray/blob/main/notebooks/deltaray-demo.ipynb) contains all the code used in this blog post if you want to follow along.
+Delta Lake and Ray are two open-source technologies that can be used to build scalable and reliable data processing and machine learning pipelines. This article will explain the role each of these tools play and show you how to use the new [`deltaray`](https://github.com/delta-incubator/deltaray) library to easily integrate the two technologies. Coming soon in part two of this blog, will be how to use this integration to run ML workflows with Ray and Delta Lake. [This notebook](https://github.com/delta-incubator/deltaray/blob/main/notebooks/deltaray-demo.ipynb) contains all the code used in this blog post if you want to follow along.
 
 Delta Lake continues to be the most reliable, scalable, and performant table storage format for the lakehouse. It’s a perfect choice for ML applications as it enables the storage of large amounts of structured and unstructured data, supports data quality checks in the form of constraints, and manages metadata. Delta Lake also provides features for versioning data and for handling data consistency and transactional guarantees.
 
-[Ray](https://docs.ray.io/en/latest/), on the other hand, is a popular distributed computing framework that enables you to build and run parallel and distributed applications across a cluster of machines. With Ray, you can easily distribute machine learning and Python workloads across multiple nodes, speeding up training times and enabling the processing of larger datasets. Ray also provides functionality for reinforcement learning, state of the art hyperparameter tuning, data processing, and more, making it a versatile platform for machine learning applications.
+[Ray](https://docs.ray.io/en/latest/) is a popular distributed computing framework that enables you to build and run parallel and distributed applications across a cluster of machines. With Ray, you can easily distribute machine learning and Python workloads across multiple nodes, speeding up training times and enabling the processing of larger datasets. Ray also provides functionality for reinforcement learning, state of the art hyperparameter tuning, data processing, and more, making it a versatile platform for machine learning applications.
 
 ### Installing Libraries
 
@@ -66,6 +66,7 @@ The `deltaray` library makes it easy to read Delta Tables from Ray. By passing i
 # External Libraries
 import deltaray
 
+# Read the initially created version of the Delta Lake table
 ds = deltaray.read_delta(table_uri, version=0)
 ds.show()
 
@@ -75,6 +76,7 @@ ds.show()
 ```
 
 ```python
+# Read the second version of the Delta Lake table
 ds = deltaray.read_delta(table_uri, version=1)
 ds.show()
 
@@ -89,6 +91,7 @@ ds.show()
 If you want the most recent version of the Delta Table, you don’t need to provide a `version` argument at all. You can see the result corresponds with the last update we made to our dummy dataset which overwrote all previous versions.
 
 ```python
+# Read the current version of the Delta Lake table
 ds = deltaray.read_delta(table_uri)
 ds.show()
 
@@ -98,6 +101,6 @@ ds.show()
 {'id': 9}
 ```
 
-### Conclusion
+### Discussion and What's Next
 
 When used together, Delta Lake and Ray can help you build scalable and reliable machine learning pipelines. You can use Ray to distribute machine learning workloads across a cluster and use Delta Lake to store and manage large datasets in a scalable, versioned, and fault-tolerant manner. With `deltaray` there are now APIs for accessing Delta Lake from Ray, providing an easy integration between the two technologies in your machine learning pipelines. If you’re interested in contributing to `deltaray`, next steps include the full implementation of Ray’s [Datasource API](https://docs.ray.io/en/latest/data/api/input_output.html#datasource-api) and improvements to testing and documentation. In part two of this blog, we'll walk through a full ML example including hyperparameter tuning and model selection. We'll use Delta Lake as the source of our training data, `deltaray` for data ingestion, and Ray for model training and selection.
