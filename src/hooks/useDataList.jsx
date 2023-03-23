@@ -250,19 +250,9 @@ const youtubeVideoDescriptions = [
     description: "Get the latest Delta Lake news and events ... a week late!",
   },
   {
-    playlistTitle: "Delta Rust",
-    description:
-      "Would you like to know more about the Delta Rust ecosystem? Watch these videos!",
-  },
-  {
     playlistTitle: "Delta Lake Community Office Hours",
     description:
       "Join our regular community office hours to discuss issues around the Delta Lake community",
-  },
-  {
-    playlistTitle: "Delta Lake Discussions with Denny Lee (D3L2)",
-    description:
-      "Watch the vidcast (or listen to this podcast) with Delta Lake customers and/or contributors",
   },
   {
     playlistTitle: "Simon & Denny Ask Us Anything",
@@ -270,23 +260,33 @@ const youtubeVideoDescriptions = [
       "Join Simon Whiteley (Advancing Analytics) and Denny Lee (Databricks) and ask your burning Delta Lake, Lakehouse questions",
   },
   {
+    playlistTitle: "Delta Lake Discussions with Denny Lee (D3L2)",
+    description:
+      "Watch the vidcast (or listen to this podcast) with Delta Lake customers and/or contributors",
+  },
+  {
     playlistTitle: "Delta Lake Tech Talks",
     description:
       "Join our regular technical webinar series on the latest Delta Lake features and integrations",
   },
   {
-    playlistTitle: "Delta Lake DW Techniques",
+    playlistTitle: "Delta Rust",
     description:
-      "Apply Data Warehousing techniques to your Delta Lake-based lakehouse.",
+      "Would you like to know more about the Delta Rust ecosystem? Watch these videos!",
+  },
+  {
+    playlistTitle: "Delta Lake Tutorials",
+    description:
+      "Jumpstart your Delta Lake technical implementation with these tutorials",
   },
   {
     playlistTitle: "Getting Started with Delta Lake",
     description: "Jumpstart your Delta Lake concepts with this video series",
   },
   {
-    playlistTitle: "Delta Lake Tutorials",
+    playlistTitle: "Delta Lake DW Techniques",
     description:
-      "Jumpstart your Delta Lake technical implementation with these tutorials",
+      "Apply Data Warehousing techniques to your Delta Lake-based lakehouse.",
   },
   {
     playlistTitle: "Under the Sediments: Diving into Delta Lake",
