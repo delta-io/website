@@ -25,8 +25,10 @@ const SEO = (props) => {
     pageIndex > 1 ? `${title} - Page ${pageIndex}` : title
   } | ${site.siteMetadata.title}`;
 
-  const image = `${site.siteMetadata.siteUrl}${thumbnailPath}`;
-  const url = `${site.siteMetadata.siteUrl}${slug}`;
+  const BASE_URL = site.siteMetadata.siteUrl;
+
+  const image = `${BASE_URL}${thumbnailPath}`;
+  const url = `${BASE_URL}${slug}`;
 
   return (
     <>
