@@ -24,7 +24,8 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
       title,
       description,
       url: slug,
-      meta: `${date} by ${author}`,
+      date,
+      author,
       thumbnail,
     };
   });
