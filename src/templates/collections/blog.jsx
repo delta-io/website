@@ -2,13 +2,13 @@ import { graphql } from "gatsby";
 import * as React from "react";
 import SEO from "src/components/SEO";
 import PageLayout from "src/components/PageLayout";
-import Pagination from "src/components/Pagination";
 import CardDataList from "src/components/CardDataList";
 import Section from "src/components/Section";
+import FilteredPosts from "src/components/FilterPosts";
 
 const BlogCollectionTemplate = ({ data, pageContext }) => {
-  const { hasPreviousPage, hasNextPage, currentPage, featuredCount } =
-    pageContext;
+  const [filter, setFilter] = React.useState("");
+  const { featuredCount } = pageContext;
   const { edges } = data.allMdx;
 
   if (!edges.length) {
@@ -30,6 +30,13 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
     };
   });
 
+  const handleFilter = (e) => setFilter(e.target.value);
+
+  const normalizedStr = (query) =>
+    query.toLowerCase().includes(filter.toLowerCase());
+
+  const filteredCards = cards.filter(({ title }) => normalizedStr(title));
+
   return (
     <PageLayout>
       <Section
@@ -38,19 +45,14 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
         primary
         background="white"
       >
+        <FilteredPosts onChange={handleFilter} cards={filteredCards} />
         <CardDataList
-          cards={cards}
+          cards={filteredCards}
           showFeatured={featuredCount > 0}
           columns={{ xs: 1, sm: 2, lg: 3 }}
           density="relaxed"
           thumbnailRatio={[16, 9]}
           clampDescriptionLines={2}
-        />
-        <Pagination
-          hasPreviousPage={hasPreviousPage}
-          hasNextPage={hasNextPage}
-          currentPage={currentPage}
-          basePath="/blog"
         />
       </Section>
     </PageLayout>
@@ -64,12 +66,10 @@ export const Head = ({ pageContext }) => {
 };
 
 export const pageQuery = graphql`
-  query ($skip: Int!, $limit: Int!) {
+  query {
     allMdx(
       sort: { fields: [fields___date], order: DESC }
       filter: { fields: { pageType: { eq: "blog" } } }
-      limit: $limit
-      skip: $skip
     ) {
       edges {
         node {
