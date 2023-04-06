@@ -12,6 +12,13 @@ const mdxPageTypes = [
     perPage: 12,
     featuredCount: 1,
   },
+  {
+    name: "user-stories",
+    path: "src/user-stories",
+    template: "user-stories",
+    perPage: 12,
+    featuredCount: 1,
+  },
 ];
 
 const mdxTemplatesBasePath = path.resolve("./src/templates/mdx");
