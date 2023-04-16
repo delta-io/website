@@ -33,6 +33,14 @@
     "thumbnail": "./images/connectors/java-logo.png"
   },
   {
+    "name": "Kotosiro Sharing",
+    "description": "A Minimalistic Rust Implementation of Delta Sharing Server.",
+    "url": "https://github.com/kotosiro/sharing",
+    "source_code": "https://github.com/kotosiro/sharing",
+    "tags": ["Kotosiro", "Delta Sharing", "Rust"],
+    "thumbnail": "./images/connectors/kotosiro-transparent.png"
+  },
+  {
     "name": "MLflow",
     "description": "Perform model exchange via Delta Sharing and MLflow",
     "url": "https://github.com/databrickslabs/arcuate",
