@@ -37,7 +37,7 @@ Let’s look at how Delta Lake 2.2+ makes the the following query run faster: `s
 
 This query was run on 100, 1_000, 10_000, and 100_000 files for Delta Lake 2.1.1 and Delta Lake 2.2 as shown in the following graph:
 
-![alt_text](images/image1.png "image_tooltip")
+![](image1.png)
 
 For Delta Lake 2.1.1 and earlier, the query runtime increased as the number of files increased. With the new optimizations that were added in Delta Lake 2.2, the query time does not increase as the number of files increases.
 
@@ -53,7 +53,7 @@ Let’s look at how Delta Lake 2.2+ makes the the following query run faster: `s
 
 This query was run on 100, 1_000, 10_000, and 100_000 files for Delta Lake 2.1.1 and Delta Lake 2.2 as shown in the following graph:
 
-![alt_text](images/image2.png "image_tooltip")
+![](image2.png)
 
 Delta Lake 2.1.1 never took the limit into account during query planning. So the physical plan that Delta Lake generated involved scanning all of the data in your table. Spark would then apply the LIMIT onto that result.
 
@@ -67,7 +67,7 @@ Let’s look at the contents of the Delta Lake transaction log to gain intuition
 
 Let’s take a look at the basic structure of a Delta table:
 
-![alt_text](images/image3.png "image_tooltip")
+![](image3.png)
 
 Data is stored in Parquet files and transaction metadata information is stored in the transaction log (aka `_delta_log`).
 
