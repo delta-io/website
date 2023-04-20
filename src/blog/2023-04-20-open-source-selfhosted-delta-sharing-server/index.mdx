@@ -51,6 +51,8 @@ Now let's get started with the interesting part. As the owner of the data and ad
         -H "Content-Type: application/json" \
         -d '{"account": "kotosiro", "password": "password"}' \
         | jq '.'
+```
+```
 {
   "profile": {
     "shareCredentialsVersion": 1,
@@ -71,6 +73,8 @@ Next, you need to register a new [share](https://github.com/delta-io/delta-shari
         -H "Content-Type: application/json" \
         -d '{ "name": "share1" }' \
         | jq '.'
+```
+```
 {
   "share": {
     "id": "78f84b5e-29e7-4adf-8df5-c40487a8da43",
@@ -89,6 +93,8 @@ So far, so good. Now it's time to register the Delta table on AWS S3 to your [Ko
         -H "Content-Type: application/json" \
         -d '{ "name": "table1", "location": "s3://kotosiro-sharing-example/avocado" }' \
         | jq '.'
+```
+```
 {
   "table": {
     "id": "8a040c74-4505-44e5-aeda-9db662f338eb",
@@ -108,6 +114,8 @@ You have created a new [share](https://github.com/delta-io/delta-sharing/blob/ma
         -H "Content-Type: application/json" \
         -d '{ "table": "table1" }' \
         | jq '.'
+```
+```
 {
   "schema": {
     "id": "62bf785c-1764-4953-9986-a6708996e72c",
@@ -125,6 +133,8 @@ This is the final and most important step in sharing your Delta table with your 
         -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgxOTM3NzMyfQ.rVjA6S7EWq7CakpB0IHik0mvxl58ynZNxNM3a3RJibY" \
         -H "Content-Type: application/json" \
         | jq '.'
+```
+```
 {
   "profile": {
     "shareCredentialsVersion": 1,
@@ -545,3 +555,14 @@ delta_sharing.load_as_pandas(
 </div>
 
 [^1]: As of April 20, 2023, this partition filters API is not public, so these code snippets are based on my local patch. I plan to create a pull request in the near future to add these partition filters APIs to the public release.
+
+## Conclusion
+
+I am really happy to announce the release of the [Kotosiro Sharing](https://github.com/kotosiro/sharing) project, and I want to thank you for reading so far. I hope you have enjoyed this short journey and have seen how [Delta Sharing](https://delta.io/sharing/) could change the game. What I really like about this idea is:
+
+ 1. The open and cloud-agnostic protocol.
+ 2. The ease of managing privacy, security, and compliance.
+ 3. Eliminating lagging and inconsistent data, as well as the need to email stale data around.
+ 4. The fact that it doesn't require technical expertise from recipients, as they only need to write a few lines of Python code.
+
+The official open protocol specification is available [here](https://github.com/delta-io/delta-sharing). I also welcome contributions to my [Kotosiro Sharing](https://github.com/kotosiro/sharing) project. Thanks for reading!
