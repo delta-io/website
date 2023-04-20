@@ -52,6 +52,7 @@ Now let's get started with the interesting part. As the owner of the data and ad
         -d '{"account": "kotosiro", "password": "password"}' \
         | jq '.'
 ```
+
 ```
 {
   "profile": {
@@ -74,6 +75,7 @@ Next, you need to register a new [share](https://github.com/delta-io/delta-shari
         -d '{ "name": "share1" }' \
         | jq '.'
 ```
+
 ```
 {
   "share": {
@@ -94,6 +96,7 @@ So far, so good. Now it's time to register the Delta table on AWS S3 to your [Ko
         -d '{ "name": "table1", "location": "s3://kotosiro-sharing-example/avocado" }' \
         | jq '.'
 ```
+
 ```
 {
   "table": {
@@ -115,6 +118,7 @@ You have created a new [share](https://github.com/delta-io/delta-sharing/blob/ma
         -d '{ "table": "table1" }' \
         | jq '.'
 ```
+
 ```
 {
   "schema": {
@@ -134,6 +138,7 @@ This is the final and most important step in sharing your Delta table with your 
         -H "Content-Type: application/json" \
         | jq '.'
 ```
+
 ```
 {
   "profile": {
@@ -176,115 +181,115 @@ delta_sharing.load_as_pandas(url)
 ```
 
 <div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>row</th>
-      <th>date</th>
-      <th>average_price</th>
-      <th>total_volume</th>
-      <th>4046</th>
-      <th>4225</th>
-      <th>4770</th>
-      <th>total_bags</th>
-      <th>small_bags</th>
-      <th>large_bags</th>
-      <th>xlarge_bags</th>
-      <th>type</th>
-      <th>year</th>
-      <th>region</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>2015-12-26 15:00:00</td>
-      <td>1.33</td>
-      <td>64236.62</td>
-      <td>1036.74</td>
-      <td>54454.85</td>
-      <td>48.16</td>
-      <td>8696.87</td>
-      <td>8603.62</td>
-      <td>93.25</td>
-      <td>0.0</td>
-      <td>conventional</td>
-      <td>2015</td>
-      <td>Albany</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>2015-12-19 15:00:00</td>
-      <td>1.35</td>
-      <td>54876.98</td>
-      <td>674.28</td>
-      <td>44638.81</td>
-      <td>58.33</td>
-      <td>9505.56</td>
-      <td>9408.07</td>
-      <td>97.49</td>
-      <td>0.0</td>
-      <td>conventional</td>
-      <td>2015</td>
-      <td>Albany</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>18247</th>
-      <td>10</td>
-      <td>2018-01-13 15:00:00</td>
-      <td>1.93</td>
-      <td>16205.22</td>
-      <td>1527.63</td>
-      <td>2981.04</td>
-      <td>727.01</td>
-      <td>10969.54</td>
-      <td>10919.54</td>
-      <td>50.00</td>
-      <td>0.0</td>
-      <td>organic</td>
-      <td>2018</td>
-      <td>WestTexNewMexico</td>
-    </tr>
-    <tr>
-      <th>18248</th>
-      <td>11</td>
-      <td>2018-01-06 15:00:00</td>
-      <td>1.62</td>
-      <td>17489.58</td>
-      <td>2894.77</td>
-      <td>2356.13</td>
-      <td>224.53</td>
-      <td>12014.15</td>
-      <td>11988.14</td>
-      <td>26.01</td>
-      <td>0.0</td>
-      <td>organic</td>
-      <td>2018</td>
-      <td>WestTexNewMexico</td>
-    </tr>
-  </tbody>
-</table>
-<p>18249 rows × 14 columns</p>
+  <table border="1" class="dataframe">
+    <thead>
+      <tr style="text-align: right;">
+        <th></th>
+        <th>row</th>
+        <th>date</th>
+        <th>average_price</th>
+        <th>total_volume</th>
+        <th>4046</th>
+        <th>4225</th>
+        <th>4770</th>
+        <th>total_bags</th>
+        <th>small_bags</th>
+        <th>large_bags</th>
+        <th>xlarge_bags</th>
+        <th>type</th>
+        <th>year</th>
+        <th>region</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>0</th>
+        <td>0</td>
+        <td>2015-12-26 15:00:00</td>
+        <td>1.33</td>
+        <td>64236.62</td>
+        <td>1036.74</td>
+        <td>54454.85</td>
+        <td>48.16</td>
+        <td>8696.87</td>
+        <td>8603.62</td>
+        <td>93.25</td>
+        <td>0.0</td>
+        <td>conventional</td>
+        <td>2015</td>
+        <td>Albany</td>
+      </tr>
+      <tr>
+        <th>1</th>
+        <td>1</td>
+        <td>2015-12-19 15:00:00</td>
+        <td>1.35</td>
+        <td>54876.98</td>
+        <td>674.28</td>
+        <td>44638.81</td>
+        <td>58.33</td>
+        <td>9505.56</td>
+        <td>9408.07</td>
+        <td>97.49</td>
+        <td>0.0</td>
+        <td>conventional</td>
+        <td>2015</td>
+        <td>Albany</td>
+      </tr>
+      <tr>
+        <th>...</th>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+      </tr>
+      <tr>
+        <th>18247</th>
+        <td>10</td>
+        <td>2018-01-13 15:00:00</td>
+        <td>1.93</td>
+        <td>16205.22</td>
+        <td>1527.63</td>
+        <td>2981.04</td>
+        <td>727.01</td>
+        <td>10969.54</td>
+        <td>10919.54</td>
+        <td>50.00</td>
+        <td>0.0</td>
+        <td>organic</td>
+        <td>2018</td>
+        <td>WestTexNewMexico</td>
+      </tr>
+      <tr>
+        <th>18248</th>
+        <td>11</td>
+        <td>2018-01-06 15:00:00</td>
+        <td>1.62</td>
+        <td>17489.58</td>
+        <td>2894.77</td>
+        <td>2356.13</td>
+        <td>224.53</td>
+        <td>12014.15</td>
+        <td>11988.14</td>
+        <td>26.01</td>
+        <td>0.0</td>
+        <td>organic</td>
+        <td>2018</td>
+        <td>WestTexNewMexico</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>18249 rows × 14 columns</p>
 </div>
 
 ### SQL Expressions for Filtering[^1]
@@ -300,121 +305,120 @@ delta_sharing.load_as_pandas(
 ```
 
 <div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>row</th>
-      <th>date</th>
-      <th>average_price</th>
-      <th>total_volume</th>
-      <th>4046</th>
-      <th>4225</th>
-      <th>4770</th>
-      <th>total_bags</th>
-      <th>small_bags</th>
-      <th>large_bags</th>
-      <th>xlarge_bags</th>
-      <th>type</th>
-      <th>year</th>
-      <th>region</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>2016-12-24 15:00:00</td>
-      <td>1.52</td>
-      <td>73341.73</td>
-      <td>3202.39</td>
-      <td>58280.33</td>
-      <td>426.92</td>
-      <td>11432.09</td>
-      <td>11017.32</td>
-      <td>411.83</td>
-      <td>2.94</td>
-      <td>conventional</td>
-      <td>2016</td>
-      <td>Albany</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>2016-12-17 15:00:00</td>
-      <td>1.53</td>
-      <td>68938.53</td>
-      <td>3345.36</td>
-      <td>55949.79</td>
-      <td>138.72</td>
-      <td>9504.66</td>
-      <td>8876.65</td>
-      <td>587.73</td>
-      <td>40.28</td>
-      <td>conventional</td>
-      <td>2016</td>
-      <td>Albany</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>11336</th>
-      <td>49</td>
-      <td>2017-01-07 15:00:00</td>
-      <td>1.18</td>
-      <td>14375.39</td>
-      <td>1327.98</td>
-      <td>2617.20</td>
-      <td>5.75</td>
-      <td>10424.46</td>
-      <td>10283.85</td>
-      <td>140.61</td>
-      <td>0.00</td>
-      <td>organic</td>
-      <td>2017</td>
-      <td>WestTexNewMexico</td>
-    </tr>
-    <tr>
-      <th>11337</th>
-      <td>50</td>
-      <td>2016-12-31 15:00:00</td>
-      <td>1.28</td>
-      <td>15307.87</td>
-      <td>867.66</td>
-      <td>3434.02</td>
-      <td>37.30</td>
-      <td>10968.89</td>
-      <td>10815.88</td>
-      <td>153.01</td>
-      <td>0.00</td>
-      <td>organic</td>
-      <td>2017</td>
-      <td>WestTexNewMexico</td>
-    </tr>
-  </tbody>
-</table>
-<p>11338 rows × 14 columns</p>
+  <table border="1" class="dataframe">
+    <thead>
+      <tr style="text-align: right;">
+        <th></th>
+        <th>row</th>
+        <th>date</th>
+        <th>average_price</th>
+        <th>total_volume</th>
+        <th>4046</th>
+        <th>4225</th>
+        <th>4770</th>
+        <th>total_bags</th>
+        <th>small_bags</th>
+        <th>large_bags</th>
+        <th>xlarge_bags</th>
+        <th>type</th>
+        <th>year</th>
+        <th>region</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>0</th>
+        <td>0</td>
+        <td>2016-12-24 15:00:00</td>
+        <td>1.52</td>
+        <td>73341.73</td>
+        <td>3202.39</td>
+        <td>58280.33</td>
+        <td>426.92</td>
+        <td>11432.09</td>
+        <td>11017.32</td>
+        <td>411.83</td>
+        <td>2.94</td>
+        <td>conventional</td>
+        <td>2016</td>
+        <td>Albany</td>
+      </tr>
+      <tr>
+        <th>1</th>
+        <td>1</td>
+        <td>2016-12-17 15:00:00</td>
+        <td>1.53</td>
+        <td>68938.53</td>
+        <td>3345.36</td>
+        <td>55949.79</td>
+        <td>138.72</td>
+        <td>9504.66</td>
+        <td>8876.65</td>
+        <td>587.73</td>
+        <td>40.28</td>
+        <td>conventional</td>
+        <td>2016</td>
+        <td>Albany</td>
+      </tr>
+      <tr>
+        <th>...</th>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+      </tr>
+      <tr>
+        <th>11336</th>
+        <td>49</td>
+        <td>2017-01-07 15:00:00</td>
+        <td>1.18</td>
+        <td>14375.39</td>
+        <td>1327.98</td>
+        <td>2617.20</td>
+        <td>5.75</td>
+        <td>10424.46</td>
+        <td>10283.85</td>
+        <td>140.61</td>
+        <td>0.00</td>
+        <td>organic</td>
+        <td>2017</td>
+        <td>WestTexNewMexico</td>
+      </tr>
+      <tr>
+        <th>11337</th>
+        <td>50</td>
+        <td>2016-12-31 15:00:00</td>
+        <td>1.28</td>
+        <td>15307.87</td>
+        <td>867.66</td>
+        <td>3434.02</td>
+        <td>37.30</td>
+        <td>10968.89</td>
+        <td>10815.88</td>
+        <td>153.01</td>
+        <td>0.00</td>
+        <td>organic</td>
+        <td>2017</td>
+        <td>WestTexNewMexico</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>11338 rows × 14 columns</p>
 </div>
 
 ### JSON predicates for Filtering[^1]
 
 While the previous `predicateHints` using [SQL filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) is handy, its logical expressiveness is a bit limited and it is recommended to use [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) instead as per the official protocol specification. It should be noted that **the SQL filtering method will be deprecated**. Here's how you can request the desired partition using [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body):
-
 
 ```python
 url = profile + "#share1.schema1.table1"
@@ -443,115 +447,115 @@ delta_sharing.load_as_pandas(
 ```
 
 <div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>row</th>
-      <th>date</th>
-      <th>average_price</th>
-      <th>total_volume</th>
-      <th>4046</th>
-      <th>4225</th>
-      <th>4770</th>
-      <th>total_bags</th>
-      <th>small_bags</th>
-      <th>large_bags</th>
-      <th>xlarge_bags</th>
-      <th>type</th>
-      <th>year</th>
-      <th>region</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>2016-12-24 15:00:00</td>
-      <td>1.52</td>
-      <td>73341.73</td>
-      <td>3202.39</td>
-      <td>58280.33</td>
-      <td>426.92</td>
-      <td>11432.09</td>
-      <td>11017.32</td>
-      <td>411.83</td>
-      <td>2.94</td>
-      <td>conventional</td>
-      <td>2016</td>
-      <td>Albany</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>2016-12-17 15:00:00</td>
-      <td>1.53</td>
-      <td>68938.53</td>
-      <td>3345.36</td>
-      <td>55949.79</td>
-      <td>138.72</td>
-      <td>9504.66</td>
-      <td>8876.65</td>
-      <td>587.73</td>
-      <td>40.28</td>
-      <td>conventional</td>
-      <td>2016</td>
-      <td>Albany</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>11336</th>
-      <td>49</td>
-      <td>2017-01-07 15:00:00</td>
-      <td>1.18</td>
-      <td>14375.39</td>
-      <td>1327.98</td>
-      <td>2617.20</td>
-      <td>5.75</td>
-      <td>10424.46</td>
-      <td>10283.85</td>
-      <td>140.61</td>
-      <td>0.00</td>
-      <td>organic</td>
-      <td>2017</td>
-      <td>WestTexNewMexico</td>
-    </tr>
-    <tr>
-      <th>11337</th>
-      <td>50</td>
-      <td>2016-12-31 15:00:00</td>
-      <td>1.28</td>
-      <td>15307.87</td>
-      <td>867.66</td>
-      <td>3434.02</td>
-      <td>37.30</td>
-      <td>10968.89</td>
-      <td>10815.88</td>
-      <td>153.01</td>
-      <td>0.00</td>
-      <td>organic</td>
-      <td>2017</td>
-      <td>WestTexNewMexico</td>
-    </tr>
-  </tbody>
-</table>
-<p>11338 rows × 14 columns</p>
+  <table border="1" class="dataframe">
+    <thead>
+      <tr style="text-align: right;">
+        <th></th>
+        <th>row</th>
+        <th>date</th>
+        <th>average_price</th>
+        <th>total_volume</th>
+        <th>4046</th>
+        <th>4225</th>
+        <th>4770</th>
+        <th>total_bags</th>
+        <th>small_bags</th>
+        <th>large_bags</th>
+        <th>xlarge_bags</th>
+        <th>type</th>
+        <th>year</th>
+        <th>region</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>0</th>
+        <td>0</td>
+        <td>2016-12-24 15:00:00</td>
+        <td>1.52</td>
+        <td>73341.73</td>
+        <td>3202.39</td>
+        <td>58280.33</td>
+        <td>426.92</td>
+        <td>11432.09</td>
+        <td>11017.32</td>
+        <td>411.83</td>
+        <td>2.94</td>
+        <td>conventional</td>
+        <td>2016</td>
+        <td>Albany</td>
+      </tr>
+      <tr>
+        <th>1</th>
+        <td>1</td>
+        <td>2016-12-17 15:00:00</td>
+        <td>1.53</td>
+        <td>68938.53</td>
+        <td>3345.36</td>
+        <td>55949.79</td>
+        <td>138.72</td>
+        <td>9504.66</td>
+        <td>8876.65</td>
+        <td>587.73</td>
+        <td>40.28</td>
+        <td>conventional</td>
+        <td>2016</td>
+        <td>Albany</td>
+      </tr>
+      <tr>
+        <th>...</th>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+      </tr>
+      <tr>
+        <th>11336</th>
+        <td>49</td>
+        <td>2017-01-07 15:00:00</td>
+        <td>1.18</td>
+        <td>14375.39</td>
+        <td>1327.98</td>
+        <td>2617.20</td>
+        <td>5.75</td>
+        <td>10424.46</td>
+        <td>10283.85</td>
+        <td>140.61</td>
+        <td>0.00</td>
+        <td>organic</td>
+        <td>2017</td>
+        <td>WestTexNewMexico</td>
+      </tr>
+      <tr>
+        <th>11337</th>
+        <td>50</td>
+        <td>2016-12-31 15:00:00</td>
+        <td>1.28</td>
+        <td>15307.87</td>
+        <td>867.66</td>
+        <td>3434.02</td>
+        <td>37.30</td>
+        <td>10968.89</td>
+        <td>10815.88</td>
+        <td>153.01</td>
+        <td>0.00</td>
+        <td>organic</td>
+        <td>2017</td>
+        <td>WestTexNewMexico</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>11338 rows × 14 columns</p>
 </div>
 
 [^1]: As of April 20, 2023, this partition filters API is not public, so these code snippets are based on my local patch. I plan to create a pull request in the near future to add these partition filters APIs to the public release.
@@ -560,9 +564,9 @@ delta_sharing.load_as_pandas(
 
 I am really happy to announce the release of the [Kotosiro Sharing](https://github.com/kotosiro/sharing) project, and I want to thank you for reading so far. I hope you have enjoyed this short journey and have seen how [Delta Sharing](https://delta.io/sharing/) could change the game. What I really like about this idea is:
 
- 1. The open and cloud-agnostic protocol.
- 2. The ease of managing privacy, security, and compliance.
- 3. Eliminating lagging and inconsistent data, as well as the need to email stale data around.
- 4. The fact that it doesn't require technical expertise from recipients, as they only need to write a few lines of Python code.
+1.  The open and cloud-agnostic protocol.
+2.  The ease of managing privacy, security, and compliance.
+3.  Eliminating lagging and inconsistent data, as well as the need to email stale data around.
+4.  The fact that it doesn't require technical expertise from recipients, as they only need to write a few lines of Python code.
 
 The official open protocol specification is available [here](https://github.com/delta-io/delta-sharing). I also welcome contributions to my [Kotosiro Sharing](https://github.com/kotosiro/sharing) project. Thanks for reading!
