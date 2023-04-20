@@ -11,7 +11,7 @@ The following image depicts the system workflow. Let's walk through how [Kotosir
 
 ![](image1.png)
 
-### Delta Table Structure
+## Delta Table Structure
 
 You have [historical data on avocado prices and sales volume in multiple US markets](https://www.kaggle.com/datasets/neuromusic/avocado-prices) stored in your Delta table on AWS S3. Your colleague has come to your desk and asked if they could use the data for further data analytics. The structure of the table is as follows:
 
@@ -40,6 +40,8 @@ avocado-table
 
 The table is partitioned using the `year` column, and each partition is appended sequentially. Therefore, the table has [four different versions](https://docs.databricks.com/delta/history.html) in chronological order.
 
+## Share Your Delta Tables via Kotosiro Sharing APIs
+
 ### Log in to Kotosiro Sharing Server and Get the Admin Access Token
 
 Now let's get started with the interesting part. As the owner of the data and administrator of your [Kotosiro Sharing](https://github.com/kotosiro/sharing) server, you need to log in to the system and obtain the admin access token. This token will enable you to create a [share](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts). Here's how you can obtain the token:
@@ -55,6 +57,80 @@ Now let's get started with the interesting part. As the owner of the data and ad
     "endpoint": "http://127.0.0.1:8080",
     "bearerToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgxOTM3NzMyfQ.rVjA6S7EWq7CakpB0IHik0mvxl58ynZNxNM3a3RJibY",
     "expirationTime": "2023-04-19 20:55:32 UTC"
+  }
+}
+```
+
+### Register a New Share
+
+Next, you need to register a new [share](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts), which is simply a logical grouping used to share with [recipients](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts). For example, you can name your share `share1`. Note that this [share](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts) is currently empty, meaning that you haven't added any data to it yet. Here's how you can create the [share](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts):
+
+```
+ $ curl -s -X POST "http://localhost:8080/admin/shares" \
+        -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgxOTM3NzMyfQ.rVjA6S7EWq7CakpB0IHik0mvxl58ynZNxNM3a3RJibY" \
+        -H "Content-Type: application/json" \
+        -d '{ "name": "share1" }' \
+        | jq '.'
+{
+  "share": {
+    "id": "78f84b5e-29e7-4adf-8df5-c40487a8da43",
+    "name": "share1"
+  }
+}
+```
+
+### Register a New Table
+
+So far, so good. Now it's time to register the Delta table on AWS S3 to your [Kotosiro Sharing](https://github.com/kotosiro/sharing) service via the API. It's fairly simple like other operations. Just post a JSON data that specifies the S3 bucket object path to the Delta table, along with the table name. For example, you can name your table `table1`. Here's how you can register the [table](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts):
+
+```
+ $ curl -s -X POST "http://localhost:8080/admin/tables" \
+        -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgxOTM3NzMyfQ.rVjA6S7EWq7CakpB0IHik0mvxl58ynZNxNM3a3RJibY" \
+        -H "Content-Type: application/json" \
+        -d '{ "name": "table1", "location": "s3://kotosiro-sharing-example/avocado" }' \
+        | jq '.'
+{
+  "table": {
+    "id": "8a040c74-4505-44e5-aeda-9db662f338eb",
+    "name": "table1",
+    "location": "s3://kotosiro-sharing-example/avocado"
+  }
+}a
+```
+
+### Register a New Table as a Part of `schema1` in the `share1`
+
+You have created a new [share](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts) and registered a new [table](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts). Now, you need to associate the [table](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts) with the [share](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts) by creating a [schema](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts). To do this, you can register the [table](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts) as part of, for example, the `schema1` in `share1`. The API operation to register the table to the share is fairly straightforward. Here's an example of how to do it:
+
+```
+ $ curl -s -X POST "http://localhost:8080/admin/shares/share1/schemas/schema1/tables" \
+        -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgxOTM3NzMyfQ.rVjA6S7EWq7CakpB0IHik0mvxl58ynZNxNM3a3RJibY" \
+        -H "Content-Type: application/json" \
+        -d '{ "table": "table1" }' \
+        | jq '.'
+{
+  "schema": {
+    "id": "62bf785c-1764-4953-9986-a6708996e72c",
+    "name": "schema1"
+  }
+}
+```
+
+### Issue a New Recipient Profile
+
+This is the final and most important step in sharing your Delta table with your colleagues. You need to issue a new recipient [profile](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#profile-file-format), which contains the necessary credentials for your colleagues to access the shared data. The resulting [profile](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#profile-file-format) JSON is a credential, so you must share it securely with your colleagues. As an administrator, you are responsible for ensuring that the [profile](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#profile-file-format) is shared only with authorized recipients. Here's how you can issue the [profile](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#profile-file-format):
+
+```
+ $ curl -s -X GET "http://localhost:8080/admin/profile" \
+        -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgxOTM3NzMyfQ.rVjA6S7EWq7CakpB0IHik0mvxl58ynZNxNM3a3RJibY" \
+        -H "Content-Type: application/json" \
+        | jq '.'
+{
+  "profile": {
+    "shareCredentialsVersion": 1,
+    "endpoint": "http://127.0.0.1:8080",
+    "bearerToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6Imd1ZXN0IiwiZXhwIjoxNjgxOTM3ODA1fQ.Pwqa5ylTDnjyivNsyNTi0QNR1oKuHJhCPPxWiznomRE",
+    "expirationTime": "2023-04-19 20:56:45 UTC"
   }
 }
 ```
