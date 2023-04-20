@@ -155,3 +155,738 @@ client.list_all_tables()
 ```
 
     [Table(name='table1', share='share1', schema='schema1')]
+
+### Load Tables
+
+Now it's time to access the shared data. The operation is incredibly simple: there's no need to prepare troublesome cloud service credentials, and you don't have to worry about what platform your colleague is using. All you have to do is specify the path to the [table](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts). A [table](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts) path consists of the [profile](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#profile-file-format) file path followed by `#` and the fully qualified name of a [table](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts): `<share-name>.<schema-name>.<table-name>`.
+
+```python
+url = profile + "#share1.schema1.table1"
+delta_sharing.load_as_pandas(url)
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>row</th>
+      <th>date</th>
+      <th>average_price</th>
+      <th>total_volume</th>
+      <th>4046</th>
+      <th>4225</th>
+      <th>4770</th>
+      <th>total_bags</th>
+      <th>small_bags</th>
+      <th>large_bags</th>
+      <th>xlarge_bags</th>
+      <th>type</th>
+      <th>year</th>
+      <th>region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2015-12-26 15:00:00</td>
+      <td>1.33</td>
+      <td>64236.62</td>
+      <td>1036.74</td>
+      <td>54454.85</td>
+      <td>48.16</td>
+      <td>8696.87</td>
+      <td>8603.62</td>
+      <td>93.25</td>
+      <td>0.0</td>
+      <td>conventional</td>
+      <td>2015</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2015-12-19 15:00:00</td>
+      <td>1.35</td>
+      <td>54876.98</td>
+      <td>674.28</td>
+      <td>44638.81</td>
+      <td>58.33</td>
+      <td>9505.56</td>
+      <td>9408.07</td>
+      <td>97.49</td>
+      <td>0.0</td>
+      <td>conventional</td>
+      <td>2015</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2015-12-12 15:00:00</td>
+      <td>0.93</td>
+      <td>118220.22</td>
+      <td>794.70</td>
+      <td>109149.67</td>
+      <td>130.50</td>
+      <td>8145.35</td>
+      <td>8042.21</td>
+      <td>103.14</td>
+      <td>0.0</td>
+      <td>conventional</td>
+      <td>2015</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2015-12-05 15:00:00</td>
+      <td>1.08</td>
+      <td>78992.15</td>
+      <td>1132.00</td>
+      <td>71976.41</td>
+      <td>72.58</td>
+      <td>5811.16</td>
+      <td>5677.40</td>
+      <td>133.76</td>
+      <td>0.0</td>
+      <td>conventional</td>
+      <td>2015</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2015-11-28 15:00:00</td>
+      <td>1.28</td>
+      <td>51039.60</td>
+      <td>941.48</td>
+      <td>43838.39</td>
+      <td>75.78</td>
+      <td>6183.95</td>
+      <td>5986.26</td>
+      <td>197.69</td>
+      <td>0.0</td>
+      <td>conventional</td>
+      <td>2015</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>18244</th>
+      <td>7</td>
+      <td>2018-02-03 15:00:00</td>
+      <td>1.63</td>
+      <td>17074.83</td>
+      <td>2046.96</td>
+      <td>1529.20</td>
+      <td>0.00</td>
+      <td>13498.67</td>
+      <td>13066.82</td>
+      <td>431.85</td>
+      <td>0.0</td>
+      <td>organic</td>
+      <td>2018</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>18245</th>
+      <td>8</td>
+      <td>2018-01-27 15:00:00</td>
+      <td>1.71</td>
+      <td>13888.04</td>
+      <td>1191.70</td>
+      <td>3431.50</td>
+      <td>0.00</td>
+      <td>9264.84</td>
+      <td>8940.04</td>
+      <td>324.80</td>
+      <td>0.0</td>
+      <td>organic</td>
+      <td>2018</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>18246</th>
+      <td>9</td>
+      <td>2018-01-20 15:00:00</td>
+      <td>1.87</td>
+      <td>13766.76</td>
+      <td>1191.92</td>
+      <td>2452.79</td>
+      <td>727.94</td>
+      <td>9394.11</td>
+      <td>9351.80</td>
+      <td>42.31</td>
+      <td>0.0</td>
+      <td>organic</td>
+      <td>2018</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>18247</th>
+      <td>10</td>
+      <td>2018-01-13 15:00:00</td>
+      <td>1.93</td>
+      <td>16205.22</td>
+      <td>1527.63</td>
+      <td>2981.04</td>
+      <td>727.01</td>
+      <td>10969.54</td>
+      <td>10919.54</td>
+      <td>50.00</td>
+      <td>0.0</td>
+      <td>organic</td>
+      <td>2018</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>18248</th>
+      <td>11</td>
+      <td>2018-01-06 15:00:00</td>
+      <td>1.62</td>
+      <td>17489.58</td>
+      <td>2894.77</td>
+      <td>2356.13</td>
+      <td>224.53</td>
+      <td>12014.15</td>
+      <td>11988.14</td>
+      <td>26.01</td>
+      <td>0.0</td>
+      <td>organic</td>
+      <td>2018</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+  </tbody>
+</table>
+<p>18249 rows × 14 columns</p>
+</div>
+
+### SQL Expressions for Filtering[^1]
+
+Great! Now you can access the desired data from the data lake. Suppose you are only interested in the data within the date range of `2016-01-01` and `2017-12-31`. In this case, you can send [SQL snippets](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#sql-expressions-for-filtering) as hints to the sharing server so that it filters out redundant partitions. Here's how you can request the desired partition:
+
+```python
+url = profile + "#share1.schema1.table1"
+delta_sharing.load_as_pandas(
+    url,
+    predicateHints=['year >= 2016', 'year <= 2017']
+)
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>row</th>
+      <th>date</th>
+      <th>average_price</th>
+      <th>total_volume</th>
+      <th>4046</th>
+      <th>4225</th>
+      <th>4770</th>
+      <th>total_bags</th>
+      <th>small_bags</th>
+      <th>large_bags</th>
+      <th>xlarge_bags</th>
+      <th>type</th>
+      <th>year</th>
+      <th>region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2016-12-24 15:00:00</td>
+      <td>1.52</td>
+      <td>73341.73</td>
+      <td>3202.39</td>
+      <td>58280.33</td>
+      <td>426.92</td>
+      <td>11432.09</td>
+      <td>11017.32</td>
+      <td>411.83</td>
+      <td>2.94</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2016-12-17 15:00:00</td>
+      <td>1.53</td>
+      <td>68938.53</td>
+      <td>3345.36</td>
+      <td>55949.79</td>
+      <td>138.72</td>
+      <td>9504.66</td>
+      <td>8876.65</td>
+      <td>587.73</td>
+      <td>40.28</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2016-12-10 15:00:00</td>
+      <td>1.49</td>
+      <td>71777.85</td>
+      <td>2323.39</td>
+      <td>56545.79</td>
+      <td>86.65</td>
+      <td>12822.02</td>
+      <td>12176.75</td>
+      <td>645.27</td>
+      <td>0.00</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2016-12-03 15:00:00</td>
+      <td>1.48</td>
+      <td>113031.96</td>
+      <td>6530.78</td>
+      <td>99746.05</td>
+      <td>50.84</td>
+      <td>6704.29</td>
+      <td>6476.12</td>
+      <td>228.17</td>
+      <td>0.00</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2016-11-26 15:00:00</td>
+      <td>1.52</td>
+      <td>58171.89</td>
+      <td>2793.99</td>
+      <td>47106.18</td>
+      <td>18.14</td>
+      <td>8253.58</td>
+      <td>7973.98</td>
+      <td>279.60</td>
+      <td>0.00</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>11333</th>
+      <td>46</td>
+      <td>2017-01-28 15:00:00</td>
+      <td>1.30</td>
+      <td>17839.37</td>
+      <td>1486.34</td>
+      <td>4498.48</td>
+      <td>26.12</td>
+      <td>11828.43</td>
+      <td>11821.76</td>
+      <td>6.67</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11334</th>
+      <td>47</td>
+      <td>2017-01-21 15:00:00</td>
+      <td>1.21</td>
+      <td>16430.64</td>
+      <td>1413.93</td>
+      <td>2820.53</td>
+      <td>20.25</td>
+      <td>12175.93</td>
+      <td>12073.07</td>
+      <td>102.86</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11335</th>
+      <td>48</td>
+      <td>2017-01-14 15:00:00</td>
+      <td>1.19</td>
+      <td>17014.23</td>
+      <td>1203.87</td>
+      <td>2904.22</td>
+      <td>23.07</td>
+      <td>12883.07</td>
+      <td>12476.57</td>
+      <td>406.50</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11336</th>
+      <td>49</td>
+      <td>2017-01-07 15:00:00</td>
+      <td>1.18</td>
+      <td>14375.39</td>
+      <td>1327.98</td>
+      <td>2617.20</td>
+      <td>5.75</td>
+      <td>10424.46</td>
+      <td>10283.85</td>
+      <td>140.61</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11337</th>
+      <td>50</td>
+      <td>2016-12-31 15:00:00</td>
+      <td>1.28</td>
+      <td>15307.87</td>
+      <td>867.66</td>
+      <td>3434.02</td>
+      <td>37.30</td>
+      <td>10968.89</td>
+      <td>10815.88</td>
+      <td>153.01</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+  </tbody>
+</table>
+<p>11338 rows × 14 columns</p>
+</div>
+
+### JSON predicates for Filtering[^1]
+
+While the previous `predicateHints` using [SQL filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) is handy, its logical expressiveness is a bit limited and it is recommended to use [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) instead as per the official protocol specification. It should be noted that **the SQL filtering method will be deprecated**. Here's how you can request the desired partition using [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body):
+
+
+```python
+url = profile + "#share1.schema1.table1"
+delta_sharing.load_as_pandas(
+    url,
+    jsonPredicateHints={
+        "op": "and",
+        "children": [
+            {
+                "op": "greaterThanOrEqual",
+                "children": [
+                    {"op": "column", "name": "year", "valueType": "int"},
+                    {"op": "literal", "value": "2016", "valueType": "int"}
+                ]
+            },
+            {
+                "op": "lessThanOrEqual",
+                "children": [
+                    {"op": "column", "name": "year", "valueType":"int"},
+                    {"op": "literal", "value": "2017", "valueType": "int"}
+                ]
+            }
+        ]
+    }
+)
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>row</th>
+      <th>date</th>
+      <th>average_price</th>
+      <th>total_volume</th>
+      <th>4046</th>
+      <th>4225</th>
+      <th>4770</th>
+      <th>total_bags</th>
+      <th>small_bags</th>
+      <th>large_bags</th>
+      <th>xlarge_bags</th>
+      <th>type</th>
+      <th>year</th>
+      <th>region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2016-12-24 15:00:00</td>
+      <td>1.52</td>
+      <td>73341.73</td>
+      <td>3202.39</td>
+      <td>58280.33</td>
+      <td>426.92</td>
+      <td>11432.09</td>
+      <td>11017.32</td>
+      <td>411.83</td>
+      <td>2.94</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2016-12-17 15:00:00</td>
+      <td>1.53</td>
+      <td>68938.53</td>
+      <td>3345.36</td>
+      <td>55949.79</td>
+      <td>138.72</td>
+      <td>9504.66</td>
+      <td>8876.65</td>
+      <td>587.73</td>
+      <td>40.28</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2016-12-10 15:00:00</td>
+      <td>1.49</td>
+      <td>71777.85</td>
+      <td>2323.39</td>
+      <td>56545.79</td>
+      <td>86.65</td>
+      <td>12822.02</td>
+      <td>12176.75</td>
+      <td>645.27</td>
+      <td>0.00</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2016-12-03 15:00:00</td>
+      <td>1.48</td>
+      <td>113031.96</td>
+      <td>6530.78</td>
+      <td>99746.05</td>
+      <td>50.84</td>
+      <td>6704.29</td>
+      <td>6476.12</td>
+      <td>228.17</td>
+      <td>0.00</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2016-11-26 15:00:00</td>
+      <td>1.52</td>
+      <td>58171.89</td>
+      <td>2793.99</td>
+      <td>47106.18</td>
+      <td>18.14</td>
+      <td>8253.58</td>
+      <td>7973.98</td>
+      <td>279.60</td>
+      <td>0.00</td>
+      <td>conventional</td>
+      <td>2016</td>
+      <td>Albany</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>11333</th>
+      <td>46</td>
+      <td>2017-01-28 15:00:00</td>
+      <td>1.30</td>
+      <td>17839.37</td>
+      <td>1486.34</td>
+      <td>4498.48</td>
+      <td>26.12</td>
+      <td>11828.43</td>
+      <td>11821.76</td>
+      <td>6.67</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11334</th>
+      <td>47</td>
+      <td>2017-01-21 15:00:00</td>
+      <td>1.21</td>
+      <td>16430.64</td>
+      <td>1413.93</td>
+      <td>2820.53</td>
+      <td>20.25</td>
+      <td>12175.93</td>
+      <td>12073.07</td>
+      <td>102.86</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11335</th>
+      <td>48</td>
+      <td>2017-01-14 15:00:00</td>
+      <td>1.19</td>
+      <td>17014.23</td>
+      <td>1203.87</td>
+      <td>2904.22</td>
+      <td>23.07</td>
+      <td>12883.07</td>
+      <td>12476.57</td>
+      <td>406.50</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11336</th>
+      <td>49</td>
+      <td>2017-01-07 15:00:00</td>
+      <td>1.18</td>
+      <td>14375.39</td>
+      <td>1327.98</td>
+      <td>2617.20</td>
+      <td>5.75</td>
+      <td>10424.46</td>
+      <td>10283.85</td>
+      <td>140.61</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+    <tr>
+      <th>11337</th>
+      <td>50</td>
+      <td>2016-12-31 15:00:00</td>
+      <td>1.28</td>
+      <td>15307.87</td>
+      <td>867.66</td>
+      <td>3434.02</td>
+      <td>37.30</td>
+      <td>10968.89</td>
+      <td>10815.88</td>
+      <td>153.01</td>
+      <td>0.00</td>
+      <td>organic</td>
+      <td>2017</td>
+      <td>WestTexNewMexico</td>
+    </tr>
+  </tbody>
+</table>
+<p>11338 rows × 14 columns</p>
+</div>
+
+[^1]: As of April 20, 2023, this partition filters API is not public, so these code snippets are based on my local patch. I plan to create a pull request in the near future to add these partition filters APIs to the public release.
