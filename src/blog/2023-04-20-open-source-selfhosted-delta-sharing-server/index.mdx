@@ -10,3 +10,51 @@ In this article, I will provide instructions on how to share your data with your
 The following image depicts the system workflow. Let's walk through how [Kotosiro Sharing](https://github.com/kotosiro/sharing) works when you want to share precious data with your colleagues.
 
 ![](image1.png)
+
+### Delta Table Structure
+
+You have [historical data on avocado prices and sales volume in multiple US markets](https://www.kaggle.com/datasets/neuromusic/avocado-prices) stored in your Delta table on AWS S3. Your colleague has come to your desk and asked if they could use the data for further data analytics. The structure of the table is as follows:
+
+```
+avocado-table
+├── .part-00000-04d10a18-acde-4d66-bb3b-39f5d0feb689-c000.snappy.parquet.crc
+├── .part-00000-c5135c42-2c15-4da5-8cd6-f0fc527dff9c-c000.snappy.parquet.crc
+├── .part-00000-c6c1e092-bef3-41a0-8a05-826a33ecff6f-c000.snappy.parquet.crc
+├── .part-00000-d7afaec2-4373-4865-ab48-e9f60495b41e-c000.snappy.parquet.crc
+├── _delta_log
+│   ├── .00000000000000000000.json.crc
+│   ├── .00000000000000000001.json.crc
+│   ├── .00000000000000000002.json.crc
+│   ├── .00000000000000000003.json.crc
+│   ├── 00000000000000000000.json
+│   ├── 00000000000000000001.json
+│   ├── 00000000000000000002.json
+│   └── 00000000000000000003.json
+├── part-00000-04d10a18-acde-4d66-bb3b-39f5d0feb689-c000.snappy.parquet
+├── part-00000-c5135c42-2c15-4da5-8cd6-f0fc527dff9c-c000.snappy.parquet
+├── part-00000-c6c1e092-bef3-41a0-8a05-826a33ecff6f-c000.snappy.parquet
+└── part-00000-d7afaec2-4373-4865-ab48-e9f60495b41e-c000.snappy.parquet
+
+2 directories, 16 files
+```
+
+The table is partitioned using the `year` column, and each partition is appended sequentially. Therefore, the table has [four different versions](https://docs.databricks.com/delta/history.html) in chronological order.
+
+### Log in to Kotosiro Sharing Server and Get the Admin Access Token
+
+Now let's get started with the interesting part. As the owner of the data and administrator of your [Kotosiro Sharing](https://github.com/kotosiro/sharing) server, you need to log in to the system and obtain the admin access token. This token will enable you to create a [share](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#concepts). Here's how you can obtain the token:
+
+```
+ $ curl -s -X POST http://localhost:8080/admin/login \
+        -H "Content-Type: application/json" \
+        -d '{"account": "kotosiro", "password": "password"}' \
+        | jq '.'
+{
+  "profile": {
+    "shareCredentialsVersion": 1,
+    "endpoint": "http://127.0.0.1:8080",
+    "bearerToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia290b3Npcm8iLCJlbWFpbCI6ImtvdG9zaXJvQGVtYWlsLmNvbSIsIm5hbWVzcGFjZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgxOTM3NzMyfQ.rVjA6S7EWq7CakpB0IHik0mvxl58ynZNxNM3a3RJibY",
+    "expirationTime": "2023-04-19 20:55:32 UTC"
+  }
+}
+```
