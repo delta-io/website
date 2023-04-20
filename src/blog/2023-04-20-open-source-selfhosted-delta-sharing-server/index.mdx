@@ -17,15 +17,7 @@ You have [historical data on avocado prices and sales volume in multiple US mark
 
 ```
 avocado-table
-├── .part-00000-04d10a18-acde-4d66-bb3b-39f5d0feb689-c000.snappy.parquet.crc
-├── .part-00000-c5135c42-2c15-4da5-8cd6-f0fc527dff9c-c000.snappy.parquet.crc
-├── .part-00000-c6c1e092-bef3-41a0-8a05-826a33ecff6f-c000.snappy.parquet.crc
-├── .part-00000-d7afaec2-4373-4865-ab48-e9f60495b41e-c000.snappy.parquet.crc
 ├── _delta_log
-│   ├── .00000000000000000000.json.crc
-│   ├── .00000000000000000001.json.crc
-│   ├── .00000000000000000002.json.crc
-│   ├── .00000000000000000003.json.crc
 │   ├── 00000000000000000000.json
 │   ├── 00000000000000000001.json
 │   ├── 00000000000000000002.json
@@ -38,7 +30,7 @@ avocado-table
 2 directories, 16 files
 ```
 
-The table is partitioned using the `year` column, and each partition is appended sequentially. Therefore, the table has [four different versions](https://docs.databricks.com/delta/history.html) in chronological order.
+Each parquet file is appended sequentially. Therefore, the table has [four different versions](https://docs.databricks.com/delta/history.html) in chronological order.
 
 ## Share Your Delta Tables via Kotosiro Sharing APIs
 
