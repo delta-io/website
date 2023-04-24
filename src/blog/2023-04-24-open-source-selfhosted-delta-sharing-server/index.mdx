@@ -170,7 +170,7 @@ url = profile + "#share1.schema1.table1"
 delta_sharing.load_as_pandas(url)
 ```
 
-<div>
+<div style={{ overflow: "auto" }}>
   <table>
     <thead>
       <tr>
@@ -282,9 +282,9 @@ delta_sharing.load_as_pandas(url)
   <p>18249 rows × 14 columns</p>
 </div>
 
-### SQL Expressions for Filtering[^1]
+### SQL Expressions for Filtering
 
-Great! Now you can access the desired data from the data lake. Suppose you are only interested in the data within the date range of `2016-01-01` and `2017-12-31`. In this case, you can send [SQL snippets](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#sql-expressions-for-filtering) as hints to the sharing server so that it filters out redundant [Parquet](https://parquet.apache.org/) files. Here's how you can request the desired [Parquet](https://parquet.apache.org/) files:
+Great! Now you can access the desired data from the data lake. Suppose you are only interested in the data within the date range of `2016-01-01` and `2017-12-31`. In this case, you can send [SQL snippets](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#sql-expressions-for-filtering) as hints to the sharing server so that it filters out redundant [Parquet](https://parquet.apache.org/) files. Here's how you can request the desired [Parquet](https://parquet.apache.org/) files (As of April 24, 2023, this filter API is not public in the Python client library, so this code snippet are based on my local patch. I plan to create a pull request in the near future to add this filter API to the public release):
 
 ```python
 url = profile + "#share1.schema1.table1"
@@ -294,7 +294,7 @@ delta_sharing.load_as_pandas(
 )
 ```
 
-<div>
+<div style={{ overflow: "auto" }}>
   <table>
     <thead>
       <tr>
@@ -406,9 +406,9 @@ delta_sharing.load_as_pandas(
   <p>11338 rows × 14 columns</p>
 </div>
 
-### JSON predicates for Filtering[^1]
+### JSON predicates for Filtering
 
-While the previous `predicateHints` using [SQL filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) is handy, its logical expressiveness is a bit limited and it is recommended to use [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) instead as per the official protocol specification. It should be noted that **the SQL filtering method will be deprecated**. Here's how you can request the desired [Parquet](https://parquet.apache.org/) files using [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body):
+While the previous `predicateHints` using [SQL filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) is handy, its logical expressiveness is a bit limited and it is recommended to use [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body) instead as per the official protocol specification. It should be noted that **the SQL filtering method will be deprecated**. Here's how you can request the desired [Parquet](https://parquet.apache.org/) files using [JSON filtering](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#request-body)(As of April 24, 2023, this filter API is not public in the Python client library, so this code snippet are based on my local patch. I plan to create a pull request in the near future to add this filter API to the public release):
 
 ```python
 url = profile + "#share1.schema1.table1"
@@ -436,7 +436,7 @@ delta_sharing.load_as_pandas(
 )
 ```
 
-<div>
+<div style={{ overflow: "auto" }}>
   <table>
     <thead>
       <tr>
@@ -547,8 +547,6 @@ delta_sharing.load_as_pandas(
   </table>
   <p>11338 rows × 14 columns</p>
 </div>
-
-[^1]: As of April 20, 2023, this filter API is not public in the Python client library, so this code snippet are based on my local patch. I plan to create a pull request in the near future to add this filter API to the public release.
 
 ## Conclusion
 
