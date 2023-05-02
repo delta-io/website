@@ -4,8 +4,8 @@ import Link from "src/components/Link";
 import Section from "src/components/Section";
 import { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
+import profileImg from "src/images/tyler-croy/Tyler-Croy-min.jpg";
 import twitchImg from "./twitch-logo-4931D91F85-seeklogo.com.png";
-import profileImg from "./Tyler-Croy-min.jpg";
 
 const ColumnWrapper = styled(TypographyContainer)`
   text-align: left;
