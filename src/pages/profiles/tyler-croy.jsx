@@ -162,17 +162,6 @@ const ProfileTylerCroy = () => {
           updates and also publishing Delta Lake-focused blogs. Thank you for
           all you do, Tyler!
         </Typography>
-        <h4>OSS Contributions</h4>
-        <p>
-          <Link href="https://marketplace.visualstudio.com/items?itemName=paiqo.databricks-vscode">
-            Databricks VSCode Extension
-          </Link>
-        </p>
-        <p>
-          <Link href="https://www.powershellgallery.com/packages/DatabricksPS/1.11.0.5">
-            DatabricksPS Powershell Module
-          </Link>
-        </p>
       </Section>
       <Section background="white" centerHeader padding="xl">
         <Typography variant="h3">References</Typography>
