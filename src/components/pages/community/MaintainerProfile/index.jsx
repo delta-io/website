@@ -51,7 +51,7 @@ const profileMaintainer = () => (
   <Section background="white" centerHeader padding="xl">
     <br />
     <h1>
-      <center>Contributor of the Month</center>
+      <center>Featured Contributor</center>
     </h1>
 
     <Link href={currentContributor.profile} muted>
