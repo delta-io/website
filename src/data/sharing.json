@@ -1,5 +1,12 @@
 [
   {
+    "name": "Oracle",
+    "description": "This connector allows for Delta Sharing with Oracle.",
+    "url": "https://www.infoworld.com/article/3695210/how-oracle-is-taking-on-aws-snowflake-with-autonomous-data-warehouse-updates.html",
+    "tags": ["Oracle", "Delta Sharing"],
+    "thumbnail": "./images/connectors/oracle.png"
+  },
+  {
     "name": "C++",
     "description": "This connector allows a C++ client to read from Delta Sharing endpoint.",
     "url": "https://github.com/magpierre/cpp_delta_sharing_client",
