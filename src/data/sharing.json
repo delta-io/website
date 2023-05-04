@@ -1,5 +1,12 @@
 [
   {
+    "name": "Oracle",
+    "description": "This connector allows for Delta Sharing with Oracle Autonomous Database Data Studio.",
+    "url": "https://www.oracle.com/autonomous-database/data-studio/features/?ytid=NAV1YyKMaaQ#data-sharing",
+    "tags": ["Oracle", "Delta Sharing"],
+    "thumbnail": "./images/connectors/oracle.png"
+  },
+  {
     "name": "C++",
     "description": "This connector allows a C++ client to read from Delta Sharing endpoint.",
     "url": "https://github.com/magpierre/cpp_delta_sharing_client",
