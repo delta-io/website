@@ -1,8 +1,8 @@
 [
   {
     "name": "Oracle",
-    "description": "This connector allows for Delta Sharing with Oracle.",
-    "url": "https://www.infoworld.com/article/3695210/how-oracle-is-taking-on-aws-snowflake-with-autonomous-data-warehouse-updates.html",
+    "description": "This connector allows for Delta Sharing with Oracle Autonomous Database Data Studio.",
+    "url": "https://www.oracle.com/autonomous-database/data-studio/features/?ytid=NAV1YyKMaaQ#data-sharing",
     "tags": ["Oracle", "Delta Sharing"],
     "thumbnail": "./images/connectors/oracle.png"
   },
