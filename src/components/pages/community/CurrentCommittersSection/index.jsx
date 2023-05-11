@@ -136,9 +136,9 @@ const CurrentCommittersSection = () => (
         { label: "Organziation", field: "organization" },
         { label: "Focal Areas", field: "areas" },
       ]}
-      data={committers.map((committer) => ({
+      data={committers.map((committer, i) => ({
         ...committer,
-        key: committer.name,
+        key: committer.name + i,
         areas: committer.areas.join(", "),
       }))}
     />
