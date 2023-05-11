@@ -51,9 +51,9 @@ const DocumentTitle = styled.span`
 `;
 
 const LinkWrapper = styled.div`
-  margin-top: 1rem;
   display: flex;
   justify-content: center;
+  margin-top: 2rem;
 `;
 
 const WhitepaperSection = () => (
@@ -98,9 +98,12 @@ const WhitepaperSection = () => (
       </WhitepaperSectionColumn>
     </Grid>
     <LinkWrapper>
-      <DocumentLink href="https://dl.acm.org/doi/10.14778/3415478.3415560">
-        Delta lake: high-performance ACID table storage over cloud object stores
-      </DocumentLink>
+      <ButtonRow variant="p">
+        <Button href="https://dl.acm.org/doi/10.14778/3415478.3415560">
+          Delta Lake: high-performance ACID table storage over cloud object
+          stores
+        </Button>
+      </ButtonRow>
     </LinkWrapper>
   </Section>
 );
