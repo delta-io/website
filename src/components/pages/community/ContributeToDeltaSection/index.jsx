@@ -50,10 +50,10 @@ const ContributeToDeltaSection = () => (
         <ImageContainer key={item.name}>
           {item.link ? (
             <Link href={item.link}>
-              <img src={item.src} alt={item.name} />
+              <img loading="lazy" src={item.src} alt={item.name} />
             </Link>
           ) : (
-            <img src={item.src} alt={item.name} />
+            <img loading="lazy" src={item.src} alt={item.name} />
           )}
         </ImageContainer>
       ))}
