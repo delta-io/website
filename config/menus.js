@@ -27,6 +27,10 @@ const main = [
         label: "Videos",
         url: "/learn/videos/",
       },
+      {
+        label: "User Stories",
+        url: "/user-stories",
+      },
     ],
   },
   {
@@ -102,6 +106,10 @@ const learn = [
   {
     label: "Videos",
     url: "/learn/videos/",
+  },
+  {
+    label: "User Stories",
+    url: "/user-stories",
   },
 ];
 

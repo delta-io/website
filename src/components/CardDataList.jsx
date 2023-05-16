@@ -15,6 +15,7 @@ import styled from "styled-components";
 import Grid from "src/components/Grid";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import Embed from "src/components/Embed";
+import BlogAuthorsName from "src/components/BlogAuthorsName";
 
 const shortDescription = (title, count) => {
   const arrWords = title.split(" ");
@@ -230,9 +231,11 @@ const CardDataList = (props) => {
                   {card.title}
                 </Link>
               </CardTitle>
-              {card.meta && (
+              {card.date && card.author && (
                 <>
-                  <CardContent variant="p2">{card.meta}</CardContent>
+                  <CardContent variant="p2">
+                    {card.date} by <BlogAuthorsName name={card.author} />
+                  </CardContent>
                   <Typography variant="hr" density="dense" />
                 </>
               )}
