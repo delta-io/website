@@ -33,6 +33,14 @@
     "thumbnail": "./images/connectors/java-logo.png"
   },
   {
+    "name": "Kotosiro Sharing",
+    "description": "A Minimalistic Rust Implementation of Delta Sharing Server.",
+    "url": "https://github.com/kotosiro/sharing",
+    "source_code": "https://github.com/kotosiro/sharing",
+    "tags": ["Kotosiro", "Delta Sharing", "Rust"],
+    "thumbnail": "./images/connectors/kotosiro-transparent.png"
+  },
+  {
     "name": "MLflow",
     "description": "Perform model exchange via Delta Sharing and MLflow",
     "url": "https://github.com/databrickslabs/arcuate",
@@ -49,6 +57,13 @@
     "source_code": "https://github.com/goodwillpunning/nodejs-sharing-client",
     "tags": ["node.js", "Delta Sharing", "community"],
     "thumbnail": "./images/connectors/nodejs-logo.png"
+  },
+  {
+    "name": "Oracle",
+    "description": "This connector allows for Delta Sharing with Oracle Autonomous Database Data Studio.",
+    "url": "https://www.oracle.com/autonomous-database/data-studio/features/?ytid=NAV1YyKMaaQ#data-sharing",
+    "tags": ["Oracle", "Delta Sharing"],
+    "thumbnail": "./images/connectors/oracle.png"
   },
   {
     "name": "Power BI",

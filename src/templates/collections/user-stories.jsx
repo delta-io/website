@@ -1,58 +1,51 @@
-import { graphql } from "gatsby";
 import * as React from "react";
-import SEO from "src/components/SEO";
-import PageLayout from "src/components/PageLayout";
-import CardDataList from "src/components/CardDataList";
-import Section from "src/components/Section";
-import FilteredPosts from "src/components/FilterPosts";
 
-const BlogCollectionTemplate = ({ data, pageContext }) => {
-  const [filter, setFilter] = React.useState("");
-  const { featuredCount } = pageContext;
+import PageLayout from "src/components/PageLayout";
+import Section from "src/components/Section";
+import { graphql } from "gatsby";
+import SEO from "src/components/SEO";
+import CardDataList from "src/components/CardDataList";
+import Pagination from "src/components/Pagination";
+
+const UserStoriesCollectionTemplate = ({ data, pageContext }) => {
+  const { hasPreviousPage, hasNextPage, currentPage, featuredCount } =
+    pageContext;
   const { edges } = data.allMdx;
 
   if (!edges.length) {
-    return <div>No articles found!</div>;
+    return <div>No user stories!</div>;
   }
 
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;
     const { title, description, author, thumbnail } = frontmatter;
-    const { date, slug } = fields;
+    const { slug } = fields;
 
     return {
       title,
       description,
       url: slug,
-      date,
-      author,
+      meta: author,
       thumbnail,
     };
   });
 
-  const handleFilter = (e) => setFilter(e.target.value);
-
-  const normalizedStr = (query) =>
-    query.toLowerCase().includes(filter.toLowerCase());
-
-  const filteredCards = cards.filter(({ title }) => normalizedStr(title));
-
   return (
     <PageLayout>
-      <Section
-        padding="xxl"
-        title="Delta Lake Blogs"
-        primary
-        background="white"
-      >
-        <FilteredPosts onChange={handleFilter} cards={filteredCards} />
+      <Section padding="xxl" title="User Stories" primary background="white">
         <CardDataList
-          cards={filteredCards}
+          cards={cards}
           showFeatured={featuredCount > 0}
           columns={{ xs: 1, sm: 2, lg: 3 }}
           density="relaxed"
           thumbnailRatio={[16, 9]}
           clampDescriptionLines={2}
+        />
+        <Pagination
+          hasPreviousPage={hasPreviousPage}
+          hasNextPage={hasNextPage}
+          currentPage={currentPage}
+          basePath="/user-stories"
         />
       </Section>
     </PageLayout>
@@ -62,14 +55,16 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 export const Head = ({ pageContext }) => {
   const { currentPage } = pageContext;
 
-  return <SEO title="Delta Lake Blogs" pageIndex={currentPage} />;
+  return <SEO title="User Stories" pageIndex={currentPage} />;
 };
 
 export const pageQuery = graphql`
-  query {
+  query ($skip: Int!, $limit: Int!) {
     allMdx(
       sort: { fields: [fields___date], order: DESC }
-      filter: { fields: { pageType: { eq: "blog" } } }
+      filter: { fields: { pageType: { eq: "user-stories" } } }
+      limit: $limit
+      skip: $skip
     ) {
       edges {
         node {
@@ -93,4 +88,4 @@ export const pageQuery = graphql`
   }
 `;
 
-export default BlogCollectionTemplate;
+export default UserStoriesCollectionTemplate;

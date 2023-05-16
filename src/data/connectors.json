@@ -88,5 +88,14 @@
     "source_code": "https://github.com/trinodb/trino/tree/master/plugin/trino-delta-lake",
     "tags": ["Trino"],
     "thumbnail": "./images/connectors/trino-logo.png"
+  },
+  {
+    "name": "FINOS Legend",
+    "description": "An extension to the FINOS Legend framework for Apache Spark™ / Delta Lake based environment, combining best of open data standards with open source technologiesThis connector allows Trino to read from and write to Delta Lake.",
+    "url": "https://legend.finos.org/docs/community/external-integrations",
+    "docs": "https://github.com/finos/legend-community-delta/blob/main/README.md",
+    "source_code": "https://github.com/finos/legend-community-delta",
+    "tags": ["FINOS", "Legend"],
+    "thumbnail": "./images/connectors/229239046-365bc3c4-f644-4fd2-b73f-7efb27366656.png"
   }
 ]

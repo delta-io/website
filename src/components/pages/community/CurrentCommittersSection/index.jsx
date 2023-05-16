@@ -16,7 +16,7 @@ const committers = [
     name: "R. Tyler Croy",
     organization: "Scribd",
     areas: ["delta", "delta-rs", "kafka-delta-ingest"],
-    link: "",
+    link: "/profiles/tyler-croy",
   },
   {
     name: "Tathagata Das",
