@@ -36,7 +36,7 @@ const Table = (props) => {
                     <Link to={row.link}>{row[column]}</Link>
                   </td>
                 ) : (
-                  <td>{row[column]}</td>
+                  <td key={column}>{row[column]}</td>
                 );
               }
               return <td key={column}>{row[column]}</td>;
