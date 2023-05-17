@@ -45,7 +45,7 @@ const ContributeToDeltaSection = () => (
     centeredHeader
     padding="xxxl"
   >
-    <Grid columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} gutter="lg">
+    <Grid columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} gutter="lg" rowGutter="xl">
       {contributors?.map((item) => (
         <ImageContainer key={item.name}>
           {item.link ? (
