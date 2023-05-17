@@ -1,13 +1,16 @@
 import * as React from "react";
 import styled from "styled-components";
+import Section from "src/components/Section";
 import linuxFoundation from "./img/linux-foundation.svg";
 
 const BannerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+  margin: 0 auto;
   height: 32px;
   background-color: black;
+  padding-top: 2px;
+`;
 
+const Container = styled(Section)`
   img {
     max-width: 300px;
   }
@@ -15,6 +18,8 @@ const BannerWrapper = styled.div`
 
 export const LinuxFoundationBanner = () => (
   <BannerWrapper>
-    <img src={linuxFoundation} alt="linux-foundation" />
+    <Container>
+      <img src={linuxFoundation} alt="linux-foundation" />
+    </Container>
   </BannerWrapper>
 );
