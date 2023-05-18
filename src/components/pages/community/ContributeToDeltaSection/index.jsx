@@ -4,7 +4,7 @@ import Section from "src/components/Section";
 import Typography from "src/components/Typography";
 import styled from "styled-components";
 import Link from "src/components/Link";
-import { contributors } from "./contributors";
+import { orgContributors } from "./orgContributors";
 
 const ImageContainer = styled.div`
   width: 100%;
@@ -46,7 +46,7 @@ const ContributeToDeltaSection = () => (
     padding="xxxl"
   >
     <Grid columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} gutter="lg" rowGutter="xxl">
-      {contributors?.map((item) => (
+      {orgContributors?.map((item) => (
         <ImageContainer key={item.name}>
           {item.link ? (
             <Link href={item.link}>
