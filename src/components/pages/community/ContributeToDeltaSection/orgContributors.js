@@ -24,7 +24,7 @@ import talend from "./img/talend.png";
 import twilio from "./img/twilio.png";
 import ucDavis from "./img/ucDavis.png";
 
-export const contributors = [
+export const orgContributors = [
   {
     name: "adobe",
     src: adobe,
