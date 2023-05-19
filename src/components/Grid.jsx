@@ -27,9 +27,9 @@ const columnsRule = (columns) => {
     .join(" ")};`;
 };
 
-const gutterRule = (gutter) => `
+const gutterRule = (gutter, rowGutter) => `
   column-gap: ${spacing[gutter]};
-  row-gap: ${spacing[gutter]};
+    row-gap: ${rowGutter ? spacing[rowGutter] : spacing[gutter]};
 `;
 
 const GridContainer = styled.div`
@@ -37,7 +37,7 @@ const GridContainer = styled.div`
   ${(props) => props.evenRows && "grid-auto-rows: 1fr;"}
 
   ${(props) => {
-    const { theme, columns, gutter } = props;
+    const { theme, columns, gutter, rowGutter } = props;
 
     const columnsMap = Object.entries(columns).reduce(
       (obj, [size, numColumns]) => ({
@@ -50,7 +50,7 @@ const GridContainer = styled.div`
     const gutterMap = Object.entries(gutter).reduce(
       (obj, [size, gutterSize]) => ({
         ...obj,
-        [size]: gutterRule(gutterSize),
+        [size]: gutterRule(gutterSize, rowGutter),
       }),
       {}
     );
@@ -60,7 +60,7 @@ const GridContainer = styled.div`
 `;
 
 const Grid = (props) => {
-  const { evenRows, columns, gutter, className, children } = props;
+  const { evenRows, columns, gutter, className, children, rowGutter } = props;
 
   return (
     <GridContainer
@@ -73,6 +73,7 @@ const Grid = (props) => {
           : columns
       }
       gutter={typeof gutter === "string" ? { xs: gutter } : gutter}
+      rowGutter={rowGutter}
       className={className}
     >
       {children}
