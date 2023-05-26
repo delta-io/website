@@ -27,7 +27,7 @@ const HomePage = () => {
       <AnnouncementSection
         title="Announcing Delta Lake 2.4.0 on Apache Spark™ 3.4"
         description="Try out the latest release today!"
-        url="https://github.com/delta-io/delta/releases/tag/v2.4.0"
+        url="http://go.delta.io/latest"
       />
       <HeroSection
         title="Build Lakehouses with Delta Lake"
