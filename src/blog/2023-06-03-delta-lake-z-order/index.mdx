@@ -121,21 +121,11 @@ You can also Z Order a Delta table on multiple columns. Let’s look at a collec
 
 Suppose you’re running the following types of queries frequently:
 
-- \*\*<code>query_a: select id1, sum(v1) as v1 from x1 where id1 = 'id016' group by id1</code></strong>
-- <strong>
-    <code>
-      query_b: select id2, sum(v1) as v1 from x1 where id2 = 'id047' group by
-      id2
-    </code>
-  </strong>
-- <strong>
-    <code>
-      query_c: select id1, id2, sum(v1) where id1 = 'id016' and id2 = 'id047'
-      group by id1, id2
-    </code>
-  </strong>
+- query_a: `select id1, sum(v1) as v1 from x1 where id1 = 'id016' group by id1`
+- query_b: `select id2, sum(v1) as v1 from x1 where id2 = 'id047' group by id2`
+- query_c: `select id1, id2, sum(v1) where id1 = 'id016' and id2 = 'id047' group by id1, id2`
 
-With this query pattern, Z Ordering on <code>id1</code> and <code>id2</code> could be good. Here’s how to run the Z Order command:
+With this query pattern, Z Ordering on `id1` and `id2` could be good. Here’s how to run the Z Order command:
 
 ```
 (
@@ -147,19 +137,10 @@ With this query pattern, Z Ordering on <code>id1</code> and <code>id2</code> cou
 
 Let’s observe the query runtime on the four versions of our Delta table.
 
-- \*\*<code>x0</code></strong>: Delta table that was initially created
-- <strong>
-    <code>x1</code>
-  </strong>
-  : Delta table that has been compacted
-- <strong>
-    <code>x2</code>
-  </strong>
-  : Delta table Z Ordered by <code>id1</code>
-- <strong>
-    <code>x3</code>
-  </strong>
-  : Delta table Z Ordered by <code>id1</code> and <code>id2</code>
+- x0: Delta table that was initially created
+- x1: Delta table that has been compacted
+- x2: Delta table Z Ordered by `id1`
+- x3: Delta table Z Ordered by `id1` and `id2`
 
 ![](image3.png)
 
