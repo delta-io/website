@@ -17,21 +17,14 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;
-    const {
-      title,
-      description,
-      author,
-      thumbnail,
-      date: insidePostDate,
-    } = frontmatter;
-    const { date, slug } = fields;
+    const { title, description, author, thumbnail, date } = frontmatter;
+    const { slug } = fields;
 
     return {
       title,
       description,
       url: slug,
       date,
-      insidePostDate,
       author,
       thumbnail,
     };
@@ -92,7 +85,6 @@ export const pageQuery = graphql`
             date(formatString: "MMMM D, YYYY")
           }
           fields {
-            date(formatString: "MMMM D, YYYY")
             slug
           }
         }

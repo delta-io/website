@@ -234,10 +234,7 @@ const CardDataList = (props) => {
               {card.date && card.author && (
                 <>
                   <CardContent variant="p2">
-                    {card.date !== "January 1, 1970"
-                      ? card.date
-                      : card.insidePostDate}{" "}
-                    by <BlogAuthorsName name={card.author} />
+                    {card.date} by <BlogAuthorsName name={card.author} />
                   </CardContent>
                   <Typography variant="hr" density="dense" />
                 </>
