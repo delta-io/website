@@ -17,7 +17,13 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;
-    const { title, description, author, thumbnail } = frontmatter;
+    const {
+      title,
+      description,
+      author,
+      thumbnail,
+      date: insidePostDate,
+    } = frontmatter;
     const { date, slug } = fields;
 
     return {
@@ -25,6 +31,7 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
       description,
       url: slug,
       date,
+      insidePostDate,
       author,
       thumbnail,
     };
@@ -82,6 +89,7 @@ export const pageQuery = graphql`
                 gatsbyImageData
               }
             }
+            date(formatString: "MMMM D, YYYY")
           }
           fields {
             date(formatString: "MMMM D, YYYY")
