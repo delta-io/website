@@ -27,7 +27,7 @@ Deletion Vectors vastly improve the performance of DELETE operations on Delta La
 
 The heatmap below illustrates the performance improvement of the DELETE command as both the number of files touched and the number of rows deleted in each file increase. We see that the performance of DELETE with Deletion Vectors enabled vastly improves over the traditional Copy-on-Write mode in nearly all cases, and especially as the number of files touched increases (bottom right). This relationship makes intuitive sense, because the traditional Copy-on-Write mode has to rewrite more and more files, while the Merge-on-Read mode with Deletion Vectors defers the rewrite penalty.
 
-![](image1.png)
+![](image3.png)
 
 The code and data used to generate these results is available in the accompanying [notebook](https://github.com/delta-io/delta-examples/blob/master/notebooks/pyspark/deletion-vectors.ipynb). You can easily run it on your local machine to confirm the results. The benefits only improve at scale where the data size is likely to be much bigger, the number of files much higher, and the penalty of cloud storage more expensive.
 
