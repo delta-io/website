@@ -1,28 +1,32 @@
 import * as React from "react";
 import { string } from "prop-types";
 import Link from "src/components/Link";
+import DENNY_LEE_IMG from "src/images/authors/denny_lee.jpg";
+import JIM_HIBBARD_IMG from "src/images/authors/jim_hibbard.jpg";
+import MATTHEW_PAWERS_IMG from "src/images/authors/matthew_pawers.jpg";
+import NICK_KARPOV_IMG from "src/images/authors/nick_karpov.jpg";
+import WILL_GIRTEN_IMG from "src/images/authors/will_girten.jpg";
 
 export const AUTHORS = {
   "Denny Lee": {
     profile: "https://www.linkedin.com/in/dennyglee/",
-    avatar:
-      "https://media.licdn.com/dms/image/C5603AQEIXKhYeXS1rw/profile-displayphoto-shrink_800_800/0/1595098409818?e=1686182400&v=beta&t=FF04NlEG-Bb3XnXNvqNTkK0xGkYGdIiJv7K2dTy8C90",
+    avatar: DENNY_LEE_IMG,
   },
   "Matthew Powers": {
     profile: "https://www.linkedin.com/in/matthew-powers-cfa-6246525/",
-    avatar:
-      "https://media.licdn.com/dms/image/C4E03AQHL3oztZlTr2w/profile-displayphoto-shrink_800_800/0/1517751980919?e=1686182400&v=beta&t=Ll4LkUNnOBiOYCePKQsch4_4iAwx5NCVkq7FzXMdP4M",
+    avatar: MATTHEW_PAWERS_IMG,
   },
-
   "Nick Karpov": {
     profile: "https://www.linkedin.com/in/nick-karpov/",
-    avatar:
-      "https://media.licdn.com/dms/image/D4D03AQGhw3fGXsB5yw/profile-displayphoto-shrink_400_400/0/1681484860389?e=1694044800&v=beta&t=ckwONUQXbZBSYL0wmBqh3HumxqMsJqDinQD38VPoGjc",
+    avatar: NICK_KARPOV_IMG,
   },
   "Jim Hibbard": {
     profile: "https://www.linkedin.com/in/jhibbard/",
-    avatar:
-      "https://media.licdn.com/dms/image/C5603AQGO55Pt1TGrAQ/profile-displayphoto-shrink_800_800/0/1654209308894?e=1686182400&v=beta&t=-ESvxupI1ClkV9X9lkQGdLcOUXNi5eN2OIde0qRp--Q",
+    avatar: JIM_HIBBARD_IMG,
+  },
+  "Will Girten": {
+    profile: "https://www.linkedin.com/in/willgirten/",
+    avatar: WILL_GIRTEN_IMG,
   },
 };
 
