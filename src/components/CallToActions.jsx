@@ -33,8 +33,7 @@ const List = styled.ul`
 
 const CallToActions = ({ authors }) => {
   const authorsArr = authors.split(",");
-
-  const isAuthorsProfile = authorsArr.some((item) => AUTHORS[item]);
+  const isAuthorsProfile = authorsArr.some((item) => AUTHORS[item.trim()]);
 
   if (!isAuthorsProfile) {
     return null;
