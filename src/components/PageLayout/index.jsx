@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import * as theme from "config/theme";
+import { LinuxFoundationBanner } from "src/components/pages/index/LinuxFoundationBanner";
 import PageHeader from "./PageHeader";
 import PageFooter from "./PageFooter";
 
@@ -72,6 +73,7 @@ const PageLayout = (props) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
+      <LinuxFoundationBanner />
       <PageHeader />
       <Content>{children}</Content>
       <PageFooter />
