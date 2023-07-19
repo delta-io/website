@@ -17,7 +17,7 @@ export const AUTHORS = {
   "Nick Karpov": {
     profile: "https://www.linkedin.com/in/nick-karpov/",
     avatar:
-      "https://media.licdn.com/dms/image/D5603AQGslor_PjWPhQ/profile-displayphoto-shrink_800_800/0/1671233970358?e=1686182400&v=beta&t=akPDf_QIr-eKzVY8ugWf7clk7AbDv3r4GfP7J_KPOyQ",
+      "https://media.licdn.com/dms/image/D4D03AQGhw3fGXsB5yw/profile-displayphoto-shrink_400_400/0/1681484860389?e=1694044800&v=beta&t=ckwONUQXbZBSYL0wmBqh3HumxqMsJqDinQD38VPoGjc",
   },
   "Jim Hibbard": {
     profile: "https://www.linkedin.com/in/jhibbard/",

@@ -67,7 +67,7 @@ const profileMaintainer = () => (
             <ColumnWrapper style={{ gridColumn: "span 3" }}>
               <NameWrapper>{currentContributor.name}</NameWrapper>
               <TitleWrapper>{currentContributor.occupation}</TitleWrapper>
-              <Typography variant="p">
+              <Typography as="span">
                 <br />
                 <QuoteWrapper>
                   <em>&#34;{currentContributor.quote}&#34;</em>
