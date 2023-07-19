@@ -17,12 +17,12 @@ const PostMeta = styled.div`
 `;
 
 const BlogMdxTemplate = ({ data, children }) => {
-  const { frontmatter = {}, fields = {} } = data.mdx;
-  const { title, author } = frontmatter;
+  const { frontmatter = {} } = data.mdx;
+  const { title, author, date } = frontmatter;
 
   const renderPostMeta = () => (
     <PostMeta>
-      {fields.date} by <BlogAuthorsName name={author} />
+      {date} by <BlogAuthorsName name={author} />
     </PostMeta>
   );
 
@@ -75,10 +75,10 @@ export const pageQuery = graphql`
             gatsbyImageData
           }
         }
+        date(formatString: "MMMM D, YYYY")
       }
       fields {
         slug
-        date(formatString: "MMMM D, YYYY")
       }
     }
   }

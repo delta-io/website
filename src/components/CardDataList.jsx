@@ -286,6 +286,7 @@ CardDataList.propTypes = {
     shape({
       title: string.isRequired,
       url: string.isRequired,
+      date: string,
       thumbnail: oneOfType([
         string,
         shape({
