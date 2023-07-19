@@ -6,45 +6,7 @@ import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
 import pandasLogo from "./pandas.png";
 import sparkLogo from "./spark.png";
-import prestoLogo from "./presto.png";
-import trinoLogo from "./trino.png";
-import rustLogo from "./rust.png";
-import hiveLogo from "./hive.png";
-import tableauLogo from "./tableau.png";
 import powerBiLogo from "./powerbi.png";
-
-const comingSoonLogos = [
-  {
-    src: prestoLogo,
-    alt: "Presto",
-    width: 108,
-    height: 34,
-  },
-  {
-    src: trinoLogo,
-    alt: "Trino",
-    width: 99,
-    height: 46,
-  },
-  {
-    src: rustLogo,
-    alt: "Rust",
-    width: 49,
-    height: 50,
-  },
-  {
-    src: hiveLogo,
-    alt: "Hive",
-    width: 57,
-    height: 51,
-  },
-  {
-    src: tableauLogo,
-    alt: "Tableau",
-    width: 119,
-    height: 24,
-  },
-];
 
 const ConnectorCard = styled(TypographyContainer)`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -66,23 +28,6 @@ const ConnectorCard = styled(TypographyContainer)`
 
   .color-blue {
     color: ${(props) => props.theme.colors.primary};
-  }
-`;
-
-const ComingSoonTitle = styled(Typography)`
-  text-align: center;
-  margin-top: 80px;
-  margin-bottom: 20px;
-`;
-
-const ComingSoonLogosGrid = styled(Grid)`
-  justify-content: center;
-  align-items: center;
-
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
   }
 `;
 
@@ -129,25 +74,6 @@ const ConnectorsSection = () => (
         </ConnectorCard>
       ))}
     </Grid>
-    <ComingSoonTitle variant="h5">and more are coming soon!</ComingSoonTitle>
-    <ComingSoonLogosGrid
-      columns={{
-        xs: Array(2).fill("min-content"),
-        sm: Array(3).fill("min-content"),
-        md: Array(6).fill("min-content"),
-      }}
-      gutter="xl"
-    >
-      {comingSoonLogos.map((logo) => (
-        <img
-          key={logo.src}
-          src={logo.src}
-          alt={logo.alt}
-          width={logo.width}
-          height={logo.height}
-        />
-      ))}
-    </ComingSoonLogosGrid>
   </Section>
 );
 

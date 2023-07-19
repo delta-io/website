@@ -32,7 +32,7 @@ const UserStoriesCollectionTemplate = ({ data, pageContext }) => {
 
   return (
     <PageLayout>
-      <Section padding="xxl" title="User Stories" primary background="white">
+      <Section padding="xxl" title="Case Studies" primary background="white">
         <CardDataList
           cards={cards}
           showFeatured={featuredCount > 0}
