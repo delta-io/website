@@ -28,7 +28,7 @@ const main = [
         url: "/learn/videos/",
       },
       {
-        label: "User Stories",
+        label: "Case Studies",
         url: "/user-stories",
       },
     ],
@@ -108,7 +108,7 @@ const learn = [
     url: "/learn/videos/",
   },
   {
-    label: "User Stories",
+    label: "Case Studies",
     url: "/user-stories",
   },
 ];
