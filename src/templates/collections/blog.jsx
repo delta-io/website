@@ -68,7 +68,7 @@ export const Head = ({ pageContext }) => {
 export const pageQuery = graphql`
   query {
     allMdx(
-      sort: { fields: [fields___date], order: DESC }
+      sort: { fields: [frontmatter___date], order: DESC }
       filter: { fields: { pageType: { eq: "blog" } } }
     ) {
       edges {
