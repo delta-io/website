@@ -17,7 +17,7 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;
-    const { title, description, author, thumbnail, date } = frontmatter;
+    const { title, description, author, thumbnail } = frontmatter;
     const { slug } = fields;
 
     return {
