@@ -17,14 +17,14 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
 
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;
-    const { title, description, author, thumbnail, date } = frontmatter;
+    const { title, description, author, thumbnail } = frontmatter;
     const { slug } = fields;
 
     return {
       title,
       description,
       url: slug,
-      date,
+      date: " ", // we want to hide dates in this view, this is the least intrusive way
       author,
       thumbnail,
     };

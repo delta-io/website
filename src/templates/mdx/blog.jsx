@@ -18,11 +18,11 @@ const PostMeta = styled.div`
 
 const BlogMdxTemplate = ({ data, children }) => {
   const { frontmatter = {} } = data.mdx;
-  const { title, author, date } = frontmatter;
+  const { title, author } = frontmatter;
 
   const renderPostMeta = () => (
     <PostMeta>
-      {date} by <BlogAuthorsName name={author} />
+      by <BlogAuthorsName name={author} />
     </PostMeta>
   );
 
