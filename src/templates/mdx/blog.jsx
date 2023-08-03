@@ -22,7 +22,7 @@ const BlogMdxTemplate = ({ data, children }) => {
 
   const renderPostMeta = () => (
     <PostMeta>
-      {date} by <BlogAuthorsName name={author} />
+      by <BlogAuthorsName name={author} />
     </PostMeta>
   );
 

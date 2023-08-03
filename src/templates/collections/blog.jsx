@@ -24,7 +24,7 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
       title,
       description,
       url: slug,
-      date,
+      date: " ", // we want to hide dates in this view, this is the least intrusive way
       author,
       thumbnail,
     };
