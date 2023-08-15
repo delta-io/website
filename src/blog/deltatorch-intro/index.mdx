@@ -53,9 +53,7 @@ There are a couple of things to note in our handling of the data:
 
 ```python
 from torchvision import datasets
-
 from pyspark.sql.types import IntegerType, StructType, StructField, FloatType, BinaryType
-
 import numpy as np
 
 train_set = datasets.MNIST(root="./data", train=True, download=True)
@@ -74,7 +72,6 @@ schema = StructType([
 ])
 
 # Convert images to numpy arrays and save as binary
-
 train_data = [
     (i, float(y), bytearray(np.array(x))) for i, (x, y) in enumerate(train_set)
 ]
@@ -88,7 +85,6 @@ test_data = [
 test_df = spark.createDataFrame(test_data, schema).repartition(50)
 
 # Write the DataFrame to Delta Lake format
-
 train_df.write.format("delta").mode("overwrite").save(
     "./data/mnist_delta/train"
 )
@@ -96,7 +92,7 @@ train_df.write.format("delta").mode("overwrite").save(
 test_df.write.format("delta").mode("overwrite").save("./data/mnist_delta/test")
 ```
 
-Now that we've saved the image data a Delta table, let's make sure we can retrieve the images.
+Now that we've saved the image data as a Delta table, let's make sure we can retrieve the images.
 
 ```python
 # Preview one of the images
@@ -104,35 +100,31 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Read from the delta table
-
 train_df_from_delta = spark.read.format("delta").load(
     "./data/mnist_delta/train"
 )
 
 # Preview one of the images
-
 import matplotlib.pyplot as plt
 import numpy as np
 
 # Select one row from the DataFrame
-
 row = train_df_from_delta.filter(train_df_from_delta.id == 7).first()
 
 # Extract the image data and label
-
 image_data = row["features"]
 label = row["label"]
 
 # Convert the binary data back to a NumPy array and reshape it
-
 image_array = np.frombuffer(image_data, dtype=np.uint8).reshape(28, 28)
 
 # Plot the image
-
 plt.imshow(image_array, cmap="gray")
 plt.title(f"Label: {label}")
 plt.show()
 ```
+
+Which returns:
 
 !["The number three"](./image1.png)
 
