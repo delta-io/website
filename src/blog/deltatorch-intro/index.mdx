@@ -1,14 +1,14 @@
 ---
-title: Use DeltaTorch to Train PyTorch Models with Delta Tables
+title: Unlock Delta Lakes for PyTorch Training with DeltaTorch
 description: This post demonstrates how to create PyTorch DataLoaders using Delta tables as data sources for training deep learning models.
 thumbnail: ./thumbnail.png
 author: Daniel Liden, Michael Shtelma
 date: 2023-08-15
 ---
 
-PyTorch has become the deep learning platform of choice in many applications. But managing data pipelines for PyTorch can be challenging, especially in a production environment with datasets that may evolve over time. Maintaining and accessing earlier versions of training data can be difficult and costly; concurrent reads and writes can disrupt training jobs; and large datasets can result in significant performance overhead.
+PyTorch has become the deep learning framework of choice in many applications. But managing data loading pipelines for PyTorch can be challenging, especially in a production environment with datasets that may evolve over time. Maintaining and accessing earlier versions of training data can be difficult and costly; concurrent reads and writes can disrupt training jobs; and large datasets can result in significant performance overhead.
 
-[DeltaTorch](https://github.com/delta-incubator/deltatorch) provides a solution by enabling the use of PyTorch DataLoaders, which handle batching, sampling, and multiprocessing of data in PyTorch training pipelines, with Delta Lake data sources.
+[DeltaTorch](https://github.com/delta-incubator/deltatorch) enables PyTorch DataLoaders to seamlessly use Delta tables as a data source. These DataLoaders handle the batching, sampling, and multiprocessing of data during PyTorch training pipelines, without requiring a temporary copy of the Delta tables.
 
 Delta Lake, an open format storage layer that uses the fast Parquet file format along with a transaction log, can mitigate these issues and improve reliability and performance of training data. Delta Lake provides ACID transactions, scalable metadata handling, and unified streaming/batch data processing on top of blob storage like S3 or ADLS. This can provide many advantages to PyTorch users:
 
@@ -177,7 +177,7 @@ def create_data_loader(path: str, batch_size: int):
     )
 ```
 
-This function takes a path to a Delta table and a batch size and returns a PyTorch DataLoader. We can use it to create a DataLoader from the training data we saved as a Delta table with:
+This function takes a path to a Delta table and a batch size and returns a PyTorch DataLoader. We can use it to create a DataLoader from the training data we saved as a Delta table using the following snippet:
 
 ```python
 train_dl = create_data_loader("./data/mnist_delta/train",
@@ -306,7 +306,7 @@ Average test accuracy: 97.32%
 
 ## Conclusion
 
-This post has shown how to create a PyTorch Dataloader with a Delta table source using the DeltaTorch library. Delta Lake's reliability features such as ACID transactions and versioning, along with performance optimizations such as Z-ordering and data skipping, provide a significant improvement over existing data formats used for training deep learning models. Whether you are a long-time Delta Lake user or you're interested in exploring the benefits of Delta Lake for the first time in your next Deep Learning project, you can follow the example in this post to get started with DeltaTorch.
+This post has shown how to create a PyTorch Dataloader with a Delta table source using the DeltaTorch library. Delta Lake's reliability features such as ACID transactions and versioning, along with performance optimizations such as Z-ordering and data skipping, offer a significant improvement over other data formats used for training deep learning models. Whether you are a long-time Delta Lake user or you're interested in exploring the benefits of Delta Lake for the first time in your next Deep Learning project, you can follow the example in this post to get started with DeltaTorch.
 
 For more resources, check out the project's [GitHub repository](https://github.com/delta-incubator/deltatorch/tree/main). In particular, take a look at the [examples directory](https://github.com/delta-incubator/deltatorch/tree/main/examples) for examples of how to use DeltaTorch in different types of PyTorch projects. Also, check out Michael Shtelma's presentation from the 2023 Data and AI Summit, [Scaling Deep Learning Using Delta Lake Storage Format on Databricks](https://www.youtube.com/watch?v=3ZqDRkVObvo).
 
