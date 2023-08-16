@@ -7,6 +7,7 @@ import MATTHEW_PAWERS_IMG from "src/images/authors/matthew_pawers.jpg";
 import NICK_KARPOV_IMG from "src/images/authors/nick_karpov.jpg";
 import WILL_GIRTEN_IMG from "src/images/authors/will_girten.jpg";
 import DAN_LIDEN_IMG from "src/images/authors/dan_liden.jpg";
+import MICHAEL_SHTELMA_IMG from "src/images/authors/michael_shtelma.jpg";
 
 export const AUTHORS = {
   "Denny Lee": {
@@ -32,6 +33,10 @@ export const AUTHORS = {
   "Daniel Liden": {
     profile: "https://www.linkedin.com/in/danielliden/",
     avatar: DAN_LIDEN_IMG,
+  },
+  "Michael Shtelma": {
+    profile: "https://www.linkedin.com/in/mshtelma/",
+    avatar: MICHAEL_SHTELMA_IMG,
   },
 };
 
