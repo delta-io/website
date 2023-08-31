@@ -105,6 +105,6 @@
     "docs": "https://docs.starrocks.io/en-us/latest/data_source/catalog/deltalake_catalog",
     "source_code": "https://github.com/StarRocks/starrocks",
     "tags": ["StarRocks"],
-    "thumbnail": "./images/connectors/starrocks-logo_en-us.png"
+    "thumbnail": "./images/connectors/starrocks_logo.png"
   }
 ]
