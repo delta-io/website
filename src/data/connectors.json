@@ -28,11 +28,11 @@
   },
   {
     "name": "Delta Rust API ",
-    "description": "This library allows Rust (with Python and Ruby bindings) low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc.",
+    "description": "This library allows Rust (with Python bindings) low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc.",
     "url": "https://github.com/delta-io/delta-rs",
     "docs": "https://docs.rs/deltalake/latest/deltalake/",
     "source_code": "https://github.com/delta-io/delta-rs/tree/main/rust",
-    "tags": ["Rust", "Python", "Ruby"],
+    "tags": ["Rust", "Python"],
     "thumbnail": "./images/connectors/rust.png"
   },
   {
