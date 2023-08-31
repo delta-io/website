@@ -21,7 +21,7 @@ module.exports = {
     siteUrl: "https://delta.io",
     title: "Delta Lake",
     description:
-      "Delta Lake is an open-source storage framework that enables building a Lakehouse architecture with compute engines including Spark, PrestoDB, Flink, Trino, and Hive and APIs for Scala, Java, Rust, Ruby, and Python.",
+      "Delta Lake is an open-source storage framework that enables building a Lakehouse architecture with compute engines including Spark, PrestoDB, Flink, Trino, and Hive and APIs for Scala, Java, Rust, and Python.",
     twitter: "@DeltaLakeOSS",
   },
   plugins: [
