@@ -48,7 +48,7 @@ const HomePage = () => {
               Lakehouse architecture
             </Link>{" "}
             with compute engines including Spark, PrestoDB, Flink, Trino, and
-            Hive and APIs for Scala, Java, Rust, Ruby, and Python.
+            Hive and APIs for Scala, Java, Rust, and Python.
           </>
         }
         ctaLabel="Get Started"

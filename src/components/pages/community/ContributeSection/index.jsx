@@ -71,7 +71,7 @@ const ContributeSection = () => (
           image: "/images/featureIcons/github_2048_black.png",
           name: "Delta Rust",
           description:
-            "Delta Lake connector written natively in Rust, with Python and Ruby bindings.",
+            "Delta Lake connector written natively in Rust, with Python bindings.",
           contributors: "50",
           orgs: "26",
           url: "https://github.com/delta-io/delta-rs/",
