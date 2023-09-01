@@ -1,0 +1,88 @@
+---
+title: Getting Started with Delta Lake - Docker
+width: full
+---
+
+This guide contains instructions and materials to get started with Delta Lake and work through the quickstart materials using a self-contained Docker image. This section focuses on building and working with the Delta Lake docker image.
+
+<Info title="Note">
+  The basic prerequisite for following along using Delta Lake Docker image is
+  having Docker installed on your machine. Please follow the steps from the
+  Docker website to install Docker locally. Based on your local machine
+  operating system, please choose the appropriate option listed on the [Get
+  Docker](https://docs.docker.com/get-docker/) page.
+</Info>
+
+Follow the steps below to build an Apache Spark<sup>TM</sup> image with Delta
+Lake installed, run a container, and follow the quickstart in an interactive
+notebook or shell with any of the options like Python, PySpark, Scala Spark or Rust.
+
+- [Docker Hub](#docker-hub): Download the Delta Lake docker and get started fast!
+- [Build the image](#build-the-image): Follow these instructions if you want to build your own docker image.
+
+<Info title="Note">
+  Python version available in this Docker image is 3.9.2 and is available as
+  `python3`.
+</Info>
+
+### Docker Hub
+
+To get started quickly, you can also download the image from DockerHub at [Delta Lake DockerHub](https://go.delta.io/dockerhub). Note, there are different versions of the Delta Lake docker
+
+| Tag               | Platform | Python | Rust   | Delta-Spark | Spark | JupyterLab | Pandas | ROAPI |
+| ----------------- | -------- | ------ | ------ | ----------- | ----- | ---------- | ------ | ----- |
+| 0.8.1_2.3.0       | amd64    | 0.8.1  | latest | 2.3.0       | 3.3.2 | 3.6.3      | 1.5.3  | 0.9.0 |
+| 0.8.1_2.3.0_arm64 | arm64    | 0.8.1  | latest | 2.3.0       | 3.3.2 | 3.6.3      | 1.5.3  | 0.9.0 |
+| latest            | amd64    | 0.9.0  | latest | 2.3.0       | 3.3.2 | 3.6.3      | 1.5.3  | 0.9.0 |
+| latest            | arm64    | 0.9.0  | latest | 2.3.0       | 3.3.2 | 3.6.3      | 1.5.3  | 0.9.0 |
+
+<Info title="Note">
+  The arm64 version is built for ARM64 platforms like Mac M1
+</Info>
+
+Download the appropriate tag, e.g.:
+
+- `docker pull deltaio/delta-docker:latest` for the standard Linux docker
+- `docker pull deltaio/delta-docker:latest_arm64` for running this optimally on your Mac M1
+
+#### Image Entry Point
+
+Your entry point for the Docker Hub image is:
+
+```bash
+# Running locally on Mac M1
+docker run --name delta_quickstart --rm -it --entrypoint bash deltaio/delta-docker:latest_arm64
+```
+
+```bash
+# Running on Linux VM
+docker run --name delta_quickstart --rm -it --entrypoint bash deltaio/delta-docker:latest
+```
+
+Once the image has been built or you have downloaded the correct image, you can then move on to running the quickstart in a notebook or shell.
+
+[Click here](../getting-started) to return to the Getting Started.
+
+### Build the Image
+
+You can also build your own docker image locally if you want to test out different versions of Delta Lake, Apache Spark™, Rust, Python, or other APIs.
+
+1. Clone this repo
+2. Navigate to the cloned folder
+3. Navigate to the `quickstart_docker` folder
+4. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
+5. Execute the following from the `static/quickstart_docker` folder
+
+   ```bash
+   docker build -t delta_quickstart -f Dockerfile_delta_quickstart .
+   ```
+
+#### Build Entry Point
+
+Your entry point for this locally built docker file is
+
+```bash
+docker run --name delta_quickstart --rm -it --entrypoint bash delta_quickstart
+```
+
+[Click here](../getting-started) to return to the Getting Started.
