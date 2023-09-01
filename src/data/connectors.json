@@ -97,5 +97,14 @@
     "source_code": "https://github.com/finos/legend-community-delta",
     "tags": ["FINOS", "Legend"],
     "thumbnail": "./images/connectors/229239046-365bc3c4-f644-4fd2-b73f-7efb27366656.png"
+  },
+  {
+    "name": "StarRocks",
+    "description": "StarRocks, a Linux Foundation project, is a next-generation sub-second MPP OLAP database for full analytics scenarios, including multi-dimensional analytics, real-time analytics, and ad-hoc queries. StarRocks has the ability to read from Delta Lake.",
+    "url": "https://starrocks.io",
+    "docs": "https://docs.starrocks.io/en-us/latest/data_source/catalog/deltalake_catalog",
+    "source_code": "https://github.com/StarRocks/starrocks",
+    "tags": ["StarRocks"],
+    "thumbnail": "./images/connectors/starrocks_logo.png"
   }
 ]
