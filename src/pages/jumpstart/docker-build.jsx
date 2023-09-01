@@ -6,14 +6,6 @@ import CodeBlock from "src/components/CodeBlock";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import deltaDockerImg from "src/images/jumpstart/delta-docker-tags.png";
-
-const QuoteWrapper = styled.div`
-  padding: 20px;
-  width: 800px;
-  background-color: hsl(191, 100%, 97.7%);
-  #background-color: #ffffe9;
-`;
 
 const ColumnWrapper = styled(TypographyContainer)`
   img {

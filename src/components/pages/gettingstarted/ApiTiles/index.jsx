@@ -12,7 +12,7 @@ const deltaApis = [
   {
     thumbnail: pythonLogo,
     label: "Python",
-    url: "https://delta-io.github.io/delta-rs/python/",
+    url: "/jumpstart/delta-rs-python",
   },
   {
     thumbnail: rustLogo,
