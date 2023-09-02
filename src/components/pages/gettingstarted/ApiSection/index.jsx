@@ -14,7 +14,7 @@ const ApiSection = () => (
         <br />
       </Typography>
     }
-    background="white"
+    background="#cdd9f4"
     centeredHeader
     padding="xl"
   >
@@ -22,11 +22,6 @@ const ApiSection = () => (
 
     <Typography variant="p">
       <br />
-      <br />
-      <center>
-        Click on the box for a Delta Lake quick start with the API of your
-        choice.
-      </center>
       <br />
     </Typography>
   </Section>

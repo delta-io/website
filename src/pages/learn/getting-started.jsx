@@ -13,12 +13,12 @@ const CommunityPage = () => (
     <HeaderSection />
     <DockerSection />
     <ApiSection />
+    <VideoSection />
     <AnnouncementSection
       title="Check out Last Week in a Byte newsletter"
       description="for the latest Delta events...a week late!"
       url="http://go.delta.io/lastweek"
     />
-    <VideoSection />
     <ProjectGovernanceSection />
   </PageLayout>
 );

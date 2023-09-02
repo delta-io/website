@@ -1,17 +1,18 @@
 ---
-title: Getting Started with Delta Lake - Spark (Scala)
-width: full
+title: Spark (Scala)
 ---
 
-The following are quick start steps to work with Delta Lake using the Spark (Scala).
+### Getting Started with Delta Lake
 
-### Scala Shell
+<hr />
 
 1. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
 
-2. Run a container from the image with a bash entrypoint ([build](#build-entry-point) | [DockerHub](#image-entry-point))
+2. Run a container from the image with a bash entrypoint ([DockerHub](/learn/docker-pages/docker-hub) | [build](/learn/docker-pages/docker-build))
 
 3. Launch a scala interactive shell session
+
+   <CodeTabs>
 
    ```bash
    $SPARK_HOME/bin/spark-shell --packages io.delta:${DELTA_PACKAGE_VERSION} \
@@ -19,7 +20,11 @@ The following are quick start steps to work with Delta Lake using the Spark (Sca
    --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
    ```
 
+   </CodeTabs>
+
 4. Run some basic commands in the shell
+
+   <CodeTabs>
 
    ```scala
    // Create a Spark DataFrame
@@ -44,6 +49,8 @@ The following are quick start steps to work with Delta Lake using the Spark (Sca
    df.show()
    ```
 
+   </CodeTabs>
+
    ```scala
    ## Output
    +---+
@@ -61,9 +68,13 @@ The following are quick start steps to work with Delta Lake using the Spark (Sca
 
 6. To verify that you have a Delta Lake table, you can list the contents within the folder of your Delta Lake table. For example, in the previous code, you saved the table in `/tmp/delta-table`. Once you close your Scala Spark process [`spark-shell`], run a list command in your Docker shell and you should get something similar to below.
 
+   <CodeTabs>
+
    ```bash
    $ ls -lsgA /tmp/delta-table
    ```
+
+   </CodeTabs>
 
    ```bash
    total 36
@@ -78,4 +89,4 @@ The following are quick start steps to work with Delta Lake using the Spark (Sca
    4 -rw-r--r-- 1 NBuser  486 Apr 26 02:31 part-00003-5963f002-d98a-421f-9c2d-22376b7f87e4-c000.snappy.parquet
    ```
 
-7. [Click here](../getting-started) to return to the Getting Started.
+7. [Click here](/learn/getting-started) to return to the Getting Started.

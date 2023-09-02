@@ -6,33 +6,37 @@ import rustLogo from "./logos/delta-rust-square.png";
 import sparkLogo from "./logos/delta-spark-square.png";
 import pythonLogo from "./logos/python-logo.png";
 import jupyterLogo from "./logos/1200px-Jupyter_logo.svg.png";
-import dockerLogo from "./logos/docker-logo.png";
 
 const deltaApis = [
   {
     thumbnail: pythonLogo,
     label: "Python",
-    url: "/learn/getting-started-rs-python",
+    url: "/learn/getting-started-pages/rs-python",
   },
   {
     thumbnail: rustLogo,
     label: "Rust",
-    url: "https://docs.rs/deltalake/latest/deltalake/",
+    url: "/learn/getting-started-pages/rust",
   },
   {
     thumbnail: sparkLogo,
-    label: "Apache Spark",
-    url: "https://docs.delta.io",
+    label: "PySpark",
+    url: "/learn/getting-started-pages/pyspark-shell",
+  },
+  {
+    thumbnail: sparkLogo,
+    label: "Spark (Scala)",
+    url: "/learn/getting-started-pages/spark-shell",
   },
   {
     thumbnail: jupyterLogo,
     label: "Jupyter",
-    url: "https://jupyter.org",
+    url: "/learn/getting-started-pages/jupyterlab-notebook",
   },
   {
-    thumbnail: dockerLogo,
-    label: "Docker",
-    url: "https://go.delta.io/docker",
+    thumbnail: rustLogo,
+    label: "ROAPI",
+    url: "/learn/getting-started-pages/roapi",
   },
 ];
 

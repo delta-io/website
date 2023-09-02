@@ -1,24 +1,31 @@
 ---
-title: Getting Started with Delta Lake - Rust
-width: full
+title: delta.rs Rust
 ---
 
-The following are quick start steps to work with Delta Lake using Rust.
+### Getting Started with Delta Lake
 
-### Delta Rust API
+<hr />
 
 1. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
 
-2. Run a container from the image with a bash entrypoint ([build](#build-entry-point) | [DockerHub](#image-entry-point))
+2. Run a container from the image with a bash entrypoint ([DockerHub](/learn/docker-pages/docker-hub) | [build](/learn/docker-pages/docker-build))
 
 3. Execute `examples/read_delta_table.rs` to review the Delta Lake table metadata and files of the `covid19_nyt` Delta Lake table.
+
+   <CodeTabs>
 
    ```bash
    cd rs
    cargo run --example read_delta_table
    ```
 
-   > If using [Delta Lake DockerHub](https://go.delta.io/dockerhub), sometimes the Rust environment hasn't been configured. To resolve this, run the command `source "$HOME/.cargo/env"`
+   </CodeTabs>
+
+   <Info title="Note" level="info">
+     If using [Delta Lake DockerHub](https://go.delta.io/dockerhub), sometimes
+     the Rust environment hasn't been configured. To resolve this, run the
+     command `source "$HOME/.cargo/env"`
+   </Info>
 
    ```bash
    === Delta table metadata ===
@@ -44,9 +51,13 @@ The following are quick start steps to work with Delta Lake using Rust.
 
 4. Execute `examples/read_delta_datafusion.rs` to query the `covid19_nyt` Delta Lake table using `datafusion`
 
+   <CodeTabs>
+
    ```bash
    cargo run --example read_delta_datafusion
    ```
+
+   </CodeTabs>
 
    ```bash
    [
@@ -82,4 +93,4 @@ The following are quick start steps to work with Delta Lake using Rust.
    ]
    ```
 
-5. [Click here](../getting-started) to return to the Getting Started.
+5. [Click here](/learn/getting-started) to return to the Getting Started.

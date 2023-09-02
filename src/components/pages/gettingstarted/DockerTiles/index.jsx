@@ -9,12 +9,12 @@ const deltaApis = [
   {
     thumbnail: dockerLogo,
     label: "DockerHub",
-    url: "/jumpstart/docker-hub",
+    url: "/learn/docker-pages/docker-hub",
   },
   {
     thumbnail: dockerLogo,
     label: "Docker Build",
-    url: "/jumpstart/docker-build",
+    url: "/learn/docker-pages/docker-build",
   },
   {
     thumbnail: githubLogo,

@@ -18,7 +18,7 @@ const VideoSection = () => (
         <br />
       </Typography>
     }
-    background="#cdd9f4"
+    background="white"
     centeredHeader
     padding="xl"
   >
