@@ -1,11 +1,12 @@
 ---
-title: Getting Started with Delta Lake - delta.rs Python
-width: full
+title: delta.rs Python
 ---
 
-The following are quick start steps to work with Delta Lake using the Delta Rust Python-bindings.
+### Getting Started with Delta Lake
 
-### delta-rs Python
+<hr />
+
+The following are quick start steps to work with Delta Lake using the Delta Rust Python-bindings.
 
 1. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
 
@@ -13,13 +14,23 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
 
 1. Launch a _python_ interactive shell session with `python3`
 
+   <CodeTabs>
+
    ```bash
    python3
    ```
 
-   > Note: The Delta Rust Python bindings are already installed in this docker. To do this manually in your own environment, run the command: `pip3 install deltalake==0.9.0`
+   </CodeTabs>
+
+   <Info title="Note" level="info">
+     The Delta Rust Python bindings are already installed in this docker. To do
+     this manually in your own environment, run the command: `pip3 install
+     deltalake==0.9.0`
+   </Info>
 
 1. Run some basic commands in the shell to write to and read from Delta Lake with Pandas
+
+   <CodeTabs>
 
    ```python
    import pandas as pd
@@ -43,6 +54,8 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
    dt.to_pandas()
    ```
 
+   </CodeTabs>
+
    ```python
    ## Output
        0
@@ -56,10 +69,14 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
 
 1. Review the files
 
+   <CodeTabs>
+
    ```python
    # List files for the Delta Lake table
    dt.files()
    ```
+
+   </CodeTabs>
 
    ```python
    ## Output
@@ -68,10 +85,14 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
 
 1. Review history
 
+   <CodeTabs>
+
    ```python
    # Review history
    dt.history()
    ```
+
+   </CodeTabs>
 
    ```python
    ## Output
@@ -80,6 +101,8 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
 
 1. Time Travel (load older version of table)
 
+   <CodeTabs>
+
    ```python
    # Load initial version of table
    dt.load_version(0)
@@ -87,6 +110,8 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
    # Show table
    dt.to_pandas()
    ```
+
+   </CodeTabs>
 
    ```python
    ## Output
@@ -102,9 +127,13 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
 
 1. To verify that you have a Delta Lake table, you can list the contents within the folder of your Delta Lake table. For example, in the previous code, you saved the table in `/tmp/deltars-table`. Once you close your `python3` process, run a list command in your Docker shell and you should get something similar to below.
 
+   <CodeTabs>
+
    ```bash
    $ ls -lsgA /tmp/deltars_table
    ```
+
+   </CodeTabs>
 
    ```bash
    total 12
@@ -113,6 +142,6 @@ The following are quick start steps to work with Delta Lake using the Delta Rust
    4 -rw-r--r-- 1 NBuser 1691 Apr 26 02:12 1-f27a5ea6-a15f-4ca1-91b3-72bcf64fbc09-0.parquet
    ```
 
-1. [Optional] Skip ahead to try out the [Delta Rust API](#delta-rust-api) and [ROAPI](#optional-roapi)
+1. [Optional] Skip ahead to try out the [Delta Rust API](../getting-started-rust) and [ROAPI](./getting-started-roapi)
 
 1. [Click here](../getting-started) to return to the Getting Started.

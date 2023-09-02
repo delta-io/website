@@ -7,6 +7,7 @@ import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
 import deltaDockerImg from "src/images/jumpstart/delta-docker-tags.png";
+import CodeTabs from "src/components/CodeTabs";
 
 const QuoteWrapper = styled.div`
   padding: 20px;
@@ -75,6 +76,31 @@ const jumpStartRsPython = () => (
             </QuoteWrapper>
           </li>
           <li>
+            Run some basic commands in the shell to write to and read from Delta
+            Lake with Pandas
+            <CodeTabs>
+              {`python
+    import pandas as pd
+    from deltalake.writer import write_deltalake
+    from deltalake import DeltaTable
+
+    # Create a Pandas DataFrame
+    df = pd.DataFrame({"data": range(5)})
+
+    # Write to the Delta Lake table
+    write_deltalake("/tmp/deltars_table", df)
+
+    # Append new data
+    df = pd.DataFrame({"data": range(6, 11)})
+    write_deltalake("/tmp/deltars_table", df, mode="append")
+
+    # Read the Delta Lake table
+    dt = DeltaTable("/tmp/deltars_table")
+
+    # Show the Delta Lake table
+    dt.to_pandas()
+    `}
+            </CodeTabs>
             <p />
           </li>
         </ul>
