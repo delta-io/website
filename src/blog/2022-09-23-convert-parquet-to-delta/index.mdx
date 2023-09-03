@@ -131,7 +131,7 @@ A Delta Lake has multiple advantages over a plain vanilla Parquet table: it allo
 
 One thing to be aware of is that converting from a Parquet table to a Delta Lake can be computationally expensive when there are a lot of Parquet files. This is because the conversion process needs to open all the files and calculate the metadata statistics to build the `_delta_log`.
 
-Also, once a Parquet table is converted to a Delta Lake, it can only be read by query engines that have a Delta Lake reader. Delta Lake has a rapidly growing [connector ecosystem](https://github.com/delta-io/connectors), so interoperability with most query engines is already supported; however, some query engines support reading plain vanilla Parquet tables but don’t support reading Delta Lakes yet. Parquet may thus integrate better with some legacy technologies, but these situations are growing rarer.
+Also, once a Parquet table is converted to a Delta Lake, it can only be read by query engines that have a Delta Lake reader. Delta Lake has a rapidly growing [connector ecosystem](https://github.com/delta-io/delta/tree/master/connectors), so interoperability with most query engines is already supported; however, some query engines support reading plain vanilla Parquet tables but don’t support reading Delta Lakes yet. Parquet may thus integrate better with some legacy technologies, but these situations are growing rarer.
 
 ## Next steps
 
