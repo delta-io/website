@@ -28,11 +28,11 @@
   },
   {
     "name": "Delta Rust API ",
-    "description": "This library allows Rust (with Python and Ruby bindings) low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc.",
+    "description": "This library allows Rust (with Python bindings) low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc.",
     "url": "https://github.com/delta-io/delta-rs",
     "docs": "https://docs.rs/deltalake/latest/deltalake/",
     "source_code": "https://github.com/delta-io/delta-rs/tree/main/rust",
-    "tags": ["Rust", "Python", "Ruby"],
+    "tags": ["Rust", "Python"],
     "thumbnail": "./images/connectors/rust.png"
   },
   {
@@ -97,5 +97,14 @@
     "source_code": "https://github.com/finos/legend-community-delta",
     "tags": ["FINOS", "Legend"],
     "thumbnail": "./images/connectors/229239046-365bc3c4-f644-4fd2-b73f-7efb27366656.png"
+  },
+  {
+    "name": "StarRocks",
+    "description": "StarRocks, a Linux Foundation project, is a next-generation sub-second MPP OLAP database for full analytics scenarios, including multi-dimensional analytics, real-time analytics, and ad-hoc queries. StarRocks has the ability to read from Delta Lake.",
+    "url": "https://starrocks.io",
+    "docs": "https://docs.starrocks.io/en-us/latest/data_source/catalog/deltalake_catalog",
+    "source_code": "https://github.com/StarRocks/starrocks",
+    "tags": ["StarRocks"],
+    "thumbnail": "./images/connectors/starrocks_logo.png"
   }
 ]
