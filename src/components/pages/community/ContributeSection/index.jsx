@@ -49,23 +49,12 @@ const ContributeSection = () => (
           image: "/images/featureIcons/github_2048_black.png",
           name: "Delta",
           description:
-            "Delta Lake connector for Apache Spark™ with Scala/Java and Python APIs.",
+            "Delta Lake connectors for Apache Spark™, with Scala/Java and Python APIs, and for Java-based engines like Hive, Flink, PrestoDB, etc.",
           contributors: "192",
           orgs: "43",
           url: "https://github.com/delta-io/delta/",
           issue: "https://github.com/delta-io/delta/issues/new/choose",
           PR: "https://github.com/delta-io/delta/pulls",
-        },
-        {
-          image: "/images/featureIcons/github_2048_black.png",
-          name: "Delta Connectors",
-          description:
-            "Delta Lake connectors for non-Spark engines like Hive, Flink, Java, etc.",
-          contributors: "21",
-          orgs: "9",
-          url: "https://github.com/delta-io/connectors/",
-          issue: "https://github.com/delta-io/connectors/issues/new/choose",
-          PR: "https://github.com/delta-io/connectors/pulls",
         },
         {
           image: "/images/featureIcons/github_2048_black.png",
