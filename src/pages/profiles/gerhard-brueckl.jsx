@@ -138,7 +138,7 @@ const ProfileGerhardBrueckl = () => {
           is Gerhard Brueckl, Lead Data Engineer / Cloud Solution Architect at{" "}
           <Link href="https://paiqo.com/en/">paiqo GmbH</Link>! Located in
           Wolkersdorf, Austria, Gerhard is the key maintainer of the official{" "}
-          <Link href="https://github.com/delta-io/connectors/tree/master/powerbi">
+          <Link href="https://github.com/delta-io/delta/tree/master/connectors/powerbi">
             PowerBI connector for Delta Lake
           </Link>{" "}
           and various other OSS tools in that ecosystem.

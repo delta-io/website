@@ -50,15 +50,15 @@ For more information:
 
 #### Delta Lake Connectors
 
-We are building [connectors](https://github.com/delta-io/connectors) to bring [Delta Lake](https://delta.io/) to popular big-data engines outside [Apache Spark](https://spark.apache.org/) (e.g., [Apache Hive](https://hive.apache.org/), [Presto](https://prestodb.io/)) and also to common reporting tools like [Microsoft Power BI](https://powerbi.microsoft.com/).
+We are building [connectors](https://github.com/delta-io/delta/tree/master/connectors) to bring [Delta Lake](https://delta.io/) to popular big-data engines outside [Apache Spark](https://spark.apache.org/) (e.g., [Apache Hive](https://hive.apache.org/), [Presto](https://prestodb.io/)) and also to common reporting tools like [Microsoft Power BI](https://powerbi.microsoft.com/).
 
 For more information:
 
-- [Delta Standalone](https://github.com/delta-io/connectors#delta-standalone), formerly known as the Delta Standalone Reader (DSR), is a JVM library to read and write Delta Lake tables.
+- [Delta Standalone](https://github.com/delta-io/delta/tree/master/connectors#delta-standalone), formerly known as the Delta Standalone Reader (DSR), is a JVM library to read and write Delta Lake tables.
   - [PrestoDB/Delta Connector](https://github.com/prestodb/presto/blob/master/presto-docs/src/main/sphinx/connector/deltalake.rst): This connector allows reading Delta Lake tables in Presto. The connector uses the Delta Standalone Library (DSR) provided by Delta Lake project to read the table metadata.
-- [Hive Connector](https://github.com/delta-io/connectors#hive-connector): This project is a library to make Hive read Delta Lake tables.
-- [sql-delta-import](https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md): Imports data from a relational database or any other JDBC source into your Delta Lake. Import either entire table or only a subset of columns, control level of parallelism, include any custom transformations
-- [Power BI](https://github.com/delta-io/connectors/blob/master/powerbi/README.md): Reading Delta Lake tables natively in PowerBI
+- [Hive Connector](https://github.com/delta-io/delta/tree/master/connectors#hive-connector): This project is a library to make Hive read Delta Lake tables.
+- [sql-delta-import](https://github.com/delta-io/delta/blob/master/connectors/sql-delta-import/readme.md): Imports data from a relational database or any other JDBC source into your Delta Lake. Import either entire table or only a subset of columns, control level of parallelism, include any custom transformations
+- [Power BI](https://github.com/delta-io/delta/blob/master/connectors/powerbi/README.md): Reading Delta Lake tables natively in PowerBI
 - [Flink Delta Lake Connector](https://github.com/pkubit-g/connectors/tree/flink_sink_feature_docs/flink-connector): Official Delta Lake connector for Apache Flink.
 
 <div className="align-image-left">

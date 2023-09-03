@@ -2,18 +2,18 @@
   {
     "name": "Apache Flink",
     "description": "This connector allows Apache Flink to write to Delta Lake.",
-    "url": "https://github.com/delta-io/connectors/tree/master/flink/",
-    "docs": "https://github.com/delta-io/connectors/tree/master/flink",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/flink",
+    "url": "https://github.com/delta-io/delta/tree/master/connectors/flink/",
+    "docs": "https://github.com/delta-io/delta/tree/master/connectors/flink",
+    "source_code": "https://github.com/delta-io/delta/tree/master/connectors/flink",
     "tags": ["Flink", "standalone"],
     "thumbnail": "./images/connectors/apache-flink-logo.png"
   },
   {
     "name": "Apache Hive",
     "description": "This connector allows Apache Hive to read from Delta Lake.",
-    "url": "https://github.com/delta-io/connectors",
+    "url": "https://github.com/delta-io/delta/tree/master/connectors",
     "docs": "https://docs.delta.io/latest/hive-integration.html",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/hive/src/main",
+    "source_code": "https://github.com/delta-io/delta/tree/master/connectors/hive/src/main",
     "tags": ["Hive", "standalone"],
     "thumbnail": "./images/connectors/hive.png"
   },
@@ -38,9 +38,9 @@
   {
     "name": "Delta Standalone",
     "description": "This library allows Scala and Java-based projects (including Apache Flink, Apache Hive, Apache Beam, and PrestoDB) to read from and write to Delta Lake.",
-    "url": "https://github.com/delta-io/connectors",
+    "url": "https://github.com/delta-io/delta/tree/master/connectors",
     "docs": "https://docs.delta.io/latest/delta-standalone.html",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/standalone/src",
+    "source_code": "https://github.com/delta-io/delta/tree/master/connectors/standalone/src",
     "tags": ["Scala", "Java", "standalone"],
     "thumbnail": "./images/connectors/delta-standalone.png"
   },
@@ -74,9 +74,9 @@
   {
     "name": "SQL Delta Import",
     "description": "This utility is for importing data from a JDBC source into a Delta Lake table.",
-    "url": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
-    "docs": "https://github.com/delta-io/connectors/blob/master/sql-delta-import/readme.md",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/sql-delta-import/src",
+    "url": "https://github.com/delta-io/delta/blob/master/connectors/sql-delta-import/readme.md",
+    "docs": "https://github.com/delta-io/delta/blob/master/connectors/sql-delta-import/readme.md",
+    "source_code": "https://github.com/delta-io/delta/tree/master/connectors/sql-delta-import/src",
     "tags": ["SQL", "JDBC"],
     "thumbnail": "./images/connectors/sql.png"
   },
@@ -97,5 +97,14 @@
     "source_code": "https://github.com/finos/legend-community-delta",
     "tags": ["FINOS", "Legend"],
     "thumbnail": "./images/connectors/229239046-365bc3c4-f644-4fd2-b73f-7efb27366656.png"
+  },
+  {
+    "name": "StarRocks",
+    "description": "StarRocks, a Linux Foundation project, is a next-generation sub-second MPP OLAP database for full analytics scenarios, including multi-dimensional analytics, real-time analytics, and ad-hoc queries. StarRocks has the ability to read from Delta Lake.",
+    "url": "https://starrocks.io",
+    "docs": "https://docs.starrocks.io/en-us/latest/data_source/catalog/deltalake_catalog",
+    "source_code": "https://github.com/StarRocks/starrocks",
+    "tags": ["StarRocks"],
+    "thumbnail": "./images/connectors/starrocks_logo.png"
   }
 ]
