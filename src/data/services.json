@@ -51,9 +51,9 @@
   {
     "name": "Power BI",
     "description": "This connector allows Power BI to read from Delta Lake.",
-    "url": "https://github.com/delta-io/connectors/tree/master/powerbi",
-    "docs": "https://github.com/delta-io/connectors/tree/master/powerbi",
-    "source_code": "https://github.com/delta-io/connectors/tree/master/powerbi",
+    "url": "https://github.com/delta-io/delta/tree/master/connectors/powerbi",
+    "docs": "https://github.com/delta-io/delta/tree/master/connectors/powerbi",
+    "source_code": "https://github.com/delta-io/delta/tree/master/connectors/powerbi",
     "tags": ["PowerBI", "community"],
     "thumbnail": "./images/connectors/powerbi.png"
   },
