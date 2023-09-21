@@ -109,7 +109,7 @@
   },
   {
     "name": "ClickHouse",
-    "description": "ClickHouse is a column-oriented database that enables its users to generate powerful analytics, using SQL queries, in real-time. ClickHouse provide a table engine and a table function integrating with DeltaLake. This provides a read-only integration with existing Delta Lake tables in Amazon S3.",
+    "description": "ClickHouse is a column-oriented database that enables its users to generate powerful analytics, using SQL queries, in real-time. ClickHouse provides a table engine and a table function integrating with DeltaLake. This provides a read-only integration with existing Delta Lake tables in Amazon S3.",
     "url": "https://clickhouse.com/",
     "docs": "https://clickhouse.com/docs/en/engines/table-engines/integrations/deltalake",
     "source_code": "https://github.com/ClickHouse/ClickHouse",
