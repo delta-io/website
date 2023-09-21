@@ -115,5 +115,5 @@
     "source_code": "https://github.com/ClickHouse/ClickHouse",
     "tags": ["ClickHouse"],
     "thumbnail": "./images/connectors/clickhouse_logo.png"
-  },
+  }
 ]
