@@ -106,5 +106,14 @@
     "source_code": "https://github.com/StarRocks/starrocks",
     "tags": ["StarRocks"],
     "thumbnail": "./images/connectors/starrocks_logo.png"
+  },
+  {
+    "name": "ClickHouse",
+    "description": "ClickHouse is a column-oriented database that allows users to run SQL queries on Delta Lake tables. This provides a read-only integration with existing Delta Lake tables in Amazon S3.",
+    "url": "https://clickhouse.com/",
+    "docs": "https://clickhouse.com/docs/en/engines/table-engines/integrations/deltalake",
+    "source_code": "https://github.com/ClickHouse/ClickHouse",
+    "tags": ["ClickHouse"],
+    "thumbnail": "./images/connectors/clickhouse_logo.png"
   }
 ]
