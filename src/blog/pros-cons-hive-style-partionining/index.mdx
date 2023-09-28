@@ -28,9 +28,7 @@ Let’s look at how Hive-style partitioning can speed up queries on data lakes b
 
 Hive-style partitioning lets you run queries on a data lake faster when the query allows for certain data files to get skipped.
 
-Suppose you want to run the following query: `select count(*) from the_table where country = 'Angola'`.
-
-This query will run faster if the data lake is partitioned by the `country` column. The query engine only needs to list and read the data files in the `country='Angola'` directory. It can skip the data files in the other directories.
+Suppose you want to run the following query: `select count(*) from the_table where country = 'Angola'`. This query will run faster if the data lake is partitioned by the `country` column. The query engine only needs to list and read the data files in the `country='Angola'` directory. It can skip the data files in the other directories.
 
 Engines need to run file listing operations to determine the files that must be read for different queries. Hive-style partitioning allows the query engine to read less files for certain queries.
 
