@@ -10,15 +10,18 @@ We are pleased to announce the release of Delta Lake 3.0 ([release notes](https:
 
 This release includes hundreds of improvements and bug fixes, but we'd like to call out the following:
 
-- Delta UniForm: expands compatibility with all engines,
-- Delta Kernel: makes building and maintaining Delta connectors simpler,
-- Faster DML Statements
+- [Delta UniForm](#uniform): expands compatibility with all engines,
+- [Delta Kernel](#kernel): makes building and maintaining Delta connectors simpler,
+- Faster [DML Statements](#merge-update-delete)
 
 Delta Lake 3.0 marks a collective commitment to making Delta Lake interoperable across formats, easier to work with, and more performant.
 
-> The Linux Foundation applauds the release of Delta Lake 3.0, which includes Delta Kernel and UniForm, showcasing the continued advancement and innovation in the open-source ecosystem. As the pace of data processing accelerates, the release of Delta Lake 3.0 demonstrates the critical importance of community-driven projects that prioritize scalability, reliability, and interoperability for the future of technology.
+<Info title="" level="info">
+The Linux Foundation applauds the release of Delta Lake 3.0, which includes Delta Kernel and UniForm, showcasing the continued advancement and innovation in the open-source ecosystem. As the pace of data processing accelerates, the release of Delta Lake 3.0 demonstrates the critical importance of community-driven projects that prioritize scalability, reliability, and interoperability for the future of technology.
 
 > – Jim Zemlin, Executive Director of the Linux Foundation
+
+</Info>
 
 ## What’s new in Delta Lake 3.0?
 
@@ -26,7 +29,7 @@ Delta Lake has been rapidly introducing features since Delta Lake 2.0. This blog
 
 ![](image1.png)
 
-### Delta Universal Format (Delta UniForm)
+### <a id="uniform"></a> Delta Universal Format (Delta UniForm)
 
 Like Delta Lake, Apache Iceberg and Apache Hudi include metadata on top of Parquet data. Until the release of Delta UniForm, the primary way to operate across table formats was to copy and/or convert the metadata. While this approach is viable, it has a significant drawback in that every change to the Parquet data or one of the lakehouse formats needs to trigger an updated conversion.
 
@@ -38,7 +41,7 @@ To set up a Delta UniForm table, all you need to do is set the table property:
 
 Once a table has been enabled as a Delta UniForm table, any table modification triggers the asynchronous generation of Iceberg metadata. Any Iceberg reader can then consume the data without further modifications, provided that client is written to the open source Iceberg specification. Support for Hive Metastore is also [available](https://github.com/delta-io/delta/commit/01fee68c).
 
-### Delta Kernel
+### <a id="kernel"></a> Delta Kernel
 
 The Delta Lake connector ecosystem has seen drastic growth over the last few years. The popularity and success of the project is a cause for celebration, and yet we recognize that this has led to some challenges for developers: variability of performance and correctness across connectors, and a longer time to adoption of new protocol features.
 
@@ -48,7 +51,7 @@ The Delta Lake connector ecosystem has seen drastic growth over the last few yea
 
 For more information on how to use Kernel in a standalone Java program or in a distributed processing connector, please refer to the [user guide](https://github.com/delta-io/delta/blob/branch-3.0/kernel/USER_GUIDE.md).
 
-### MERGE, UPDATE, and DELETE performance enhancements
+### <a id="merge-update-delete"></a> MERGE, UPDATE, and DELETE performance enhancements
 
 #### Merge
 
