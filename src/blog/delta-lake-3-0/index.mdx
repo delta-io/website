@@ -39,6 +39,11 @@ Like Delta Lake, Apache Iceberg and Apache Hudi include metadata on top of Parqu
 
 To set up a Delta UniForm table, all you need to do is set the table property:
 
+```
+CREATE TABLE main.default.table_name (msg STRING)
+TBLPROPERTIES('delta.universalFormat.enabledFormats' = 'iceberg');
+```
+
 Once a table has been enabled as a Delta UniForm table, any table modification triggers the asynchronous generation of Iceberg metadata. Any Iceberg reader can then consume the data without further modifications, provided that client is written to the open source Iceberg specification. Support for Hive Metastore is also [available](https://github.com/delta-io/delta/commit/01fee68c).
 
 ### <a id="kernel"></a> Delta Kernel
@@ -71,6 +76,11 @@ The `UPDATE` command now supports writing [Deletion Vectors](https://docs.delta.
 ![](image4.png)
 
 Currently this feature must be enabled manually:
+
+```
+SET spark.databricks.delta.update.deletionVectors.persistent = 'true;
+UPDATE table_name SET id = -1 WHERE id % 2 = 0;
+```
 
 #### Delete
 
