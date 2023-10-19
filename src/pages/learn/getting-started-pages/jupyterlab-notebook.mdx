@@ -1,0 +1,47 @@
+---
+width: full
+---
+
+import Typography, { TypographyContainer } from "src/components/Typography";
+
+<Typography variant="nw">Getting Started with Delta Lake: Jupyter</Typography>
+<Typography variant="tw">
+  Use Jupyter Notebook with Apache Spark™ (PySpark, Scala) to try out Delta Lake
+</Typography>
+<hr />
+<br />
+
+1. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
+
+2. Run a container from the image with a JuypterLab entrypoint
+
+  <CodeTabs>
+
+    ```bash
+    # Build entry point
+    docker run --name delta_quickstart --rm -it -p 8888-8889:8888-8889 delta_quickstart
+    ```
+
+  </CodeTabs>
+
+  <CodeTabs>
+
+```bash
+# Image entry point (M1)
+docker run --name delta_quickstart --rm -it -p 8888-8889:8888-8889 -entrypoint bash deltaio/delta-docker:latest_arm64
+```
+
+  </CodeTabs>
+
+{" "}
+
+<br />{" "}
+
+3. Running the above command gives a JupyterLab notebook URL, copy that URL and launch a browser to follow along the notebook and run each cell.
+
+<Info title="Note">
+  You may also launch the pyspark or scala shells after launching a terminal in
+  JupyterLab
+</Info>
+
+4. [Click here](/learn/getting-started) to return to the Getting Started.

@@ -1,0 +1,97 @@
+---
+width: full
+---
+
+import Typography, { TypographyContainer } from "src/components/Typography";
+
+<Typography variant="nw">Getting Started with Delta Lake: PySpark</Typography>
+<Typography variant="tw">
+  Use Apache Spark™ - PySpark to try out Delta Lake
+</Typography>
+<hr />
+<br />
+
+1. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
+
+2. Run a container from the image with a bash entrypoint ([DockerHub](/learn/docker-pages/docker-hub) | [build](/learn/docker-pages/docker-build))
+
+3. Launch a pyspark interactive shell session
+
+   <CodeTabs>
+
+   ```bash
+   $SPARK_HOME/bin/pyspark --packages io.delta:${DELTA_PACKAGE_VERSION} \
+   --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
+   --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+   ```
+
+   </CodeTabs>
+
+4. Run some basic commands in the shell
+
+   <CodeTabs>
+
+   ```python
+   # Create a Spark DataFrame
+   data = spark.range(0, 5)
+
+   # Write to a Delta Lake table
+   (data
+      .write
+      .format("delta")
+      .save("/tmp/delta-table")
+   )
+
+   # Read from the Delta Lake table
+   df = (spark
+           .read
+           .format("delta")
+           .load("/tmp/delta-table")
+           .orderBy("id")
+         )
+
+   # Show the Delta Lake table
+   df.show()
+   ```
+
+   </CodeTabs>
+
+   ```python
+   ## Output
+   +---+
+   | id|
+   +---+
+   |  0|
+   |  1|
+   |  2|
+   |  3|
+   |  4|
+   +---+
+   ```
+
+5. Continue with the quickstart [here](https://docs.delta.io/latest/quick-start.html#create-a-table&language-python)
+
+6. To verify that you have a Delta Lake table, you can list the contents within the folder of your Delta Lake table. For example, in the previous code, you saved the table in `/tmp/delta-table`. Once you close your `pyspark` process, run a list command in your Docker shell and you should get something similar to below.
+
+   <CodeTabs>
+
+   ```bash
+   $ ls -lsgA /tmp/delta-table
+   ```
+
+   </CodeTabs>
+
+   ```bash
+   total 36
+   4 drwxr-xr-x 2 NBuser 4096 Apr 26 02:30 _delta_log
+   4 -rw-r--r-- 1 NBuser   12 Apr 26 02:30 .part-00000-bdee316b-8623-4423-b59c-6a809addaea8-c000.snappy.parquet.crc
+   4 -rw-r--r-- 1 NBuser   12 Apr 26 02:30 .part-00001-6b373d50-5bdd-496a-9e21-ab4164176f11-c000.snappy.parquet.crc
+   4 -rw-r--r-- 1 NBuser   12 Apr 26 02:30 .part-00002-9721ce9e-e043-4875-bcff-08f7d7c3d3f0-c000.snappy.parquet.crc
+   4 -rw-r--r-- 1 NBuser   12 Apr 26 02:30 .part-00003-61aaf450-c318-452a-aea5-5a44c909fd74-c000.snappy.parquet.crc
+   4 -rw-r--r-- 1 NBuser  478 Apr 26 02:30 part-00000-bdee316b-8623-4423-b59c-6a809addaea8-c000.snappy.parquet
+   4 -rw-r--r-- 1 NBuser  478 Apr 26 02:30 part-00001-6b373d50-5bdd-496a-9e21-ab4164176f11-c000.snappy.parquet
+   4 -rw-r--r-- 1 NBuser  478 Apr 26 02:30 part-00002-9721ce9e-e043-4875-bcff-08f7d7c3d3f0-c000.snappy.parquet
+   4 -rw-r--r-- 1 NBuser  486 Apr 26 02:30 part-00003-61aaf450-c318-452a-aea5-5a44c909fd74-c000.snappy.parquet
+   ```
+
+7. [Click here](/learn/getting-started) to return to the Getting Started.

@@ -1,0 +1,152 @@
+---
+width: full
+---
+
+import Typography, { TypographyContainer } from "src/components/Typography";
+
+<Typography variant="nw">Getting Started with Delta Lake: Python</Typography>
+<Typography variant="tw">
+  Use delta.rs Python-bindings to try out Delta Lake
+</Typography>
+<hr />
+<br />
+
+The following are quick start steps to work with Delta Lake using the Delta Rust Python-bindings.
+
+1. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
+
+1. Run a container from the image with a bash entrypoint ([DockerHub](/learn/docker-pages/docker-hub) | [build](/learn/docker-pages/docker-build))
+
+1. Launch a _python_ interactive shell session with `python3`
+
+   <CodeTabs>
+
+   ```bash
+   python3
+   ```
+
+   </CodeTabs>
+
+   <Info title="Note" level="info">
+     The Delta Rust Python bindings are already installed in this docker. To do
+     this manually in your own environment, run the command: `pip3 install
+     deltalake==0.9.0`
+   </Info>
+
+1. Run some basic commands in the shell to write to and read from Delta Lake with Pandas
+
+   <CodeTabs>
+
+   ```python
+   import pandas as pd
+   from deltalake.writer import write_deltalake
+   from deltalake import DeltaTable
+
+   # Create a Pandas DataFrame
+   df = pd.DataFrame({"data": range(5)})
+
+   # Write to the Delta Lake table
+   write_deltalake("/tmp/deltars_table", df)
+
+   # Append new data
+   df = pd.DataFrame({"data": range(6, 11)})
+   write_deltalake("/tmp/deltars_table", df, mode="append")
+
+   # Read the Delta Lake table
+   dt = DeltaTable("/tmp/deltars_table")
+
+   # Show the Delta Lake table
+   dt.to_pandas()
+   ```
+
+   </CodeTabs>
+
+   ```python
+   ## Output
+       0
+   0   0
+   1   1
+   2   2
+   ... ...
+   8   9
+   9  10
+   ```
+
+1. Review the files
+
+   <CodeTabs>
+
+   ```python
+   # List files for the Delta Lake table
+   dt.files()
+   ```
+
+   </CodeTabs>
+
+   ```python
+   ## Output
+   ['0-d4920663-30e9-4a1a-afde-59bc4ebd24b5-0.parquet', '1-f27a5ea6-a15f-4ca1-91b3-72bcf64fbc09-0.parquet']
+   ```
+
+1. Review history
+
+   <CodeTabs>
+
+   ```python
+   # Review history
+   dt.history()
+   ```
+
+   </CodeTabs>
+
+   ```python
+   ## Output
+   [{'timestamp': 1682475171964, 'delta-rs': '0.8.0'}, {'timestamp': 1682475171985, 'operation': 'WRITE', 'operationParameters': {'partitionBy': '[]', 'mode': 'Append'}, 'clientVersion': 'delta-rs.0.8.0'}]
+   ```
+
+1. Time Travel (load older version of table)
+
+   <CodeTabs>
+
+   ```python
+   # Load initial version of table
+   dt.load_version(0)
+
+   # Show table
+   dt.to_pandas()
+   ```
+
+   </CodeTabs>
+
+   ```python
+   ## Output
+      0
+   0  0
+   1  1
+   2  2
+   3  3
+   4  4
+   ```
+
+1. Follow the delta-rs Python documentation [here](https://delta-io.github.io/delta-rs/python/usage.html#)
+
+1. To verify that you have a Delta Lake table, you can list the contents within the folder of your Delta Lake table. For example, in the previous code, you saved the table in `/tmp/deltars-table`. Once you close your `python3` process, run a list command in your Docker shell and you should get something similar to below.
+
+   <CodeTabs>
+
+   ```bash
+   $ ls -lsgA /tmp/deltars_table
+   ```
+
+   </CodeTabs>
+
+   ```bash
+   total 12
+   4 drwxr-xr-x 2 NBuser 4096 Apr 26 02:12 _delta_log
+   4 -rw-r--r-- 1 NBuser 1689 Apr 26 02:12 0-d4920663-30e9-4a1a-afde-59bc4ebd24b5-0.parquet
+   4 -rw-r--r-- 1 NBuser 1691 Apr 26 02:12 1-f27a5ea6-a15f-4ca1-91b3-72bcf64fbc09-0.parquet
+   ```
+
+1. [Optional] Skip ahead to try out the [Delta Rust API](../getting-started-rust) and [ROAPI](./getting-started-roapi)
+
+1. [Click here](/learn/getting-started) to return to the Getting Started.

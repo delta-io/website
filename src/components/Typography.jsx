@@ -95,6 +95,21 @@ const HorizontalRule = styled.hr`
   background: ${(props) => props.theme.colors.border};
 `;
 
+const NameWrapper = styled(TypographyContainer)`
+  font-size: 2.5rem;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 0;
+`;
+
+const TitleWrapper = styled(TypographyContainer)`
+  font-size: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 5px;
+  margin-left: 5px;
+`;
+
 const elements = {
   p: Paragraph,
   p2: Secondary,
@@ -108,6 +123,8 @@ const elements = {
   ul: UnorderedList,
   li: ListItem,
   hr: HorizontalRule,
+  nw: NameWrapper,
+  tw: TitleWrapper,
 };
 
 const Typography = (props) => {

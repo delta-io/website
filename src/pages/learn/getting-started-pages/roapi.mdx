@@ -1,0 +1,105 @@
+---
+width: full
+---
+
+import Typography, { TypographyContainer } from "src/components/Typography";
+
+<Typography variant="nw">Getting Started with Delta Lake: ROAPI</Typography>
+<Typography variant="tw">
+  Use ROAPI to run SQL, GraphQL, or REST to try out Delta Lake
+</Typography>
+
+<hr />
+<br />
+
+You can query your Delta Lake table with [Apache Arrow](https://github.com/apache/arrow) and [Datafusion](https://github.com/apache/arrow-datafusion) using [ROAPI](https://roapi.github.io/docs/config/dataset-formats/delta.html) which are pre-installed in this docker.
+
+<Info title="Note">
+  If you need to do this in your own environment, run the command `pip3 install
+  roapi==0.9.0`
+</Info>
+
+1. Open a bash shell (if on windows use git bash, WSL, or any shell configured for bash commands)
+
+2. Run a container from the image with a bash entrypoint ([DockerHub](/learn/docker-pages/docker-hub) | [build](/learn/docker-pages/docker-build))
+
+3. Start the `roapi` API using the following command. Notes:
+
+   - the API calls are pushed to the `nohup.out` file.
+   - if you haven't created the `deltars_table` in your container create it via the [delta-rs Python](#delta-rs-python) option above. Alternatively you may omit the following from the command:
+     `--table 'deltars_table=/tmp/deltars_table/,format=delta'` as well as any steps that call the `deltars_table`
+
+   <CodeTabs>
+
+   ```bash
+   nohup roapi --addr-http 0.0.0.0:8080 --table 'deltars_table=/tmp/deltars_table/,format=delta' --table 'covid19_nyt=/opt/spark/work-dir/rs/data/COVID-19_NYT,format=delta' &
+   ```
+
+   </CodeTabs>
+
+   <br />
+
+4. Check the schema of the two Delta Lake tables
+
+   <CodeTabs>
+
+   ```bash
+   curl localhost:8080/api/schema
+   ```
+
+   </CodeTabs>
+
+   <br />
+
+   ```bash
+   {
+      "covid19_nyt":{"fields":[
+         {"name":"date","data_type":"Utf8","nullable":true,"dict_id":0,"dict_is_ordered":false},
+         {"name":"county","data_type":"Utf8","nullable":true,"dict_id":0,"dict_is_ordered":false},
+         {"name":"state","data_type":"Utf8","nullable":true,"dict_id":0,"dict_is_ordered":false},
+         {"name":"fips","data_type":"Int32","nullable":true,"dict_id":0,"dict_is_ordered":false},
+         {"name":"cases","data_type":"Int32","nullable":true,"dict_id":0,"dict_is_ordered":false},
+         {"name":"deaths","data_type":"Int32","nullable":true,"dict_id":0,"dict_is_ordered":false}
+      ]},
+      "deltars_table":{"fields":[
+         {"name":"0","data_type":"Int64","nullable":true,"dict_id":0,"dict_is_ordered":false}
+      ]}
+   }
+   ```
+
+5. Query the `deltars_table`
+
+   <CodeTabs>
+
+   ```bash
+   curl -X POST -d "SELECT * FROM deltars_table"  localhost:8080/api/sql
+   ```
+
+   </CodeTabs>
+
+   ```bash
+   # output
+   [{"0":0},{"0":1},{"0":2},{"0":3},{"0":4},{"0":6},{"0":7},{"0":8},{"0":9},{"0":10}]
+   ```
+
+6. Query the `covid19_nyt` table
+
+   <CodeTabs>
+
+   ```bash
+   curl -X POST -d "SELECT cases, county, date FROM covid19_nyt ORDER BY cases DESC LIMIT 5" localhost:8080/api/sql
+   ```
+
+   </CodeTabs>
+
+   ```bash
+   [
+      {"cases":1208672,"county":"Los Angeles","date":"2021-03-11"},
+      {"cases":1207361,"county":"Los Angeles","date":"2021-03-10"},
+      {"cases":1205924,"county":"Los Angeles","date":"2021-03-09"},
+      {"cases":1204665,"county":"Los Angeles","date":"2021-03-08"},
+      {"cases":1203799,"county":"Los Angeles","date":"2021-03-07"}
+   ]
+   ```
+
+7. [Click here](/learn/getting-started) to return to the Getting Started.
