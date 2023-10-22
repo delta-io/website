@@ -109,7 +109,6 @@ We can see in the metrics, one target_row got inserted and one got updated. If w
 print(pl.read_delta("sales_orders"))
 ```
 
-    shape: (5, 5)
     ┌────────────────┬────────────┬─────────────────────┬─────────────┬──────────────────┐
     │ sales_order_id ┆ product    ┆ order_date          ┆ sales_price ┆ paid_by_customer │
     │ ---            ┆ ---        ┆ ---                 ┆ ---         ┆ ---              │
@@ -143,7 +142,6 @@ dt.update(updates={"product": "'apple'"}, predicate="product = 'appl'")
 print(pl.read_delta("update_test"))
 ```
 
-    shape: (3, 2)
     ┌─────┬─────────┐
     │ id  ┆ product │
     │ --- ┆ ---     │
@@ -174,7 +172,6 @@ dt.delete(predicate="deleted = True")
 print(pl.read_delta("delete_test"))
 ```
 
-    shape: (1, 2)
     ┌─────┬─────────┐
     │ id  ┆ deleted │
     │ --- ┆ ---     │
@@ -192,7 +189,6 @@ In this release, Delta-RS introduces enhanced interoperability with large Arrow 
 ```python
 df = pl.DataFrame({"id": [1, 2, 3], "deleted": [False, True, False]})
 ```
-
 
 ```python
 source = df.to_arrow()
@@ -212,11 +208,15 @@ print(f"history: {dt.history()[0]}")
 The improved interoperability enables smoother integration with libraries like `Polars`, where you can work with large data types without conversion.
 
 ## Conclusion: Bridging the Gap in Data Workloads
-The 0.12.0 release of Delta-RS brings many powerful operations, such as MERGE, DELETE, and UPDATE, directly to Python users. This empowers data scientists and data engineers working in non-JVM workloads to build and enhance lakehouse solutions. It bridges the gap between small-to-medium data workloads, commonly handled with tools like Polars, DuckDB, or Pandas, and big data workloads managed with Spark.
+The 0.12.0 Python release of Delta-RS brings many powerful operations, such as MERGE, DELETE, and UPDATE, directly to Python users. This empowers data scientists and data engineers working in non-JVM workloads to build and enhance lakehouse solutions. It bridges the gap between small-to-medium data workloads, commonly handled with tools like Polars, DuckDB, or Pandas, and big data workloads managed with Spark.
+
+Also credits to the amazing [contributors](https://github.com/delta-io/delta-rs/graphs/contributors) of Delta-RS, a lot of effort has gone into building the Rust API! 
 
 ## What's on the Horizon for Delta-RS?
-- Use logical plans in MERGE for improved performance [PR](https://github.com/delta-io/delta-rs/pull/1720)
-- Multiple "when" clauses in Python MERGE [PR](https://github.com/delta-io/delta-rs/pull/1750)
-- Expose FSCK (repair) operation to Python [PR](https://github.com/delta-io/delta-rs/pull/1730)
-- Adding VACUUM to transaction log [PR](https://github.com/delta-io/delta-rs/pull/1728)
-- PyArrow v13 support [PR](https://github.com/delta-io/delta-rs/pull/1602)
+- Add support for table features (read support V3, writer support V7) and improving the overall protocol support
+- Integration of Rust Delta Kernel in Delta-RS
+- Use logical plans in MERGE for improved performance
+- Multiple "when" clauses in Python MERGE
+- Expose FSCK (repair) operation to Python
+- Adding VACUUM to transaction log
+
