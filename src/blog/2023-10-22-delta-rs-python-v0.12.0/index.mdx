@@ -40,6 +40,7 @@ print(df)
 df.write_delta("sales_orders", mode="append")
 ```
 
+```
     ┌────────────────┬────────────┬─────────────────────┬─────────────┬──────────────────┐
     │ sales_order_id ┆ product    ┆ order_date          ┆ sales_price ┆ paid_by_customer │
     │ ---            ┆ ---        ┆ ---                 ┆ ---         ┆ ---              │
@@ -50,6 +51,7 @@ df.write_delta("sales_orders", mode="append")
     │ 1002           ┆ car        ┆ 2023-01-10 00:00:00 ┆ 32000.0     ┆ false            │
     │ 1003           ┆ motorcycle ┆ 2023-02-01 00:00:00 ┆ 9000.0      ┆ true             │
     └────────────────┴────────────┴─────────────────────┴─────────────┴──────────────────┘
+```
 
 The above code demonstrates how to write the initial data into a Delta table. Now, let's say we receive a new batch of changed data, including updates, as some customers have paid their orders, and we've adjusted prices for certain products. We've also made a new car sale.
 
@@ -90,6 +92,7 @@ source = source.cast(delta_schema)
 )
 ```
 
+```
     {'num_source_rows': 2,
      'num_target_rows_inserted': 1,
      'num_target_rows_updated': 1,
@@ -101,6 +104,7 @@ source = source.cast(delta_schema)
      'execution_time_ms': 51,
      'scan_time_ms': 0,
      'rewrite_time_ms': 45}
+```
 
 We can see in the metrics, one target_row got inserted and one got updated. If we read the delta table with Polars we can see that order_id 1002 got an updated sales_price and paid_by_customer field, and we added a new sales with order_id 1004.
 
@@ -108,6 +112,7 @@ We can see in the metrics, one target_row got inserted and one got updated. If w
 print(pl.read_delta("sales_orders"))
 ```
 
+```
     ┌────────────────┬────────────┬─────────────────────┬─────────────┬──────────────────┐
     │ sales_order_id ┆ product    ┆ order_date          ┆ sales_price ┆ paid_by_customer │
     │ ---            ┆ ---        ┆ ---                 ┆ ---         ┆ ---              │
@@ -119,6 +124,7 @@ print(pl.read_delta("sales_orders"))
     │ 1003           ┆ motorcycle ┆ 2023-02-01 00:00:00 ┆ 9000.0      ┆ true             │
     │ 1004           ┆ car        ┆ 2023-02-05 00:00:00 ┆ 40000.0     ┆ true             │
     └────────────────┴────────────┴─────────────────────┴─────────────┴──────────────────┘
+```
 
 This real-world example illustrates how the MERGE operation in Delta-RS simplifies data integration, enabling you to handle changes, updates, and inserts seamlessly. For more examples on what Merge allows you to do, take a look at this blog post deep diving in [Delta Lake Merge](https://delta.io/blog/2023-02-14-delta-lake-merge/).
 
@@ -140,6 +146,7 @@ dt.update(updates={"product": "'apple'"}, predicate="product = 'appl'")
 print(pl.read_delta("update_test"))
 ```
 
+```
     ┌─────┬─────────┐
     │ id  ┆ product │
     │ --- ┆ ---     │
@@ -149,6 +156,7 @@ print(pl.read_delta("update_test"))
     │ 2   ┆ apple   │
     │ 3   ┆ kiwi    │
     └─────┴─────────┘
+```
 
 The result is a corrected "product" column in our Delta table, showcasing how the UPDATE operation allows you to fine-tune your data effortlessly.
 
@@ -170,6 +178,7 @@ dt.delete(predicate="deleted = True")
 print(pl.read_delta("delete_test"))
 ```
 
+```
     ┌─────┬─────────┐
     │ id  ┆ deleted │
     │ --- ┆ ---     │
@@ -177,6 +186,7 @@ print(pl.read_delta("delete_test"))
     ╞═════╪═════════╡
     │ 1   ┆ false   │
     └─────┴─────────┘
+```
 
 The result is a cleaned-up Delta table with only the non-deleted records, illustrating how the DELETE operation is a valuable operation for data management.
 
