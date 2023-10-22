@@ -9,11 +9,12 @@ date: 2023-10-22
 The DeltaLake 0.12.0 release is a game-changer, introducing a suite of powerful Delta operations such as MERGE (upserts), DELETE and UPDATE. In addition, this release brings substantial performance enhancements, boosting read performance by up to 10 times. Furthermore, it significantly improves interoperability with large Arrow data types during writing.
 
 ## MERGE operation: Effortless Data Integration
+
 Merging data is one of the most versatile operations that Delta Lake brings to the table. It can handle updates, deletions, and inserts simultaneously, making it a pivotal tool for data engineers and data scientists. Some of the usecases are handling Slowly Changing Dimensions (SCD), processing only the changed data (CDC), handle deduplication during writing and various other cases. Let's explore the capabilities of MERGE with a real-world example.
 
 ### Upserts Made Easy
-Imagine you have a source table or dataframe, and you want to upsert its data into a target table using `.merge()`, `when_matched_update()`, and `when_not_matched_upsert()`. Let's consider a scenario where we have our initial load of the SalesOrder table.
 
+Imagine you have a source table or dataframe, and you want to upsert its data into a target table using `.merge()`, `when_matched_update()`, and `when_not_matched_upsert()`. Let's consider a scenario where we have our initial load of the SalesOrder table.
 
 ```python
 from deltalake import DeltaTable, write_deltalake
@@ -68,7 +69,6 @@ To perform the upsert, we load the sales order table as a DeltaTable object and 
 
 You can optionally provide a `source_alias`, `target_alias` and `error_on_type_mismatch` parameters. By default the merge operation will error out if there are type mismatches.
 
-
 ```python
 from polars.io.delta import _convert_pa_schema_to_delta
 
@@ -104,7 +104,6 @@ source = source.cast(delta_schema)
 
 We can see in the metrics, one target_row got inserted and one got updated. If we read the delta table with Polars we can see that order_id 1002 got an updated sales_price and paid_by_customer field, and we added a new sales with order_id 1004.
 
-
 ```python
 print(pl.read_delta("sales_orders"))
 ```
@@ -121,10 +120,10 @@ print(pl.read_delta("sales_orders"))
     │ 1004           ┆ car        ┆ 2023-02-05 00:00:00 ┆ 40000.0     ┆ true             │
     └────────────────┴────────────┴─────────────────────┴─────────────┴──────────────────┘
 
-
 This real-world example illustrates how the MERGE operation in Delta-RS simplifies data integration, enabling you to handle changes, updates, and inserts seamlessly. For more examples on what Merge allows you to do, take a look at this blog post deep diving in [Delta Lake Merge](https://delta.io/blog/2023-02-14-delta-lake-merge/).
 
 ## UPDATE operation: Fine-Tuning data
+
 Sometimes, you just need to make specific updates in your data based on a predicate. In this case, the `.update()` operation comes to the rescue. Let's consider a simple example where we need to correct a typo in the "product" column.
 
 ```python
@@ -133,7 +132,6 @@ df.write_delta("update_test", mode="overwrite")
 ```
 
 With the data in place, we load the Delta table and use the .update() operation to fix the typo in the "product" column where the predicate is met. Soon, you'll be able to [pass Python objects](https://github.com/delta-io/delta-rs/pull/1749) as input to the `.update()` operation, making it even more flexible.
-
 
 ```python
 dt = DeltaTable("update_test")
@@ -155,8 +153,8 @@ print(pl.read_delta("update_test"))
 The result is a corrected "product" column in our Delta table, showcasing how the UPDATE operation allows you to fine-tune your data effortlessly.
 
 ## DELETE operation: Managing Data Cleanup
-The DELETE operation is a powerful tool for data cleanup and management. For instance, you can use it to remove soft-deleted records from your table. Here's an example of how it works.
 
+The DELETE operation is a powerful tool for data cleanup and management. For instance, you can use it to remove soft-deleted records from your table. Here's an example of how it works.
 
 ```python
 df = pl.DataFrame({"id": [1, 2, 3], "deleted": [False, True, True]})
@@ -183,8 +181,8 @@ print(pl.read_delta("delete_test"))
 The result is a cleaned-up Delta table with only the non-deleted records, illustrating how the DELETE operation is a valuable operation for data management.
 
 ## Enhanced Interoperability with Large Arrow Data
-In this release, Delta-RS introduces enhanced interoperability with large Arrow data types. You can now do consecutive writes with Arrow tables that have large Arrow types directly using `write_deltalake` by just enabling `large_dtypes=True`.
 
+In this release, Delta-RS introduces enhanced interoperability with large Arrow data types. You can now do consecutive writes with Arrow tables that have large Arrow types directly using `write_deltalake` by just enabling `large_dtypes=True`.
 
 ```python
 df = pl.DataFrame({"id": [1, 2, 3], "deleted": [False, True, False]})
@@ -201,22 +199,22 @@ print(f"history: {dt.history()[0]}")
 
     schema: id: int64
     deleted: bool
-    
-    history: {'timestamp': 1697974132175, 'operation': 'WRITE', 'operationParameters': {'mode': 'Overwrite', 'partitionBy': '[]'}, 'clientVersion': 'delta-rs.0.17.0', 'version': 7}
 
+    history: {'timestamp': 1697974132175, 'operation': 'WRITE', 'operationParameters': {'mode': 'Overwrite', 'partitionBy': '[]'}, 'clientVersion': 'delta-rs.0.17.0', 'version': 7}
 
 The improved interoperability enables smoother integration with libraries like `Polars`, where you can work with large data types without conversion.
 
 ## Conclusion: Bridging the Gap in Data Workloads
+
 The 0.12.0 Python release of Delta-RS brings many powerful operations, such as MERGE, DELETE, and UPDATE, directly to Python users. This empowers data scientists and data engineers working in non-JVM workloads to build and enhance lakehouse solutions. It bridges the gap between small-to-medium data workloads, commonly handled with tools like Polars, DuckDB, or Pandas, and big data workloads managed with Spark.
 
-Also credits to the amazing [contributors](https://github.com/delta-io/delta-rs/graphs/contributors) of Delta-RS, a lot of effort has gone into building the Rust API! 
+Also credits to the amazing [contributors](https://github.com/delta-io/delta-rs/graphs/contributors) of Delta-RS, a lot of effort has gone into building the Rust API!
 
 ## What's on the Horizon for Delta-RS?
+
 - Add support for table features (read support V3, writer support V7) and improving the overall protocol support
 - Integration of Rust Delta Kernel in Delta-RS
 - Use logical plans in MERGE for improved performance
 - Multiple "when" clauses in Python MERGE
 - Expose FSCK (repair) operation to Python
 - Adding VACUUM to transaction log
-
