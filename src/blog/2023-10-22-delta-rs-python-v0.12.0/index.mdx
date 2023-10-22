@@ -93,17 +93,17 @@ source = source.cast(delta_schema)
 ```
 
 ```
-    {'num_source_rows': 2,
-     'num_target_rows_inserted': 1,
-     'num_target_rows_updated': 1,
-     'num_target_rows_deleted': 0,
-     'num_target_rows_copied': 3,
-     'num_output_rows': 5,
-     'num_target_files_added': 1,
-     'num_target_files_removed': 1,
-     'execution_time_ms': 51,
-     'scan_time_ms': 0,
-     'rewrite_time_ms': 45}
+{'num_source_rows': 2,
+    'num_target_rows_inserted': 1,
+    'num_target_rows_updated': 1,
+    'num_target_rows_deleted': 0,
+    'num_target_rows_copied': 3,
+    'num_output_rows': 5,
+    'num_target_files_added': 1,
+    'num_target_files_removed': 1,
+    'execution_time_ms': 51,
+    'scan_time_ms': 0,
+    'rewrite_time_ms': 45}
 ```
 
 We can see in the metrics, one target_row got inserted and one got updated. If we read the delta table with Polars we can see that order_id 1002 got an updated sales_price and paid_by_customer field, and we added a new sales with order_id 1004.
@@ -113,17 +113,17 @@ print(pl.read_delta("sales_orders"))
 ```
 
 ```
-    ┌────────────────┬────────────┬─────────────────────┬─────────────┬──────────────────┐
-    │ sales_order_id ┆ product    ┆ order_date          ┆ sales_price ┆ paid_by_customer │
-    │ ---            ┆ ---        ┆ ---                 ┆ ---         ┆ ---              │
-    │ str            ┆ str        ┆ datetime[μs]        ┆ f64         ┆ bool             │
-    ╞════════════════╪════════════╪═════════════════════╪═════════════╪══════════════════╡
-    │ 1002           ┆ car        ┆ 2023-01-10 00:00:00 ┆ 30000.0     ┆ true             │
-    │ 1000           ┆ bike       ┆ 2023-01-01 00:00:00 ┆ 120.25      ┆ true             │
-    │ 1001           ┆ scooter    ┆ 2023-01-05 00:00:00 ┆ 2400.0      ┆ false            │
-    │ 1003           ┆ motorcycle ┆ 2023-02-01 00:00:00 ┆ 9000.0      ┆ true             │
-    │ 1004           ┆ car        ┆ 2023-02-05 00:00:00 ┆ 40000.0     ┆ true             │
-    └────────────────┴────────────┴─────────────────────┴─────────────┴──────────────────┘
+┌────────────────┬────────────┬─────────────────────┬─────────────┬──────────────────┐
+│ sales_order_id ┆ product    ┆ order_date          ┆ sales_price ┆ paid_by_customer │
+│ ---            ┆ ---        ┆ ---                 ┆ ---         ┆ ---              │
+│ str            ┆ str        ┆ datetime[μs]        ┆ f64         ┆ bool             │
+╞════════════════╪════════════╪═════════════════════╪═════════════╪══════════════════╡
+│ 1002           ┆ car        ┆ 2023-01-10 00:00:00 ┆ 30000.0     ┆ true             │
+│ 1000           ┆ bike       ┆ 2023-01-01 00:00:00 ┆ 120.25      ┆ true             │
+│ 1001           ┆ scooter    ┆ 2023-01-05 00:00:00 ┆ 2400.0      ┆ false            │
+│ 1003           ┆ motorcycle ┆ 2023-02-01 00:00:00 ┆ 9000.0      ┆ true             │
+│ 1004           ┆ car        ┆ 2023-02-05 00:00:00 ┆ 40000.0     ┆ true             │
+└────────────────┴────────────┴─────────────────────┴─────────────┴──────────────────┘
 ```
 
 This real-world example illustrates how the MERGE operation in Delta-RS simplifies data integration, enabling you to handle changes, updates, and inserts seamlessly. For more examples on what Merge allows you to do, take a look at this blog post deep diving in [Delta Lake Merge](https://delta.io/blog/2023-02-14-delta-lake-merge/).
@@ -147,15 +147,15 @@ print(pl.read_delta("update_test"))
 ```
 
 ```
-    ┌─────┬─────────┐
-    │ id  ┆ product │
-    │ --- ┆ ---     │
-    │ i64 ┆ str     │
-    ╞═════╪═════════╡
-    │ 1   ┆ apple   │
-    │ 2   ┆ apple   │
-    │ 3   ┆ kiwi    │
-    └─────┴─────────┘
+┌─────┬─────────┐
+│ id  ┆ product │
+│ --- ┆ ---     │
+│ i64 ┆ str     │
+╞═════╪═════════╡
+│ 1   ┆ apple   │
+│ 2   ┆ apple   │
+│ 3   ┆ kiwi    │
+└─────┴─────────┘
 ```
 
 The result is a corrected "product" column in our Delta table, showcasing how the UPDATE operation allows you to fine-tune your data effortlessly.
@@ -179,13 +179,13 @@ print(pl.read_delta("delete_test"))
 ```
 
 ```
-    ┌─────┬─────────┐
-    │ id  ┆ deleted │
-    │ --- ┆ ---     │
-    │ i64 ┆ bool    │
-    ╞═════╪═════════╡
-    │ 1   ┆ false   │
-    └─────┴─────────┘
+┌─────┬─────────┐
+│ id  ┆ deleted │
+│ --- ┆ ---     │
+│ i64 ┆ bool    │
+╞═════╪═════════╡
+│ 1   ┆ false   │
+└─────┴─────────┘
 ```
 
 The result is a cleaned-up Delta table with only the non-deleted records, illustrating how the DELETE operation is a valuable operation for data management.
@@ -207,10 +207,13 @@ dt = DeltaTable("sample_table")
 print(f"history: {dt.history()[0]}")
 ```
 
-    schema: id: int64
+```
+schema:
+    id: int64
     deleted: bool
 
-    history: {'timestamp': 1697974132175, 'operation': 'WRITE', 'operationParameters': {'mode': 'Overwrite', 'partitionBy': '[]'}, 'clientVersion': 'delta-rs.0.17.0', 'version': 7}
+history: {'timestamp': 1697974132175, 'operation': 'WRITE', 'operationParameters': {'mode': 'Overwrite', 'partitionBy': '[]'}, 'clientVersion': 'delta-rs.0.17.0', 'version': 7}
+```
 
 The improved interoperability enables smoother integration with libraries like `Polars`, where you can work with large data types without conversion.
 
