@@ -1,20 +1,20 @@
 ---
-title: Bringing MERGE, DELETE AND UPDATE to deltalake Python in the 0.12.0 release
-description: This post explains the new features in the deltalake (Delta-RS Python) 0.12.0 release
+title: New features in the Python deltalake 0.12.0 release
+description: This post explains the new features in the Python deltalake 0.12.0 release
 thumbnail: ./thumbnail.png
 author: Ion Koutsouris
 date: 2023-10-22
 ---
 
-The deltalake Python 0.12.0 release is a game-changer, introducing a suite of powerful Delta operations such as MERGE (upserts), DELETE and UPDATE. In addition, this release brings substantial performance enhancements, boosting read performance by up to 10 times. Furthermore, it significantly improves interoperability with large Arrow data types during writing.
+The Python deltalake 0.12.0 release is a game-changer, introducing a suite of powerful Delta operations such as MERGE (upserts), DELETE, and UPDATE. In addition, this release brings substantial performance enhancements, boosting read performance by up to 10 times. Furthermore, it significantly improves interoperability with large Arrow data types during writing.
 
 ## MERGE operation: Effortless Data Integration
 
-Merging data is one of the most versatile operations that Delta Lake brings to the table. It can handle updates, deletions, and inserts simultaneously, making it a pivotal tool for data engineers and data scientists. Some of the usecases are handling Slowly Changing Dimensions (SCD), processing only the changed data (CDC), handle deduplication during writing and various other cases. Let's explore the capabilities of MERGE with a real-world example.
+Merging data is one of the most versatile operations that Delta Lake brings to the table. It can handle updates, deletions, and inserts simultaneously, making it a pivotal tool for data engineers and data scientists. Some of the use cases are handling Slowly Changing Dimensions (SCD), processing only the changed data (CDC), handling deduplication during writing, and various other cases. Let's explore the capabilities of MERGE with a real-world example.
 
 ### Upserts Made Easy
 
-Imagine you have a source table or dataframe, and you want to upsert its data into a target table using `.merge()`, `when_matched_update()`, and `when_not_matched_upsert()`. Let's consider a scenario where we have our initial load of the SalesOrder table.
+Imagine you have a source table or DataFrame, and you want to upsert its data into a target table using `.merge()`, `when_matched_update()`, and `when_not_matched_upsert()`. Let's consider a scenario where we have our initial load of the SalesOrder table.
 
 ```python
 from deltalake import DeltaTable, write_deltalake
@@ -69,7 +69,7 @@ new_data = pl.DataFrame(
 
 To perform the upsert, we load the sales order table as a DeltaTable object and use the `.merge()` operation to specify the source data and the predicate for matching records. The `when_matched_update_all()` and `when_not_matched_insert_al()` functions are then used to specify how updates and inserts should be handled for all columns. Finally, the operation is executed with `execute()`.
 
-You can optionally provide a `source_alias`, `target_alias` and `error_on_type_mismatch` parameters. By default the merge operation will error out if there are type mismatches.
+You can optionally provide `source_alias`, `target_alias` and `error_on_type_mismatch` parameters. By default, the merge operation will error out if there are type mismatches.
 
 ```python
 from polars.io.delta import _convert_pa_schema_to_delta
@@ -126,7 +126,7 @@ print(pl.read_delta("sales_orders"))
 └────────────────┴────────────┴─────────────────────┴─────────────┴──────────────────┘
 ```
 
-This real-world example illustrates how the MERGE operation in Delta-RS simplifies data integration, enabling you to handle changes, updates, and inserts seamlessly. For more examples on what Merge allows you to do, take a look at this blog post deep diving in [Delta Lake Merge](https://delta.io/blog/2023-02-14-delta-lake-merge/).
+This real-world example illustrates how the MERGE operation in Delta-RS simplifies data integration, enabling you to handle changes, updates, and inserts seamlessly. For more examples of what Merge allows you to do, take a look at the [Delta Lake Merge](https://delta.io/blog/2023-02-14-delta-lake-merge/) blog post.
 
 ## UPDATE operation: Fine-Tuning data
 
@@ -221,7 +221,7 @@ The improved interoperability enables smoother integration with libraries like `
 
 The 0.12.0 Python release of Delta-RS brings many powerful operations, such as MERGE, DELETE, and UPDATE, directly to Python users. This empowers data scientists and data engineers working in non-JVM workloads to build and enhance lakehouse solutions. It bridges the gap between small-to-medium data workloads, commonly handled with tools like Polars, DuckDB, or Pandas, and big data workloads managed with Spark.
 
-Also credits to the amazing [contributors](https://github.com/delta-io/delta-rs/graphs/contributors) of Delta-RS, a lot of effort has gone into building the Rust API!
+Big shout out to the amazing [contributors](https://github.com/delta-io/delta-rs/graphs/contributors) of Delta-RS, a lot of effort has gone into building the Rust API!
 
 ## What's on the Horizon for Delta-RS?
 
@@ -230,4 +230,4 @@ Also credits to the amazing [contributors](https://github.com/delta-io/delta-rs/
 - Use logical plans in MERGE for improved performance
 - Multiple "when" clauses in Python MERGE
 - Expose FSCK (repair) operation to Python
-- Adding VACUUM to transaction log
+- Adding VACUUM to the transaction log
