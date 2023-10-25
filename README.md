@@ -51,7 +51,7 @@ You can add a blog by adding a directory with some files to `src/blog`. Here's a
 ```
 src/
   blog/
-    2022-09-23-convert-parquet-to-delta/
+    convert-parquet-to-delta/
       index.mdx
       thumbnail.png
 ```
@@ -68,7 +68,3 @@ thumbnail: ./thumbnail.png
 author: Matthew Powers
 ---
 ```
-
-You can also add the new blog post to the homepage by updating the `src/components/pages/index/LatestUpdateSection/index.jsx` file.
-
-[This commit](https://github.com/delta-io/website/commit/432449ad8126355aae40ef9b09e346d47f30d23c) is a good example of how to add a blog post.
