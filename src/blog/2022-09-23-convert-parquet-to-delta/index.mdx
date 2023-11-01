@@ -3,6 +3,7 @@ title: Converting from Parquet to Delta Lake
 description: This post shows how to convert a Parquet table to a Delta Lake.
 thumbnail: ./thumbnail.png
 author: Matthew Powers
+date: 2022-09-23
 ---
 
 A Delta Lake has several advantages over a plain vanilla Parquet table, such as support for ACID transactions, time travel, and concurrency control, as well as optimizations to improve query performance. You can easily take advantage of these features by converting your Parquet table into a Delta Lake. The code is simple and the Parquet files don’t need to be rewritten, so it requires fewer computational resources than you might imagine.
@@ -130,7 +131,7 @@ A Delta Lake has multiple advantages over a plain vanilla Parquet table: it allo
 
 One thing to be aware of is that converting from a Parquet table to a Delta Lake can be computationally expensive when there are a lot of Parquet files. This is because the conversion process needs to open all the files and calculate the metadata statistics to build the `_delta_log`.
 
-Also, once a Parquet table is converted to a Delta Lake, it can only be read by query engines that have a Delta Lake reader. Delta Lake has a rapidly growing [connector ecosystem](https://github.com/delta-io/connectors), so interoperability with most query engines is already supported; however, some query engines support reading plain vanilla Parquet tables but don’t support reading Delta Lakes yet. Parquet may thus integrate better with some legacy technologies, but these situations are growing rarer.
+Also, once a Parquet table is converted to a Delta Lake, it can only be read by query engines that have a Delta Lake reader. Delta Lake has a rapidly growing [connector ecosystem](https://github.com/delta-io/delta/tree/master/connectors), so interoperability with most query engines is already supported; however, some query engines support reading plain vanilla Parquet tables but don’t support reading Delta Lakes yet. Parquet may thus integrate better with some legacy technologies, but these situations are growing rarer.
 
 ## Next steps
 

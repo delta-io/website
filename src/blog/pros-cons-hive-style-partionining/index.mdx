@@ -1,0 +1,170 @@
+---
+title: Pros and cons of Hive-style partitioning
+description: This post discusses the pros and cons of Hive-style partioning.
+thumbnail: ./thumbnail.png
+author: Matthew Powers
+date: 2023-09-27
+---
+
+This blog post explains when Hive-style partitioning is a useful data management technique and why it can have downsides for both data lake and Lakehouse storage system users.
+
+You’ll also see how techniques like partition evolution overcome some of the limitations of Hive-style partitioning, but still suffer from the fundamental issues of Hive-style partitioning.
+
+Hive-style partitioning physically separates data in folders. Here’s an example of a dataset that’s partitioned by country.
+
+```
+country="Angola"/
+  fileA.parquet
+  fileB.parquet
+country="Colombia"/
+  fileC.parquet
+  fileD.parquet
+  fileE.parquet
+```
+
+Let’s look at how Hive-style partitioning can speed up queries on data lakes before turning our attention to the downsides.
+
+## Hive-style partitioning for data lakes
+
+Hive-style partitioning lets you run queries on a data lake faster when the query allows for certain data files to get skipped.
+
+Suppose you want to run the following query: `select count(*) from the_table where country = 'Angola'`. This query will run faster if the data lake is partitioned by the `country` column. The query engine only needs to list and read the data files in the `country='Angola'` directory. It can skip the data files in the other directories.
+
+Engines need to run file listing operations to determine the files that must be read for different queries. Hive-style partitioning allows the query engine to read less files for certain queries.
+
+For a query like `select count(*) from the_table`, the Hive-style partitioning doesn’t allow for any data skipping, so the query won’t run any faster. The Hive-style partitioning can actually make queries that can’t leverage data skipping run far slower.
+
+File listing operations execute differently depending on the underlying storage system. A file listing operation on a Unix-based file system like Mac OS is executed differently than on a cloud based key-value store, like Amazon S3.
+
+Globbing nested directories is much slower on key-value object stores. Slower file listing operations is just one way Hive-style partitioning can make queries slower.
+
+## Hive-style partitioning can exacerbate the small file problem
+
+Hive-style partitioning can also make the small file problem worse.
+
+Query engines generally run slower if the data lake contains a lot of small files. The query will generally run faster on 100 files that are 1 GB each compared to 10,000 files that are 0.01 GB each.
+
+Hive-style partitioning requires data to be stored in separate files, even if it’s just a single row of data. Suppose you are partitioning a dataset on columnA which has 1,000 distinct values. That means your dataset must be written out to at least 1,000 different files.
+
+Further suppose that you update this dataset with new data every hour. That means up-to 1,000 files are created every hour, which is 24,000 files per day. Hive-style partitioning can result in rapid growth of small files.
+
+If you’re only ingesting 1GB of data per hour, then it’s not wise to write out up to 1,000 files every hour. You can fix the small files with periodic compaction, but that’ll waste compute cycles.
+
+Data is often skewed and the ideal situation is to have full partitioning for the most common column values, but shared partitions for the long-tail column values. Hive-style partitioning is too strict for skewed datasets.
+
+Let’s dive into the architecture of a Lakehouse storage system to understand how they list files different and why physical disk partitioning isn’t even necessary.
+
+## Hive-style partitioning for Lakehouse storage systems
+
+Lakehouse storage systems (like Delta Lake) store data in Parquet files and metadata about the files in the transaction log.
+
+Engines find the file paths in the transaction log when querying Lakehouse storage systems - they don’t need to perform file listing operations. Avoiding file listing operations is one major advantage of a Lakehouse storage system over a data lake.
+
+Engines don’t need physical disk partitioning to enjoy the data skipping benefits of disk partitioning when Lakehouse storage systems are used. The engine can get all the file skipping benefits from consulting the transaction log. It doesn’t need to glob directories to discern which files contain certain partition values.
+
+Let’s look at a Hive-style partitioned table with Delta Lake and explain why this data management technique is supported.
+
+## Hive-style partitioning for Delta Lake tables
+
+Let’s create a small partitioned Delta table to demonstrate the feature. Start by creating a DataFrame with people.
+
+```
++----------+---------+---------+
+|first_name|last_name|  country|
++----------+---------+---------+
+|   Ernesto|  Guevara|Argentina|
+|     Maria|Sharapova|   Russia|
+|     Bruce|      Lee|    China|
+|      Jack|       Ma|    China|
++----------+---------+---------+
+```
+
+Now write this DataFrame out to a Hive-style partitioned Delta table:
+
+```
+(
+    df.repartition(F.col("country"))
+    .write.partitionBy("country")
+    .format("delta")
+    .saveAsTable("country_people")
+)
+```
+
+Note: `repartition()` is used here so one file is written per partition for example purposes.
+
+Take a look at the contents of the Delta table in storage:
+
+```
+spark-warehouse/country_people
+├── _delta_log
+│   └── 00000000000000000000.json
+├── country=Argentina
+│   └── part-00000-0e188daf-7ed1-4a46-9786-251e5a5b7c61.c000.snappy.parquet
+├── country=China
+│   └── part-00000-69aeadfb-3692-4765-94bc-f4b271133b35.c000.snappy.parquet
+└── country=Russia
+    └── part-00000-d3a4d532-74f9-4304-970d-b476cf296a07.c000.snappy.parquet
+```
+
+The Delta table consists of Parquet files with the data that are structured in nested directories. The transaction log contains information about the files, including the partition structure.
+
+When engines query the Delta table, the figure out the file locations and partition information from the transaction log. They don’t need to run file listing operations or glob to find the relevant files. The physical partitions of a Delta table are actually unnecessary and the files could simply be logically partitioned. The only reason Delta Lake supports physical partitioning is for compatibility with other engines that support Hive-style partitioning and to make conversions possible.
+
+A Hive-style partitioned Parquet data lake can be converted to a Delta table (and vice versa) because Delta Lake supports Hive-style partitioning.
+
+Let’s look at some more limitations of Hive-style partitioning and how to separate data better.
+
+## Partition evolution for changing partitioning needs
+
+Partition evolution allows you to change the partitioning scheme of an existing table and is sometimes touted as a solution for the limitations of Hive-style partitioning.
+
+Partition evolution is nice if you want to fix a mistake in your table partitioning, like updating from partitioning by day to partitioning by hour. Partition evolution lets you make this switch without rewriting your data table.
+
+Partition evolution lets you fix the mistake of choosing the wrong partition key, but it’s a band-aid solution and doesn’t fix the root issue.
+
+The issue of overly rigid data separation, small files, and slow file listings (for data lakes), still persist. Let’s now turn our attention to Z Ordering, which solves some of the Hive-style partitioning problems more sustainably.
+
+## Z Ordering instead of Hive-style partitioning
+
+You can skip files when running queries on tables in Lakehouse storage systems based on the column level metadata or the partition information in the transaction log.
+
+As we’ve already discussed, Lakehouse storage systems don’t require Hive-style partitioning which uses file listing operations based on the directory structure to skip data. A Delta table can also skip files based on the min/max column values stored in the transaction log.
+
+Z Ordering the data makes skipping files based on min/max file-level metadata more effective.
+
+Z Ordering also makes file skipping better for a wider range of query patterns. Suppose you have a table with `col_a` and `col_b` and you’d like to make all the following types of queries run faster:
+
+- QueryA: filtering on `col_a`
+- QueryB: filtering on `col_b`
+- QueryC: filtering on both `col_a` and `col_b`
+
+Z Ordering the dataset on `col_a` and `col_b` will make QueryA, QueryB, and QueryC run faster. If the table is partitioned by `col_a`, then only QueryA will run faster.
+
+Z Ordering can be better than Hive-style partitioning in certain use cases, but it also has a lot of tradeoffs. Z Ordering and Hive-style partitioning aren’t mutually exclusive either - a table can be partitioned and each partition can be Z Ordered.
+
+See [this post](https://delta.io/blog/2023-06-03-delta-lake-z-order/) for a full description on Z Ordering. For purposes of this discussion, the most important take-away is that data does not need to be separated in subfolders for users to enjoy the benefits of file skipping. Data skipping in a Lakehouse storage system can also take place based on file-level column min/max metadata.
+
+Let’s now look at another reason why Hive-style partitioning is used that’s not related to performance.
+
+## Hive-style partitioning for concurrency
+
+There are certain types of operations that can bypass concurrency issues via Hive-style partitioning.
+
+For example, concurrent update and delete operations on the same data may conflict and will throw errors.
+
+You can bypass these concurrency errors on a Hive-style partitioned table by running the update and delete operations on non-overlapping partitions. For example, these two commands can be run concurrently on a Delta table that’s partitioned by `date`:
+
+- `UPDATE table WHERE date > '2010-01-01'`
+- `DELETE table WHERE date < '2010-01-01'`
+
+Hive-style partitioning allows users to bypass concurrency issues in certain circumstances, but as we’ve previously mentioned, separating data into subdirectories isn’t strictly necessary to get a full division of data. Logical partitioning (separating data into separate files and recording this in the transaction log) is sufficient and physical partitioning (separate data into separate folders) isn’t strictly necessary.
+
+## Conclusion
+
+Hive-style partitioning is an important data management technique for data lakes because it allows for data skipping. Data lakes don’t have a transaction log with file-level metadata statistics, so the only way to skip files is by physically partitioning the data in storage.
+
+Hive-style partitioning allows for full data separation, is supported by many legacy engines, and can help users bypass concurrency conflicts, so it’s useful in certain situations.
+
+However, Hive-style partitioning also has many downsides. It creates a rigid table structure, can cause lots of small files to be created, and only works for columns with relatively low cardinality. A table is often queried in different ways and Hive-style partitioning will only make some of the queries faster (and perhaps make the other queries slower).
+
+Delta Lake supports better ways to colocate data that provide the benefits of Hive-style partitioning without the downsides.

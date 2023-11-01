@@ -3,6 +3,7 @@ title: Getting started contributing to Delta Lake Spark
 description: This post explains the full development loop with the Delta Lake Spark connector. You'll learn how to retrieve and navigate the codebase, make changes, and package and debug custom builds.
 thumbnail: ./thumbnail.png
 author: Nick Karpov
+date: 2023-03-07
 ---
 
 In this post we'll explore the full development loop with the Delta Lake Spark connector. You'll learn how to retrieve and navigate the codebase, make changes, and package and debug custom builds of the Delta Lake Spark Connector.
@@ -117,7 +118,7 @@ Assuming you ran the package command successfully, you should now have some new 
 ```
 
 You'll notice that `package` produced more than just one JAR file.
-This is the first time we're seeing that the Delta Spark connector consists of a handful of separate, but related modules.  
+This is the first time we're seeing that the Delta Spark connector consists of a handful of separate, but related modules.
 The two modules we actually need for our work today are listed above: delta-core and delta-storage.
 
 Since we're focused on getting our code to run, we'll return to expand on these modules later.

@@ -3,9 +3,10 @@ title: Writing to Delta Lake from Apache Flink
 description: Learn more about how you can write from Apache Flink to Delta Lake about the latest release of the open-source project Delta Sharing and how it enables sharing on Google Cloud Storage, among other enhancements.
 thumbnail: ./apache-flink-app-with-delta-lake.png
 author: Fabian Paul, Pawel Kubit, Scott Sandre, Tathagata Das, Denny Lee
+date: 2022-04-27
 ---
 
-One of the most exciting aspects of the [Delta Connectors 0.3.0](https://github.com/delta-io/connectors/releases/tag/v0.3.0) is the addition of write functionality with new APIs to support creating and writing Delta tables without [Apache Spark™](https://spark.apache.org/). The latest release [0.4.0](https://github.com/delta-io/connectors/releases/tag/v0.4.0) of Delta Connectors introduces the [Flink/Delta Connector](https://github.com/delta-io/connectors/tree/master/flink), which provides a sink that can write Parquet data files from Apache Flink and commit them to Delta tables atomically. This sink uses Flink’s [DataStream API](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/dev/datastream/overview/) and supports both batch and streaming processing.
+One of the most exciting aspects of the [Delta Connectors 0.3.0](https://github.com/delta-io/connectors/releases/tag/v0.3.0) is the addition of write functionality with new APIs to support creating and writing Delta tables without [Apache Spark™](https://spark.apache.org/). The latest release [0.4.0](https://github.com/delta-io/connectors/releases/tag/v0.4.0) of Delta Connectors introduces the [Flink/Delta Connector](https://github.com/delta-io/delta/tree/master/connectors/flink), which provides a sink that can write Parquet data files from Apache Flink and commit them to Delta tables atomically. This sink uses Flink’s [DataStream API](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/dev/datastream/overview/) and supports both batch and streaming processing.
 
 A bit of background for [Apache Flink](https://flink.apache.org/) and [Delta Lake](https://delta.io/) before we dive into the details for the connector.
 
@@ -20,7 +21,7 @@ For more information about Flink, see the [Apache Flink documentation](https://n
 
 ## Delta Lake - Open Source Data Lake Storage Standards
 
-Delta Lake is an open-source project built for data [lakehouses](http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf) supporting compute engines including Spark, PrestoDB, Flink, and Hive with APIs for Scala, Java, Rust, Ruby, and Python. It is a data storage layer that brings reliability and improved performance to data lakes by providing [ACID transactions](https://docs.databricks.com/delta/concurrency-control.html), easily handling metadata for peta-byte scale partitions and unifying streaming and batch transactions on top of existing cloud data stores.
+Delta Lake is an open-source project built for data [lakehouses](http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf) supporting compute engines including Spark, PrestoDB, Flink, and Hive with APIs for Scala, Java, Rust, and Python. It is a data storage layer that brings reliability and improved performance to data lakes by providing [ACID transactions](https://docs.databricks.com/delta/concurrency-control.html), easily handling metadata for peta-byte scale partitions and unifying streaming and batch transactions on top of existing cloud data stores.
 
 Delta Lake is fundamentally an advanced storage system that consists of storing data in parquet files with partitions, and maintains a rich transaction log to be able to provide capabilities like ACID transactions and time travel. In addition, the log also contains metadata such as min/max statistics for each data file, enabling an order of magnitude faster metadata searches than the “files in object store” approach. For more information, refer to VLDB whitepaper [Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores](https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf).
 
@@ -32,7 +33,7 @@ Delta uses optimistic concurrency protocols for storing metadata and transaction
 
 ## Native Flink Delta Lake Connector
 
-For those of you who have leveraged Flink to build real-time streaming applications and/or analytics, we are excited to announce the new [Flink/Delta Connector](https://github.com/delta-io/connectors/blob/master/flink/README.md) that enables you to store data in Delta tables such that you harness Delta’s reliability and scalability, while maintaining Flink’s end-to-end exactly-once processing.
+For those of you who have leveraged Flink to build real-time streaming applications and/or analytics, we are excited to announce the new [Flink/Delta Connector](https://github.com/delta-io/delta/blob/master/connectors/flink/README.md) that enables you to store data in Delta tables such that you harness Delta’s reliability and scalability, while maintaining Flink’s end-to-end exactly-once processing.
 
 The Flink/Delta Connector is designed to create Flink’s DataStreams API sinks for both batch and streaming use cases in append mode. The connector ensures that the data from Flink is written to Delta Tables in an idempotent manner such that even if the Flink pipeline is restarted from its checkpoint information, the pipeline will guarantee no data is lost or duplicated thus preserving the exactly-once semantics of Flink. If the pipeline is restarted without a checkpoint, then there are no guarantees for exactly-once processing.
 
@@ -68,7 +69,7 @@ The following architecture diagram illustrates how the data is written from a Fl
 
 ### Implementation - Writing data from Flink into Delta Lake tables
 
-The [Flink/Delta Lake Connector](https://github.com/delta-io/connectors/tree/master/flink/) is a JVM library to read and write data from Apache Flink applications to Delta Lake tables utilizing the [Delta Standalone JVM library](https://github.com/delta-io/connectors#delta-standalone). It includes:
+The [Flink/Delta Lake Connector](https://github.com/delta-io/delta/tree/master/connectors/flink/) is a JVM library to read and write data from Apache Flink applications to Delta Lake tables utilizing the [Delta Standalone JVM library](https://github.com/delta-io/delta/tree/master/connectors#delta-standalone). It includes:
 
 - Sink for writing data from Apache Flink to a Delta table ([#111](https://github.com/delta-io/connectors/issues/111), [design document](https://docs.google.com/document/d/19CU4eJuBXOwW7FC58uSqyCbcLTsgvQ5P1zoPOPgUSpI/edit#heading=h.gjdgxs))
   - Note, we are also working on creating a <code>DeltaSink</code> using Flink’s **Table API** (PR [#250](https://github.com/delta-io/connectors/pull/250)).
@@ -81,7 +82,7 @@ The Flink/Delta Sink is designed to work with Flink >= 1.12 and provides exactly
 - <code>flink-table-common</code>
 - <code>hadoop-client</code>
 
-Please refer to the linked build file examples for [maven](https://github.com/delta-io/connectors/tree/master/flink#maven) and [sbt](https://github.com/delta-io/connectors/tree/master/flink#sbt).
+Please refer to the linked build file examples for [maven](https://github.com/delta-io/delta/tree/master/connectors/flink#maven) and [sbt](https://github.com/delta-io/delta/tree/master/connectors/flink#sbt).
 
 #### 1. Sink creation for non-partitioned tables
 
@@ -153,7 +154,7 @@ public class DeltaSinkExample {
 }
 ```
 
-More information on how to build and test is [here](https://github.com/delta-io/connectors/tree/master/flink).
+More information on how to build and test is [here](https://github.com/delta-io/delta/tree/master/connectors/flink).
 
 ## What’s next?
 

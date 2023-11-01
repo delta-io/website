@@ -1,13 +1,14 @@
 ---
-title: Delta Lake Vacuum Command
-description: This blog post explains how to vacuum files marked for deletion from storage with the Delta Lake Vacuum command.
+title: Remove old files with the Delta Lake Vacuum Command
+description: This blog post explains how to remove files marked for deletion from storage with the Delta Lake Vacuum command.
 thumbnail: ./thumbnail.png
 author: Matthew Powers, Nick Karpov
+date: 2023-01-03
 ---
 
-This blog post explains how to remove files marked for deletion (aka “tombstoned files”) from storage with the Delta Lake vacuum command. Delta Lake doesn't physically remove files from storage when operations “delete” the files. The vacuum command is used to physically remove files from storage that have been marked for deletion and are older than the retention period.
+This blog post explains how to remove files marked for deletion (aka “tombstoned files”) from storage with the Delta Lake vacuum command. Delta Lake doesn't physically remove files from storage for operations that logically delete the files. You need to use the vacuum command to physically remove files from storage that have been marked for deletion and are older than the retention period.
 
-The main benefit of vacuuming is to save on storage costs. Vacuuming does not make your queries run any faster and can limit your ability to time travel to certain Delta table versions. You need to weigh the costs/benefits for each of your tables to develop an optimal vacuum strategy.
+The main benefit of vacuuming is to save on storage costs. Vacuuming does not make your queries run any faster and can limit your ability to [time travel](https://delta.io/blog/2023-02-01-delta-lake-time-travel/) to earlier Delta table versions. You need to weigh the costs/benefits for each of your tables to develop an optimal vacuum strategy. Some tables should be vacuumed frequently. Other tables should never be vacuumed.
 
 Let's start with a simple example and then dig into some of the edge cases. Then we'll look at the costs/benefits of vacuuming so you can weigh the tradeoffs and make an informed decision on how to best manage your Delta tables.
 
@@ -221,8 +222,9 @@ Here are other operations that tombstone files in a Delta table:
 
 - [DELETE operations to remove rows from a Delta table](https://delta.io/blog/2022-12-07-delete-rows-from-delta-lake-table/)
 - UPDATE operation to perform upserts
-- MERGE operation that performs both DELETES and UPDATES in a single transaction
-- OPTIMIZE command that removes small files and adds the same data to larger files
+- MERGE operation that performs both DELETES and UPDATES in a single transaction, as described in [this post](https://delta.io/blog/2023-02-14-delta-lake-merge/).
+- OPTIMIZE command that removes small files and adds the same data to larger files, [as described here](https://delta.io/blog/2023-01-25-delta-lake-small-file-compaction-optimize/).
+- [Z ORDER colocates similar data in the same files](https://delta.io/blog/2023-06-03-delta-lake-z-order/)
 
 ## Conclusion
 

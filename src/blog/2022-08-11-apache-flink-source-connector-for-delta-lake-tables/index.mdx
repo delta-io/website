@@ -3,6 +3,7 @@ title: Apache Flink Source Connector for Delta Lake tables
 description: We are excited to announce the release of Delta Connectors 0.5.0, which introduces the new Flink/Delta Source Connector on Apache Flink™ 1.13 that can read directly from Delta tables using Flink’s DataStream API.
 thumbnail: ./unified-source-interface.png
 author: Krzysztof Chmielewski, Scott Sandre, Denny Lee
+date: 2022-08-11
 ---
 
 <Info title="Contributing authors" level="info">
@@ -13,11 +14,11 @@ author: Krzysztof Chmielewski, Scott Sandre, Denny Lee
   Lee](https://github.com/dennyglee)
 </Info>
 
-We are excited to announce the release of [Delta Connectors 0.5.0](https://github.com/delta-io/connectors/releases/tag/v0.5.0), which introduces the new [Flink/Delta Source Connector](https://github.com/delta-io/connectors/tree/branch-0.5/flink#delta-source) on [Apache Flink™ 1.13](https://flink.apache.org/news/2021/05/03/release-1.13.0.html) that can read directly from Delta tables using Flink’s DataStream API. Both the Flink/Delta Source and Sink connectors are now available as one JVM library that provides the ability to read and write data from Apache Flink applications to Delta tables using the [Delta Standalone JVM Library.](https://github.com/delta-io/connectors#delta-standalone) The Flink/Delta Source Connector supports reading data from Delta tables into Flink for both batch and streaming processing.
+We are excited to announce the release of [Delta Connectors 0.5.0](https://github.com/delta-io/connectors/releases/tag/v0.5.0), which introduces the new [Flink/Delta Source Connector](https://github.com/delta-io/connectors/tree/branch-0.5/flink#delta-source) on [Apache Flink™ 1.13](https://flink.apache.org/news/2021/05/03/release-1.13.0.html) that can read directly from Delta tables using Flink’s DataStream API. Both the Flink/Delta Source and Sink connectors are now available as one JVM library that provides the ability to read and write data from Apache Flink applications to Delta tables using the [Delta Standalone JVM Library.](https://github.com/delta-io/delta/tree/master/connectors#delta-standalone) The Flink/Delta Source Connector supports reading data from Delta tables into Flink for both batch and streaming processing.
 
 ## Native Flink Delta Lake Source Connector
 
-The [Flink/Delta Source Connector](https://github.com/delta-io/connectors/blob/master/flink/README.md) is built on Flink's new [Unified Source Interface API](https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/sources/), which was introduced in version 1.12 for building source connectors. Our connector uses low-level elements of the original File Source in addition to logic specific for reading Delta tables, such as reading the Delta table log.
+The [Flink/Delta Source Connector](https://github.com/delta-io/delta/blob/master/connectors/flink/README.md) is built on Flink's new [Unified Source Interface API](https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/sources/), which was introduced in version 1.12 for building source connectors. Our connector uses low-level elements of the original File Source in addition to logic specific for reading Delta tables, such as reading the Delta table log.
 
 ### Work modes
 
@@ -91,7 +92,7 @@ More detailed information can be found in [Delta Connector Design Document](http
 
 ## Implementation - Reading data from Delta Lake tables into Flink
 
-The [Flink/Delta Lake Connector](https://github.com/delta-io/connectors/tree/master/flink/) is a JVM library to read and write data from Apache Flink applications to Delta Lake tables utilizing the [Delta Standalone JVM library](https://github.com/delta-io/connectors#delta-standalone) and includes both the Source and Sink connectors. This section focuses on the Source connector and provides examples to read data directly from Delta Lake into Flink for both batch (bounded) and streaming (continuous) modes. Please see [#110](https://github.com/delta-io/connectors/issues/110) for more information.
+The [Flink/Delta Lake Connector](https://github.com/delta-io/delta/tree/master/connectors/flink/) is a JVM library to read and write data from Apache Flink applications to Delta Lake tables utilizing the [Delta Standalone JVM library](https://github.com/delta-io/delta/tree/master/connectors#delta-standalone) and includes both the Source and Sink connectors. This section focuses on the Source connector and provides examples to read data directly from Delta Lake into Flink for both batch (bounded) and streaming (continuous) modes. Please see [#110](https://github.com/delta-io/connectors/issues/110) for more information.
 
 The Flink/Delta Source is designed to work with 1.13.0 &lt;= Flink &lt;= 1.14.5 and provides exactly-once delivery guarantees. This connector is dependent on the following packages:
 
@@ -100,7 +101,7 @@ The Flink/Delta Source is designed to work with 1.13.0 &lt;= Flink &lt;= 1.14.5 
 - `flink-table-common`
 - `hadoop-client`
 
-Please refer to the linked build file examples for [maven](https://github.com/delta-io/connectors/tree/master/flink#maven) and [sbt](https://github.com/delta-io/connectors/tree/master/flink#sbt).
+Please refer to the linked build file examples for [maven](https://github.com/delta-io/delta/tree/master/connectors/flink#maven) and [sbt](https://github.com/delta-io/delta/tree/master/connectors/flink#sbt).
 
 **Batch (or Bounded) Mode**
 
@@ -276,7 +277,7 @@ public DataStream<RowData> createContinuousDeltaSourceUserColumns(
 }
 ```
 
-More information on how to build and test is [here](https://github.com/delta-io/connectors/tree/master/flink).
+More information on how to build and test is [here](https://github.com/delta-io/delta/tree/master/connectors/flink).
 
 ## What’s Next?
 

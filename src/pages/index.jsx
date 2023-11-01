@@ -26,7 +26,7 @@ const HomePage = () => {
   return (
     <PageLayout>
       <AnnouncementSection
-        title="Announcing Delta Lake 2.4.0 on Apache Spark™ 3.4"
+        title="Announcing Delta Lake 3.0.0 on Apache Spark™ 3.5"
         description="Try out the latest release today!"
         url="http://go.delta.io/latest"
       />
@@ -49,7 +49,7 @@ const HomePage = () => {
               Lakehouse architecture
             </Link>{" "}
             with compute engines including Spark, PrestoDB, Flink, Trino, and
-            Hive and APIs for Scala, Java, Rust, Ruby, and Python.
+            Hive and APIs for Scala, Java, Rust, and Python.
           </>
         }
         ctaLabel="Get Started"
