@@ -10,6 +10,7 @@ import ContributeToDeltaSection from "src/components/pages/community/ContributeT
 import CurrentCommittersSection from "src/components/pages/community/CurrentCommittersSection";
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
 import MaintainerProfileSection from "src/components/pages/community/MaintainerProfile";
+import BookDownload from "src/components/BookDownload";
 
 const CommunityPage = () => (
   <PageLayout>
@@ -23,6 +24,7 @@ const CommunityPage = () => (
     <TwitchSection />
     <ContributeSection />
     <MaintainerProfileSection />
+    <BookDownload />
     <CurrentCommittersSection />
     <ContributeToDeltaSection />
     <ProjectGovernanceSection />
