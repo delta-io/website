@@ -16,6 +16,7 @@ import WhitepaperSection from "src/components/pages/index/WhitepaperSection";
 import CommunitySection from "src/components/pages/shared/CommunitySection";
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
 import ChatService from "src/services/chatService";
+import BookDownload from "src/components/BookDownload";
 
 const HomePage = () => {
   React.useEffect(() => {
@@ -60,6 +61,7 @@ const HomePage = () => {
       <ValuePropsSection />
       <LatestUpdateSection />
       <KeyFeaturesSection />
+      <BookDownload />
       <WhitepaperSection />
       {/* <OrganizationsSection /> */}
       <ContributeToDeltaSection />
