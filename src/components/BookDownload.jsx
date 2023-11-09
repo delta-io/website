@@ -128,7 +128,7 @@ const BookDownload = () => (
           Early Release (Raw & Unedited) sponsored by Databricks
         </DownloadSubTitle>
 
-        <ButtonDownload download href="/pdfs/gide-book.pdf">
+        <ButtonDownload download href="/pdfs/DLTDG_ER3.pdf">
           Download
           <img src={downloadArrow} alt="Download button" />
         </ButtonDownload>
