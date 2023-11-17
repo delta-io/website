@@ -46,6 +46,16 @@ This repo runs automated checks on PRs, like the lint check above. Sometimes thi
 
 All changes are proposed as a [pull request](https://github.com/delta-io/website/pulls). Simply create a pull request and request a review and we'll get on it.
 
+### Blog posts
+
+We encourage blog post contributions from the community, but have strict topic and quality standards.
+
+The blog post topic should not overlap with any existing content. We prefer updating existing content instead of creating overlapping content. We wouldn't want a post like "Delta Lake Z Ordering large datasets" blog post because we already have a [Delta Lake Z Order](https://delta.io/blog/2023-06-03-delta-lake-z-order/) post.
+
+Please create an issue with your proposed title before writing the blog post!
+
+Blog posts should generally be around 2,000 words, target a relevant, high-value keyword, and be easy to read.
+
 You can add a blog by adding a directory with some files to `src/blog`. Here's an example:
 
 ```
