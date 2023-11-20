@@ -58,13 +58,13 @@ df1 = spark.createDataFrame(
 
 Let’s use the AWS Glue Crawler to register this Delta table in the AWS Glue Data Catalog.
 
-![](images/image1.png)
+![](image1.png)
 
-![](images/image2.png)
+![](image2.png)
 
 Take a look at the tables registered in the AWS Glue Data Catalog to make sure it’s registered.
 
-![](images/image3.png)
+![](image3.png)
 
 Now, let’s see how to query the registered Delta table.
 
@@ -72,7 +72,7 @@ Now, let’s see how to query the registered Delta table.
 
 You can also easily query this Delta table with AWS Athena. See the following example:
 
-![](images/image4.png)
+![](image4.png)
 
 You can query the data based on the name registered in the AWS Glue Data Catalog. You don’t need to remember the path of the Delta table in AWS S3. Referencing it by name is much easier.
 
@@ -115,7 +115,7 @@ select count(*) from kj.gluetest.ext_delta_catalog_returns
 
 Now register the table to the Glue Catalog using the Glue Delta crawler:
 
-![](images/image5.png)
+![](image5.png)
 
 You can now query the table from Athena:
 
@@ -125,7 +125,7 @@ SELECT count(*) FROM "AwsDataCatalog"."keerthi_josyula"."1711ext_delta_catalog_r
 --7975662
 ```
 
-![](images/image6.png)
+![](image6.png)
 
 You can append data to the Delta table with the existing workload:
 
@@ -137,7 +137,7 @@ select * from pqt_vw limit 1000;
 
 Simply rerun the crawler to update the Delta table in the AWS Glue Data Catalog:
 
-![](images/image7.png)
+![](image7.png)
 
 Rerun the query for table count in Athena:
 
@@ -147,7 +147,7 @@ SELECT count(*) FROM "AwsDataCatalog"."keerthi_josyula"."1711ext_delta_catalog_r
 --7976662
 ```
 
-![](images/image8.png)
+![](image8.png)
 
 Make sure to note that when you’re working with multiple engines, you need to manage [concurrency control](https://docs.delta.io/latest/concurrency-control.html).
 
