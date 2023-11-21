@@ -155,6 +155,18 @@ Delta tables can be registered in multiple catalogs.
 
 ## Conclusion
 
-It’s easy to register Delta tables in the AWS Glue Data Catalog and query them from various data tools in the AWS ecosystem.
+It’s easy to register Delta tables in the AWS Glue Data Catalog and query them from various data tools in the AWS ecosystem. See this blog post for even more details on [crawling Delta Lake tables using AWS Glue Crawler](https://aws.amazon.com/blogs/big-data/crawl-delta-lake-tables-using-aws-glue-crawlers/).
+
+You can also watch this excellent video on processing Delta Lake Tables on AWS Using AWS Glue, Amazon Athena, and Amazon Redshift:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/o6Wd84-lxCI?si=sQo_amCC4hvvTrR7"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
 
 It’s also easy to register a Delta table with multiple catalogs, like both the AWS Glue Data Catalog and Unity Catalog. It’s instrumental to register tables in multiple catalogs when different execution environments query the data, or you need to leverage features that are available in one catalog but not another.
