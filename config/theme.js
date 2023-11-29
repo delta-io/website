@@ -87,6 +87,11 @@ export const breakpoints = {
   xl: 1200,
 };
 
+export const media = Object.keys(breakpoints).reduce((acc, label) => {
+  acc[label] = `(min-width: ${breakpoints[label] / 16}em)`;
+  return acc;
+}, {});
+
 export const breakpointGreaterThan = (test) => (size) => {
   const sizes = Object.keys(breakpoints);
 
