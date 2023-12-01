@@ -3,7 +3,6 @@ import Section from "src/components/Section";
 import axios from "axios";
 import styled from "styled-components";
 import { media } from "config/theme";
-import eventLogoDefault from "../../public/images/eventLogoDefault.png";
 
 const MainTitle = styled.h3`
   font-size: 32px;
@@ -200,7 +199,10 @@ const EventsList = () => {
                     alt={event.summary}
                   />
                 ) : (
-                  <ImgEvent src={eventLogoDefault} alt={event.summary} />
+                  <ImgEvent
+                    src="/images/eventLogoDefault.png"
+                    alt={event.summary}
+                  />
                 )}
               </ImgEventBox>
               <EventDescriptionBox>
