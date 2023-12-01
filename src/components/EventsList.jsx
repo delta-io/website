@@ -10,7 +10,7 @@ const MainTitle = styled.h3`
   font-weight: 600;
   line-height: 30px;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 
 const EventsBox = styled.ul`
