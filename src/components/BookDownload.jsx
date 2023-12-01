@@ -14,6 +14,7 @@ const BookDownloadWrap = styled.div`
   padding: 48px 30px;
   border-radius: 5px;
   flex-direction: column;
+  margin-top: 50px;
 
   @media ${media.md} {
     flex-direction: row;
