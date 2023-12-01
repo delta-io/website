@@ -19,6 +19,7 @@ const EventsBox = styled.ul`
   list-style: none;
   font-family: ${(props) => props.theme.fontFamilyBase};
   position: relative;
+  min-height: 50px;
 `;
 const EventItem = styled.li`
   padding: 20px;
