@@ -54,7 +54,9 @@ const ArticleSubTitle = styled.h4`
   font-weight: ${(props) => props.theme.fontWeightBold};
 `;
 
-const ArticleTextWrap = styled.div``;
+const ArticleTextWrap = styled.div`
+  font-family: ${(props) => props.theme.fontFamilyBase};
+`;
 
 const ArticleText = styled.p`
   font-size: 18px;
