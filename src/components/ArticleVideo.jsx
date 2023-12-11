@@ -58,7 +58,7 @@ const ArticleTextWrap = styled.div``;
 
 const ArticleText = styled.p`
   font-size: 18px;
-  line-height: 23px;
+  line-height: 27px;
   margin-bottom: 10px;
 `;
 
