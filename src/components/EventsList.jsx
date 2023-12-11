@@ -143,7 +143,7 @@ const EventsList = () => {
 
   useEffect(() => {
     const calendarId = "deltalakeevents@gmail.com";
-    const API_KEY = AIzaSyBd2n - A2Zlojy6H3brACodDTL5cotlNOEI;
+    const API_KEY = "AIzaSyBd2n-A2Zlojy6H3brACodDTL5cotlNOEI";
 
     axios
       .get(
