@@ -5,7 +5,9 @@ export const colors = {
   accent: "#ffda47",
   text: "#002638",
   textSecondary: "#536974",
+  textThird: "#4F4F4F",
   bgLight: "#f5f8f9",
+  bgLightSecond: "#F3FDFF",
   bgDark: "#042436",
   border: "#B9C0C1",
   info: "#00add4",
@@ -86,6 +88,11 @@ export const breakpoints = {
   lg: 992,
   xl: 1200,
 };
+
+export const media = Object.keys(breakpoints).reduce((acc, label) => {
+  acc[label] = `(min-width: ${breakpoints[label] / 16}em)`;
+  return acc;
+}, {});
 
 export const breakpointGreaterThan = (test) => (size) => {
   const sizes = Object.keys(breakpoints);
