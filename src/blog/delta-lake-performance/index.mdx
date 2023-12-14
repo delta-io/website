@@ -10,7 +10,7 @@ This post explains why Delta Lake is a performant data storage system for differ
 
 It also describes the changes made to Delta Lake over time to help it execute data operations faster.
 
-## `MERGE` Improvements in Delta Lake 3.0
+## MERGE Improvements in Delta Lake 3.0
 
 This section reviews the MERGE performance improvements in Delta Lake 3.0. These changes improve the execution speed of MERGE operations by up to 56%. We’ll explore these enhancements and demonstrate the substantial performance gains they provide.
 
@@ -25,7 +25,7 @@ The recent enhancements to the `MERGE` command were incorporated in [Delta Lake 
 - Efficient Row Change Writing
 - Efficient Metrics Counter
 
-### Data Skipping for `MATCHED` Only Merges
+### Data Skipping for MATCHED Only Merges
 
 We now employ data skipping when a `MERGE` statement includes only MATCHED clauses. This accelerates the search for matches by using target-only MATCHED conditions for data skipping. For example, in the following query, predicates `target.value = 5 OR target.value = 7` can exclude unnecessary scans of any file that is known not to contain those values:
 
@@ -41,7 +41,7 @@ We’ve refined the row change writing process for improved efficiency. Rather t
 
 When updating metrics during `MERGE`/`UPDATE`/`DELETE` actions we replaced the UDFs previously used with dedicated native expressions. This change optimizes code generation, resulting in a more efficient and streamlined method of incrementing metrics.
 
-### Benchmarking `MERGE` Performance
+### Benchmarking MERGE Performance
 
 We created a small new benchmark to test the improvement to `MERGE`. The increased efficiency of `MERGE` means operations are now faster overall. Here is the summary by statement type:
 
