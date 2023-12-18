@@ -3,12 +3,7 @@ import Section from "src/components/Section";
 import styled from "styled-components";
 import bookDownload from "src/images/bookDownload.png";
 import downloadArrow from "src/images/downloadArrow.png";
-import { breakpoints } from "config/theme";
-
-const media = Object.keys(breakpoints).reduce((acc, label) => {
-  acc[label] = `(min-width: ${breakpoints[label] / 16}em)`;
-  return acc;
-}, {});
+import { media } from "config/theme";
 
 const BookDownloadWrap = styled.div`
   background: ${(props) => props.theme.colors.bgDarkBlue};
@@ -19,7 +14,7 @@ const BookDownloadWrap = styled.div`
   padding: 48px 30px;
   border-radius: 5px;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 50px;
 
   @media ${media.md} {
     flex-direction: row;
