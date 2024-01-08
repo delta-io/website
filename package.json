@@ -12,7 +12,7 @@
     "npm": "8.x"
   },
   "scripts": {
-    "develop": "gatsby develop",
+    "develop": "nodemon --watch gatsby-node.js --exec 'NODE_OPTIONS=--max-old-space-size=4096 gatsby develop'",
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",

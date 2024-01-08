@@ -185,6 +185,31 @@ const query = graphql`
         }
       }
     }
+    youtubePlaylist: allYoutubePlaylist {
+      edges {
+        node {
+          playlistId
+          playlistTitle
+          playlistDescription
+          videoCollection {
+            description
+            id
+            playlistId
+            publishedAt
+            thumbnail {
+              high {
+                height
+                url
+                width
+              }
+            }
+            title
+            url
+            videoId
+          }
+        }
+      }
+    }
     videosYoutube: allVideosYoutube(
       sort: { fields: videoCollection___videoUploadDate, order: DESC }
     ) {
@@ -300,7 +325,6 @@ const youtubeVideoDescriptions = [
 
 const useDataList = (list) => {
   const data = useStaticQuery(query);
-
   const getList = (listName) =>
     data[listName]?.edges.map(({ node }) => ({ ...node }));
 
@@ -346,6 +370,28 @@ const useDataList = (list) => {
     });
 
     return arr;
+  }
+
+  if (list === "youtubePlaylist") {
+    // the order in which the videos should be displayed (1st 3)
+    const allYoutubePlaylist = getList(list);
+    const orderedPlaylistIds = [
+      "PLzxP01GQMpjdCmKNjmMldcmi7UUluAOmo", // Delta Lake Shorts
+      "PLzxP01GQMpjeCBRoqIN5T4ZcLTtM1oF4e", // Delta Lake Deep Dives
+      "PLzxP01GQMpjeBlOKv7iOXOJIw5aFdx1B5", // Delta Rust
+    ];
+
+    const orderedPlaylists = orderedPlaylistIds
+      .map((id) => allYoutubePlaylist.find((p) => p.playlistId === id))
+      .filter((p) => p !== undefined);
+
+    allYoutubePlaylist.forEach((p) => {
+      if (!orderedPlaylistIds.includes(p.playlistId)) {
+        orderedPlaylists.push(p);
+      }
+    });
+
+    return orderedPlaylists;
   }
 
   return getList(list);
