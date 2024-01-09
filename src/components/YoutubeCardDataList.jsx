@@ -186,7 +186,7 @@ const YoutubeCardDataList = ({ cards }) => {
   const [isEmbedId, setIsEmbedId] = useState(null);
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
-  console.log(cards);
+
   const embedIdHandler = (embedId) => {
     setIsEmbedId(embedId);
     onOpen();
