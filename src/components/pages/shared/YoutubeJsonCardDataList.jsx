@@ -35,7 +35,6 @@ const YoutubeJsonCardDataList = (props) => {
   const { data: dataList, first } = props;
 
   let cards = useDataList(dataList);
-
   if (first) {
     cards = cards.slice(0, first);
   }

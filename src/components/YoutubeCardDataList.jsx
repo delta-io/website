@@ -193,19 +193,22 @@ const YoutubeCardDataList = ({ cards }) => {
   };
 
   useNoScroll(isOpen);
-
   return (
     <>
       <PageContainer>
         {cards.map((item) => (
-          <PlayListSection key={item.id}>
+          <PlayListSection key={item.playlistId}>
             <TitleWrapper>
               {item.playlistTitle && (
                 <CardTitle>{item.playlistTitle}</CardTitle>
               )}
               {item.playlistDescription && (
                 <CollectionDescription>
-                  {item.playlistDescription}
+                  {item.playlistDescription.replace(
+                    // eslint-disable-next-line no-misleading-character-class
+                    /[\u{1F300}-\u{1F5FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E0}-\u{1F1FF}\u{FE0F}]/gu,
+                    ""
+                  )}
                 </CollectionDescription>
               )}
             </TitleWrapper>
@@ -235,31 +238,39 @@ const YoutubeCardDataList = ({ cards }) => {
                 // onSlideChange={() => console.log("slide change")}
                 // onSwiper={(swiper) => console.log(swiper)}
               >
-                {item?.videoCollection.map((slide) => (
-                  <SwiperSlide key={slide.id}>
-                    <Card>
-                      {item.playlistId === "manually_added_playlist_id" ? (
-                        <a href={slide.url} rel="noreferrer" target="_blank">
-                          <Embed src={slide?.thumbnail} />
-                          <span className="title">{slide.title}</span>
-                          <CardDescription playlistId={item.playlistId}>
-                            {slide.description}
-                          </CardDescription>
-                        </a>
-                      ) : (
-                        <CardButton
-                          onClick={() => embedIdHandler(slide.videoId)}
-                        >
-                          <Embed src={slide?.thumbnail?.high?.url} />
-                          <span className="title">{slide?.title}</span>
-                          <CardDescription playlistId={item.playlistId}>
-                            {shortedDescription(slide?.description, 100)}
-                          </CardDescription>
-                        </CardButton>
-                      )}
-                    </Card>
-                  </SwiperSlide>
-                ))}
+                {item?.videoCollection.map(
+                  (slide, index) =>
+                    slide.thumbnail && (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <SwiperSlide key={`${slide.id}-${index}`}>
+                        <Card>
+                          {item.playlistId === "manually_added_playlist_id" ? (
+                            <a
+                              href={slide.url}
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              <Embed src={slide.thumbnail} />
+                              <span className="title">{slide.title}</span>
+                              <CardDescription playlistId={item.playlistId}>
+                                {slide.description}
+                              </CardDescription>
+                            </a>
+                          ) : (
+                            <CardButton
+                              onClick={() => embedIdHandler(slide.videoId)}
+                            >
+                              <Embed src={slide.thumbnail.high.url} />
+                              <span className="title">{slide.title}</span>
+                              <CardDescription playlistId={item.playlistId}>
+                                {shortedDescription(slide.description, 100)}
+                              </CardDescription>
+                            </CardButton>
+                          )}
+                        </Card>
+                      </SwiperSlide>
+                    )
+                )}
               </Swiper>
             </WrapperList>
           </PlayListSection>
