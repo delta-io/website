@@ -8,11 +8,11 @@
     "gatsby"
   ],
   "engines": {
-    "node": "18.x",
+    "node": "16.x",
     "npm": "8.x"
   },
   "scripts": {
-    "develop": "nodemon --watch gatsby-node.js --exec 'NODE_OPTIONS=--max-old-space-size=4096 gatsby develop'",
+    "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
