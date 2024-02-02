@@ -10,7 +10,7 @@ We are pleased to announce the release of Delta Lake 3.1 ([release notes](https:
 
 This release includes many improvements and bug fixes, but we'd like to highlight the following:
 
-- <code>MERGE</code> with Deletion Vectors: Up to 3.7x reduction in merges
+- `MERGE` with Deletion Vectors: Up to 3.7x reduction in merges
 - Optimized Write and Auto Compaction: Two features to automatically optimize file sizes for best out-of-the-box read performance
 - Improvements to the Delta Kernel read APIs: Updates to improve read performance, through table state reconstruction and support for query predicate-based data skipping
 - UniForm Iceberg compatibility: Support for MAP and LIST data types and improved compatibility with popular Iceberg reader clients
@@ -48,7 +48,7 @@ For any given query predicate, Delta Kernel can restrict the list of files to sc
 
 Delta Kernel can now also read the table metadata (that is, schema, properties, etc.) much faster due to improved table state reconstruction. Delta Flink Sink in 3.1.0 includes an experimental Kernel integration that reduced the Flink pipeline initialization time by 45x (that is, by faster table metadata fetch) when writing to an 11 PB table with 7M files.
 
-Delta Kernel also now supports reading tables with column mapping \*\*<code>id</code></strong> mode.
+Delta Kernel also now supports reading tables with column mapping `id` mode.
 
 For more information, please see:
 
@@ -87,7 +87,7 @@ For more information about these new features, check out UniForm’s [documentat
 - Incremental clustering is built around a new concept of ZCubes. A ZCube is a group of files with Hilbert-clustered data produced by the same `OPTIMIZE` command. Already clustered files are tagged in the file metadata (that is, in the Delta log) by ZCube id and new `OPTIMIZE` commands will only rewrite unclustered files. This significantly limits the write amplification.
 - Finally, the clustering column information is stored in the table, so users are not required to specify the clustering columns every time in the `OPTIMIZE` command thus avoiding errors.
 
-Note that Delta 3.1.0 only provides a preview of Liquid clustering with major [limitations](https://docs.delta.io/3.1.0/delta-clustering.html#limitations) In order to use clustering, you need to enable the Spark session configuration flag <code>spark.databricks.delta.clusteredTable.enableClusteringTablePreview.<strong> </strong></code>
+Note that Delta 3.1.0 only provides a preview of Liquid clustering with major [limitations](https://docs.delta.io/3.1.0/delta-clustering.html#limitations) In order to use clustering, you need to enable the Spark session configuration flag `spark.databricks.delta.clusteredTable.enableClusteringTablePreview`.
 
 Liquid clustering is enabled at table creation with the `CLUSTER BY` statement:
 
