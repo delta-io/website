@@ -72,6 +72,15 @@
     "thumbnail": "./images/connectors/229239046-365bc3c4-f644-4fd2-b73f-7efb27366656.png"
   },
   {
+    "name": "Hopsworks",
+    "description": "Hopsworks Feature Store stores, manages, and serves feature data in Delta Lake.",
+    "url": "https://www.hopsworks.ai/dictionary/feature-store",
+    "docs": "https://docs.hopsworks.ai/latest/user_guides/fs/feature_group/create/#batch-write-api",
+    "source_code": "https://github.com/logicalclocks/feature-store-api/blob/master/python/hsfs/core/delta_engine.py",
+    "tags": ["Hopsworks", "Python"],
+    "thumbnail": "./images/connectors/hopsworks.png"
+  },
+  {
     "name": "Kafka Delta Ingest",
     "description": "This project builds a highly efficient daemon for streaming data through Apache Kafka into Delta Lake.",
     "url": "https://github.com/delta-io/kafka-delta-ingest",
