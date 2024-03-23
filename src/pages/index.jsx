@@ -41,15 +41,17 @@ const HomePage = () => {
             >
               Delta Lake
             </Link>{" "}
-            is an open-source storage framework that enables building a <br />{" "}
+            is an open-source storage framework that enables building a format
+            agnostic{" "}
             <Link
               href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
               newTab
             >
               Lakehouse architecture
             </Link>{" "}
-            with compute engines including Spark, PrestoDB, Flink, Trino, and
-            Hive and APIs for Scala, Java, Rust, and Python.
+            with compute engines including Spark, PrestoDB, Flink, Trino, Hive,
+            Snowflake, Google BigQuery, Athena, Redshift, Databricks, Azure
+            Fabric and APIs for Scala, Java, Rust, and Python.
           </>
         }
         ctaLabel="Get Started"
