@@ -1,8 +1,10 @@
 import * as React from "react";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import deltaDiagramTop from "./delta-hp-hero-top.png";
-import deltaDiagramBottom from "./delta-hp-hero-bottom.png";
+// import deltaDiagramTop from "./delta-hp-hero-top.png";
+// import deltaDiagramBottom from "./delta-hp-hero-bottom.png";
+import deltaDiagramTop from "./delta-uniform-hero-v3-top.png";
+import deltaDiagramBottom from "./delta-uniform-hero-v3-bottom.png";
 
 export const imageOffsets = {
   sm: 35,
@@ -17,7 +19,7 @@ const DiagramSectionRoot = styled(Section)`
 `;
 
 const DiagramWrapperTop = styled.div`
-  max-width: 2000px;
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
 
@@ -39,7 +41,7 @@ const DiagramWrapperTop = styled.div`
 `;
 
 const DiagramWrapperBottom = styled.div`
-  max-width: 2000px;
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
 
