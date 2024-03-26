@@ -88,219 +88,23 @@ While not a user-facing feature in itself, it is a revolutionary internal mechan
 
 Delta on Spark already supports creating, writing, and reading tables with the above features, and support for engines is coming via the Delta Kernel project (to be discussed further in part 2 of this blog post). In addition, there have been major improvements in the user interfaces and operations in the last 12 months.
 
-<ul class="Typography__UnorderedList-cKZdCv fvRyZO">
-  <li class="Typography__ListItem-knJKVi icfGkC">
-    <p class="Typography__Paragraph-GQvFr ipDfUJ">
-      <strong>Most advanced MERGE API ever</strong> - Since the inception of{" "}
-      <a
-        href="https://github.com/delta-io/delta/releases/tag/v0.3.0"
-        class="Link__StyledLink-kKnxtl"
-      >
-        MERGE support in Delta 0.3
-      </a>{" "}
-      in 2019, we have always pushed the boundary of MERGE capabilities. We were
-      the first open-source format to introduce support for the following:
-    </p>
-    <ul class="Typography__UnorderedList-cKZdCv fvRyZO">
-      <li class="Typography__ListItem-knJKVi icfGkC">
-        Automatic schema evolution with <code>INSERT *</code> and{" "}
-        <code>UPDATE SET * </code>(
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v0.6.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 0.6
-        </a>
-        )
-      </li>
-      <li class="Typography__ListItem-knJKVi icfGkC">
-        Unlimited conditional <code>WHEN MATCHED</code> and{" "}
-        <code>WHEN NOT MATCHED</code> clauses (
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v1.0.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 1.0
-        </a>
-        )
-      </li>
-      <li class="Typography__ListItem-knJKVi icfGkC">
-        Complex types support (
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v0.8.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 0.8
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v1.1.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 1.1
-        </a>
-        )
-      </li>
-    </ul>
-  </li>
-  <li class="Typography__ListItem-knJKVi icfGkC">
-    <p class="Typography__Paragraph-GQvFr ipDfUJ">
-      Over the last year, we have been improving APIs and improving performance
-    </p>
-    <ul class="Typography__UnorderedList-cKZdCv fvRyZO">
-      <li class="Typography__ListItem-knJKVi icfGkC">
-        <code>
-          <a
-            href="https://docs.delta.io/2.3.0/delta-update.html#modify-all-unmatched-rows-using-merge"
-            class="Link__StyledLink-kKnxtl"
-          >
-            WHEN NOT MATCHED BY SOURCE clause
-          </a>
-        </code>{" "}
-        (Scala in{" "}
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v2.3.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 2.3
-        </a>{" "}
-        and SQL in{" "}
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v2.4.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 2.4
-        </a>
-        ), which allows you to perform more complicated data updates in a single
-        MERGE operation (instead of multiple <code>UPDATE/DELETE/MERGE</code>{" "}
-        operations).
-      </li>
-      <li class="Typography__ListItem-knJKVi icfGkC">
-        Arbitrary column support in automatic schema evolution (
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v2.3.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 2.3
-        </a>
-        )
-      </li>
-      <li class="Typography__ListItem-knJKVi icfGkC">
-        <a
-          href="https://docs.delta.io/2.3.0/delta-batch.html#idempotent-writes"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Idempotency in MERGE{" "}
-        </a>
-        for ensuring failures in periodic jobs are handled gracefully (
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v2.3.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 2.3
-        </a>
-        )
-      </li>
-      <li class="Typography__ListItem-knJKVi icfGkC">
-        2x faster merge even without deletion vectors (
-        <a
-          href="https://github.com/delta-io/delta/releases/tag/v3.0.0"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta 3.0
-        </a>
-        )
-      </li>
-    </ul>
-  </li>
-  <li class="Typography__ListItem-knJKVi icfGkC">
-    <p class="Typography__Paragraph-GQvFr ipDfUJ">
-      <strong>
-        <a
-          href="https://docs.delta.io/latest/delta-uniform.html"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Delta Uniform
-        </a>
-      </strong>{" "}
-      (introduced in{" "}
-      <a
-        href="https://github.com/delta-io/delta/releases/tag/v3.0.0"
-        class="Link__StyledLink-kKnxtl"
-      >
-        Delta 3.0
-      </a>{" "}
-      and expanded in{" "}
-      <a
-        href="https://github.com/delta-io/delta/releases/tag/v3.1.0"
-        class="Link__StyledLink-kKnxtl"
-      >
-        Delta 3.1
-      </a>
-      ) - Read Delta tables as Iceberg tables. More on this in part 2 of this
-      blog post.
-    </p>
-  </li>
-  <li class="Typography__ListItem-knJKVi icfGkC">
-    <p class="Typography__Paragraph-GQvFr ipDfUJ">
-      <strong>
-        <a
-          href="https://docs.delta.io/latest/delta-utility.html#shallow-clone-a-delta-table"
-          class="Link__StyledLink-kKnxtl"
-        >
-          Table cloning
-        </a>{" "}
-      </strong>
-      (
-      <a
-        href="https://github.com/delta-io/delta/releases/tag/v2.3.0"
-        class="Link__StyledLink-kKnxtl"
-      >
-        Delta 2.3
-      </a>
-      )- This allows you to do a quick "shallow copy" a Delta, Parquet or
-      Iceberg table into a new table for experimentation. That is, only the
-      transaction log will be copied to a new table location; the new log will
-      refer to the data files in the original table location. Any modifications
-      to the data in the new table will create new data files in the new table
-      location, and the original table will stay untouched.
-    </p>
-  </li>
-  <li class="Typography__ListItem-knJKVi icfGkC">
-    <p class="Typography__Paragraph-GQvFr ipDfUJ">
-      <strong>Timestamp without timezone support</strong> (
-      <a
-        href="https://github.com/delta-io/delta/releases/tag/v2.4.0"
-        class="Link__StyledLink-kKnxtl"
-      >
-        Delta 2.4.0
-      </a>
-      ) - Support for new data type supported in Spark 3.3.
-    </p>
-  </li>
-  <li class="Typography__ListItem-knJKVi icfGkC">
-    <p class="Typography__Paragraph-GQvFr ipDfUJ">
-      <strong>SQL function to query change data</strong> (
-      <a
-        href="https://github.com/delta-io/delta/releases/tag/v2.3.0"
-        class="Link__StyledLink-kKnxtl"
-      >
-        Delta 2.3
-      </a>
-      ) - A new SQL function{" "}
-      <code>
-        <a
-          href="https://docs.delta.io/2.3.0/delta-change-data-feed.html#read-changes-in-batch-queries"
-          class="Link__StyledLink-kKnxtl"
-        >
-          tables_changes()
-        </a>
-      </code>{" "}
-      that returns the row-level diff between two versions of a table when
-      Change Data Feed is enabled on the table.
-    </p>
-  </li>
-</ul>
+- **Most advanced MERGE API ever** - Since the inception of [MERGE support in Delta 0.3](https://github.com/delta-io/delta/releases/tag/v0.3.0) in 2019, we have always pushed the boundary of MERGE capabilities. We were the first open-source format to introduce support for the following:
+
+  - Automatic schema evolution with `INSERT *` and `UPDATE SET * `([Delta 0.6](https://github.com/delta-io/delta/releases/tag/v0.6.0))
+  - Unlimited conditional `WHEN MATCHED` and `WHEN NOT MATCHED` clauses ([Delta 1.0](https://github.com/delta-io/delta/releases/tag/v1.0.0))
+  - Complex types support ([Delta 0.8](https://github.com/delta-io/delta/releases/tag/v0.8.0) and [Delta 1.1](https://github.com/delta-io/delta/releases/tag/v1.1.0))
+
+- Over the last year, we have been improving APIs and improving performance
+
+  - [WHEN NOT MATCHED BY SOURCE clause](https://docs.delta.io/2.3.0/delta-update.html#modify-all-unmatched-rows-using-merge) (Scala in [Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0) and SQL in [Delta 2.4](https://github.com/delta-io/delta/releases/tag/v2.4.0)), which allows you to perform more complicated data updates in a single MERGE operation (instead of multiple `UPDATE/DELETE/MERGE` operations).
+  - Arbitrary column support in automatic schema evolution ([Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0))
+  - [Idempotency in MERGE ](https://docs.delta.io/2.3.0/delta-batch.html#idempotent-writes)for ensuring failures in periodic jobs are handled gracefully ([Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0))
+  - 2x faster merge even without deletion vectors ([Delta 3.0](https://github.com/delta-io/delta/releases/tag/v3.0.0))
+
+- **[Delta Uniform](https://docs.delta.io/latest/delta-uniform.html)** (introduced in [Delta 3.0](https://github.com/delta-io/delta/releases/tag/v3.0.0) and expanded in [Delta 3.1](https://github.com/delta-io/delta/releases/tag/v3.1.0)) - Read Delta tables as Iceberg tables. More on this in part 2 of this blog post.
+- **[Table cloning](https://docs.delta.io/latest/delta-utility.html#shallow-clone-a-delta-table)** ([Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0))- This allows you to do a quick "shallow copy" a Delta, Parquet or Iceberg table into a new table for experimentation. That is, only the transaction log will be copied to a new table location; the new log will refer to the data files in the original table location. Any modifications to the data in the new table will create new data files in the new table location, and the original table will stay untouched.
+- **Timestamp without timezone support** ([Delta 2.4.0](https://github.com/delta-io/delta/releases/tag/v2.4.0)) - Support for new data type supported in Spark 3.3.
+- **SQL function to query change data** ([Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0)) - A new SQL function [tables_changes()](https://docs.delta.io/2.3.0/delta-change-data-feed.html#read-changes-in-batch-queries) that returns the row-level diff between two versions of a table when Change Data Feed is enabled on the table.
 
 See [all the release notes](https://github.com/delta-io/delta/releases) for more information.
 
