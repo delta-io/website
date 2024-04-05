@@ -81,7 +81,7 @@ df = df.where((df["language"] == "en") & (df["question_score"] > 5))
 df.to_pandas()
 ```
 
-We’ll read data from three sources to compare the results:
+We’ll compare the relative execution speed when reading data from three sources:
 
 1. **Single JSON file:** The folks at [Together AI](https://www.together.ai/) provide a single [80 GB newline-delimited JSON file](https://data.together.xyz/redpajama-data-1T/v1.0.0/stackexchange/stackexchange.jsonl) for the entire StackExchange dataset. We took a 6 GB sample of this data and saved it as a single file in AWS S3:
 
@@ -99,20 +99,21 @@ We’ll read data from three sources to compare the results:
 
    ```
    s3://daft-public-datasets/red-pajamas/stackexchange-sample-deltalake-zorder/
-
    ```
+
+When comparing to the baseline of reading the single JSON file, reading this data from the Parquet files is 25x faster, and reading the Delta Lake table is 50x faster.
 
 ![json_speedup](json_speedup.png)
 
 **From JSON to Parquet: 113.7s vs. 4.6s**
 
-As expected, reading from the JSON file takes (by far) the longest; it’s about 20x slower than reading from Parquet files! This is because Parquet’s optimizations for compression and parallel access via Parquet’s “row groups” allows Daft to access data with extremely high throughput.
+As expected, reading from the JSON file takes (by far) the longest; it’s about 25x slower than reading from Parquet files! This is because Parquet’s optimizations for compression and parallel access via Parquet’s “row groups” allows Daft to access data with extremely high throughput.
 
-**From Parquet to a Delta Lake table: 4.6s vs. 2.3s**
+**From Parquet to Delta Lake: 4.6s vs. 2.3s**
 
-Storing the data in a Delta Lake table gives us further speedups from the Delta Lake table’s partitioning and z-ordering. Daft is able to leverage the data layout in Delta Lake to efficiently skip reading data, ultimately touching only 15% of the files in storage for this query.
+Storing the data in a Delta Lake table gives us a further 2x speedup over Parquet due to the Delta Lake table’s partitioning and z-ordering. Daft is able to leverage the data layout in Delta Lake to efficiently skip reading data, ultimately touching only 15% of the files in storage for this query.
 
-We can use `df.explain()` to inspect what optimizations Daft is performing under the hood when it queries Delta Lake:
+We can use `df.explain()` to see what optimizations Daft is performing under the hood when it queries Delta Lake:
 
 ```python
 df.explain(True)
@@ -133,24 +134,30 @@ df.explain(True)
 
 When executing this query with Delta Lake, Daft pushes the `Filter` plan node into the `DeltaLakeScanOperator`, which is then able to leverage this information to ensure only the required data is read:
 
-- Daft applies the `Filter` to each file that it reads, making use of file-level metadata when available to perform the filtering. Since the data is z-ordered by the `"question_score"` column, this data will be tightly clustered, and Daft can skip entire chunks of files/row groups that do not match the `col(question_score) > lit(5)` filter.
+- Daft applies the `Filter` to each file that it reads, making use of file-level metadata when available to perform the filtering. Since the data is z-ordered (sort-clustered) by the `"question_score"` column, this data will be tightly clustered on the filter column, and Daft can easily skip entire chunks of files/row groups that do not match the `col(question_score) > lit(5)` filter.
 - Our Delta Lake table is partitioned by the `"language"` column, which allows Daft to skip reading entire partitions that do not match the` col("language") == "en"` filter.
 
 ## Local Benchmarks
 
-We also benchmarked Daft’s reads from the same S3 locations against other local data engines: [pandas](https://pandas.pydata.org/docs/index.html#), [Polars](https://pola.rs/) and [DuckDB](https://duckdb.org/). Daft’s native integration with Delta Lake, S3, and Parquet allows it to outperform these libraries in many cases by a significant margin.
+We also benchmarked Daft’s reads from the same files in S3 against other local query engines: [pandas](https://pandas.pydata.org/docs/index.html#), [Polars](https://pola.rs/) and [DuckDB](https://duckdb.org/). Daft’s native integration with Delta Lake, S3, and Parquet allows it to outperform these libraries by a significant margin.
 
 All benchmarks were performed on an AWS EC2 c7g.4xlarge machine in the same region as the buckets that contain our data (us-west-2). This machine has access to 16 CPUs, 128 GB of memory, and 10 Gbps network bandwidth.
 
+For the single JSON file, Daft is 3.5x faster than Polars and about as fast as DuckDB. Pandas ran out of memory before completing the query.
+
 ![json_comp](json_comp.png)
 
+For the Parquet files, Daft is 2x faster than Polars, 4.7x faster than Pandas, and 11x faster than DuckDB.
+
 ![parquet_comp](parquet_comp.png)
+
+Finally, for the Delta Lake table, Daft is 2x faster than Polars, 15.8x faster than Pandas, and 2.3x faster than DuckDB.
 
 ![delta_lake_comp](delta_lake_comp.png)
 
 ## Conclusion
 
-Daft enables fast and easy-to-use parallel reading from Delta Lake, with data skipping optimizations that lead to order-of-magnitude performance improvements on massive datasets. We showed that on a single machine, Daft’s parallel reader outperforms **pandas by 11.3x** and **Polars by 2x** for partitioned and z-ordered Delta Lake tables.
+Daft enables fast and easy-to-use parallel reading from Delta Lake, with data skipping optimizations that lead to order-of-magnitude performance improvements on massive datasets. We showed that on a single machine, Daft’s parallel reader outperforms **pandas by 15.8x**, **DuckDB by 2.3x**, and **Polars by 2x** for partitioned and z-ordered Delta Lake tables.
 
 Daft’s full-featured dataframe API and first-class support for multimodal data make it possible to seamlessly read data from your catalogs and data lake(house)s, transform it into ML-ready data, and ingest it directly into your ML pipelines, all on the same cluster and without intermediate persistence to storage. Modern data and ML stacks, unite!
 
@@ -162,12 +169,12 @@ We have some exciting new features around Delta Lake in the pipeline too. These 
 
 - Read support for [deletion vectors](https://docs.delta.io/latest/delta-deletion-vectors.html) ([issue](https://github.com/Eventual-Inc/Daft/issues/1954))
 - Read support for [column mappings](https://docs.delta.io/latest/delta-column-mapping.html) ([issue](https://github.com/Eventual-Inc/Daft/issues/1955))
-- Writing new Delta Lake tables ([issue](https://github.com/Eventual-Inc/Daft/issues/1967))
+- Writing new Delta Lake tables ([issue](https://github.com/Eventual-Inc/Daft/issues/1967), [in-progress PR](https://github.com/Eventual-Inc/Daft/pull/2073))
 - Writing back to an existing table with appends, overwrites, upserts, or deletes ([issue](https://github.com/Eventual-Inc/Daft/issues/1968))
 
 Please let us know on the linked issues if you would like to see any of these features, and [join our Slack community](https://github.com/Eventual-Inc/Daft/issues/1968) to get involved.
 
-P.S. If you’re interested in exploring the intersection of modern data and ML stacks, our team is [hiring](https://www.ycombinator.com/companies/eventual/jobs)! :)
+P.S., if you’re interested in exploring the intersection of modern data and ML stacks, our team is [hiring](https://www.ycombinator.com/companies/eventual/jobs)! :)
 
 ## Appendix
 
