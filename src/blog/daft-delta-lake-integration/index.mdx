@@ -143,7 +143,14 @@ When executing this query with Delta Lake, Daft pushes the `Filter` plan node in
 
 We also benchmarked Daft’s reads from the same files in S3 against other local query engines: [pandas](https://pandas.pydata.org/docs/index.html#), [Polars](https://pola.rs/) and [DuckDB](https://duckdb.org/). Daft’s native integration with Delta Lake, S3, and Parquet allows it to outperform these libraries by a significant margin.
 
-All benchmarks were performed on an AWS EC2 c7g.4xlarge machine in the same region as the buckets that contain our data (us-west-2). This machine has access to 16 CPUs, 128 GB of memory, and 10 Gbps network bandwidth. We used the following version of each library in the benchmarks: `getdaft[deltalake]==0.2.19`, `polars==0.20.15`, `pandas==2.2.1`, `duckdb==0.10.0`.
+All benchmarks were performed on an AWS EC2 c7g.4xlarge machine in the same region as the buckets that contain our data (us-west-2). This machine has access to 16 CPUs, 128 GB of memory, and 10 Gbps network bandwidth. See this [GitHub gist](https://gist.github.com/jaychia/039bd724e351aac449adad75ba791cd7) for the local benchmarking code, and note that we used the following library versions:
+
+- `getdaft[deltalake]==0.2.19`
+- `polars[deltalake]==0.20.15`
+- `pandas==2.2.1`
+- `duckdb==0.10.0`
+- `deltalake==0.16.0`
+- `pyarrow==15.0.2`
 
 For the single JSON file, Daft is 3.5x faster than Polars and about as fast as DuckDB. Pandas ran out of memory before completing the query.
 
@@ -177,7 +184,3 @@ We have some exciting new features around Delta Lake in the pipeline too. These 
 Please let us know on the linked issues if you would like to see any of these features, and [join our Slack community](https://github.com/Eventual-Inc/Daft/issues/1968) to get involved.
 
 P.S., if you’re interested in exploring the intersection of modern data and ML stacks, our team is [hiring](https://www.ycombinator.com/companies/eventual/jobs)! :)
-
-## Appendix
-
-[GitHub gist](https://gist.github.com/jaychia/039bd724e351aac449adad75ba791cd7) for code used for local benchmarking
