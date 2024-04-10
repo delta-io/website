@@ -6,6 +6,10 @@ author: Tathagata "TD" Das, Susan Pierce, Carly Akerly
 date: 2024-03-26
 ---
 
+_This is part 1 of a 2 part blog series:_  
+_[Part I: Delta Lake - State of the Project](/blog/state-of-the-project-pt1/)_  
+_[Part II: Delta Lake - State of the Project](/blog/state-of-the-project-pt2/)_
+
 Delta Lake, a project hosted under The Linux Foundation, has been growing by leaps and bounds. To celebrate the achievements of the project, we’re publishing a 2-part series on Delta Lake. Delta Lake is greater than the sum of its parts, so instead of providing a highlight reel from each release version, we’ve organized this review along common themes that are core to the project. In this first blog post, we’ll discuss the community, ecosystem, and feature innovations that the project has released. In part two, we’ll go deeper into two key areas that the project has focused on - interoperability and the out-of-the-box performance of Delta Lake.
 
 We’re proud of the progress this project is making and want to highlight some of the key achievements within the project, the community, and the ecosystem. Delta Lake is now up to 18M monthly downloads!
@@ -68,7 +72,7 @@ This feature introduces the merge-on-read (MOR) paradigm to Delta. When updating
 
 ### [Liquid clustering](https://docs.delta.io/latest/delta-clustering.html)
 
-[Hive-style partitioning](https://delta.io/blog/pros-cons-hive-style-partionining/) is commonly used to increase read performance in data lakes, but it can cause maintenance and performance headaches if you have columns with high cardinality, have a lot of data skew, or if your data changes fairly frequently. In 2022, [Delta Lake 2.0](https://github.com/delta-io/delta/releases/tag/v2.0.0) introduced the command `OPTIMIZE ZORDER` which allows better data layouts with multi-dimensional clustering. However, it required reclustering data many times, resulting in higher write amplification. In 2023, we introduced a new approach called [Liquid clustering](https://docs.delta.io/latest/delta-clustering.html) which can solve the limitations of Zorder. It has (i) better data layout with [Hilbert curves](https://en.wikipedia.org/wiki/Hilbert_curve), with more data skipped on read than with [Z-order curves](https://en.wikipedia.org/wiki/Z-order), (ii) Z-cubes to make clustering incremental and reduce write amplification, and (iii) pluggability for you to plug in your data layout policy that works best for your data. While it's still in preview, you can kick the tires with [Delta 3.1](https://github.com/delta-io/delta/releases/tag/v3.1.0).
+[Hive-style partitioning](https://delta.io/blog/pros-cons-hive-style-partionining/) is commonly used to increase read performance in data lakes, but it can cause maintenance and performance headaches if you have columns with high cardinality, have a lot of data skew, or if your data changes fairly frequently. In 2022, [Delta Lake 2.0](https://github.com/delta-io/delta/releases/tag/v2.0.0) introduced the command `OPTIMIZE ZORDER` which allows better data layouts with multi-dimensional clustering. However, it required reclustering data many times, resulting in higher write amplification. In 2023, we introduced a new approach called [Liquid clustering](https://docs.delta.io/latest/delta-clustering.html) which can solve the limitations of Zorder. It has (i) better data layout with [Hilbert curves](https://en.wikipedia.org/wiki/Hilbert_curve), with more data skipped on read than with [Z-order curves](https://en.wikipedia.org/wiki/Z-order_curve), (ii) Z-cubes to make clustering incremental and reduce write amplification, and (iii) pluggability for you to plug in your data layout policy that works best for your data. While it's still in preview, you can kick the tires with [Delta 3.1](https://github.com/delta-io/delta/releases/tag/v3.1.0).
 
 ### V2 checkpoints and minor log compactions
 
