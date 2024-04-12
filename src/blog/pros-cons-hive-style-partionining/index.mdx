@@ -166,13 +166,13 @@ Hive-style partitioning allows users to bypass concurrency issues in certain cir
 [7]: https://spark.apache.org/docs/latest/api/sql/#date_trunc
 [8]: https://delta.io/blog/2023-04-12-delta-lake-generated-columns
 [9]: https://docs.delta.io/latest/delta-batch.html#-deltausegeneratedcolumns
-[10]: https://docs.delta.io/3.1.0/delta-clustering.html
-[11]: https://dennyglee.com/2024/02/06/how-delta-lake-liquid-clustering-conceptually-works
-[12]: https://github.com/delta-io/delta/releases/tag/v2.3.0
+[10]: https://github.com/delta-io/delta/releases/tag/v2.3.0
 
 ### 🛑 anti-pattern: partition by non-binned `TimestampType` column
-When working with transactional data / events, data usually contain some kind of timestamp attribute. Analysis of the data often focuses on the *most recent data*, which is why using the timestamp as partition column might sound promising.
+
+When working with transactional data / events, data usually contain some kind of timestamp attribute. Analysis of the data often focuses on the _most recent data_, which is why using the timestamp as partition column might sound promising.
 Problem here is that partitioning by a high cardinality column like `TimestampType` column will most certainly lead to over-partitioning, creating an abundance of partitions containing only little data.
+
 ```python
 from pyspark.sql import functions as F
 from pyspark.sql import types as T
@@ -219,13 +219,14 @@ events
 └── event_timestamp=2000-01-10 12:34:56/
     └── part-00007-66f59e03-5c5c-4b7f-923b-3059f928e06f.c000.snappy.parquet (1 rows)
 ```
+
 As shown here, all the rows will end up in a separate partition even when event 1 and 2 happened nearly at the same time.
 
+### ✅ partition by _binned_ `TimestampType` column (using generation expression)
 
-### ✅ partition by *binned* `TimestampType` column (using generation expression)
-A better approach is, to ["bin"][6] the `TimestampType` values to a *coarser* granularity and thereby reduce the cardinality of values (e.g., hourly, daily, yearly).
+A better approach is, to ["bin"][6] the `TimestampType` values to a _coarser_ granularity and thereby reduce the cardinality of values (e.g., hourly, daily, yearly).
 This can easily be done by a [**generated column**][8], making use of the [`DATE_TRUNC`][7] function.
-The advantage of a generated column here is that when appending data to the table after its creation, it will be calculated from the reference column automatically during insert (and the column does not need to be contained in the append-`DataFrame`). Moreover, since [Delta 2.3][12], when querying the table with a predicate on a column **referenced by the partition column's generation expression** will also support [partition pruning][9]. When executing `SELECT * FROM events WHERE event_timestamp = '1990-06-15 09:01:01'` Delta will tell the engine only to read partition `event_timestamp_bin=1990-01-01` initially and then filter for `event_timestamp = '1990-06-15 09:01:01'` in the following example.
+The advantage of a generated column here is that when appending data to the table after its creation, it will be calculated from the reference column automatically during insert (and the column does not need to be contained in the append-`DataFrame`). Moreover, since [Delta 2.3][10], when querying the table with a predicate on a column **referenced by the partition column's generation expression** will also support [partition pruning][9]. When executing `SELECT * FROM events WHERE event_timestamp = '1990-06-15 09:01:01'` Delta will tell the engine only to read partition `event_timestamp_bin=1990-01-01` initially and then filter for `event_timestamp = '1990-06-15 09:01:01'` in the following example.
 
 ```python
 generation_expression = "DATE_TRUNC('YEAR', event_timestamp)"
@@ -251,6 +252,7 @@ events
 └── event_timestamp_bin=2000-01-01 00:00:00/
     └── part-00000-57b8e78f-a752-4285-8cab-25be3aa632f4.c000.snappy.parquet (1 rows)
 ```
+
 Here it is visible, that three rows will be stored in the same partition (no more over-partitioning).
 
 <details>
@@ -272,6 +274,7 @@ spark.table("events").filter(F.col("event_timestamp_bin") == '1990-01-01').expla
     PushedFilters: [],
     ReadSchema: struct<event_id:bigint,event_timestamp:timestamp,event_payload:string>
 ```
+
 Note `PartitionFilters`
 
 ```python
@@ -290,16 +293,19 @@ spark.table("events").filter(F.col("event_timestamp") == '1990-06-15 09:01:02').
     PartitionFilters: [((event_timestamp_bin#4918 = date_trunc(MONTH, 1990-06-15 09:01:02, Some(Etc/UTC))) OR isnull((e..., PushedFilters: [IsNotNull(event_timestamp), EqualTo(event_timestamp,1990-06-15 09:01:02.0)],
     ReadSchema: struct<event_id:bigint,event_timestamp:timestamp,event_payload:string>
 ```
+
 Note `PartitionFilters`
+
 </details>
 
-
 ### 🔀 Partition evolution: change binning granularity of partition columns
-Estimating the *correct* partition granularity upfront is very difficult. The rule of thumb here is that there should be [at least 1 GB of data in each partition][4].
+
+Estimating the _correct_ partition granularity upfront is very difficult. The rule of thumb here is that there should be [at least 1 GB of data in each partition][4].
 Therefore, ending up in a situation where the table is either over-partitioned (many partitions containing only little data) or under-partitioned (few partitions containing large data) is rather common.
 To **change the granularity** of the partition afterward is easy with Delta but comes at the cost of **rewriting the whole table**.
 
-In this example, the Delta table (previously binned by *year*) is read; the corresponding `DataFrame` is transformed (so that the partition values are binned by *month*) and used to simply overwrite the Delta table in-place. Due to Delta's versioning / time travel functionality, this will create a new version of the table with the changed generation expression. So there is no need to create a temporary table and swap it afterward.
+In this example, the Delta table (previously binned by _year_) is read; the corresponding `DataFrame` is transformed (so that the partition values are binned by _month_) and used to simply overwrite the Delta table in-place. Due to Delta's versioning / time travel functionality, this will create a new version of the table with the changed generation expression. So there is no need to create a temporary table and swap it afterward.
+
 ```python
 spark.table("events")
 
