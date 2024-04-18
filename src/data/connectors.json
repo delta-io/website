@@ -1,13 +1,13 @@
 [
   {
-   "name": "Apache Druid",
+    "name": "Apache Druid",
     "description": "This connector allows Apache Druid to read from Delta Lake.",
     "url": "https://druid.apache.org/",
     "docs": "https://druid.apache.org/docs/latest/development/extensions-contrib/delta-lake/",
     "source_code": "https://github.com/apache/druid/",
     "tags": ["Druid"],
     "thumbnail": "./images/connectors/apache_druid_logo.png"
-  }
+  },
   {
     "name": "Apache Flink",
     "description": "This connector allows Apache Flink to write to Delta Lake.",
