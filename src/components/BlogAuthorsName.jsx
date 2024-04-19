@@ -38,6 +38,9 @@ export const AUTHORS = {
     profile: "https://www.linkedin.com/in/mshtelma/",
     avatar: MICHAEL_SHTELMA_IMG,
   },
+  "Martin Bode": {
+    profile: "https://www.linkedin.com/in/martin-bode/",
+  },
 };
 
 const BlogAuthorsName = ({ name }) => {
