@@ -8,6 +8,22 @@
     "thumbnail": "./images/connectors/athena.png"
   },
   {
+    "name": "AWS EMR",
+    "description": "Starting with Amazon EMR release 6.9.0, you can use Apache Spark 3.x on Amazon EMR clusters with Delta Lake tables. ",
+    "url": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
+    "docs": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
+    "tags": ["AWS", "EMR"],
+    "thumbnail": "./images/connectors/aws-emr.png"
+  },
+  {
+    "name": "AWS Glue",
+    "description": "AWS Glue 3.0 and later supports the Linux Foundation Delta Lake framework",
+    "url": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
+    "docs": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
+    "tags": ["AWS", "Glue"],
+    "thumbnail": "./images/connectors/aws-glue.png"
+  },
+  {
     "name": "aws-pandas-sdk",
     "description": "pandas on AWS - Easy integration with AWS services including optional dependency with Delta Lake",
     "url": "https://github.com/aws/aws-sdk-pandas",
@@ -25,6 +41,14 @@
     "thumbnail": "./images/connectors/azure-stream-analytics-logo.png"
   },
   {
+    "name": "BigQuery",
+    "description": "BigQuery’s native Delta Lake support enables seamless delivery of data for downstream applications.",
+    "url": "https://cloud.google.com/bigquery/docs/create-delta-lake-table",
+    "docs": "https://cloud.google.com/bigquery/docs/create-delta-lake-table",
+    "tags": [],
+    "thumbnail": "./images/connectors/big-query.png"
+  },
+  {
     "name": "Databricks",
     "description": "Delta Lake is included within Databricks allowing it to read from and write to Delta Lake.",
     "url": "https://docs.databricks.com/delta/index.html",
@@ -33,20 +57,12 @@
     "thumbnail": "./images/connectors/Databricks-logo.png"
   },
   {
-    "name": "AWS EMR",
-    "description": "Starting with Amazon EMR release 6.9.0, you can use Apache Spark 3.x on Amazon EMR clusters with Delta Lake tables. ",
-    "url": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
-    "docs": "https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-delta.html",
-    "tags": ["AWS", "EMR"],
-    "thumbnail": "./images/connectors/aws-emr.png"
-  },
-  {
-    "name": "AWS Glue",
-    "description": "AWS Glue 3.0 and later supports the Linux Foundation Delta Lake framework",
-    "url": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
-    "docs": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-delta-lake.html",
-    "tags": ["AWS", "Glue"],
-    "thumbnail": "./images/connectors/aws-glue.png"
+    "name": "Microsoft Fabric",
+    "description": "In order to achieve seamless data access across all compute engines in Microsoft Fabric, Delta Lake is chosen as the unified table format.",
+    "url": "https://learn.microsoft.com/en-us/fabric/get-started/delta-lake-interoperability",
+    "docs": "https://learn.microsoft.com/en-us/fabric/get-started/delta-lake-interoperability",
+    "tags": [],
+    "thumbnail": "./images/connectors/fabric.svg"
   },
   {
     "name": "Power BI",
@@ -89,13 +105,5 @@
     "docs": "https://startree.ai/blog/delta-lake-managed-ingestion-with-startree-s-deltaconnector-for-apache-pinot",
     "tags": ["StarTree", "Pinot"],
     "thumbnail": "./images/connectors/startree-logo.png"
-  },
-  {
-    "name": "Azure Synapse",
-    "description": "The current version of Delta Lake included with Azure Synapse has language support for Scala, PySpark, and .NET.",
-    "url": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-delta-lake-overview?pivots=programming-language-csharp",
-    "docs": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-what-is-delta-lake",
-    "tags": ["Azure", "Synapse"],
-    "thumbnail": "./images/connectors/AzureSynapseAnalytics.png"
   }
 ]
