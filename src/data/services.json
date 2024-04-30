@@ -45,7 +45,6 @@
     "description": "BigQuery’s native Delta Lake support enables seamless delivery of data for downstream applications.",
     "url": "https://cloud.google.com/bigquery/docs/create-delta-lake-table",
     "docs": "https://cloud.google.com/bigquery/docs/create-delta-lake-table",
-    "tags": [],
     "thumbnail": "./images/connectors/big-query.png"
   },
   {
@@ -61,8 +60,7 @@
     "description": "In order to achieve seamless data access across all compute engines in Microsoft Fabric, Delta Lake is chosen as the unified table format.",
     "url": "https://learn.microsoft.com/en-us/fabric/get-started/delta-lake-interoperability",
     "docs": "https://learn.microsoft.com/en-us/fabric/get-started/delta-lake-interoperability",
-    "tags": [],
-    "thumbnail": "./images/connectors/fabric.svg"
+    "thumbnail": "./images/connectors/ms-fabric.png"
   },
   {
     "name": "Power BI",
