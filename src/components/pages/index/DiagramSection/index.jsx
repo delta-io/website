@@ -37,17 +37,6 @@ const DiagramWrapperTop = styled.div`
   }
 `;
 
-const DiagramWrapperBottom = styled.div`
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-
-  img {
-    width: 100%;
-    height: auto;
-  }
-`;
-
 const DiagramSection = () => (
   <DiagramSectionRoot>
     <DiagramWrapperTop>
