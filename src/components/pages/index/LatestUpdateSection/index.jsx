@@ -12,7 +12,7 @@ const LatestUpdateSection = () => {
   const data = useStaticQuery(graphql`
     query {
       allMdx(
-        sort: { fields: [fields___date], order: DESC }
+        sort: { fields: [frontmatter___date], order: DESC }
         filter: { fields: { pageType: { eq: "blog" } } }
       ) {
         edges {
@@ -23,12 +23,12 @@ const LatestUpdateSection = () => {
               author
               thumbnail {
                 childImageSharp {
-                  gatsbyImageData(width: 700, height: 394)
+                  gatsbyImageData
                 }
               }
+              date(formatString: "MMMM D, YYYY")
             }
             fields {
-              date(formatString: "MMMM D, YYYY")
               slug
             }
           }
@@ -44,6 +44,7 @@ const LatestUpdateSection = () => {
       title: frontmatter.title,
       thumbnail: frontmatter.thumbnail,
       url: fields.slug,
+      date: fields.date,
     }))
     .slice(0, 5);
 
@@ -51,7 +52,7 @@ const LatestUpdateSection = () => {
     <Section
       background={(theme) => theme.light.bg}
       title="The Latest"
-      titleSize="h5"
+      titleSize="h2"
       centeredHeader
       padding="xxxl"
     >

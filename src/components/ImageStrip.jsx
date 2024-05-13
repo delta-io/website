@@ -11,6 +11,9 @@ const CardThumbnail = styled.div`
   background-color: ${(props) => color(props.theme.light.bg).darken(0.1)};
   margin-bottom: ${(props) => props.theme.spacing.sm};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  &:hover {
+    transform: translate(2px, -2px);
+  }
 `;
 
 const ImageStrip = (props) => {

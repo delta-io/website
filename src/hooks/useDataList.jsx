@@ -185,6 +185,31 @@ const query = graphql`
         }
       }
     }
+    youtubePlaylist: allYoutubePlaylist {
+      edges {
+        node {
+          playlistId
+          playlistTitle
+          playlistDescription
+          videoCollection {
+            description
+            id
+            playlistId
+            publishedAt
+            thumbnail {
+              high {
+                height
+                url
+                width
+              }
+            }
+            title
+            url
+            videoId
+          }
+        }
+      }
+    }
     videosYoutube: allVideosYoutube(
       sort: { fields: videoCollection___videoUploadDate, order: DESC }
     ) {
@@ -244,9 +269,62 @@ const query = graphql`
   }
 `;
 
+const youtubeVideoDescriptions = [
+  {
+    playlistTitle: "Last Week in a Byte",
+    description: "Get the latest Delta Lake news and events ... a week late!",
+  },
+  {
+    playlistTitle: "Delta Lake Community Office Hours",
+    description:
+      "Join our regular community office hours to discuss issues around the Delta Lake community",
+  },
+  {
+    playlistTitle: "Simon & Denny Ask Us Anything",
+    description:
+      "Join Simon Whiteley (Advancing Analytics) and Denny Lee (Databricks) and ask your burning Delta Lake, Lakehouse questions",
+  },
+  {
+    playlistTitle: "Delta Lake Discussions with Denny Lee (D3L2)",
+    description:
+      "Watch the vidcast (or listen to this podcast) with Delta Lake customers and/or contributors",
+  },
+  {
+    playlistTitle: "Delta Lake Tech Talks",
+    description:
+      "Join our regular technical webinar series on the latest Delta Lake features and integrations",
+  },
+  {
+    playlistTitle: "Delta Rust",
+    description:
+      "Would you like to know more about the Delta Rust ecosystem? Watch these videos!",
+  },
+  {
+    playlistTitle: "Delta Lake Tutorials",
+    description:
+      "Jumpstart your Delta Lake technical implementation with these tutorials",
+  },
+  {
+    playlistTitle: "Getting Started with Delta Lake",
+    description: "Jumpstart your Delta Lake concepts with this video series",
+  },
+  {
+    playlistTitle: "Delta Lake DW Techniques",
+    description:
+      "Apply Data Warehousing techniques to your Delta Lake-based lakehouse.",
+  },
+  {
+    playlistTitle: "Under the Sediments: Diving into Delta Lake",
+    description: "Dive deep into the internals and Delta Lake code-base",
+  },
+  {
+    playlistTitle: "Conference Talks",
+    description: "Watch these conference talks that are not on YouTube.",
+  },
+];
+
 const useDataList = (list) => {
   const data = useStaticQuery(query);
-
   const getList = (listName) =>
     data[listName]?.edges.map(({ node }) => ({ ...node }));
 
@@ -261,7 +339,59 @@ const useDataList = (list) => {
         conferenceVideoList.length > 0 ? conferenceVideoList : [],
     };
 
-    return [...allPlaylistsForVideos, playlistConference];
+    // create one list from two stream
+    const finallyList = [...allPlaylistsForVideos, playlistConference];
+
+    // list which will be used to sort finallyList on it
+    const listFocus = youtubeVideoDescriptions.map(
+      (item) => item.playlistTitle
+    );
+
+    // sorted playlists regarding listFocus
+    const sortedPlaylists = (array, sortArray) =>
+      [...array].sort(
+        (a, b) =>
+          sortArray.indexOf(a.playlistTitle) -
+          sortArray.indexOf(b.playlistTitle)
+      );
+
+    // added description from manually created array to playlists array which we get from Youtube API
+    const arr = sortedPlaylists(finallyList, listFocus).map((listItem) => {
+      const obj = {
+        ...listItem,
+        playlistDescription: "",
+      };
+      youtubeVideoDescriptions.forEach((el) => {
+        if (el.playlistTitle === listItem.playlistTitle) {
+          obj.playlistDescription = el.description;
+        }
+      });
+      return obj;
+    });
+
+    return arr;
+  }
+
+  if (list === "youtubePlaylist") {
+    // the order in which the videos should be displayed (1st 3)
+    const allYoutubePlaylist = getList(list);
+    const orderedPlaylistIds = [
+      "PLzxP01GQMpjdCmKNjmMldcmi7UUluAOmo", // Delta Lake Shorts
+      "PLzxP01GQMpjeCBRoqIN5T4ZcLTtM1oF4e", // Delta Lake Deep Dives
+      "PLzxP01GQMpjeBlOKv7iOXOJIw5aFdx1B5", // Delta Rust
+    ];
+
+    const orderedPlaylists = orderedPlaylistIds
+      .map((id) => allYoutubePlaylist.find((p) => p.playlistId === id))
+      .filter((p) => p !== undefined);
+
+    allYoutubePlaylist.forEach((p) => {
+      if (!orderedPlaylistIds.includes(p.playlistId)) {
+        orderedPlaylists.push(p);
+      }
+    });
+
+    return orderedPlaylists;
   }
 
   return getList(list);

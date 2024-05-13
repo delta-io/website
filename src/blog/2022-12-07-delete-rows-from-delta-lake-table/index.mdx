@@ -3,6 +3,7 @@ title: How to Delete Rows from a Delta Lake Table
 description: This post teaches you how to delete rows from a Delta Lake table and how the operation is implemented under the hood.
 thumbnail: ./thumbnail.png
 author: Matthew Powers
+date: 2022-12-07
 ---
 
 Delta Lake makes it easy to efficiently delete rows from a Delta table.
@@ -10,6 +11,8 @@ Delta Lake makes it easy to efficiently delete rows from a Delta table.
 This post will show you how to delete rows from a Delta table and how the transaction is implemented under the hood, so you can understand how Delta Lake performs the computation quickly.
 
 You’ll also see why delete operations are better with Delta Lake than data lakes. All computations are in [this notebook](https://github.com/MrPowers/delta-examples/blob/master/notebooks/pyspark/delete-rows.ipynb) if you’d like to run these computations on your machine while following along.
+
+Important note: Deleting rows is significantly faster with deletion vectors enabled, see [this blog post](https://delta.io/blog/2023-07-05-deletion-vectors/) for more information.
 
 ## Delta Lake Delete Rows Example
 
@@ -132,10 +135,14 @@ The delete operation marks File B for deletion (a logical operation), but it doe
 
 Sometimes you’ll actually want to remove files from storage, perhaps to save on storage costs or for regulatory reasons. In that case, you’ll need to make sure to [vacuum the data](https://docs.delta.io/latest/delta-utility.html) after running the delete commands to physically remove the files from storage.
 
+Important note: when deletion vectors are enabled, removing files from storage first requires running the `PURGE` command, see the [deletion vector blog post](https://delta.io/blog/2023-07-05-deletion-vectors/) for more information.
+
 ## Conclusion
 
-Delta Lake makes it easy for you to remove rows of data from your Delta table. The Delta Lake delete operation is executed efficiently because it only rewrites the minimal subset of files.
+Delta Lake makes it easy for you to remove rows of data from your Delta table. The Delta Lake delete operation is executed efficiently because it only rewrites the minimal subset of files. When deletion vectors are enabled, the delete operations run even faster.
 
 Delta Lake delete operations are ACID transactions that keep your Delta table in a usable state, even while the delete transaction is being performed.
 
 Delete operations are a real pain to run on data lakes. You need to write a bunch of custom code, suffer from table downtime, and run the risk of making a mistake and losing data. Delta Lakes are much better for delete operations because they’re reliable and don’t require manual work.
+
+See this blog post on [Delta Lake vs. Parquet](https://delta.io/blog/delta-lake-vs-parquet-comparison/) to learn more about the advantages of Delta Lake compared to data lakes.

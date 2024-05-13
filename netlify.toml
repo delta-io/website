@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/blog/2023-01-03-delta-lake-vacuum-command"
+  to = "/blog/remove-files-delta-lake-vacuum-command"
+  status = 301
+  force = false

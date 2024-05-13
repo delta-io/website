@@ -3,14 +3,14 @@ title: Getting Started with Delta Lake
 width: full
 ---
 
-This guide helps you quickly explore the main features of Delta Lake. It provides code snippets that show how to read from and write to Delta tables from interactive, batch, and streaming queries.
+This guide helps you quickly explore the [main features](https://docs.delta.io/latest/delta-intro.html) of Delta Lake. It provides code snippets that show how to read from and write to Delta tables from interactive, batch, and streaming queries. It also demonstrates table updates and time travel.
 
 ## Set up Apache Spark with Delta Lake
 
 Follow these instructions to set up Delta Lake with Spark. You can run the steps in this guide on your local machine in the following two ways:
 
 1. Run interactively: Start the Spark shell (Scala or Python) with Delta Lake and run the code snippets interactively in the shell.
-2. Run as a project: Set up a Maven or SBT project (Scala or Java) with Delta Lake, copy the code snippets into a source file, and run the project. Alternatively, you can use the [examples provided in the Github repository](https://github.com/delta-io/delta/tree/master/examples).
+2. Run as a project: Set up a Maven or SBT project (Scala or Java) with Delta Lake, copy the code snippets into a source file, and run the project. Alternatively, you can use the [examples provided in the GitHub repository](https://github.com/delta-io/delta/tree/master/examples).
 
 ### Set up interactive shell
 
@@ -210,3 +210,12 @@ stream2 = spark.readStream.format("delta") \
   .writeStream.format("console") \
   .start()
 ```
+
+## Next Steps
+
+Here are some further resources for learning more about Delta Lake:
+
+- [Delta FAQ](https://docs.delta.io/latest/delta-faq.html) for answers to common questions about Delta Lake
+- [Tutorials](https://delta.io/learn/tutorials/) for video tutorials about Delta Lake
+- [Documentation—Batch Reading and Writing](https://docs.delta.io/latest/delta-batch.html) for detailed documentation on table batch reads and writes
+- [Examples](https://github.com/delta-io/delta/tree/master/examples) for Delta Lake usage examples

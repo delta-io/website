@@ -9,7 +9,9 @@ import ContributeSection from "src/components/pages/community/ContributeSection"
 import ContributeToDeltaSection from "src/components/pages/community/ContributeToDeltaSection";
 import CurrentCommittersSection from "src/components/pages/community/CurrentCommittersSection";
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
-import MaintainerProfileSection from "src/components/pages/community/MaintainerProfile";
+import BookDownload from "src/components/BookDownload";
+import ArticleVideo from "src/components/ArticleVideo";
+import EventsList from "src/components/EventsList";
 
 const CommunityPage = () => (
   <PageLayout>
@@ -21,8 +23,11 @@ const CommunityPage = () => (
     />
     <LatestEventsSectionYoutube />
     <TwitchSection />
+    <EventsList />
     <ContributeSection />
-    <MaintainerProfileSection />
+    <ArticleVideo />
+    {/*   <MaintainerProfileSection /> */}
+    <BookDownload />
     <CurrentCommittersSection />
     <ContributeToDeltaSection />
     <ProjectGovernanceSection />

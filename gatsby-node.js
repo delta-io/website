@@ -48,6 +48,47 @@ const getSectionLists = async () => {
   return response.data.items;
 };
 
+// get all playlists from youtube
+const getPlaylistAllItems = async (
+  playlistId,
+  playlistTitle,
+  playListDescription
+) => {
+  const playlistItemsURL = `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet,contentDetails&maxResults=50&playlistId=${playlistId}&key=${process.env.YOUTUBE_API_KEY}`;
+  try {
+    const response = await axios.get(playlistItemsURL);
+    return {
+      playlistId,
+      playlistTitle,
+      playlistDescription: playListDescription,
+      videoCollection: response.data.items.map((item) => {
+        const { thumbnails } = item.snippet;
+        const highThumbnail = thumbnails &&
+          thumbnails.high && {
+            height: thumbnails.high.height,
+            url: thumbnails.high.url,
+            width: thumbnails.high.width,
+          };
+
+        return {
+          description: item.snippet.description,
+          id: item.snippet.resourceId.videoId,
+          playlistId,
+          publishedAt: item.snippet.publishedAt,
+          title: item.snippet.title,
+          url: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
+          thumbnail: highThumbnail ? { high: highThumbnail } : null,
+          videoId: item.snippet.resourceId.videoId,
+        };
+      }),
+    };
+  } catch (error) {
+    console.error("Error while retrieving a video playlist: ", error);
+    return null;
+  }
+};
+//
+
 // Helpers
 
 const reduceArrItems = (collection) =>
@@ -84,9 +125,9 @@ const matchedArrByPlaylistId = (arr1, arr2) => {
 };
 
 const createListIdForEachSection = async () => {
-  const list = await getSectionLists();
+  const playlistsDividedBySection = await getSectionLists();
 
-  const arr = list
+  const arr = playlistsDividedBySection
     ?.filter((el) => el.contentDetails)
     .map((item) => ({
       type: item.snippet.type,
@@ -98,6 +139,7 @@ const createListIdForEachSection = async () => {
     .filter((item) => item.sectionTitle === "Techniques and Tutorials")
     .map((el) => el.playlists)
     .flat();
+
   const videosPlaylist = arr
     .filter((el) => el.type === "singleplaylist")
     .map((item) => item.playlists)
@@ -110,9 +152,19 @@ const createListIdForEachSection = async () => {
 };
 
 const dataForSeparatedSection = async (playListsAll, playlistType) => {
-  const promisesList = playlistType.map((playlistId) =>
-    videoListByPlayListId(playlistId)
-  );
+  // if we do not have dividing for section and do not have playlistType
+
+  let promisesList;
+  if (playlistType.length > 0) {
+    promisesList = playlistType.map((playlistId) =>
+      videoListByPlayListId(playlistId)
+    );
+  } else {
+    promisesList = playListsAll
+      .map((item) => item.playlistId)
+      .map((playlistId) => videoListByPlayListId(playlistId));
+  }
+
   const [...data] = await Promise.all(promisesList);
 
   const collectionVideos = data.map((item) => item.data.items);
@@ -127,7 +179,6 @@ const dataForSeparatedSection = async (playListsAll, playlistType) => {
     playlistId: el[0]?.playlistId,
     videoCollection: [...el],
   }));
-
   const resultListForNodes = matchedArrByPlaylistId(
     playListsAll,
     createArrWithPlaylistId
@@ -140,13 +191,13 @@ const dataForSeparatedSection = async (playListsAll, playlistType) => {
 
 const getVideoListPromise = async () => {
   const playListsAll = await createPlayList();
-
   const playlistForSection = await createListIdForEachSection();
 
   const videosList = dataForSeparatedSection(
     playListsAll,
     playlistForSection.videosPlaylist
   );
+
   const tutorialsList = dataForSeparatedSection(
     playListsAll,
     playlistForSection.tutorialPlaylists
@@ -246,6 +297,30 @@ exports.sourceNodes = async ({
     createContentDigest,
     listName: "Meetings",
   });
+
+  const playlists = await playListsByChanelId(YOUTUBE_CHANNEL_ID);
+
+  const processPlaylist = async (playlist) => {
+    const playlistData = await getPlaylistAllItems(
+      playlist.id,
+      playlist.snippet.title,
+      playlist.snippet.description
+    );
+
+    if (playlistData) {
+      createNode({
+        ...playlistData,
+        id: createNodeId(`playlist-${playlistData.playlistId}`),
+        internal: {
+          type: "YoutubePlaylist",
+          content: JSON.stringify(playlistData),
+          contentDigest: createContentDigest(playlistData),
+        },
+      });
+    }
+  };
+
+  await Promise.all(playlists.map(processPlaylist));
 };
 
 const getMdxTemplatePath = (templateName = "default") =>
