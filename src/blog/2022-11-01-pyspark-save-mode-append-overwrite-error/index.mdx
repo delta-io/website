@@ -3,6 +3,7 @@ title: Why PySpark append and overwrite write operations are safer in Delta Lake
 description: This post shows you why PySpark overwrite operations are safer with Delta Lake and how the different save mode operations are implemented under the hood.
 thumbnail: ./thumbnail.png
 author: Matthew Powers
+date: 2022-11-01
 ---
 
 This post explains the `append` and `overwrite` PySpark [save mode](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.mode.html) write operations and how they’re physically implemented in Delta tables. You’ll see how these operations are implemented differently for Parquet tables and learn why the Delta Lake implementation is superior. You’ll also learn about how the PySpark `errorifexists` and `ignore` save mode write operations are implemented with Delta Lake.

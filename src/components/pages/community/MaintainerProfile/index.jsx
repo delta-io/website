@@ -4,7 +4,7 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import profileImg from "./gerhard-brueckl.jpg";
+import profileImg from "./Tyler-Croy-min.jpg";
 
 const QuoteWrapper = styled.div`
   padding: xxxl;
@@ -37,34 +37,40 @@ const TitleWrapper = styled(TypographyContainer)`
   font-size: 1.5rem;
 `;
 
+const currentContributor = {
+  name: "R. Tyler Croy",
+  avatar: profileImg,
+  profile: "/profiles/tyler-croy",
+  occupation: "Lead the Platform Engineering organization at Scribd",
+  quote:
+    "From my perspective, it’s only the beginning with delta-rs. Delta Lake is a deceptively simple technology" +
+    " with tremendous potential across the data platform.",
+};
+
 const profileMaintainer = () => (
   <Section background="white" centerHeader padding="xl">
     <br />
     <h1>
-      <center>Contributor of the Month</center>
+      <center>Featured Contributor</center>
     </h1>
 
-    <Link href="/profiles/gerhard-brueckl" muted>
+    <Link href={currentContributor.profile} muted>
       <Section background="white" padding="xl">
         <center>
           <Grid columns={{ xs: 1, sm: 1, md: 4 }} gutter="xl">
             <ColumnWrapper>
-              <img src={profileImg} alt="Gerhard Brueckl" />
+              <img
+                src={currentContributor.avatar}
+                alt={currentContributor.name}
+              />
             </ColumnWrapper>
             <ColumnWrapper style={{ gridColumn: "span 3" }}>
-              <NameWrapper>Gerhard Brueckl</NameWrapper>
-              <TitleWrapper>
-                Lead Data Engineer / Cloud Solution Architect at{" "}
-                <a href="https://paiqo.com/en/">paiqo GmbH</a>
-              </TitleWrapper>
-              <Typography variant="p">
+              <NameWrapper>{currentContributor.name}</NameWrapper>
+              <TitleWrapper>{currentContributor.occupation}</TitleWrapper>
+              <Typography as="span">
                 <br />
                 <QuoteWrapper>
-                  <em>
-                    &#34;Contributing to something you use on a daily basis not
-                    only makes you learn the topic in depth but also further
-                    drives it and thereby also your success.&#34;
-                  </em>
+                  <em>&#34;{currentContributor.quote}&#34;</em>
                   <br />
                 </QuoteWrapper>
               </Typography>

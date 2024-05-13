@@ -3,6 +3,7 @@ title: How to Create Delta Lake tables
 description: This post shows you how to create Delta Lake tables with Python, SQL, and PySpark.
 thumbnail: ./thumbnail.png
 author: Matthew Powers
+date: 2022-10-25
 ---
 
 There are a variety of easy ways to create Delta Lake tables. This post explains how to do so with SQL, PySpark, and other technologies. It’ll also show you how to create Delta Lake tables from data stored in CSV and Parquet files.
@@ -214,7 +215,7 @@ The open nature of Delta Lake allows for a robust connector ecosystem. This mean
 
 - The [delta-rs](https://github.com/delta-io/delta-rs) Python bindings let you create a Delta Lake from a pandas DataFrame.
 - [kafka-delta-ingest](https://github.com/delta-io/kafka-delta-ingest) is a highly efficient way to stream data from Kafka into a Delta Lake.
-- The [connectors](https://github.com/delta-io/connectors) repo contains Delta Standalone, a Java library that doesn’t depend on Spark, which allows for Java-based connectors like Hive and Flink.
+- The [connectors](https://github.com/delta-io/delta/tree/master/connectors) repo contains Delta Standalone, a Java library that doesn’t depend on Spark, which allows for Java-based connectors like Hive and Flink.
 
 The Delta Lake community continues to grow the connector ecosystem, with many developers building connectors for their internal projects and graciously donating them. The Delta ecosystem is a friendly and productive place to contribute. Here’s some feedback from a new Delta Lake contributor after their first pull request was merged:
 

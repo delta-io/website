@@ -16,7 +16,7 @@ const committers = [
     name: "R. Tyler Croy",
     organization: "Scribd",
     areas: ["delta", "delta-rs", "kafka-delta-ingest"],
-    link: "",
+    link: "/profiles/tyler-croy",
   },
   {
     name: "Tathagata Das",
@@ -108,6 +108,10 @@ const CommittersTable = styled(Table)`
   margin: 0 auto;
 `;
 
+const TableWrap = styled.div`
+  overflow-x: auto;
+`;
+
 const CurrentCommittersSection = () => (
   <Section
     background={(theme) => theme.light.bg}
@@ -130,18 +134,20 @@ const CurrentCommittersSection = () => (
     centeredHeader
     padding="xxl"
   >
-    <CommittersTable
-      headers={[
-        { label: "Name", field: "name" },
-        { label: "Organziation", field: "organization" },
-        { label: "Focal Areas", field: "areas" },
-      ]}
-      data={committers.map((committer) => ({
-        ...committer,
-        key: committer.name,
-        areas: committer.areas.join(", "),
-      }))}
-    />
+    <TableWrap>
+      <CommittersTable
+        headers={[
+          { label: "Name", field: "name" },
+          { label: "Organziation", field: "organization" },
+          { label: "Focal Areas", field: "areas" },
+        ]}
+        data={committers.map((committer, i) => ({
+          ...committer,
+          key: committer.name + i,
+          areas: committer.areas.join(", "),
+        }))}
+      />
+    </TableWrap>
   </Section>
 );
 

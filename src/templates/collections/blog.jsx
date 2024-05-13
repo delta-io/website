@@ -18,13 +18,13 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;
     const { title, description, author, thumbnail } = frontmatter;
-    const { date, slug } = fields;
+    const { slug } = fields;
 
     return {
       title,
       description,
       url: slug,
-      date,
+      date: " ", // we want to hide dates in this view, this is the least intrusive way
       author,
       thumbnail,
     };
@@ -68,7 +68,7 @@ export const Head = ({ pageContext }) => {
 export const pageQuery = graphql`
   query {
     allMdx(
-      sort: { fields: [fields___date], order: DESC }
+      sort: { fields: [frontmatter___date], order: DESC }
       filter: { fields: { pageType: { eq: "blog" } } }
     ) {
       edges {
@@ -82,9 +82,9 @@ export const pageQuery = graphql`
                 gatsbyImageData
               }
             }
+            date(formatString: "MMMM D, YYYY")
           }
           fields {
-            date(formatString: "MMMM D, YYYY")
             slug
           }
         }
