@@ -2,8 +2,8 @@
 title: Pros and cons of Hive-style partitioning
 description: This post discusses the pros and cons of Hive-style partioning.
 thumbnail: ./thumbnail.png
-author: Matthew Powers
-date: 2023-09-27
+author: Matthew Powers, Martin Bode
+date: 2024-04-24
 ---
 
 This blog post explains when Hive-style partitioning is a useful data management technique and why it can have downsides for both data lake and Lakehouse storage system users.
@@ -158,6 +158,185 @@ You can bypass these concurrency errors on a Hive-style partitioned table by run
 - `DELETE table WHERE date < '2010-01-01'`
 
 Hive-style partitioning allows users to bypass concurrency issues in certain circumstances, but as we’ve previously mentioned, separating data into subdirectories isn’t strictly necessary to get a full division of data. Logical partitioning (separating data into separate files and recording this in the transaction log) is sufficient and physical partitioning (separate data into separate folders) isn’t strictly necessary.
+
+## Using a generated column to partition time series data
+
+[4]: https://docs.delta.io/latest/best-practices.html#choose-the-right-partition-column
+[6]: https://en.wikipedia.org/wiki/Data_binning
+[7]: https://spark.apache.org/docs/latest/api/sql/#date_trunc
+[8]: https://delta.io/blog/2023-04-12-delta-lake-generated-columns
+[9]: https://docs.delta.io/latest/delta-batch.html#-deltausegeneratedcolumns
+[10]: https://github.com/delta-io/delta/releases/tag/v2.3.0
+
+### 🛑 anti-pattern: partition by non-binned `TimestampType` column
+
+When working with transactional data / events, data usually contain some kind of timestamp attribute. Analysis of the data often focuses on the _most recent data_, which is why using the timestamp as partition column might sound promising.
+Problem here is that partitioning by a high cardinality column like `TimestampType` column will most certainly lead to over-partitioning, creating an abundance of partitions containing only little data.
+
+```python
+from pyspark.sql import functions as F
+from pyspark.sql import types as T
+from datetime import datetime
+
+schema = T.StructType([
+    T.StructField('event_id', T.LongType()),
+    T.StructField('event_timestamp', T.TimestampType()),
+    T.StructField('event_payload', T.StringType()),
+])
+
+data = [
+    (            1, datetime.fromisoformat("1990-06-15 09:01:01"), "Australia"),
+    (            2, datetime.fromisoformat("1990-06-15 09:01:02"), "Botswana"),
+    (    1_000_000, datetime.fromisoformat("1990-12-31 12:34:56"), "Costa Rica"),
+    (1_000_000_000, datetime.fromisoformat("2000-01-10 12:34:56"), "Denmark"),
+]
+
+df = spark.createDataFrame(data, schema)
+```
+
+```python
+(
+    df
+    .coalesce(1) # only for demonstration purposes, so per partition, one file is written
+    .write
+    .format("delta")
+    .mode("overwrite")
+    .partitionBy("event_timestamp")
+    .saveAsTable("events")
+)
+```
+
+```
+events
+├── _delta_log/
+│   └── 00000000000000000000.json
+├── event_timestamp=1990-06-15 09:01:01/
+│   └── part-00001-77330743-946f-4f6a-830e-37a575d5234f.c000.snappy.parquet (1 rows)
+├── event_timestamp=1990-06-15 09:01:02/
+│   └── part-00003-d4e51376-087d-45fb-b472-d392c3991dab.c000.snappy.parquet (1 rows)
+├── event_timestamp=1990-12-31 12:34:56/
+│   └── part-00005-0ca14c69-bdcb-4233-b075-da74bc8b0f97.c000.snappy.parquet (1 rows)
+└── event_timestamp=2000-01-10 12:34:56/
+    └── part-00007-66f59e03-5c5c-4b7f-923b-3059f928e06f.c000.snappy.parquet (1 rows)
+```
+
+As shown here, all the rows will end up in a separate partition even when event 1 and 2 happened nearly at the same time.
+
+### ✅ partition by _binned_ `TimestampType` column (using generation expression)
+
+A better approach is, to ["bin"][6] the `TimestampType` values to a _coarser_ granularity and thereby reduce the cardinality of values (e.g., hourly, daily, yearly).
+This can easily be done by a [**generated column**][8], making use of the [`DATE_TRUNC`][7] function.
+The advantage of a generated column here is that when appending data to the table after its creation, it will be calculated from the reference column automatically during insert (and the column does not need to be contained in the append-`DataFrame`). Moreover, since [Delta 2.3][10], when querying the table with a predicate on a column **referenced by the partition column's generation expression** will also support [partition pruning][9]. When executing `SELECT * FROM events WHERE event_timestamp = '1990-06-15 09:01:01'` Delta will tell the engine only to read partition `event_timestamp_bin=1990-01-01` initially and then filter for `event_timestamp = '1990-06-15 09:01:01'` in the following example.
+
+```python
+generation_expression = "DATE_TRUNC('YEAR', event_timestamp)"
+(
+    df
+    .withColumn("event_timestamp_bin", F.expr(generation_expression)) # generated a new column that contains the desired timestamp granularity
+    .withMetadata("event_timestamp_bin", {"delta.generationExpression": generation_expression}) # this will tell Delta that this is a generated column
+    .coalesce(1) # only for demonstration purposes, so per partition, one file is written
+    .write
+    .format("delta")
+    .mode("overwrite")
+    .partitionBy("event_timestamp_bin")
+    .saveAsTable("events")
+)
+```
+
+```
+events
+├── _delta_log/
+│   └── 00000000000000000000.json
+├── event_timestamp_bin=1990-01-01 00:00:00/
+│   └── part-00000-0ba92f13-29ee-410b-8943-298fa8e86f4e.c000.snappy.parquet (3 rows)
+└── event_timestamp_bin=2000-01-01 00:00:00/
+    └── part-00000-57b8e78f-a752-4285-8cab-25be3aa632f4.c000.snappy.parquet (1 rows)
+```
+
+Here it is visible, that three rows will be stored in the same partition (no more over-partitioning).
+
+<details>
+<summary>See partition pruning in action</summary>
+
+```python
+spark.table("events").filter(F.col("event_timestamp_bin") == '1990-01-01').explain()
+```
+
+```
+== Physical Plan ==
+*(1) ColumnarToRow
++- FileScan parquet spark_catalog.delta_blog.events[event_id#4761L,event_timestamp#4762,event_payload#4763,event_timestamp_bin#4764]
+    Batched: true,
+    DataFilters: [],
+    Format: Parquet,
+    Location: PreparedDeltaFileIndex(1 paths)[dbfs:/user/hive/warehouse/delta_blog.db/events],
+    PartitionFilters: [isnotnull(event_timestamp_bin#4764), (event_timestamp_bin#4764 = 1990-01-01 00:00:00)],
+    PushedFilters: [],
+    ReadSchema: struct<event_id:bigint,event_timestamp:timestamp,event_payload:string>
+```
+
+Note `PartitionFilters`
+
+```python
+spark.table("events").filter(F.col("event_timestamp") == '1990-06-15 09:01:02').explain()
+```
+
+```
+== Physical Plan ==
+*(1) Filter (isnotnull(event_timestamp#4916) AND (event_timestamp#4916 = 1990-06-15 09:01:02))
++- *(1) ColumnarToRow
+   +- FileScan parquet spark_catalog.delta_blog.events[event_id#4915L,event_timestamp#4916,event_payload#4917,event_timestamp_bin#4918]
+    Batched: true,
+    DataFilters: [isnotnull(event_timestamp#4916), (event_timestamp#4916 = 1990-06-15 09:01:02)],
+    Format: Parquet,
+    Location: PreparedDeltaFileIndex(1 paths)[dbfs:/user/hive/warehouse/delta_blog.db/events],
+    PartitionFilters: [((event_timestamp_bin#4918 = date_trunc(MONTH, 1990-06-15 09:01:02, Some(Etc/UTC))) OR isnull((e..., PushedFilters: [IsNotNull(event_timestamp), EqualTo(event_timestamp,1990-06-15 09:01:02.0)],
+    ReadSchema: struct<event_id:bigint,event_timestamp:timestamp,event_payload:string>
+```
+
+Note `PartitionFilters`
+
+</details>
+
+### 🔀 Partition evolution: change binning granularity of partition columns
+
+Estimating the _correct_ partition granularity upfront is very difficult. The rule of thumb here is that there should be [at least 1 GB of data in each partition][4].
+Therefore, ending up in a situation where the table is either over-partitioned (many partitions containing only little data) or under-partitioned (few partitions containing large data) is rather common.
+To **change the granularity** of the partition afterward is easy with Delta but comes at the cost of **rewriting the whole table**.
+
+In this example, the Delta table (previously binned by _year_) is read; the corresponding `DataFrame` is transformed (so that the partition values are binned by _month_) and used to simply overwrite the Delta table in-place. Due to Delta's versioning / time travel functionality, this will create a new version of the table with the changed generation expression. So there is no need to create a temporary table and swap it afterward.
+
+```python
+spark.table("events")
+
+new_generation_expression = "DATE_TRUNC('MONTH', event_timestamp)"
+(
+    spark.table("events")
+    .withColumn("event_timestamp_bin", F.expr(new_generation_expression))
+    .withMetadata("event_timestamp_bin", {"delta.generationExpression": new_generation_expression})
+    .coalesce(1) # only for demonstration purposes, so per partition, one file is written
+    .write
+    .format("delta")
+    .mode("overwrite")
+    .option("overwriteSchema", "True") # this is required, because we change the generation expression that is considered part of the schema
+    .partitionBy("event_timestamp_bin")
+    .saveAsTable("events")
+)
+```
+
+```
+events
+├── _delta_log/
+│   └── 00000000000000000000.json (old generation expression / partitioning scheme)
+│   └── 00000000000000000001.json (new generation expression / partitioning scheme)
+├── event_timestamp_bin=1990-01-01 00:00:00/
+├── event_timestamp_bin=1990-06-01 00:00:00/
+│   └── part-00000-cc206daa-ed02-4277-a340-e73b103f1cb3.c000.snappy.parquet (2 rows)
+├── event_timestamp_bin=1990-12-01 00:00:00/
+│   └── part-00000-886aa276-3211-4c45-8a5a-6d138809b39b.c000.snappy.parquet (1 rows)
+└── event_timestamp_bin=2000-01-01 00:00:00/
+    └── part-00000-70d65a32-e9cd-4503-8822-3fe1a7e36586.c000.snappy.parquet (1 rows)
+```
 
 ## Conclusion
 
