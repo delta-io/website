@@ -1,0 +1,99 @@
+---
+title: Delta Lake vs Data Lake: What's the Difference?
+description: Understand the difference between Delta Lake and a data lake
+thumbnail: ./
+author: Avril Aysha
+date: 2024-05-15
+---
+
+This article defines Delta Lake and Data Lake and explains the differences you should know when deciding how to store your data.
+
+A Data Lake is a central repository to store and process your raw data, no matter the size or format. Data lakes give you flexibility at the cost of performance and reliability.
+
+Delta Lake is an open-source table format for data storage. Delta Lake improves data storage by supporting ACID transactions, high-performance query optimizations, schema evolution, data versioning and many other features.
+
+Data lakes can easily become data swamps. Dumping lots of different file formats and data types together in one location without proper versioning or schema enforcement can get messy very quickly. Delta Lake helps you solve these problems and keep your flexibility without compromising on performance and reliability.
+
+> “Data Lake” is a general term that describes a data storage methodology which can exist anywhere you can store hybrid data formats. For example, you might have a data lake containing Parquet, JSON and unstructured text files located in an AWS S3 bucket.
+
+> “Delta Lake” is a specific open-source technology. You don’t have a Delta Lake; you use Delta Lake to store your data in Delta tables. Delta Lake makes your data lake more secure and performant. This is often referred to as data lakehouse architecture.
+
+Delta Lake is an example of an open table format. This article will compare a data lake with Delta Lake. If your data lake includes non-table data, you will need to bring it into a table (e.g. by vectorizing free text, adding JSON columns, or using DataFrame libraries with multimodal dtype support). If you cannot bring your data into a table format you may need to look at technologies in addition to Delta Lake.
+
+Let’s take a closer look at how this works.
+
+## What is a Data Lake?
+
+Data lakes are central repositories to store and process your raw data, no matter the size or format. The term “Data Lake” comes from the analogy of a lake (“central repository”) which has many different rivers (“data streams”) flowing into it. These data streams all end up in one place and are co-located without strict separation or pre-defined structuring.
+
+![](image1.png)
+
+Data lakes became popular as a reaction to data warehouses, which require your data to be in a particular structured format. Data warehouses are optimized for performance on specific queries that you define in advance. They give you speed at the cost of flexibility. They also often store your data in proprietary formats, so you run the risk of vendor lock-in.
+
+Instead, data lakes are optimized for flexibility. You can store your data in any format you like and run many different types of analyses on your data without expensive pre-processing.
+
+A Data Lake gives you:
+
+- Free data movement from multiple sources, in its original format, possibly in real-time
+- Cataloging and indexing to give you an overview of what kind of data is in your data lake
+- Access from different teams and roles for using the data downstream.
+- The ability to perform data science and machine learning analyses.
+
+A local directory of Parquet files can be considered a data lake. Or an S3 bucket containing many different file types with data formatted as tables, JSON, free text, images, video, etc.
+
+This is what a data lake of Parquet files can look like on disk:
+
+    ```
+    your_data_lake/
+    file1.parquet
+    file2.parquet
+    …
+    fileN.parquet
+    ```
+
+## Data Lake --> Data Swamp
+
+Data Lakes are great because they give you lots of flexibility and cheap storage. Multiple data formats from multiple sources can all be stored efficiently in a single location.
+
+But when your data scales, this flexibility can become a problem. It can be difficult to keep track of file versions, data schemas or to roll back an accidental data operation. Data lakes are also easily corruptible, which makes them unreadable without manual cleanup.
+
+Your data lake can easily turn into a data swamp. This will cause incorrect analyses and expensive downtime for developers who need to use the data downstream.
+
+![](image2.gif)
+
+## What is Delta Lake?
+
+Delta Lake is an open-source table format for storing data at scale. It improves the reliability, performance and developer experience of regular data lakes by giving you:
+
+- ACID transactions for reliable reads and writes
+- High-performance query optimization via file-skipping
+- Data versioning and time travel
+- Schema enforcement and evolution
+- Flexible data operations like dropping/renaming columns, deleting rows and DML operations
+
+Delta Lake gives you the flexibility and low storage costs of a data lake with the reliability and performance of the data warehouse. You can run Delta Lake on top of your existing data lake infrastructure. Delta Lake tables can be used to build the Data Lakehouse architecture, [as described in this paper](https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf).
+
+Delta Lake stores your data in Parquet files under the hood. Parquet files are a popular file format for data lakes. But Parquet files [do not have functionality](https://delta.io/blog/delta-lake-vs-parquet-comparison/) like transaction logs, Z-ordering and time travel.
+
+Delta Lake takes your existing Parquet data lake and makes it more reliable and performant by:
+
+1. Storing all the metadata in a separate transaction log
+2. Tracking all the changes to your data in this transaction log
+3. Organizing your data for maximum query performance
+
+Here’s what a Delta Lake directory looks like on disk:
+
+    ```
+    your_delta_table/		<-- 	this is the top-level table directory
+    _delta_log			    <-- 	this is the transaction log which tracks
+        00.json				        all the changes to your data
+        01.json
+        …
+        n.json
+    file1.parquet			<-- 	these are your Delta table partitions,
+    file2.parquet				    ordered for maximum query performance
+    …
+    fileN.parquet
+    ```
+
+Let’s take a closer look at each of the Delta Lake features mentioned above.
