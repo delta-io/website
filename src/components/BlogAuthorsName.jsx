@@ -46,7 +46,7 @@ export const AUTHORS = {
   },
   "Avril Aysha": {
     profile: "https://www.linkedin.com/in/avrilaysha/",
-    avatar: MARTIN_BODE_IMG,
+    avatar: AVRIL_AYSHA_IMG,
   },
 };
 
