@@ -8,11 +8,12 @@ import chartImg from "./chart2.png";
 
 const TitleWrapper = styled(TypographyContainer)`
   font-size: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  margin-top: 1rem;
 `;
 
 const twitchSection = () => (
-  <Section background="white" padding="xl">
+  <Section background={(theme) => theme.light.bg} padding="xl">
     <center>
       <TitleWrapper>
         Because of the contributions from our amazing community, Delta Lake is
