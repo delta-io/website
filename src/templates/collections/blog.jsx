@@ -2,13 +2,13 @@ import { graphql } from "gatsby";
 import * as React from "react";
 import SEO from "src/components/SEO";
 import PageLayout from "src/components/PageLayout";
-import Pagination from "src/components/Pagination";
 import CardDataList from "src/components/CardDataList";
 import Section from "src/components/Section";
+import FilteredPosts from "src/components/FilterPosts";
 
 const BlogCollectionTemplate = ({ data, pageContext }) => {
-  const { hasPreviousPage, hasNextPage, currentPage, featuredCount } =
-    pageContext;
+  const [filter, setFilter] = React.useState("");
+  const { featuredCount } = pageContext;
   const { edges } = data.allMdx;
 
   if (!edges.length) {
@@ -18,16 +18,24 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
   const cards = edges.map(({ node }) => {
     const { frontmatter = {}, fields = {} } = node;
     const { title, description, author, thumbnail } = frontmatter;
-    const { date, slug } = fields;
+    const { slug } = fields;
 
     return {
       title,
       description,
       url: slug,
-      meta: `${date} by ${author}`,
+      date: " ", // we want to hide dates in this view, this is the least intrusive way
+      author,
       thumbnail,
     };
   });
+
+  const handleFilter = (e) => setFilter(e.target.value);
+
+  const normalizedStr = (query) =>
+    query.toLowerCase().includes(filter.toLowerCase());
+
+  const filteredCards = cards.filter(({ title }) => normalizedStr(title));
 
   return (
     <PageLayout>
@@ -37,19 +45,14 @@ const BlogCollectionTemplate = ({ data, pageContext }) => {
         primary
         background="white"
       >
+        <FilteredPosts onChange={handleFilter} cards={filteredCards} />
         <CardDataList
-          cards={cards}
+          cards={filteredCards}
           showFeatured={featuredCount > 0}
           columns={{ xs: 1, sm: 2, lg: 3 }}
           density="relaxed"
           thumbnailRatio={[16, 9]}
           clampDescriptionLines={2}
-        />
-        <Pagination
-          hasPreviousPage={hasPreviousPage}
-          hasNextPage={hasNextPage}
-          currentPage={currentPage}
-          basePath="/blog"
         />
       </Section>
     </PageLayout>
@@ -63,12 +66,10 @@ export const Head = ({ pageContext }) => {
 };
 
 export const pageQuery = graphql`
-  query ($skip: Int!, $limit: Int!) {
+  query {
     allMdx(
-      sort: { fields: [fields___date], order: DESC }
+      sort: { fields: [frontmatter___date], order: DESC }
       filter: { fields: { pageType: { eq: "blog" } } }
-      limit: $limit
-      skip: $skip
     ) {
       edges {
         node {
@@ -78,12 +79,12 @@ export const pageQuery = graphql`
             author
             thumbnail {
               childImageSharp {
-                gatsbyImageData(width: 700, height: 394)
+                gatsbyImageData
               }
             }
+            date(formatString: "MMMM D, YYYY")
           }
           fields {
-            date(formatString: "MMMM D, YYYY")
             slug
           }
         }

@@ -5,9 +5,9 @@ import Link from "src/components/Link";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import profileImg from "./florian-valeye.jpeg";
-import d3l2Img from "./d3l2-florian-valeye.jpg";
-import blogImg from "./subscriptions-on-a-delta-lake.png";
+import profileImg from "src/images/florian-valeye/florian-valeye.jpeg";
+import d3l2Img from "src/images/florian-valeye/d3l2-florian-valeye.jpg";
+import blogImg from "src/images/florian-valeye/subscriptions-on-a-delta-lake.png";
 
 const QuoteWrapper = styled.div`
   padding: xxxl;
@@ -47,7 +47,7 @@ const TitleWrapper = styled(TypographyContainer)`
   font-size: 1.5rem;
 `;
 
-const profileFlorianValeye = () => (
+const ProfileFlorianValeye = () => (
   <PageLayout>
     <Section background="white" padding="xl">
       <center>
@@ -175,4 +175,4 @@ const profileFlorianValeye = () => (
   </PageLayout>
 );
 
-export default profileFlorianValeye;
+export default ProfileFlorianValeye;
