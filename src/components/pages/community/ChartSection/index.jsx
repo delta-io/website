@@ -1,5 +1,4 @@
 import * as React from "react";
-import Grid from "src/components/Grid";
 import Link from "src/components/Link";
 import Section from "src/components/Section";
 import { TypographyContainer } from "src/components/Typography";
