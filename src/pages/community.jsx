@@ -5,13 +5,13 @@ import AnnouncementSection from "src/components/pages/index/AnnouncementSection"
 import CommunitySection from "src/components/pages/shared/CommunitySection";
 import LatestEventsSectionYoutube from "src/components/pages/community/LatestEventsSectionYoutube";
 import TwitchSection from "src/components/pages/community/TwitchSection";
+import ChartSection from "src/components/pages/community/ChartSection";
 import ContributeSection from "src/components/pages/community/ContributeSection";
 import ContributeToDeltaSection from "src/components/pages/community/ContributeToDeltaSection";
 import CurrentCommittersSection from "src/components/pages/community/CurrentCommittersSection";
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
 import BookDownload from "src/components/BookDownload";
 import ArticleVideo from "src/components/ArticleVideo";
-import EventsList from "src/components/EventsList";
 
 const CommunityPage = () => (
   <PageLayout>
@@ -23,7 +23,7 @@ const CommunityPage = () => (
     />
     <LatestEventsSectionYoutube />
     <TwitchSection />
-    <EventsList />
+    <ChartSection />
     <ContributeSection />
     <ArticleVideo />
     {/*   <MaintainerProfileSection /> */}
