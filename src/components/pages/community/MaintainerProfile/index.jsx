@@ -4,7 +4,7 @@ import Grid from "src/components/Grid";
 import Section from "src/components/Section";
 import Typography, { TypographyContainer } from "src/components/Typography";
 import styled from "styled-components";
-import profileImg from "./florian-valeye.jpeg";
+import profileImg from "./Tyler-Croy-min.jpg";
 
 const QuoteWrapper = styled.div`
   padding: xxxl;
@@ -20,6 +20,7 @@ const ColumnWrapper = styled(TypographyContainer)`
   vertical-align: top;
   margin: 0;
   padding: 0;
+
   img {
     align: right;
     text-align: right;
@@ -36,39 +37,41 @@ const TitleWrapper = styled(TypographyContainer)`
   font-size: 1.5rem;
 `;
 
+const currentContributor = {
+  name: "R. Tyler Croy",
+  avatar: profileImg,
+  profile: "/profiles/tyler-croy",
+  occupation: "Lead the Platform Engineering organization at Scribd",
+  quote:
+    "From my perspective, it’s only the beginning with delta-rs. Delta Lake is a deceptively simple technology" +
+    " with tremendous potential across the data platform.",
+};
+
 const profileMaintainer = () => (
   <Section background="white" centerHeader padding="xl">
     <br />
     <h1>
-      <center>Contributor of the Month</center>
+      <center>Featured Contributor</center>
     </h1>
 
-    <Link href="/profiles/florian-valeye" muted>
+    <Link href={currentContributor.profile} muted>
       <Section background="white" padding="xl">
         <center>
           <Grid columns={{ xs: 1, sm: 1, md: 4 }} gutter="xl">
             <ColumnWrapper>
-              <img src={profileImg} alt="Florian Valeye" />
+              <img
+                src={currentContributor.avatar}
+                alt={currentContributor.name}
+              />
             </ColumnWrapper>
             <ColumnWrapper style={{ gridColumn: "span 3" }}>
-              <NameWrapper>Florian Valeye</NameWrapper>
-              <TitleWrapper>
-                Delta Lake Maintainer, Staff Data Engineer at Back Market
-              </TitleWrapper>
-              <Typography variant="p">
+              <NameWrapper>{currentContributor.name}</NameWrapper>
+              <TitleWrapper>{currentContributor.occupation}</TitleWrapper>
+              <Typography as="span">
                 <br />
                 <QuoteWrapper>
-                  <em>
-                    &#34;Contributing to open source is key to learning how to
-                    solve problems within worldwide, benevolent communities of
-                    people.&#34;
-                  </em>
+                  <em>&#34;{currentContributor.quote}&#34;</em>
                   <br />
-                  <br />
-                  Source: &nbsp;
-                  <Link href="https://project.linuxfoundation.org/hubfs/LF%20Research/2022%20Linux%20Foundation%20Annual%20Report.pdf?hsLang=en">
-                    Linux Foundation 2022 Annual Report
-                  </Link>
                 </QuoteWrapper>
               </Typography>
             </ColumnWrapper>
