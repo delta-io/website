@@ -15,6 +15,7 @@ This release includes many improvements and bug fixes, but we'd like to highligh
 - [Type widening](#type-widening): An easier way to handle schema updates when data changes
 - [Vacuum inventory support](#vacuum-inventory-support): Faster VACUUM operations for large tables
 - [Delta Kernel updates](#delta-kernel-updates): Time travel support, metadata read improvements, additional protocol support for the connector ecosystem and preview version of APIs to create and append data to Delta tables.
+- [Deletion Vectors read performance improvements](#deletion-vectors-read-performance-improvements): Faster Deletion Vectors read performance
 
 ## What’s new in Delta Lake 3.2?
 
@@ -29,11 +30,11 @@ We are pleased to announce the GA of [Liquid Clustering](https://docs.delta.io/3
 - Support for DESCRIBE DETAIL to inspect the clustering columns
 - Support for DeltaTable [clusterBy API](<https://docs.delta.io/3.2.0/api/scala/spark/io/delta/tables/DeltaTableBuilder.html#clusterBy(colNames:String*):io.delta.tables.DeltaTableBuilder>) in Scala and Python.
 
-Liquid Clustering is fully pluggable in Delta Lake, allowing the open-source community to contribute other other clustering algorithms. The default technique in Liquid Clustering uses [Hilbert Curve](https://en.wikipedia.org/wiki/Hilbert_curve), a continuous fractal space-filling curve as a multi-dimensional clustering technique, which significantly improves data skipping over `ZORDER`. We encourage and are looking for contributions of different clustering techniques.
+Liquid Clustering is fully pluggable in Delta Lake, allowing the open-source community to contribute to other clustering algorithms. The default technique in Liquid Clustering uses [Hilbert Curve](https://en.wikipedia.org/wiki/Hilbert_curve), a continuous fractal space-filling curve as a multi-dimensional clustering technique, which significantly improves data skipping over `ZORDER`. We encourage and are looking for contributions of different clustering techniques.
 
 ### Hudi write support in UniForm
 
-[Delta Universal Format](https://docs.delta.io/latest/delta-uniform.html) enables you to write a single copy of your data and make it available to any engine that supports [Delta Lake](https://delta.io/), [Iceberg](https://iceberg.apache.org/), and now in Delta 3.2., [Hudi](https://hudi.apache.org/). Delta automatically generates metadata needed for Hudi clients, so users don’t have to manage manual conversions to work across ecosystems. Now with Hudi support, Delta is the universal format, unifying all three open table formats.
+[Delta Universal Format](https://docs.delta.io/latest/delta-uniform.html) enables you to write a single copy of your data and make it available to any engine that supports [Delta Lake](https://delta.io/), [Iceberg](https://iceberg.apache.org/), and now in Delta 3.2, [Hudi](https://hudi.apache.org/). Delta automatically generates metadata needed for Hudi clients, so users don’t have to manage manual conversions to work across ecosystems. Now with Hudi support, Delta is the universal format, unifying all three open table formats.
 
 ### Type Widening
 
@@ -65,6 +66,18 @@ In this release, we also added a <strong><em>preview version</em></strong> of AP
 - Idempotently update the Delta table.
 
 The above functionality is available both for the partitioned and unpartitioned tables. Refer to the [examples](https://github.com/delta-io/delta/tree/branch-3.2/kernel/examples) for sample connector code to create and blind append data to the tables. We are still developing and evolving these APIs. Please give it a try and let us know your feedback.
+
+### Deletion Vectors read performance improvements
+
+We continue to improve the performance of merge-on-read with Deletion Vectors (DV).
+
+- We [improved](https://github.com/delta-io/delta/commit/be7183bef85feaebfc928d5f291c5a90246cde87) stability by [removing broadcasting of DV information to executors](https://github.com/delta-io/delta/commit/be7183bef85feaebfc928d5f291c5a90246cde87), which reduces drivers’ memory consumption, and prevents potential Driver OOM for very large Delta tables like 1TB+. This work also improves performance by saving us fixed broadcasting overhead in reading small Delta Tables.
+- We improved the performance of DV reads with filter queries by enabling [predicate pushdown and file splitting](https://github.com/delta-io/delta/pull/2982).
+- We benchmarked these improvements using [a real world workload](https://www.brooklyndata.co/ideas/2022/11/28/benchmarking-open-table-formats) that uses a combination.
+
+!["Performance chart linear scale"](./fg1.png)
+
+!["Performance chart log scale"](./fg2.png)
 
 ### Additional features
 
