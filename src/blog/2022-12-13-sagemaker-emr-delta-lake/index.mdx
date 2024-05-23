@@ -3,6 +3,7 @@ title: Building a more efficient data infrastructure for machine learning with O
 description: In this blog, we’ll explore how connecting Delta Lake, Amazon SageMaker Studio, and Amazon EMR can simplify the end-to-end workflow required to support data engineering and data science projects.
 thumbnail: ./thumbnail.png
 author: Vedant Jain, Denny Lee
+date: 2022-12-13
 ---
 
 <Info title="Guest authors" level="info">
@@ -17,7 +18,7 @@ Fortunately, there is a better way with a few native tools designed to help more
 
 ## What is Delta Lake?
 
-Before you can start to train your ML models, you first need to get all of your data into a single storage layer for ETL and sharing. One of the options for storing data in AWS is Delta Lake. Delta Lake is an open-source storage framework that enables building a Lakehouse architecture with compute engines, including Spark, PrestoDB, Flink, Trino, and Hive, and APIs for Scala, Java, Rust, Ruby, and Python.
+Before you can start to train your ML models, you first need to get all of your data into a single storage layer for ETL and sharing. One of the options for storing data in AWS is Delta Lake. Delta Lake is an open-source storage framework that enables building a Lakehouse architecture with compute engines, including Spark, PrestoDB, Flink, Trino, and Hive, and APIs for Scala, Java, Rust, and Python.
 
 The Delta Lake library enables reads and writes in open-source Apache Parquet file format, and provides capabilities like ACID transactions, scalable metadata handling, and unified streaming and batch data processing. Delta Lake offers a storage layer API that you can use to store data on top of an object-layer storage like Amazon Simple Storage Service (Amazon S3).
 

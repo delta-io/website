@@ -70,7 +70,7 @@ const Button = styled(Link)`
 
     return props.theme.fontSizes.primary;
   }};
-  white-space: nowrap;
+  /* white-space: nowrap;*/
   border: 1px solid ${(props) => getButtonColors(props).border};
 
   &:hover {

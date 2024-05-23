@@ -6,6 +6,8 @@ import MDX from "src/components/MDX";
 import { TypographyContainer } from "src/components/Typography";
 import Section from "src/components/Section";
 import styled from "styled-components";
+import BlogAuthorsName from "src/components/BlogAuthorsName";
+import CallToActions from "src/components/CallToActions";
 import OneColumnLayout from "./components/OneColumnLayout";
 
 const PostMeta = styled.div`
@@ -15,12 +17,12 @@ const PostMeta = styled.div`
 `;
 
 const BlogMdxTemplate = ({ data, children }) => {
-  const { frontmatter = {}, fields = {} } = data.mdx;
+  const { frontmatter = {} } = data.mdx;
   const { title, author } = frontmatter;
 
   const renderPostMeta = () => (
     <PostMeta>
-      {fields.date} by {author}
+      by <BlogAuthorsName name={author} />
     </PostMeta>
   );
 
@@ -37,6 +39,7 @@ const BlogMdxTemplate = ({ data, children }) => {
             <MDX>{children}</MDX>
           </TypographyContainer>
         </Section>
+        <CallToActions authors={author} />
       </OneColumnLayout>
     </PageLayout>
   );
@@ -72,10 +75,10 @@ export const pageQuery = graphql`
             gatsbyImageData
           }
         }
+        date(formatString: "MMMM D, YYYY")
       }
       fields {
         slug
-        date(formatString: "MMMM D, YYYY")
       }
     }
   }
