@@ -69,9 +69,9 @@ There are 3 ways to make sure you have the right Delta Lake and PySpark versions
 
 ### Virtual Environment
 
-The easiest way to make sure you have the right versions of Delta-spark and PySpark is to create a virtual Python environment with Conda. [Conda](https://docs.conda.io/projects/conda/en/stable/#) is a package manager for Python.
+The easiest way to ensure you have the right versions of Delta-spark and PySpark is to create a virtual Python environment with Conda. [Conda](https://docs.conda.io/projects/conda/en/stable/#) is a package manager for Python.
 
-To create a conda environment with the latest compatible versions of PySpark and Delta-spark, follow the steps below:
+To create a conda environment with the latest compatible versions of PySpark and delta-spark, follow the steps below:
 
 1. Create a .yml file with the following contents and name it `pyspark-350-delta-320.yml`:
 
@@ -105,7 +105,7 @@ To create a conda environment with the latest compatible versions of PySpark and
 
    `conda activate pyspark-350-delta-310.yml`
 
-5. Launch a Jupyter notebook by running `jupyter lab` from the command line. Select an existing notebook or launch a new one from `File > New > Notebook`.
+5. Launch a Jupyter notebook by running `jupyter lab` from the command line. You can select an existing notebook or launch a new one from `File > New > Notebook`.
 
 6. Use Delta Lake with PySpark
 
@@ -160,7 +160,7 @@ You can read this Delta table back into your Spark session like this:
     +------------+---------------+
     ```
 
-Now suppose you want to add more data to this Delta Lake. You can use the “append” write mode:
+Now suppose you want to add more data to this Delta table. You can use the “append” write mode:
 
     ```
     data2 = [
