@@ -14,6 +14,8 @@ Many Python data professionals use Delta Lake from a Jupyter Notebook. This is a
 
 This post will show you how you can use Delta Lake from a Jupyter Notebook.
 
+![](image1.png)
+
 ## Delta Lake from a Jupyter Notebook
 
 There are 2 ways to use Delta Lake from a Jupyter Notebook:
@@ -255,6 +257,29 @@ Use [delta-rs](https://delta-io.github.io/delta-rs/) to run analyses with these 
 
 There are no compatibility issues with running delta-rs. To get started, simply `pip install deltalake` along with your favorite query engine.
 
+#### Disabling Logging Output
+
+By default, running PySpark in Jupyter Notebooks can output logging information that is displayed as red lines. This is due to a change in [ipykernel 6.0.0](https://github.com/ipython/ipykernel/releases/tag/6.0.0) which forwards low-level output to your notebook display.
+The logging data is purely informational and does not mean anything is wrong with your code.
+
+This can look like something this:
+
+![](image2.png)
+
+You can disable this logging with the [capture fd output](https://ipython.readthedocs.io/en/stable/config/options/kernel.html#configtrait-IPKernelApp.capture_fd_output) flag in your iPython profile config.
+
+To do so:
+
+1. Run `ipython profile create` from a terminal window
+2. Add the following line to your `~/.ipython/profile_default/ipython_config.py` file:
+   `c.IPKernelApp.capture_fd_output = False`
+3. Important: Clear your browser cache
+4. Restart your notebook kernel if you already had it running
+
+Your cell outputs should now look like this:
+
+![](image3.png)
+
 ### Delta Lake from a Jupyter Notebook with pandas
 
 Let’s look at an example with `pandas`.
@@ -325,6 +350,8 @@ You can time travel to a previous version using the version keyword:
     1         li   23
     2       leah   51
     ```
+
+![](image4.png)
 
 Refer to the [Integrations page](https://delta-io.github.io/delta-rs/integrations/delta-lake-arrow/) in the Delta-rs documentation for more information on using Delta Lake with other query engines like [polars](https://delta-io.github.io/delta-rs/integrations/delta-lake-polars/), [Dask](https://delta-io.github.io/delta-rs/integrations/delta-lake-dask/), [Daft](https://delta-io.github.io/delta-rs/integrations/delta-lake-daft/) and others.
 
