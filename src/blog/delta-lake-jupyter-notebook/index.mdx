@@ -153,13 +153,13 @@ You can read this Delta table back into your Spark session like this:
     df = spark.read.format("delta").load("/tmp/spark-delta-table")
     df.show()
 
-    +------------+---------------+
-    |         age|     first_name|
-    +------------+---------------+
-    |[47, 23, 51]|[bob, li, leah]|
-    |    [33, 68]|   [suh, anais]|
-    |    [33, 68]|   [suh, anais]|
-    +------------+---------------+
+    +---+----------+
+    |age|first_name|
+    +---+----------+
+    | 51|      leah|
+    | 47|       bob|
+    | 23|        li|
+    +---+----------+
     ```
 
 Now suppose you want to add more data to this Delta table. You can use the “append” write mode:
