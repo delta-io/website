@@ -26,9 +26,9 @@ const HomePage = () => {
   return (
     <PageLayout>
       <AnnouncementSection
-        title="Announcing Delta Lake 3.0.0 on Apache Spark™ 3.5"
+        title="Announcing Delta Lake 3.2.0 on Apache Spark™ 3.5"
         description="Try out the latest release today!"
-        url="http://go.delta.io/latest"
+        url="https://github.com/delta-io/delta/releases/tag/v3.2.0"
       />
       <HeroSection
         title="Build Lakehouses with Delta Lake"
@@ -41,15 +41,17 @@ const HomePage = () => {
             >
               Delta Lake
             </Link>{" "}
-            is an open-source storage framework that enables building a <br />{" "}
+            is an open-source storage framework that enables building a format
+            agnostic{" "}
             <Link
               href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
               newTab
             >
               Lakehouse architecture
             </Link>{" "}
-            with compute engines including Spark, PrestoDB, Flink, Trino, and
-            Hive and APIs for Scala, Java, Rust, and Python.
+            with compute engines including Spark, PrestoDB, Flink, Trino, Hive,
+            Snowflake, Google BigQuery, Athena, Redshift, Databricks, Azure
+            Fabric and APIs for Scala, Java, Rust, and Python.
           </>
         }
         ctaLabel="Get Started"

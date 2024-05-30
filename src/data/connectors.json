@@ -1,5 +1,14 @@
 [
   {
+    "name": "Apache Druid",
+    "description": "This connector allows Apache Druid to read from Delta Lake.",
+    "url": "https://druid.apache.org/",
+    "docs": "https://druid.apache.org/docs/latest/development/extensions-contrib/delta-lake/",
+    "source_code": "https://github.com/apache/druid/",
+    "tags": ["Druid"],
+    "thumbnail": "./images/connectors/apache_druid_logo.png"
+  },
+  {
     "name": "Apache Flink",
     "description": "This connector allows Apache Flink to write to Delta Lake.",
     "url": "https://github.com/delta-io/delta/tree/master/connectors/flink/",
@@ -45,6 +54,15 @@
     "thumbnail": "./images/connectors/clickhouse_logo.png"
   },
   {
+    "name": "Dagster",
+    "description": "Use the Delta Lake IO Manager to read from and write to Delta Lake in your Dagster orchestration pipelines.",
+    "url": "https://dagster.io/",
+    "docs": "https://delta-io.github.io/delta-rs/integrations/delta-lake-dagster/",
+    "source_code": "https://github.com/dagster-io/dagster/tree/e556a8a1d0062ac17e169e656c20fb68f82e8450/python_modules/libraries/dagster-deltalake",
+    "tags": ["Dagster", "Python"],
+    "thumbnail": "./images/connectors/dagster.png"
+  },
+  {
     "name": "Delta Rust API ",
     "description": "This library allows Rust (with Python bindings) low level access to Delta tables and is intended to be used with data processing frameworks like datafusion, ballista, rust-dataframe, vega, etc.",
     "url": "https://github.com/delta-io/delta-rs",
@@ -70,6 +88,15 @@
     "source_code": "https://github.com/finos/legend-community-delta",
     "tags": ["FINOS", "Legend"],
     "thumbnail": "./images/connectors/229239046-365bc3c4-f644-4fd2-b73f-7efb27366656.png"
+  },
+  {
+    "name": "Hopsworks",
+    "description": "Hopsworks Feature Store stores, manages, and serves feature data in Delta Lake.",
+    "url": "https://www.hopsworks.ai/dictionary/feature-store",
+    "docs": "https://docs.hopsworks.ai/latest/user_guides/fs/feature_group/create/#batch-write-api",
+    "source_code": "https://github.com/logicalclocks/feature-store-api/blob/master/python/hsfs/core/delta_engine.py",
+    "tags": ["Hopsworks", "Python"],
+    "thumbnail": "./images/connectors/hopsworks.png"
   },
   {
     "name": "Kafka Delta Ingest",
