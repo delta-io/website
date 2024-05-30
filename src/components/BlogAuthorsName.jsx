@@ -50,34 +50,40 @@ export const AUTHORS = {
   },
 };
 
-const BlogAuthorsName = ({ name }) => {
+const BlogAuthorsName = ({ name, date }) => {
   const splitNameArr = name.split(",");
 
   const lastElement = splitNameArr.length - 1;
 
-  return splitNameArr.map((person, i) =>
-    AUTHORS[person.trim()]?.profile ? (
-      <>
-        <Link
-          href={AUTHORS[person.trim()]?.profile}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {person}
-        </Link>
-        {lastElement !== i ? <span>, </span> : ""}
-      </>
-    ) : (
-      <>
-        <span>{person}</span>
-        {lastElement !== i ? <span>, </span> : ""}
-      </>
-    )
+  return (
+    <>
+      {splitNameArr.map((person, i) =>
+        AUTHORS[person.trim()]?.profile ? (
+          <>
+            <Link
+              href={AUTHORS[person.trim()]?.profile}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {person}
+            </Link>
+            {lastElement !== i ? <span>, </span> : ""}
+          </>
+        ) : (
+          <>
+            <span>{person}</span>
+            {lastElement !== i ? <span>, </span> : ""}
+          </>
+        )
+      )}
+      <span>, {date}</span>
+    </>
   );
 };
 
 BlogAuthorsName.prototype = {
   name: string,
+  date: string,
 };
 
 export default BlogAuthorsName;
