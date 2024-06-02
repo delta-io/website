@@ -51,7 +51,12 @@ const HomePage = () => {
             </Link>{" "}
             with compute engines including Spark, PrestoDB, Flink, Trino, Hive,
             Snowflake, Google BigQuery, Athena, Redshift, Databricks, Azure
-            Fabric and APIs for Scala, Java, Rust, and Python.
+            Fabric and APIs for Scala, Java, Rust, and Python. With{" "}
+            <Link href="https://docs.delta.io/latest/delta-uniform.html" newTab>
+              Delta Universal Format
+            </Link>{" "}
+            aka UniForm, you can read now Delta tables with Iceberg and Hudi
+            clients.
           </>
         }
         ctaLabel="Get Started"

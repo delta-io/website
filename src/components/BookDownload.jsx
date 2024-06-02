@@ -120,7 +120,8 @@ const BookDownload = () => (
         </DownloadTitle>
 
         <DownloadSubTitle>
-          Early Release (Raw & Unedited) sponsored by Databricks
+          Early Release (Raw & Unedited) on building modern data lakehouse
+          architectures with Delta Lake
         </DownloadSubTitle>
 
         <ButtonDownload download href="/pdfs/DLTDG_ER4.pdf">
