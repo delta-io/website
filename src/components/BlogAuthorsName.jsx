@@ -80,6 +80,7 @@ const BlogAuthorsName = ({ name, date }) => {
     </>
   );
 };
+console.log("test");
 
 BlogAuthorsName.prototype = {
   name: string,
