@@ -29,7 +29,7 @@ const TitleWrapper = styled(TypographyContainer)`
 `;
 
 const twitchSection = () => (
-  <Section background="white" padding="xl">
+  <Section background="#f5f8f9" padding="xl">
     <center>
       <Grid columns={{ xs: 1, sm: 1, md: 6 }} gutter="xl">
         <ColumnWrapper>

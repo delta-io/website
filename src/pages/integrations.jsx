@@ -23,7 +23,6 @@ const IntegrationsPage = () => (
       centeredHeader
       padding="xl"
       logo
-      background="white"
     />
     <Section
       title="Frameworks"
@@ -33,7 +32,7 @@ const IntegrationsPage = () => (
           to Apache Flink, Apache Spark, Trino, and Rust.
         </Typography>
       }
-      background="#f5f8f9"
+      background="white"
       centeredHeader
       padding="xl"
     >
@@ -52,7 +51,7 @@ const IntegrationsPage = () => (
       }
       centeredHeader
       padding="xl"
-      background="white"
+      backkground="grey"
     >
       <Wrapper>
         <JsonCardDataList data="sharing" />
@@ -66,7 +65,7 @@ const IntegrationsPage = () => (
           Lake.
         </Typography>
       }
-      background="#f5f8f9"
+      background="white"
       centeredHeader
       padding="xl"
     >
@@ -84,7 +83,7 @@ const IntegrationsPage = () => (
       }
       centeredHeader
       padding="xl"
-      background="white"
+      backkground="grey"
     >
       <Wrapper>
         <JsonCardDataList data="community" />

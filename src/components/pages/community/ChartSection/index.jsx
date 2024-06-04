@@ -12,7 +12,7 @@ const TitleWrapper = styled(TypographyContainer)`
 `;
 
 const twitchSection = () => (
-  <Section background={(theme) => theme.light.bg} padding="xl">
+  <Section background={(theme) => theme.dark.color} padding="xl">
     <center>
       <TitleWrapper>
         Because of the contributions from our amazing community, Delta Lake is

@@ -16,7 +16,7 @@ const ImgItem = styled.a`
 `;
 
 const UniFormBlock = () => (
-  <Section title="UniForm" background="#f5f8f9" centeredHeader padding="xl">
+  <Section title="UniForm" background="white" centeredHeader padding="xl">
     <ImgItem
       target="_blank"
       href="https://docs.delta.io/latest/delta-uniform.html"
