@@ -3,7 +3,7 @@ import Section from "src/components/Section";
 import * as theme from "config/theme";
 import styled from "styled-components";
 import Typography from "src/components/Typography";
-import { media } from "config/theme";
+import { colors, media } from "config/theme";
 import deltaUniForm from "../images/delta-uniForm.png";
 
 const Box = styled.div`
@@ -23,7 +23,7 @@ const Box = styled.div`
 `;
 
 const BoxItem = styled.div`
-  color: white;
+  color: ${(props) => props.theme.dark.color};
   line-height: 1.2;
 `;
 
@@ -62,12 +62,16 @@ const LinksBox = styled.div`
 `;
 
 const Link = styled.a`
-  color: white;
+  color: ${(props) => props.theme.dark.color};
   text-decoration: none;
   font-size: 18px;
 
   @media ${media.lg} {
     font-size: 25px;
+  }
+
+  &:hover {
+    color: ${(props) => props.theme.colors.text};
   }
 
   &:first-of-type {
