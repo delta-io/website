@@ -4,6 +4,7 @@ import Section from "src/components/Section";
 import styled from "styled-components";
 import Typography from "src/components/Typography";
 import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
+import UniFormBlock from "src/components/UniFormBlock";
 
 const Wrapper = styled.div`
   padding: 2.5rem 0;
@@ -22,6 +23,7 @@ const IntegrationsPage = () => (
       centeredHeader
       padding="xl"
       logo
+      background="white"
     />
     <Section
       title="Frameworks"
@@ -31,7 +33,7 @@ const IntegrationsPage = () => (
           to Apache Flink, Apache Spark, Trino, and Rust.
         </Typography>
       }
-      background="white"
+      background="#f5f8f9"
       centeredHeader
       padding="xl"
     >
@@ -50,7 +52,7 @@ const IntegrationsPage = () => (
       }
       centeredHeader
       padding="xl"
-      backkground="grey"
+      background="white"
     >
       <Wrapper>
         <JsonCardDataList data="sharing" />
@@ -64,7 +66,7 @@ const IntegrationsPage = () => (
           Lake.
         </Typography>
       }
-      background="white"
+      background="#f5f8f9"
       centeredHeader
       padding="xl"
     >
@@ -82,12 +84,13 @@ const IntegrationsPage = () => (
       }
       centeredHeader
       padding="xl"
-      backkground="grey"
+      background="white"
     >
       <Wrapper>
         <JsonCardDataList data="community" />
       </Wrapper>
     </Section>
+    <UniFormBlock />
   </PageLayout>
 );
 

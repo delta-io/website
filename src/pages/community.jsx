@@ -12,6 +12,7 @@ import CurrentCommittersSection from "src/components/pages/community/CurrentComm
 import ProjectGovernanceSection from "src/components/pages/shared/ProjectGovernanceSection";
 import BookDownload from "src/components/BookDownload";
 import ArticleVideo from "src/components/ArticleVideo";
+import UniFormBlock from "src/components/UniFormBlock";
 
 const CommunityPage = () => (
   <PageLayout>
@@ -22,6 +23,7 @@ const CommunityPage = () => (
       url="http://go.delta.io/lastweek"
     />
     <LatestEventsSectionYoutube />
+    <UniFormBlock />
     <TwitchSection />
     <ChartSection />
     <ContributeSection />
