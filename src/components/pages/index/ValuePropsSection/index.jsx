@@ -21,6 +21,11 @@ const ValuePropsSection = () => (
             "One format to unify your ETL, Data warehouse, ML in your lakehouse",
         },
         {
+          image: "/images/value_props/delta-uniform-dark-bkgd.svg",
+          name: "UniForm",
+          description: "A universal format for lakehouse interoperability",
+        },
+        {
           image: "/images/value_props/production.svg",
           name: "Production Ready",
           description:
