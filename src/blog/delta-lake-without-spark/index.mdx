@@ -506,8 +506,8 @@ Define two dictionaries to store some data:
 Create a DataFrame with the first dictionary and write it to a Delta Lake table:
 
 ```
-    df = pd.DataFrame.from_dict(data)
-    write_deltalake("tmp/pandas-table", df)
+    df = pl.DataFrame(data)
+    df.write_delta("tmp/polars_table")
 ```
 
 Read the Delta table and print the DataFrame to visualize it:
