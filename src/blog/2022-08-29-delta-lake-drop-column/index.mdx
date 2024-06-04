@@ -104,7 +104,7 @@ Here’s [a link to the notebook](https://github.com/MrPowers/delta-examples/blo
 
 ## Delta Lake drop column implementation
 
-`DROP COLUMN` was added in Delta Lake 2.0, which allows for dropping a column via a metadata operation. When you drop a table, Delta simply creates an entry in the transaction log to indicate that queries should ignore the dropped column going forward.
+`DROP COLUMN` was added in Delta Lake 2.0, which allows for dropping a column via a metadata operation. When you drop a column, Delta simply creates an entry in the transaction log to indicate that queries should ignore the dropped column going forward.
 
 Here’s the schema before you drop the column:
 
