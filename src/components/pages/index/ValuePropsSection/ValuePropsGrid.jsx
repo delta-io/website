@@ -36,7 +36,7 @@ const ValuePropsGrid = (props) => {
   const { features } = props;
 
   return (
-    <Grid columns={{ md: 2, lg: 4 }}>
+    <Grid columns={{ md: 2, lg: 5 }}>
       {features.map((feature) => (
         <ValuePropContainer key={feature.name}>
           <Icon src={feature.image} alt="" />

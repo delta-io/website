@@ -242,22 +242,7 @@ The final option to run Delta Lake with PySpark is to check the [Compatibility M
 
 This method is fine for quick testing. It is not recommended for production environments that require robust reliability and reproducible notebooks.
 
-## Delta Lake from a Jupyter Notebook with delta-rs
-
-You don’t need to know Spark to use Delta Lake. You can also use Delta Lake from many other Python or SQL query engines, including:
-
-- pandas
-- polars
-- Dask
-- Daft
-- Datafusion
-- DuckDB
-
-Use [delta-rs](https://delta-io.github.io/delta-rs/) to run analyses with these query engines on Delta Lake tables.
-
-There are no compatibility issues with running delta-rs. To get started, simply `pip install deltalake` along with your favorite query engine.
-
-#### Disabling Logging Output
+### Disabling Logging Output
 
 By default, running PySpark in Jupyter Notebooks can output logging information that is displayed as red lines. This is due to a change in [ipykernel 6.0.0](https://github.com/ipython/ipykernel/releases/tag/6.0.0) which forwards low-level output to your notebook display.
 The logging data is purely informational and does not mean anything is wrong with your code.
@@ -279,6 +264,21 @@ To do so:
 Your cell outputs should now look like this:
 
 ![](image3.png)
+
+## Delta Lake from a Jupyter Notebook with delta-rs
+
+You don’t need to know Spark to use Delta Lake. You can also use Delta Lake from many other Python or SQL query engines, including:
+
+- pandas
+- polars
+- Dask
+- Daft
+- Datafusion
+- DuckDB
+
+Use [delta-rs](https://delta-io.github.io/delta-rs/) to run analyses with these query engines on Delta Lake tables.
+
+There are no compatibility issues with running delta-rs. To get started, simply `pip install deltalake` along with your favorite query engine.
 
 ### Delta Lake from a Jupyter Notebook with pandas
 
