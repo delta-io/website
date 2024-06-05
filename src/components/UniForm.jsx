@@ -3,7 +3,6 @@ import Section from "src/components/Section";
 import * as theme from "config/theme";
 import styled from "styled-components";
 import Typography from "src/components/Typography";
-import { colors, media } from "config/theme";
 import deltaUniForm from "../images/delta-uniForm.png";
 
 const Box = styled.div`
