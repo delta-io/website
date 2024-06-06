@@ -4,6 +4,7 @@ import Section from "src/components/Section";
 import styled from "styled-components";
 import Typography from "src/components/Typography";
 import JsonCardDataList from "src/components/pages/shared/JsonCardDataList";
+import UniForm from "src/components/UniForm";
 
 const Wrapper = styled.div`
   padding: 2.5rem 0;
@@ -23,6 +24,7 @@ const IntegrationsPage = () => (
       padding="xl"
       logo
     />
+    <UniForm />
     <Section
       title="Frameworks"
       subtitle={
