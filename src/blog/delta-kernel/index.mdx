@@ -26,10 +26,10 @@ This Delta Kernel initiative is still in the early phase where the APIs are stil
 Despite its lack of maturity, the Delta community has started adopting Kernel.
 
 - **[DuckDB](https://github.com/duckdb/duckdb_delta)** - DuckDB has already released its Delta support using Delta Kernel Rust.
-- **[Apache Druid](https://druid.apache.org/docs/latest/development/extensions-contrib/delta-lake)** - Druid has already added its first Delta support using
-- **[Apache Flink](https://github.com/delta-io/delta/tree/master/connectors/flink)** - Even a partial migration to Delta Kernel gave 3x startup time performance improvements to the Delta Flink connector
-- **[Delta Sharing](https://github.com/delta-io/delta-sharing/issues/438)** - Delta Sharing ecosystem has evolved its protocol to share the Delta metadata directory. Both communities are working together to adopt Delta Kernel in the Sharing Server, and the Sharing clients like delta-sharing-pandas
-- **[Delta-rs](https://github.com/delta-io/delta-rs/)** - We have worked closely with the Delta-rs community to begin [migrating](https://github.com/delta-io/delta-rs/pull/2495) to Delta Kernel.
+- **[Apache Druid](https://druid.apache.org/docs/latest/development/extensions-contrib/delta-lake)** - Druid has already added its first Delta support using Kernel Java.
+- **[Apache Flink](https://github.com/delta-io/delta/tree/master/connectors/flink)** - Even a partial migration to Delta Kernel Java gave 3x startup time performance improvements to the Delta Flink connector.
+- **[Delta Sharing](https://github.com/delta-io/delta-sharing/issues/438)** - Delta Sharing ecosystem has evolved its protocol to share the Delta metadata directory. Both communities are working together to adopt Delta Kernel in the Sharing Server, and the Sharing clients like delta-sharing-pandas.
+- **[Delta-rs](https://github.com/delta-io/delta-rs/)** - We have worked closely with the Delta-rs community to begin [migrating](https://github.com/delta-io/delta-rs/pull/2495) to Delta Kernel Rust.
 
 There is a lot more adoption in progress. Stay tuned for more updates and blog posts. We invite the entire community to build new Delta connectors or migrate existing ones to use Delta Kernel. Specifically, **existing connectors using Delta Standalone are strongly recommended to migrate to Delta Kernel as Delta Standalone is no longer maintained and is soon to be deprecated.**
 
