@@ -26,8 +26,8 @@ This Delta Kernel initiative is still in the early phase where the APIs are stil
 Despite its lack of maturity, the Delta community has started adopting Kernel.
 
 - **[DuckDB](https://github.com/duckdb/duckdb_delta)** - DuckDB has already released its Delta support using Delta Kernel Rust.
-- **[Apache Druid](https://druid.apache.org/docs/latest/development/extensions-contrib/delta-lake)** - Druid has already added its first Delta support using Kernel Java.
-- **[Apache Flink](https://github.com/delta-io/delta/tree/master/connectors/flink)** - Even a partial migration to Delta Kernel Java gave 3x startup time performance improvements to the Delta Flink connector.
+- **[Apache Druid](https://druid.apache.org/docs/latest/development/extensions-contrib/delta-lake)** - Druid has already added its first Delta support using Kernel Java with [less than 1000 lines of production code](https://github.com/apache/druid/pull/15755/).
+- **[Apache Flink](https://github.com/delta-io/delta/tree/master/connectors/flink)** - Even a partial migration to Delta Kernel Java gave [45x startup time improvement](https://delta.io/blog/delta-lake-3-1/) to the Delta Flink connector.
 - **[Delta Sharing](https://github.com/delta-io/delta-sharing/issues/438)** - Delta Sharing ecosystem has evolved its protocol to share the Delta metadata directory. Both communities are working together to adopt Delta Kernel in the Sharing Server, and the Sharing clients like delta-sharing-pandas.
 - **[Delta-rs](https://github.com/delta-io/delta-rs/)** - We have worked closely with the Delta-rs community to begin [migrating](https://github.com/delta-io/delta-rs/pull/2495) to Delta Kernel Rust.
 
