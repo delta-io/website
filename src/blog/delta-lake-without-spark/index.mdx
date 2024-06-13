@@ -734,14 +734,6 @@ You can then query or transform your data. For example:
     ╰────────────┴───────╯
 ```
 
-And then write your data out to a Delta table with `write_deltalake`:
-
-```
-df.write_deltalake("tmp/daft-table", mode="overwrite")
-```
-
-The Daft writer supports multiple write modes.
-
 Refer to the [Daft integration page](https://delta-io.github.io/delta-rs/integrations/delta-lake-daft/) in the delta-rs documentation for more information.
 
 ### Delta Lake without Spark: DuckDB
