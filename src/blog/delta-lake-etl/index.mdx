@@ -179,6 +179,9 @@ Now, let's try to write data with a different schema to this same Delta table:
     df.write.format("delta").mode("append").save("data/toy_data")
 ```
 
+Here's the complete error:
+
+```
     AnalysisException: [_LEGACY_ERROR_TEMP_DELTA_0007] A schema mismatch detected when writing to the Delta table
 
     Table schema:
@@ -191,6 +194,7 @@ Now, let's try to write data with a different schema to this same Delta table:
     -- first_name: string (nullable = true)
     -- age: long (nullable = true)
     -- country: string (nullable = true)
+```
 
 Delta Lake does not allow you to append data with mismatched schema by default. Read the [Delta Lake schema enforcement](https://delta.io/blog/2022-11-16-delta-lake-schema-enforcement/) post to learn more.
 
