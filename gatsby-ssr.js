@@ -9,6 +9,6 @@ exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
       defer
       data-domain="delta.io"
       src="https://plausible.io/js/script.js"
-    ></script>,
+    />,
   ]);
 };
