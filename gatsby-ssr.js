@@ -4,6 +4,7 @@ exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
   setHtmlAttributes({ lang: "en" });
 
   setHeadComponents([
+    // eslint-disable-next-line react/jsx-filename-extension
     <script
       key="plausible-script"
       defer
