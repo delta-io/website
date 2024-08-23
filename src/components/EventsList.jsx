@@ -162,6 +162,7 @@ const EventsList = () => {
         setIsLoading(false);
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error("Error fetching data: ", error);
         setIsLoading(false);
       });
