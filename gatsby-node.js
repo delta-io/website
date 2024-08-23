@@ -83,6 +83,7 @@ const getPlaylistAllItems = async (
       }),
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error while retrieving a video playlist: ", error);
     return null;
   }
