@@ -10,35 +10,23 @@ This blog shows you how to clone Delta Lake tables.
 
 Cloning your Delta Lake tables is a great feature that you can use to migrate data, reproduce machine learning flows and create data copies for sharing or experiments. Any changes made to Delta Lake clones affect only the clones themselves and not the source table.
 
-There are different ways to clone your Delta Lake tables. You can create deep or shallow clones. You can clone your Delta Lake tables with or without Unity Catalog. You should understand the differences and their applications so you know when to use which type of Delta Lake clone.
+There are different ways to clone your Delta Lake tables. For example, you can clone your Delta Lake tables with or without Unity Catalog. You should understand the differences and their applications so you know when to use which type of Delta Lake clone.
 
 This article will walk you through the different ways to clone your Delta Lake tables in detail.
 
 Let's jump in 🪂
 
-## Delta Lake Clone: Shallow vs Deep
-
-A Delta Lake clone can be either deep or shallow.
+## Delta Lake Clone: Introduction
 
 Let's start with a quick refresher. Delta Lake tables are made of two main components: your data stored in Parquet files and metadata (incl. commits etc.) stored in the transaction log.
 
 ![](image1.png)
 
-**Shallow clones** only copy over the table metadata; they do not copy the source data. You can edit the clone without affecting the source data but not the other way around. Changing to the source data will affect the shallow clone data.
+**Delta clones** (also called "shallow clones") only copy over the table metadata; they do not copy the source data. You can edit the clone without affecting the source data but not the other way around. Changing to the source data will affect the shallow clone data.
 
 ![](image2.png)
 
-**Deep clones** copy over the table metadata _as well as_ all of the data from the source tables. This gives you a completely independent copy of your data. You can edit the clone without affecting the source data. You can also edit the source data without affecting the deep clone data.
-
-![](image3.png)
-
-There are important trade-offs to consider here.
-
-**Shallow clones are faster and computationally cheaper** because you need to copy less data. But shallow clones are also less flexible because they still reference the same source data. If you shallow clone a Delta Lake table and somebody runs a VACUUM operation on the source data, your shallow clone will be affected.
-
-**Deep clones give you more flexibility and independence**. You can change the data of a deep clone Delta Lake table without affecting the original data source, and vice versa. This means that someone can VACUUM old source data or even delete the entire original data without it affecting your Delta Lake clone.
-
-> Delta Lake clone functionality is available for Delta Lake 2.3 and above.
+**Shallow clones are fast and computationally cheap** because don't need to copy all of the underlying data. But it's important to remember that they still reference the same source data. If you shallow clone a Delta Lake table and somebody runs a VACUUM operation on the source data, your shallow clone will be affected.
 
 ## Delta Lake Clone: Shallow
 
@@ -82,18 +70,6 @@ If you're using Delta Lake from PySpark you can pass the SQL syntax directly to 
 
 You can read more about shallow clones in [the Delta docs](https://docs.delta.io/latest/delta-utility.html#shallow-clone-a-delta-table).
 
-## Delta Lake Clone: Deep
-
-You can create a deep clone of your Delta Lake table using the following SQL syntax:
-
-```
-    CREATE TABLE target_table CLONE source_table;
-```
-
-The same variations of this command are available as listed above for the shallow clones to clone specific versions, replace target tables or only perform the clone if it doesn't exist already. Just use `CLONE` instead of `SHALLOW CLONE`.
-
-> Note: Deep clone functionality is currently only available for Delta Lake on Databricks.
-
 ## Delta Lake Clone and Time Travel
 
 A cloned Delta Lake table has its own independent history and versioning. This means that time travel queries on a cloned table will not work with the same inputs as they work on its source table.
@@ -113,8 +89,6 @@ Shallow clones reference data files in the source directory.
 Suppose you shallow clone a Delta Lake table. The next day, your colleague runs a scheduled VACUUM operation on the source table to clean up old files. Your cloned table can now no longer access the referenced data files and a `FileNotFoundException` is thrown.
 
 You can repair this by running clone with replace over the shallow clone.
-
-If this occurs often, consider using a deep clone instead which does not depend on the source table.
 
 Read more about [Delta Lake vacuum](https://delta.io/blog/remove-files-delta-lake-vacuum-command/) in the dedicated blog.
 
@@ -214,12 +188,12 @@ This can be helpful when you want to share tables with external users and add an
 
 ### Delta Lake Clone for Disaster Recovery
 
-You can also choose to sync deep clones incrementally to maintain an updated state of a source table for disaster recovery. Incremental cloning means that changes to the source table are automatically forwarded to the target clone table.
+You can also choose to sync Delta clones incrementally to maintain an updated state of a source table for disaster recovery. Incremental cloning means that changes to the source table are automatically forwarded to the target clone table.
 
 ## Delta Lake Clone
 
-Delta Lake clone gives you data copying functionality with varying degrees of control and flexibility. You can use deep and shallow clones to perform data migration and archiving, to reproduce production workflows and to safely share data with external parties.
+Delta Lake clone gives you data copying functionality with varying degrees of control and flexibility. You can use Delta Lake clones to perform data migration and archiving, to reproduce production workflows and to safely share data with external parties.
 
-Use shallow clones for quick and cheap data copies that still reference the original source data. Choose deep clones instead if you need an entirely independent copy and are willing to spend the extra time and resources.
+Use shallow clones for quick and cheap data copies that still reference the original source data.
 
 Take a look at [Delta Lake vs Data Lake](https://delta.io/blog/delta-lake-vs-data-lake/) if you want to learn more about Delta Lake basics. When you’re ready to dive deeper, you might enjoy reading about all the ways you can use [Delta Lake for ETL](https://delta.io/blog/delta-lake-etl/).
