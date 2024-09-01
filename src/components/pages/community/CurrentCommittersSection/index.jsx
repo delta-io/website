@@ -102,6 +102,12 @@ const committers = [
     areas: ["delta", "connectors", "delta-sharing"],
     link: "/profiles/gerhard-brueckl",
   },
+  {
+    name: "Ion Koutsouris",
+    organization: "ASML",
+    areas: ["delta", "delta-rs"],
+    link: "",
+  },
 ];
 
 const CommittersTable = styled(Table)`
