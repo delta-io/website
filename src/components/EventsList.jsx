@@ -151,7 +151,10 @@ const EventsList = () => {
 
   useEffect(() => {
     const calendarId = "deltalakeevents@gmail.com";
-    const API_KEY = process.env.GATSBY_GOOGLE_CALENDAR_API_KEY;
+    const API_KEY = process.env.GOOGLE_CALENDAR_API_KEY;
+
+    console.log(API_KEY);
+    console.log(process.env);
 
     axios
       .get(
