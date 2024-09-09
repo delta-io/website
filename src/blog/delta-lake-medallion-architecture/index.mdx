@@ -96,18 +96,18 @@ Here is how Unity Catalog namespaces tables: catalog\_name.schema\_name.table\_n
 Let’s look at how an organization can namespace tables for the Medallion architecture:
 
 ```
-something\_cool  
+something_cool  
   bronze  
-    raw\_transactions  
-    table\_b  
+    raw_transactions  
+    table_b  
   silver  
-    user\_transactions  
-    table\_b  
+    user_transactions  
+    table_b  
   gold  
-    user\_transactions  
+    user_transactions  
     users
 ```
-
+  
 When you see something\_cool.bronze.raw\_transactions, you can easily identify that the table contains raw ingested data.
 
 something\_cool.gold.user\_transactions gives the clear message that the table contains business-level aggregates.
