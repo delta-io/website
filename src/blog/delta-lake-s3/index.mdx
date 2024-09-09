@@ -44,13 +44,13 @@ Many query engines support reading and writing Delta Lake on S3.
 
 For example, you can read Delta Lake tables with Spark using:
 
-```
+```python
     df = spark.read.format("delta").load(path/to/delta)
 ```
 
 And you can write data to Delta Lake table with Spark using:
 
-```
+```python
 	df.write.format("delta").save(path/to/delta)
 ```
 
@@ -68,22 +68,29 @@ These dependencies need to be carefully and manually specified. Not all versions
 
 In other words, you can't simply start up a basic Spark session and use it read or write Delta tables:
 
-```
+```python
 import pyspark
 from delta import *
 
-builder = pyspark.sql.SparkSession.builder.master("local[4]").appName("parallel") \
-    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+builder = (
+    pyspark.sql.SparkSession.builder.master("local[4]")
+    .appName("parallel")
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+    .config(
+        "spark.sql.catalog.spark_catalog",
+        "org.apache.spark.sql.delta.catalog.DeltaCatalog",
+    )
+)
 
 spark = configure_spark_with_delta_pip(builder).getOrCreate()
 
 df = spark.read.format("delta").load("s3a://bucket/delta-table")
+
 ```
 
 This will error out with:
 
-```
+```sh
 Py4JJavaError: An error occurred while calling o35.parquet.
 : org.apache.hadoop.fs.UnsupportedFileSystemException: No FileSystem for scheme "s3"
 ```
@@ -107,8 +114,6 @@ Follow these steps to configure your Spark session to read/write Delta tables to
      \
     To be sure you get the right version number for hadoop-aws and hadoop-common, you can run the following command in your terminal from wherever you have Spark installed. You want to match the version number of `hadoop-client-runtime`:
 
-         \
-
     > `cd pyspark/jars && ls -l | grep hadoop`
 
 ```
@@ -122,7 +127,7 @@ Follow these steps to configure your Spark session to read/write Delta tables to
      \
     You may be used to doing this by adding the JARs to your Spark Config object with something like: \
 
-```
+```python
 builder = (
     pyspark.sql.SparkSession.builder.master("local[4]")
     .appName("s3-write")
@@ -139,14 +144,13 @@ builder = (
     .config("spark.hadoop.fs.s3a.access.key", access_key)
     .config("spark.hadoop.fs.s3a.secret.key", secret_key)
 )
-
 ```
 
         But the `jars.packages` configs will get overridden by the `configure_spark_with_delta_pip` utility function.
 
         Instead, use the extra_packages kwarg option to the `configure_spark_with_delta_pip` function:
 
-```
+```python
 conf = (
     pyspark.conf.SparkConf()
     .setAppName("MY_APP")
@@ -178,17 +182,16 @@ spark = configure_spark_with_delta_pip(
 5.  Launch your Spark session. You can confirm that the correct JARs are installed using `spark.sparkContext.getConf().getAll()`
 6.  Create a dataframe with some toy data.
 
-    `import pandas as pd`
+```python
+`import pandas as pd`
 
-```
 df = pd.DataFrame({'x': [1, 2, 3]})
 df = spark.createDataFrame(df)
-
 ```
 
 7. Write the data to a Delta table on S3.
 
-```
+```python
 	s3_path = "s3a://avriiil/delta-test-spark"
 	df.write.format("delta").save(s3_path)
 ```
@@ -213,7 +216,7 @@ Many Python engines use [boto3](https://boto3.amazonaws.com/v1/documentation/api
 
 For example, if you’re running locally with the proper credentials in your local `.aws/config` or `.aws/creds` file then you can write a Parquet file to S3 like this with pandas:
 
-```
+```python
     import pandas as pd
     df = pd.DataFrame({'x': [1, 2, 3]})
     df.to_parquet("s3://avriiil/parquet-test-pandas")
@@ -238,13 +241,13 @@ Follow the steps below to use Delta Lake on S3 with Polars:
     \
    `pip install polars deltalake`
 
-2. Create a dataframe with some toy data. \
+2. Create a dataframe with some toy data.
 
    `df = pl.DataFrame({'x': [1, 2, 3]})`
 
-3. Set your `storage_options` correctly. \
+3. Set your `storage_options` correctly.
 
-```
+```python
 storage_options = {
     "AWS_REGION":<region_name>,
     'AWS_ACCESS_KEY_ID': <key_id>,
@@ -256,12 +259,11 @@ storage_options = {
 
 4. Write data to Delta table using the `storage_options` kwarg.
 
-   ```
+   ```python
    df.write_delta(
        "s3://bucket/delta_table",
        storage_options=storage_options,
    )
-
    ```
 
 Just like the Spark implementation, `delta-rs` uses DynamoDB to guarantee safe concurrent writes. If for some reason you don't want to use DynamoDB as your locking mechanism you can choose to set the `AWS_S3_ALLOW_UNSAFE_RENAME` variable to `true` in order to enable S3 unsafe writes.
