@@ -192,7 +192,7 @@ Delta Lake allows for schema evolution so you can seamlessly add new columns to 
 
 Suppose you append a DataFrame to a Parquet table with a mismatched schema. In that case, you must remember to set a specific option every time you read the table to ensure accurate results. Query engines usually take shortcuts when determining the schema of a Parquet table. They look at the schema of one file and just assume that all the other files have the same schema.
 
-The engine can consults the schema of all the files in a Parquet table when determining the schema of the overall table when you manually set a flag. Checking the schema of all the files is more computationally expensive, so it isn’t set by default. Delta Lake schema evolution is better than what’s offered by Parquet.
+The engine consults the schema of all the files in a Parquet table when determining the schema of the overall table when you manually set a flag. Checking the schema of all the files is more computationally expensive, so it isn’t set by default. Delta Lake schema evolution is better than what’s offered by Parquet.
 
 ## Delta Lake vs. Parquet: check constraints
 
