@@ -192,7 +192,7 @@ Delta Lake allows for schema evolution so you can seamlessly add new columns to 
 
 Suppose you append a DataFrame to a Parquet table with a mismatched schema. In that case, you must remember to set a specific option every time you read the table to ensure accurate results. Query engines usually take shortcuts when determining the schema of a Parquet table. They look at the schema of one file and just assume that all the other files have the same schema.
 
-The engine can consults the schema of all the files in a Parquet table when determining the schema of the overall table when you manually set a flag. Checking the schema of all the files is more computationally expensive, so it isn’t set by default. Delta Lake schema evolution is better than what’s offered by Parquet.
+The engine consults the schema of all the files in a Parquet table when determining the schema of the overall table when you manually set a flag. Checking the schema of all the files is more computationally expensive, so it isn’t set by default. Delta Lake schema evolution is better than what’s offered by Parquet.
 
 ## Delta Lake vs. Parquet: check constraints
 
@@ -210,7 +210,7 @@ Versioned data also impacts how engines execute certain transactions. For exampl
 
 Parquet tables don’t support versioned data. When you remove data from a Parquet table, you actually delete it from storage, which is referred to as a “physical deletes”.
 
-Logical data operations are better because they are safer and allow for mistakes to be reversed. If you overwrite a Parquet table, it is an irreversible error (unless there is a separate mechanism backing up the data). It’s easy to undo an overwrite tranaction in a Delta table.
+Logical data operations are better because they are safer and allow for mistakes to be reversed. If you overwrite a Parquet table, it is an irreversible error (unless there is a separate mechanism backing up the data). It’s easy to undo an overwrite transaction in a Delta table.
 
 See this blog post on [Why PySpark append and overwrite operations are safer in Delta Lake than Parquet tables](https://delta.io/blog/2022-11-01-pyspark-save-mode-append-overwrite-error/) to learn more.
 
