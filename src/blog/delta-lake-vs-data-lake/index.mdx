@@ -134,6 +134,8 @@ To read your data from a Parquet data lake, you will first have to list all the 
 
 Delta Lake stores the paths to all of the underlying Parquet files in the transaction log. This is a separate file which doesn’t require an expensive listing operation. The more files you have, the faster it will be to read your data with Delta Lake compared to regular Parquet files.
 
+![](image5.png)
+
 ### Delta Lake vs Data Lake: Metadata
 
 Regular Parquet files store metadata about column values in the footer of each file. This metadata contains min/max values of the columns per row group. This means that when you want to read the metadata of your data lake, you will have to read the metadata from each individual Parquet file. This requires fetching each file and grabbing the footer metadata, which is slow when you have lots of Parquet files.
