@@ -29,7 +29,30 @@ GeoParquet extends on standard Parquet files by:
 
 GeoParquet is technically not a separate format but a backwards-compatible _extension_ of Apache Parquet. Any program that can read Parquet is able to read GeoParquet – even if it might not be able to properly read the geometry information.
 
-Let’s take a look at how you can work with GeoParquet data.
+Let's take a closer look at how GeoParquet extends Parquet for geospatial data.
+
+## Using the Geometry Column
+
+Geographical data is data that includes information on the geospatial location of objects, events or phenomena. This data can be represented as a string in two popular formats:
+
+- **GeoJSON**, e.g. { “geometry”: { “type”: “Polygon”, “coordinates”: [ [ [100.0, 0.0], [101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]] ]} }
+- **Well-Known Text (WKT)**, e.g. POLYGON ((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 1.0, 100.0 0.0))
+
+In these formats, geographical information can be stored in a string column in a standard Parquet file.
+
+But it’s difficult to perform spatial operations on geographical data stored in a string. Let’s say you want to perform a spatial join to match rows whose geography is located within a certain polygon. You could write some complicated code to turn your strings into geometric information and perform the math yourself, but this would be very time-consuming.
+
+GeoParquet extends standard Parquet files with a dedicated GEOMETRY column. This is a separate data type which query engines can use to properly parse the information and easily perform spatial operations.
+
+For example, using GeoPandas, you can easily map your geospatial data stored as GeoParquet using the `.plot()` method:
+
+```
+> df = geopandas.read_parquet("boston.geoparquet")
+```
+
+![](image1.jpg)
+
+Now let’s take a look at how you can work with GeoParquet data.
 
 ## Working with GeoParquet Data
 
