@@ -124,7 +124,7 @@ const BookDownload = () => (
           architectures with Delta Lake
         </DownloadSubTitle>
 
-        <ButtonDownload download href="/pdfs/DLDTG_ER5.pdf">
+        <ButtonDownload download href="/pdfs/dldg_databricks.pdf">
           Download
           <img src={downloadArrow} alt="Download button" />
         </ButtonDownload>
