@@ -79,7 +79,6 @@ conf = (
 )
 
 extra_packages = [
-#    'org.apache.sedona:sedona-spark-shaded-3.5_2.13:1.6.1', # use this if you're not working in an IDE or Jupyter notebook
     'org.apache.sedona:sedona-spark-3.5_2.12:1.6.1',
     'org.datasyslab:geotools-wrapper:1.6.0-28.2',
     "org.apache.hadoop:hadoop-aws:3.3.4",
@@ -214,8 +213,6 @@ Wall time: 2min 37s
 ```
 
 Great work! Sedona has efficiently crunched the entire 59-million row dataset and performed the spatial query. This example was run on all 8 clusters of a Macbook Pro M1 machine. Performance will vary depending on cluster size/specs, network connection, etc.
-
-### Visualize your Data
 
 ### Store Geospatial Data in Delta Lake
 
