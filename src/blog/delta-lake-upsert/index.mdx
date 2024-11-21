@@ -95,7 +95,7 @@ CPU times: user 9.09 ms, sys: 5.65 ms, total: 14.7 ms
 Wall time: 28.8 s
 ```
 
-This took more than 28seconds on an M1 Macbook Pro with 8 cores. That’s quite slow for a single upsert operation.
+This took more than 28 seconds on an M1 Macbook Pro with 8 cores. That’s quite slow for a single upsert operation.
 
 Not only that, but we now have two large files on disk.
 
@@ -353,7 +353,7 @@ Read more about using Delta Lake without Spark dependencies in the [Delta Lake w
 
 Here are some best practices to consider when running your Delta Lake upsert operations:
 
-- **Optimize Table Performance**: Periodically optimize and vacuum yourDelta tables to improve performance and reduce storage costs. Read more in the [Delta Lake Optimize post](https://delta.io/blog/delta-lake-optimize/).
+- **Optimize Table Performance**: Periodically optimize and vacuum your Delta tables to improve performance and reduce storage costs. Read more in the [Delta Lake Optimize post](https://delta.io/blog/delta-lake-optimize/).
 - **Enable Z-Ordering or Liquid Clustering**: For large tables, consider **Z-Ordering** on frequently queried columns or enabling Liquid Clustering. This can help to reduce read time. Read more in the [Delta Lake Z Order post](https://delta.io/blog/2023-06-03-delta-lake-z-order/).
 - **Use Primary Keys in Conditions**: When possible, use a unique identifier in the `MERGE` condition to prevent unintentional duplicates.
 
