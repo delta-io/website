@@ -10,7 +10,7 @@ This article shows you how to use Delta Lake with Google Cloud Platform (GCP).
 
 Delta Lake is an open-source framework for fast, reliable data storage. It supports ACID transactions, handles metadata efficiently at scale, optimizes query performance and allows time travel. You can use Delta Lake to build a high-performing lakehouse architecture.
 
-GCP is a popular cloud service. Many organizations use its object store Google Cloud Service to build a data lake, for example with Parquet files. Storage on GCP is cheap and accessing it is efficient, especially for batch workloads. Data lakes on GCS do not natively support transactional guarantees or many of the query optimizations that Delta Lake provides.
+GCP is a popular cloud service. Many organizations use its object store Google Cloud Storage to build a data lake, for example with Parquet files. Storage on GCP is cheap and accessing it is efficient, especially for batch workloads. Data lakes on GCS do not natively support transactional guarantees or many of the query optimizations that Delta Lake provides.
 
 This article will show you how to read and write Delta tables from and to GCP. We’ll work through code examples with Spark and Polars.
 
@@ -30,9 +30,7 @@ Unlike traditional file systems, cloud storage uses a flat namespace. This means
 
 Cloud storage also has API rate limits, so each file listing often requires multiple API calls. When you need to list a large number of files, this can create a serious bottleneck.
 
-Imagine you have a table stored in S3, with data spread across many files in a ‘directory’. To run a query, your engine first has to list all the files and then filter for the relevant ones. S3 only allows a maximum of 1,000 objects per LIST operation. If your table has millions of files, this means high latency and slower queries.
-
-Delta Lake avoids this problem by storing all file paths in a transaction log. Instead of listing files, your engine can quickly access the paths of relevant files in a single operation. This makes querying much faster and more efficient.
+Delta Lake avoids these issues by storing all file paths in a transaction log. Instead of listing files, your engine can quickly access the paths of relevant files in a single operation. This makes querying much faster and more efficient.
 
 ![](image1.png)
 
