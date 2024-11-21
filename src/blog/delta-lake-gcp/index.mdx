@@ -137,29 +137,13 @@ You will need to set two more configurations to set up working with Delta Lake o
 1. Download and install the `gcs-connector` JAR file and add it to your Spark session
 2. Configure GCS as a file system.
 
-We will do this all in one go using the following code block:
+We will do this all in by setting the following configurations in our Spark session:
 
 ```
-conf = (
-    pyspark.conf.SparkConf()
-    .setAppName("MY_APP")
-    .set(
-        "spark.sql.catalog.spark_catalog",
-        "org.apache.spark.sql.delta.catalog.DeltaCatalog",
-    )
-    .set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+    .set("spark.jars", "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop3-latest.jar")
     .set("spark.hadoop.fs.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem")
     .set("spark.hadoop.google.cloud.auth.service.account.enable", "true")
     .set("spark.hadoop.google.cloud.auth.service.account.json.keyfile", "/path/to/key.json")
-    .set("spark.jars", "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop3-latest.jar") \
-    .set("spark.sql.shuffle.partitions", "4")
-    .setMaster(
-        "local[*]"
-    )  # replace the * with your desired number of cores. * for use all.
-)
-
-builder = pyspark.sql.SparkSession.builder.appName("MyApp").config(conf=conf)
-spark = configure_spark_with_delta_pip(builder.getOrCreate()
 ```
 
 Replace `/path/to/key.json` with the path to your Service Account key JSON file.
