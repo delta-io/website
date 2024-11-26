@@ -40,16 +40,16 @@ Avro is designed to serialize data quickly. It can be a good choice for workload
 Delta Lake stores your table data in Parquet files and metadata in a separate transaction log. Here are the contents of a Delta table:
 
 ```
-    your_delta_table/	        <-- 	this is the top-level table directory
-    _delta_log			<-- 	this is the transaction log which tracks
-        00.json			        all the changes to your data
-        01.json
-        …
-        n.json
-    file1.parquet	        <-- 	these are your Delta table partitions,
-    file2.parquet		        ordered for maximum query performance
-    …
-    fileN.parquet
+your_delta_table/                       <-- 	this is the top-level table directory
+├── _delta_log                          <-- 	this is the transaction log which tracks
+│   ├── 00000000000000000000.json               all the changes to your data
+│   ├── 00000000000000000001.json
+│   ├── 00000000000000000002.json
+│   └── _commits
+├── file1.parquet                       <-- 	these are your Delta table partitions,
+└── file2.parquet                               ordered for maximum query performance
+└── ...
+└── fileN.parquet
 ```
 
 Here’s a visual representation of a Delta table:
@@ -98,7 +98,7 @@ Avro doesn’t include centralized file tracking. File listing in Avro-based sys
 
 ## Delta Lake vs. Avro: The Small File Problem
 
-The small file problem refers to performance issues caused by having too many small files. Delta Lake handles this with its [compaction and optimization features](https://delta.io/blog/delta-lake-optimize/), which merge small files to reduce the number of metadata entries and optimize performance.
+The small file problem refers to performance issues caused by having too many small files. For example, in order to execute a query against your Delta Lake table, all matching files (after partition pruning and file-skipping) must be read from storage into memory in order to produce a result. The query response time difference between non-optimized tables (with many small files) and optimized tables (with right-sized files) can dramatically improve table performance across the board. Delta Lake handles this with its [compaction and optimization features](https://delta.io/blog/delta-lake-optimize/), which merge small files to reduce the number of metadata entries and optimize performance.
 
 ![](image3.png)
 
@@ -142,7 +142,7 @@ Read the [Delta Lake Time Travel](https://delta.io/blog/2023-02-01-delta-lake-ti
 
 Both Avro and Delta Lake can be used for streaming and real-time processing.
 
-Avro is often used for ingestion of raw streaming data, such as log files, events or sensor data. Its lightweight, row-based structure makes it ideal for high-throughput writes.
+Avro is often used for ingestion of raw streaming data, such as log files, events or sensor data. Because it is a lightweight and row-based format it is ideal for many high-throughput writes. The row-based format lends itself better for initial ingestion, but because it is not a columnar format, there is a higher cost when using avro for analytical stream processing.
 
 With Delta Lake, you get a columnar, analytics-ready format, which gives you faster reads and better query performance. This makes it ideal for streaming-analytics use cases where the goal is to process incoming data streams while also enabling complex queries and reliability.
 
