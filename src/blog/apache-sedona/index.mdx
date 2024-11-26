@@ -41,13 +41,13 @@ You will also need to add two JAR files to your Spark session for Sedona to work
 
 You can install these JARs manually or add them to your Spark session as we will do in the next section.
 
-Here are some important notes to be aware of:
+> Here are some important notes to be aware of:
 
-- If you are using Spark versions >= 3.4, use the corresponding major.minor version of Spark, such as `sedona-spark-shaded-3.4_2.12:1.6.1`. For Spark &lt;3.4, you can use `sedona-spark-shaded-3.0…`
-- If you are working in an IDE or Jupyter notebook, use the `unshaded` version of the `sedona-spark` JAR: `'org.apache.sedona:sedona-spark-3.5_2.12:1.6.1`.
-- If you’re going to be working with files stored in Amazon S3 then you will also need to install some more JARs and set some additional config. You can follow precise instructions to do so in [the Delta Lake on S3 article](https://delta.io/blog/delta-lake-s3).
+> - If you are using Spark versions >= 3.4, use the corresponding major.minor version of Spark, such as `sedona-spark-shaded-3.4_2.12:1.6.1`. For Spark &lt;3.4, you can use `sedona-spark-shaded-3.0…`
+> - If you are working in an IDE or Jupyter notebook, use the `unshaded` version of the `sedona-spark` JAR: `'org.apache.sedona:sedona-spark-3.5_2.12:1.6.1`.
+> - If you’re going to be working with files stored in Amazon S3 then you will also need to install some more JARs and set some additional config. You can follow precise instructions to do so in [the Delta Lake on S3 article](https://delta.io/blog/delta-lake-s3).
 
-### Create a Sedona Session
+### Create a Sedona Session≈
 
 Creating a Sedona session is much like creating a Spark session. To work with Delta Lake we will have to do this in two steps:
 
