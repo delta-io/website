@@ -9,7 +9,13 @@ date: 2023-06-03
 This blog post explains how to Z ORDER Delta tables and how this design pattern can significantly speed up your queries.
 
 <Info level="warning">
-A new feature for simplifying data layout to optimize query performance has been introduced since this blog was written. While this blog is still current, and Z-ORDER continues to be supported, **Liquid Clustering** provides flexibility to redefine clustering columns without rewriting existing data, allowing data layout to evolve alongside analytic needs over time. You can learn more about it in the [Delta Lake documentation](https://docs.delta.io/latest/delta-clustering.html).
+  A new feature for simplifying data layout to optimize query performance has
+  been introduced since this blog was written. While this blog is still current,
+  and Z-ORDER continues to be supported, **Liquid Clustering** provides
+  flexibility to redefine clustering columns without rewriting existing data,
+  allowing data layout to evolve alongside analytic needs over time. You can
+  learn more about it in the [Delta Lake
+  documentation](https://docs.delta.io/latest/delta-clustering.html).
 </Info>
 
 Z Ordering your data reorganizes the data in storage and allows certain queries to read less data, so they run faster. When your data is appropriately ordered, more files can be skipped.
