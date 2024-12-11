@@ -1,7 +1,7 @@
 import React from "react";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import bookDownload from "src/images/bookDownload.png";
+import bookDownload from "src/images/dldg-cover.png";
 import downloadArrow from "src/images/downloadArrow.png";
 import { media } from "config/theme";
 
@@ -120,11 +120,11 @@ const BookDownload = () => (
         </DownloadTitle>
 
         <DownloadSubTitle>
-          Early Release (Raw & Unedited) on building modern data lakehouse
-          architectures with Delta Lake
+          Building modern data lakehouse architectures with Delta Lake with
+          forewords by Michael Armbrust and Dominique Brezinski
         </DownloadSubTitle>
 
-        <ButtonDownload download href="/pdfs/DLDTG_ER5.pdf">
+        <ButtonDownload download href="/pdfs/dldg_databricks.pdf">
           Download
           <img src={downloadArrow} alt="Download button" />
         </ButtonDownload>
