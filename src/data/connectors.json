@@ -117,6 +117,15 @@
     "thumbnail": "./images/connectors/prestodb-logo.png"
   },
   {
+    "name": "RisingWave",
+    "description": "This connector allows RisingWave to write to Delta Lake.",
+    "url": "https://docs.risingwave.com/integrations/destinations/delta-lake",
+    "docs": "https://docs.risingwave.com/integrations/destinations/delta-lake",
+    "source_code": "https://github.com/risingwavelabs/risingwave/blob/main/src/connector/src/sink/deltalake.rs",
+    "tags": ["RisingWave", "standalone"],
+    "thumbnail": "./images/connectors/risingwave_logo.png"
+  },
+  {
     "name": "SQL Delta Import",
     "description": "This utility is for importing data from a JDBC source into a Delta Lake table.",
     "url": "https://github.com/delta-io/delta/blob/master/connectors/sql-delta-import/readme.md",
