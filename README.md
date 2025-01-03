@@ -15,7 +15,7 @@
 
 ## :rocket: Getting up and running locally
 
-This site requires Node 16, which you can install with `brew install node@16`.
+This site requires Node 20 or greater, which you can install with `brew install node@20`.
 
 This site requires a development `YOUTUBE_API_KEY` which populates the YouTube videos in the learn > videos, learn > tutorials, and community pages. That is, ensure you have created a `.env.development` file in the root folder; the file should look like:
 
