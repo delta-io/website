@@ -17,6 +17,8 @@
 
 This site requires Node 20 or greater, which you can install with `brew install node@20`.
 
+> If you are using vscode, you can use the dev container to simplify getting started.
+
 This site requires a development `YOUTUBE_API_KEY` which populates the YouTube videos in the learn > videos, learn > tutorials, and community pages. That is, ensure you have created a `.env.development` file in the root folder; the file should look like:
 
 ```
