@@ -93,7 +93,7 @@ Since Parquet stores data in a columnar format, it allows your engine to skip re
 For example:
 
 ```python
-summary_df = spark.read.parquet("transactions.parquet") \
+summary_df = spark.read.format("parquet").load("transactions.parquet") \
     .select("transaction_date", "amount") \
     .filter("transaction_date > '2024-01-01'")
 ```
