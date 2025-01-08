@@ -16,9 +16,9 @@ Delta Lake is a popular open table format. There are also other open table forma
 
 ![](image1.png)
 
-While there are differences between the different open table formats, these differences are becoming less important as technologies emerge to support interoperability. Projects like Delta Lake UniForm and Unity Catalog are bridging the gap between open table formats. We’ll cover these projects at the end of the article.
+While there are differences between the different open table formats, these differences are becoming less important as technologies emerge to support interoperability. Projects like Delta Lake UniForm and Unity Catalog are bridging the gap between open table formats. We'll cover these projects at the end of the article.
 
-First, let’s jump into understanding what open table formats are and why they are so awesome 😀
+First, let's jump into understanding what open table formats are and why they are so awesome 😀
 
 ## What is an open table format?
 
@@ -38,7 +38,7 @@ Open table formats solve performance and reliability problems with traditional d
 4. Schema enforcement and evolution
 5. Full CRUD operations
 
-Let’s explore each feature in the sections below.
+Let's explore each feature in the sections below.
 
 ### Open Table Formats: Reliable ACID Transactions
 
@@ -157,14 +157,14 @@ For example, to convert a Delta table into a Parquet data lake with Hive-style p
 
 ![](image3.png)
 
-From a pure performance perspective, you usually don’t want to convert from Delta Lake to Parquet if you can avoid it. Delta Lake is almost always faster and more reliable. Only do this if you’re sure you no longer need features like versioning or transaction management.
+From a pure performance perspective, you usually don't want to convert from Delta Lake to Parquet if you can avoid it. Delta Lake is almost always faster and more reliable. Only do this if you're sure you no longer need features like versioning or transaction management.
 
 ## When should I use an open table format?
 
 Open table formats are almost always faster, safer and more developer-friendly than data lakes with file formats like Parquet, CSV or JSON. Open table formats like Delta lake can be a great choice for you because they:
 
-- support transactions and schema enforcement, so it’s much less likely you’ll corrupt your table.
+- support transactions and schema enforcement, so it's much less likely you'll corrupt your table.
 - abstract the file metadata to a transaction log and supports advanced clustering and data skipping, so you can run queries faster
 - make it easy to perform common data operations like dropping columns, renaming columns, deleting rows, and DML operations.
 
-If you’re running important tabular data workflows in production, open table formats are likely going to be the best choice for you.
+If you're running important tabular data workflows in production, open table formats are likely going to be the best choice for you.
