@@ -50,6 +50,7 @@ Let’s take a closer look at what the transaction log files look like and how t
 For these examples we will use Delta Lake with Apache Spark. Follow [these instructions](https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake) to set up Spark with Delta Lake.
 
 > You can also use Delta Lake with many other query engines. See the Querying Delta Lake section below for more detail.
+
 ### Basic Structure of the Transaction Log
 
 Let’s start by creating some data to play with:
@@ -84,7 +85,7 @@ tmp/delta-table
 ```
 
 > Spark generally runs in parallel on multiple cores. In that case, it will create at least one partition per core. In the example above, the Spark session is running on 1 core and creates 1 partition.
-The Parquet files store the data in your Spark DataFrame. The `_delta_log` directory stores metadata about the transactions in lightweight JSON files.
+> The Parquet files store the data in your Spark DataFrame. The `_delta_log` directory stores metadata about the transactions in lightweight JSON files.
 
 Here are the contents of the `00000000000000000000.json` file:
 
