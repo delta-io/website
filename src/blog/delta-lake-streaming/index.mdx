@@ -114,7 +114,7 @@ streaming_query = (
 )
 ```
 
-Checkpoints record the state of the data processing pipeline at a given point in time. This enables Delta Lake to make sure that data is processed exactly once, even in the event of failures, and enables the system to continue processing from the correct position if something goes wrong.
+Checkpoints record the state of the data processing pipeline at a given point in time. This enables Delta Lake to make sure that data is processed exactly once, even in the event of failures. It also enables the system to continue processing from the correct position if something goes wrong.
 
 Now end with the following line to keep the stream open until terminated:
 
@@ -123,6 +123,8 @@ streaming_query.awaitTermination()
 ```
 
 Save all this to a Python script and give it a name, for example: `delta-stream-sink.py`
+
+### Run your Delta Lake stream
 
 To see this in action:
 
