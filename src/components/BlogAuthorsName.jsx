@@ -48,6 +48,15 @@ export const AUTHORS = {
     profile: "https://www.linkedin.com/in/avrilaysha/",
     avatar: AVRIL_AYSHA_IMG,
   },
+  "Sida Shen": {
+    profile: "https://www.linkedin.com/in/sida-shen-165303193/"
+  },
+  "Allison Portis": {
+    profile: "https://www.linkedin.com/in/allisonportis/"
+  },
+  "Robert Pack": {
+    profile: "https://www.linkedin.com/in/robert-pack/"
+  }
 };
 
 const BlogAuthorsName = ({ name, date }) => {
