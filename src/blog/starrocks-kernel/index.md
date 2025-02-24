@@ -27,13 +27,11 @@ the Delta log to read or write data correctly, which tracks changes, schema, and
 information. With new features like **Deletion Vectors** or **Column Mapping**, keeping up with
 protocol updates becomes increasingly complex.
 
-
 ### Optimizing Performance
 
 Efficiently querying Delta Lake requires more than just reading Parquet files. The integration
 must optimize I/O operations, handle metadata caching, and leverage partition pruning to minimize
 data scans. Without these optimizations, query performance can degrade significantly, especially at scale.
-
 
 ### Connector Fragmentation
 
@@ -46,7 +44,6 @@ Each new feature requires connectors to update their implementations, leading to
 It becomes less predictable for customers to know which features are supported by which connectors,
 creating inconsistencies in the user experience. This delay in adoption can hinder customers’ ability
 to fully leverage Delta Lake’s latest advancements across their ecosystem.
-
 
 ## Enter Delta Kernel
 
@@ -85,7 +82,6 @@ where **Delta Kernel** plays a critical role in handling metadata, optimizing qu
 
 ![](figure2.png)
 
-
 #### Metadata and Protocol Retrieval
 
 Delta Kernel retrieves the table's **metadata**, including schema, partition columns, and configurations,
@@ -94,11 +90,9 @@ and ensures compatibility with Delta Lake's evolving feature set. As part of thi
 - `minReaderVersion`: The minimum reader version required to correctly interpret the table.
 - `readerFeatures`: The specific features that must be supported for proper data processing.
 
-
 #### Statistics Retrieval for Query Optimization
 
 Delta Kernel provides file-level statistics, which help StarRocks' **Cost-Based Optimizer (CBO)** select the most efficient query execution plan.
-
 
 #### Scan Range Management
 
@@ -136,21 +130,21 @@ introducing caching mechanisms that minimize redundant file reads:
 These optimizations reduce query latency by avoiding redundant reads of Parquet/JSON files and
 minimize metadata-related overhead in the FE, ensuring responsiveness for high-concurrency workloads.
 
-
 ## Current Capabilities
 
 Today, StarRocks’ Delta Lake connector supports:
 
 1. **Wide Data Type Coverage**:
+
    1. Handles core data types like INT, STRING, and FLOAT, with ongoing development for complex types like MAP and STRUCT.
 
 2. **Data Skipping**:
+
    1. Efficiently skips irrelevant data based on Parquet file statistics and Delta transaction logs, drastically reducing scan times.
 
 3. **Advanced Table Features**:
    1. Supports transactional consistency, and partitioned tables.
    2. Supports Delete Vectors.
-
 
 ## Try StarRocks and Delta Lake Today
 
@@ -163,7 +157,7 @@ with key benefits such as:
   reliable analytics directly on Delta Lake, eliminating data ingestion and improving data governance.
 
 Combining Delta Lake’s powerful data management capabilities with StarRocks’ high-performance query engine,
-this architecture delivers the best of both worlds—unified data governance and exceptional performance for **customer-facing analytics**. 
+this architecture delivers the best of both worlds—unified data governance and exceptional performance for **customer-facing analytics**.
 
 If you’re looking to maximize the value of your lakehouse for demanding workloads, **StarRocks + Delta Lake**
 is the solution to consider. Join the [Delta Lake Slack](https://go.delta.io/slack)
