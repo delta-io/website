@@ -26,8 +26,8 @@ Here's how it works:
 
 1. You create a Delta Sharing Server which makes an existing Delta Lake table available for consumption. The server defines which parts of the data can be accessed by which recipients.
 2. A data recipient can run any query engine that supports the open Delta Sharing REST protocol to access the data that they are authorized to query.
-3. The Delta Sharing Server will list the required files needed to complete the recipient's query. This allows the recipient to ask only for a subset of table (e.g. specific items or date) for more efficient computation
-4. The Delta Sharing Server will then transfer files to the recipient using short-lived URLs and making use of cloud object store support for parallel computing and performance gains. Only the files required for the query are transferred so you don't need to be constantly streaming the entire dataset to a server.
+3. The Delta Sharing Server will list the required files needed to complete the recipient's query. This allows the recipient to ask only for a subset of the table (e.g. specific items or date) for more efficient computation
+4. The Delta Sharing Server will then transfer files to the recipient using short-lived URLs, using cloud object store support for parallel computing and performance gains. Only the files required for the query are transferred so you don't need to be constantly streaming the entire dataset to a server.
 
 ## Why should I use Delta Sharing?
 
@@ -103,7 +103,7 @@ You can now use your client to access the shared Delta tables. Let's list all th
  Table(name='owid-covid-data', share='delta_sharing', schema='default')]
 ```
 
-To work with the data in these tables, you will need to create a table URL to reference it. A table URL consists of the path to your profile file, followed by a `#` and 3 components: `&lt;share-name>.&lt;schema-name>.&lt;table-name>`.
+To work with the data in these tables, you will need to create a table URL to reference it. A table URL consists of the path to your profile file, followed by a `#` and 3 components: `<share-name>.<schema-name>.<table-name>`.
 
 Create the table URL for one of the tables listed in this share:
 
@@ -128,10 +128,9 @@ Now that your data is loaded into a pandas DataFrame you can query and transform
 ```python
 > df[["Year","DayofMonth"]].groupby("DayofMonth").count()
 
-           	Year
-DayofMonth
-9            947
-10            53
+Year        DayofMonth
+9           947
+10          53
 ```
 
 ### How to query Table Changes
@@ -139,14 +138,16 @@ DayofMonth
 If the table supports history sharing, the connector can query table changes. For example, here's how to load table changes from version 0 to version 5 into a pandas DataFrame.
 
 ```python
-delta_sharing.load_table_changes_as_pandas(table_url, starting_version=0, ending_version=5)
+delta_sharing.load_table_changes_as_pandas(
+  table_url,
+  starting_version=0,
+  ending_version=5
+)
 ```
 
 To support history sharing, enable the `tableConfig.cdfEnabled` setting in the OSS Delta Sharing Server.
 
 ## How to run Delta Sharing with Apache Spark
-
-You can also use Delta Sharing with Apache Spark. This will make your data available to clients running in SQL, Python, Java, Scala and R.
 
 To run Delta Sharing with Apache Spark, launch a Spark session with the `delta-sharing` Spark connector. For example, in Pyspark:
 
@@ -154,7 +155,7 @@ To run Delta Sharing with Apache Spark, launch a Spark session with the `delta-s
 pyspark --packages io.delta:delta-sharing-spark_2.12:3.1.0
 ```
 
-To work with shared Delta tables you will need the profile file with the access credentials to talk to the Delta Sharing server. After downloading the file, you can references shared tables using the following URL format:
+To work with shared Delta tables you will need the profile file with the access credentials to talk to the Delta Sharing server. After downloading the file, you can reference shared tables using the following URL format:
 
 ```python
 table_path = "<profile-file-path>#<share-name>.<schema-name>.<table-name>"
@@ -183,7 +184,7 @@ df = (spark.read.format("deltaSharing")
       .load(table_path))
 ```
 
-Read more about CDF in the [Delta Lake Change Data Feed](https://delta.io/blog/2023-07-14-delta-lake-change-data-feed-cdf/) post. This feature is available with delta-sharing 0.5.0+.
+Read more about CDF in the [Delta Lake Change Data Feed](https://delta.io/blog/2023-07-14-delta-lake-change-data-feed-cdf/) post. This feature is available with `delta-sharing 0.5.0+`.
 
 ### How to query streaming data with Delta Sharing
 
@@ -198,7 +199,7 @@ df = (spark.readStream.format("deltaSharing")
       .load(table_path))
 ```
 
-Read more about streaming in the Delta Lake streaming post. This feature is available with delta-sharing 0.6.0+.
+Read more about streaming in the Delta Lake streaming post. This feature is available with `delta-sharing 0.6.0+`.
 
 ## Important things to keep in mind
 
