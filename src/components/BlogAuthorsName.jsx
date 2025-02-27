@@ -10,6 +10,7 @@ import DAN_LIDEN_IMG from "src/images/authors/dan_liden.jpg";
 import MICHAEL_SHTELMA_IMG from "src/images/authors/michael_shtelma.jpg";
 import MARTIN_BODE_IMG from "src/images/authors/martin_bode.jpg";
 import AVRIL_AYSHA_IMG from "src/images/authors/avril_aysha.jpg";
+import SIDA_SHEN_IMG from "src/images/authors/sida-shen-profile.jpeg";
 
 export const AUTHORS = {
   "Denny Lee": {
@@ -50,6 +51,7 @@ export const AUTHORS = {
   },
   "Sida Shen": {
     profile: "https://www.linkedin.com/in/sida-shen-165303193/",
+    avatar: SIDA_SHEN_IMG,
   },
   "Allison Portis": {
     profile: "https://www.linkedin.com/in/allisonportis/",
