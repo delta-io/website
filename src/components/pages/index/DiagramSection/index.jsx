@@ -1,7 +1,7 @@
 import * as React from "react";
 import Section from "src/components/Section";
 import styled from "styled-components";
-import deltaDiagram from "./delta-uniform-hero-v4.png";
+import deltaDiagram from "./delta-uniform-hero-v5.png";
 
 export const imageOffsets = {
   sm: 35,
