@@ -55,7 +55,7 @@ const HomePage = () => {
             <Link href="https://docs.delta.io/latest/delta-uniform.html" newTab>
               Delta Universal Format
             </Link>{" "}
-            aka UniForm, you can read now Delta tables with Iceberg and Hudi
+            aka UniForm, you can now read Delta tables with Iceberg and Hudi
             clients.
           </>
         }
