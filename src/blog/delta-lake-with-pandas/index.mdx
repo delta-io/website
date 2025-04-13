@@ -1,0 +1,463 @@
+---
+title: Implementing Delta Lake and its optimization techniques Outside Spark - A Pandas-Centric Approach with delta-rs
+description: Implement Delta Lake and its optimization techniques in Pandas using delta-rs
+thumbnail: ./thumbnail.png
+author: Abhishek Ramji
+date: 2025-04-13
+---
+
+## Introduction
+
+Delta Lake has revolutionized data lake storage by providing ACID transactions, schema evolution, and performance optimizations. While it is commonly used with Apache Spark, Delta Lake can also be leveraged outside Spark using delta-rs, a Rust-based implementation of Delta Lake that supports Python and Pandas. In this article, we explore how to implement Delta Lake features using Pandas and delta-rs, focusing on techniques like Data Skipping, Compaction, Z-Ordering, Time Travel, and Vacuum. We also compare the performance improvements after implementing the Delta Lake features.
+
+## Setting Up delta-rs with Pandas
+
+To get started, install the required dependencies:
+
+```
+pip install deltalake
+```
+
+Next, create a Delta table from a Pandas DataFrame (3 cols, 100 mil rows):
+
+```
+import numpy as np
+import pandas as pd
+from deltalake import write_deltalake, DeltaTable
+
+## Sample DataFrame
+
+data = pd.DataFrame({
+ "id": np.arange(1, 100000001),
+ "value": np.random.randint(0, 100, 100000000),
+ 'salary': np.random.randint(100000, 500000, 100000000)
+})
+
+## Write to Delta format
+
+write_deltalake("./delta_table", data)
+```
+
+# Key Delta Lake Techniques in Pandas
+
+## 1. Data Skipping
+
+Data Skipping allows Delta Lake to avoid scanning unnecessary data by leveraging metadata stored in Parquet statistics. This improves query performance by reading only relevant data instead of scanning the entire dataset. There are 3 different ways of implementing data-skipping during a write operation.
+
+### Default data skipping (Data Skipping stats are automatically collected for the first 32 columns)
+
+```
+write_deltalake("./delta_default_data_skipping", data)
+```
+
+### Custom data skipping with indexed columns (Data Skipping stats are collected for the first "n" columns)
+
+```
+write_deltalake(
+ "./delta_custom_data_skipping_n_cols",
+ data,
+ configuration={"delta.dataSkippingNumIndexedCols": "2"}
+)
+```
+
+### Custom data skipping specifying column names (Data Skipping stats are collected for the column names specified)
+
+```
+write_deltalake(
+ "./delta_custom_data_skipping_specify_col_names",
+ data,
+ configuration={"delta.dataSkippingStatsColumns": "id"}
+)
+```
+
+> Note: Data Skipping benefits are available only during the initial read from Delta Lake. Once loaded into memory, Pandas operates on the full dataset, meaning filtering operations will not benefit from this optimization.
+
+## 2. Compaction
+
+Compaction (file optimization) reduces the number of small Parquet files to improve query performance by minimizing metadata overhead and enhancing read efficiency.
+
+```
+delta_table = DeltaTable("./delta_default_data_skipping")
+delta_table.optimize.compact()
+```
+
+This process merges small files into larger ones, reducing read overhead for Pandas and other consumers.
+
+## 3. Z-Ordering
+
+Z-Ordering is a data layout optimization technique that improves read performance by clustering related data together. This is particularly useful for range queries, as it reduces the number of files that need to be scanned. Z Ordering is always performed along with Compaction.
+
+Similar to Data Skipping, Z-Ordering only provides benefits during the initial read. Once the data is loaded into Pandas, it is held in memory, negating any advantages from the optimized layout.
+
+```
+DeltaTable(
+ "./delta_default_data_skipping"
+).optimize.z_order(['value'])
+```
+
+```
+## Output
+
+{'numFilesAdded': 7,
+ 'numFilesRemoved': 10,
+ 'filesAdded': '{"avg":104318175.71428572,"max":104926297,"min":100718771,"totalFiles":7,"totalSize":730227230}',
+ 'filesRemoved': '{"avg":97421902.3,"max":106107570,"min":19275218,"totalFiles":10,"totalSize":974219023}',
+ 'partitionsOptimized': 0,
+ 'numBatches': 12208,
+ 'totalConsideredFiles': 10,
+ 'totalFilesSkipped': 0,
+ 'preserveInsertionOrder': True}
+```
+
+As you can see, there were 10 files initially. However, since Compaction was performed along with Z Ordering, those 10 files were removed, and instead, 7 files were created.
+
+Let's check the history of the table to see if Z Order and Compaction have been applied
+
+```
+DeltaTable("./delta_default_data_skipping").history()
+```
+
+```
+## Output
+
+[{'timestamp': 1742153900713,
+  'operation': 'OPTIMIZE',
+  'operationParameters': {'predicate': '[]', 'targetSize': '104857600'},
+  'readVersion': 0,
+  'clientVersion': 'delta-rs.0.23.1',
+  'operationMetrics': {'filesAdded': '{"avg":104318175.71428572,"max":104926297,"min":100718771,"totalFiles":7,"totalSize":730227230}',
+   'filesRemoved': '{"avg":97421902.3,"max":106107570,"min":19275218,"totalFiles":10,"totalSize":974219023}',
+   'numBatches': 12208,
+   'numFilesAdded': 7,
+   'numFilesRemoved': 10,
+   'partitionsOptimized': 0,
+   'preserveInsertionOrder': True,
+   'totalConsideredFiles': 10,
+   'totalFilesSkipped': 0},
+  'version': 1},
+ {'timestamp': 1742153130481,
+  'operation': 'WRITE',
+  'operationParameters': {'mode': 'ErrorIfExists'},
+  'operationMetrics': {'execution_time_ms': 20914,
+   'num_added_files': 10,
+   'num_added_rows': 100000000,
+   'num_partitions': 0,
+   'num_removed_files': 0},
+  'clientVersion': 'delta-rs.0.23.1',
+  'version': 0}]
+```
+
+As you can see above, two versions have been created.
+The first version (version 0) is the initial default-data skipping write. The second version (version 1) is the Compacted and Z-ordered version.
+
+## 4. Time Travel
+
+Delta Lake maintains historical versions of data, allowing users to query past states, making it useful for auditing, debugging, and rollback scenarios.
+
+```
+### Creating the version 0 of data
+
+output_path = './time_travel_example'
+data_1 = pd.DataFrame({
+ "id": np.arange(1, 10001),
+ "value": np.random.randint(0, 100, 10000),
+ 'salary': np.random.randint(100000, 500000, 10000)
+})
+
+write_deltalake(output_path, data_1)
+
+df1 = DeltaTable(output_path).to_pandas()
+```
+
+```
+### Append new data to the same deltalake path (Version 1)
+
+data_2 = pd.DataFrame({
+ "id": np.arange(1, 11),
+ "value": np.random.randint(0, 100, 10),
+ 'salary': np.random.randint(100000, 500000, 10)
+})
+
+write_deltalake(output_path, data_2, mode = 'append')
+```
+
+```
+### Overwrite with new data to the same deltalake path (Version 2)
+
+data_3 = pd.DataFrame({
+ "id": [10],
+ "value": [100],
+ 'salary': [200000]
+})
+
+write_deltalake(output_path, data_3, mode = 'overwrite')
+```
+
+```
+### View history of the Delta table
+
+DeltaTable(output_path).history()
+```
+
+```
+## Output
+
+[{'timestamp': 1742155280805,
+  'operation': 'WRITE',
+  'operationParameters': {'mode': 'Overwrite'},
+  'operationMetrics': {'execution_time_ms': 453,
+   'num_added_files': 1,
+   'num_added_rows': 1,
+   'num_partitions': 0,
+   'num_removed_files': 2},
+  'clientVersion': 'delta-rs.0.23.1',
+  'version': 2},
+ {'timestamp': 1742155269018,
+  'operation': 'WRITE',
+  'operationParameters': {'mode': 'Append'},
+  'clientVersion': 'delta-rs.0.23.1',
+  'operationMetrics': {'execution_time_ms': 2,
+   'num_added_files': 1,
+   'num_added_rows': 10,
+   'num_partitions': 0,
+   'num_removed_files': 0},
+  'version': 1},
+ {'timestamp': 1742155255789,
+  'operation': 'WRITE',
+  'operationParameters': {'mode': 'ErrorIfExists'},
+  'operationMetrics': {'execution_time_ms': 4,
+   'num_added_files': 1,
+   'num_added_rows': 10000,
+   'num_partitions': 0,
+   'num_removed_files': 0},
+  'clientVersion': 'delta-rs.0.23.1',
+  'version': 0}]
+```
+
+As expected, we see three different versions of data exist in the above output_path.
+
+We can travel to different versions of data using the version argument when performing the read. Eg: You want to read version 1 of the above path:
+
+```
+df_version1 = DeltaTable(
+ output_path,
+ version = 1
+).to_pandas()
+```
+
+> Note: Not specifying the version argument will automatically return the latest version of data available in the path specified.
+
+## 5. Vacuum
+
+While we will need to store older versions of data on disks for time travel purposes, storing them over a longer period will significantly increase the storage costs. So, we can remove the older files that we no longer need(for time-travel purposes), and delete them permanently from the disk.
+
+Vacuum removes Parquet files that are no longer referenced, optimizing storage efficiency and keeping the dataset lean. Regularly running Vacuum helps optimize storage costs by clearing obsolete data.
+
+```
+### Let's remove the older 2 versions from the Time Travel example, and we only want to retain the latest version
+
+delta_table = DeltaTable(output_path)
+
+## List the files that will be vacuumed
+delta_table.vacuum()
+```
+
+Initially, there will be no files displayed because there are no files that are older than the default <b>"deletedFileRetentionDuration"</b>. The default value for this is "168 hours".
+
+By default, only files that have been present on the disk for longer than 168 hours will be considered for vacuum. But how to customize this behavior?
+
+```
+## Set 'dry_run = True' to check which files will be considered for deletion. This won't delete the files
+## Set 'retention_duration = 0' to consider all the older files for deletion. This won't affect the latest files
+## Set 'enforce_retention_duration = False' to give more priority to the value we assign to the 'retention_hours'
+
+delta_table.vacuum(
+retention_hours = 0, 
+dry_run = True, 
+enforce_retention_duration = False
+)
+```
+
+```
+['part-00001-20003cd1-c799-4e7c-83b0-4691da3e35fc-c000.snappy.parquet',
+ 'part-00001-eb826a04-8f6b-49c1-be0c-a63425c255a6-c000.snappy.parquet']
+```
+
+The above command will return the path of the files that will be considered for deletion. As expected, it returns the two older files.
+Now let's perform the actual vacuum operation:
+
+```
+## Set 'dry_run = False' to perform the actual deletion operation
+
+delta_table.vacuum(
+retention_hours = 0, 
+dry_run = False, 
+enforce_retention_duration = False
+)
+```
+
+The deletion operations have been performed successfully.
+
+Let's have a look at whether it actually worked:
+
+```
+### Version 0
+
+df_version0 = DeltaTable(
+ output_path,
+ version = 0
+).to_pandas()
+```
+
+```
+## Output
+
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+Input In [69], in <cell line: 1>()
+----> 1 df_version0 = DeltaTable(
+      2     output_path,
+      3     version = 0
+      4 ).to_pandas()
+```
+
+```
+### Version 1
+
+df_version1 = DeltaTable(
+ output_path,
+ version = 1
+).to_pandas()
+```
+
+```
+## Output
+
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+Input In [70], in <cell line: 1>()
+----> 1 df_version1 = DeltaTable(
+      2     output_path,
+      3     version = 1
+      4 ).to_pandas()
+```
+
+```
+### Version 2 (Latest)
+
+df_version2 = DeltaTable(
+ output_path,
+ version = 2 #(This line is Optional here as it is the latest version anyways)
+).to_pandas()
+```
+
+```
+Works Successfully
+```
+
+As expected, the older versions are no longer available and we only have the latest version available, which is what we wanted.
+
+Now, let's have a look at the history of changes to this table
+
+```
+delta_table.history()
+```
+
+```
+## Output
+
+[{'timestamp': 1742157751698,
+  'operation': 'VACUUM END',
+  'operationParameters': {'status': 'COMPLETED'},
+  'clientVersion': 'delta-rs.0.23.1',
+  'operationMetrics': {'numDeletedFiles': 2, 'numVacuumedDirectories': 0},
+  'version': 4},
+ {'timestamp': 1742157751693,
+  'operation': 'VACUUM START',
+  'operationParameters': {'retentionCheckEnabled': 'false',
+   'specifiedRetentionMillis': '0',
+   'defaultRetentionMillis': '604800000'},
+  'clientVersion': 'delta-rs.0.23.1',
+  'operationMetrics': {'numFilesToDelete': 2, 'sizeOfDataToDelete': 126042},
+  'version': 3},
+ {'timestamp': 1742155280805,
+  'operation': 'WRITE',
+  'operationParameters': {'mode': 'Overwrite'},
+  'clientVersion': 'delta-rs.0.23.1',
+  'operationMetrics': {'execution_time_ms': 453,
+   'num_added_files': 1,
+   'num_added_rows': 1,
+   'num_partitions': 0,
+   'num_removed_files': 2},
+  'version': 2},
+ {'timestamp': 1742155269018,
+  'operation': 'WRITE',
+  'operationParameters': {'mode': 'Append'},
+  'clientVersion': 'delta-rs.0.23.1',
+  'operationMetrics': {'execution_time_ms': 2,
+   'num_added_files': 1,
+   'num_added_rows': 10,
+   'num_partitions': 0,
+   'num_removed_files': 0},
+  'version': 1},
+ {'timestamp': 1742155255789,
+  'operation': 'WRITE',
+  'operationParameters': {'mode': 'ErrorIfExists'},
+  'operationMetrics': {'execution_time_ms': 4,
+   'num_added_files': 1,
+   'num_added_rows': 10000,
+   'num_partitions': 0,
+   'num_removed_files': 0},
+  'clientVersion': 'delta-rs.0.23.1',
+  'version': 0}]
+```
+
+The history command will return all the operations that have been performed on this path since the beginning. This will be useful to preserve a comprehensive history of changes for operational/analytical purposes.
+
+# Performance Comparison: Non-Optimized vs. Optimized Queries
+
+To illustrate the performance benefits of Data Skipping and Z-Ordering, let's compare query times for a dataset with and without these optimizations.
+
+## Theoretical Context
+
+Without Data Skipping and Z-Ordering, queries must scan a significant portion (or all) of the dataset, leading to increased latency. Data Skipping improves efficiency by leveraging Parquet metadata to prune irrelevant rows before reading the data, while Z-Ordering enhances range query performance by sorting and clustering related data together, minimizing unnecessary scans.
+
+## Implementation
+
+```
+### Performance of a Query with default data skipping only (No Z-Ordering)
+
+filters = [("value", "=", 73)]
+delta_df_only_data_skipping = DeltaTable(
+ "./delta_default_data_skipping"
+).to_pandas(filters = filters)
+```
+
+```
+Time Taken: 8.23 seconds
+```
+
+```
+### Performance of a Query with Z Ordering and Data Skipping
+
+filters = [("value", "=", 73)]
+delta_df_z_ordered = DeltaTable(
+ "./delta_default_data_skipping"
+).to_pandas(filters = filters)
+```
+
+```
+Time Taken: 4.04 seconds
+```
+
+## Results
+
+As you can see above, the time taken to filter from a Z-Ordered table (4.04 seconds) is more than ~50% faster than the time taken to run the same query from a non-Z-Ordered table (8.23 seconds). While there is not a significant difference due to the relatively small amount of data involved (100M rows and 3 cols), the difference will be huge in real-world scenarios where we have PBs of data.
+
+This demonstrates how Delta Lake optimizations reduce scan time and improve retrieval speed. However, once the data is loaded into Pandas, these benefits no longer apply, as Pandas operates entirely in-memory.
+
+## Conclusion
+
+Using delta-rs, we can leverage Delta Lake's powerful features with Pandas, enhancing data lake storage without requiring Spark. However, optimizations like Data Skipping and Z-Ordering only benefit initial reads, as Pandas loads all data into memory. Implementing Delta Lake outside Spark expands its accessibility, providing ACID guarantees and performance improvements for Python-based data workflows.
+
+By leveraging delta-rs effectively, data practitioners can build robust, high-performance data pipelines using Delta Lake beyond the Spark ecosystem.
