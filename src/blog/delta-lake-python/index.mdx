@@ -18,7 +18,7 @@ Let's take a look at the Delta Lake architecture and how you can use its great f
 
 Delta Lake is an open-source data storage framework for storing and crunching data safely and efficiently at scale. It is also called an [open table format](https://delta.io/blog/open-table-formats/).
 
-Delta Lake stores your data in Parquet files and adds a transaction log to give you powerful features like:
+Delta Lake stores your data in Parquet files and adds [a transaction log](#link-to-delta-architecture-blog) to give you powerful features like:
 
 - **ACID transactions**: Safe, atomic writes. No more half-written data.
 - **Query optimization**: Smart filtering and file skipping make reads fast.
@@ -39,7 +39,7 @@ There are two main ways to use Delta Lake in Python:
 
 The choice depends mainly on whether or not you want to use Spark and introduce Java dependencies into your workflow.
 
-Many Python developers are using Python because it is lightweight and does not depend on the JVM. If that's you, then you will want to use the `delta-rs` implementation. If you are familiar with Spark and don't mind the Java dependencies, then using Delta Lake with PySpark might be a good option.
+Many Python developers are using Python because it is lightweight and does not depend on the JVM. If that's you, then you will want to use the `delta-rs` implementation. If you are familiar with Spark and don't mind the Java dependencies, then [using Delta Lake with PySpark](#link-to-pyspark-blog) might be a good option.
 
 ## What is delta-rs?
 
