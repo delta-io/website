@@ -1,0 +1,285 @@
+---
+import { Image } from "astro:assets";
+import type { ComponentProps } from "astro/types";
+import clsx from "clsx";
+import Grid from "delta-theme/components/Grid.astro";
+import Icon from "delta-theme/components/Icon.astro";
+
+interface ImageItem {
+  title: string;
+  thumbnail: string | ComponentProps<typeof Image>["src"];
+  url: string;
+}
+
+interface Props {
+  items: ImageItem[];
+  columns?: number;
+  className?: string;
+}
+
+const { items, columns = items.length, className } = Astro.props;
+
+const maxColumns = columns ?? items.length;
+
+const gridColumnSizes = {
+  xs: { columns: 1, widthPct: 1, gapRem: 0 },
+  sm: { columns: 2, widthPct: 0.5, gapRem: 1.875 / 2 },
+  lg: {
+    columns: maxColumns,
+    widthPct: 1 / maxColumns,
+    gapRem: (1.875 * (maxColumns - 1)) / maxColumns,
+  },
+};
+
+const gridColumnRules = Object.entries(gridColumnSizes).reduce(
+  (cols, [breakpoint, { widthPct, gapRem }]) => {
+    return {
+      ...cols,
+      [breakpoint]: [
+        `repeat(${items.length}, calc(${widthPct * 100}% - ${gapRem}rem))`,
+      ],
+    };
+  },
+  {},
+);
+---
+
+<grid-slider
+  class="relative block"
+  data-items={items.length}
+  data-column-sizes={JSON.stringify(gridColumnSizes)}
+>
+  <div class="slider-container w-full overflow-hidden">
+    <Grid
+      columns={gridColumnRules}
+      className={clsx("slider-track gap-xl grid-flow-col", className)}
+    >
+      {
+        items.map(({ title, thumbnail, url }) => (
+          <a href={url} class="thumbnail" data-imagestrip-item>
+            {typeof thumbnail === "string" ? (
+              <span>
+                <img src={thumbnail} alt="" loading="lazy" />
+              </span>
+            ) : (
+              <span>
+                <Image src={thumbnail} alt="" loading="lazy" />
+              </span>
+            )}
+            {title}
+          </a>
+        ))
+      }
+    </Grid>
+  </div>
+  <button
+    type="button"
+    class="slider-prev slider-button left-[-10px] sm:left-[-1em]"
+    disabled
+  >
+    <Icon icon="chevronLeft" alt="Previous slide" />
+  </button>
+  <button
+    type="button"
+    class="slider-next slider-button right-[-10px] sm:right-[-1em]"
+    disabled
+  >
+    <Icon icon="chevronRight" alt="Next slide" />
+  </button>
+</grid-slider>
+<script>
+  type Breakpoint = "lg" | "sm" | "xs";
+
+  type ColumnSizesMap = Record<
+    Breakpoint,
+    {
+      columns: number;
+      widthPct: number;
+      gapRem: number;
+    }
+  >;
+  class Slider extends HTMLElement {
+    #track: HTMLElement | null = null;
+    #nextButton: HTMLElement | null = null;
+    #prevButton: HTMLElement | null = null;
+    #container: HTMLElement | null = null;
+    #itemsCount: number | null = null;
+    #columnSizes: ColumnSizesMap | null = null;
+
+    constructor() {
+      super();
+
+      this.#track = this.querySelector(".slider-track");
+      this.#nextButton = this.querySelector(".slider-next");
+      this.#prevButton = this.querySelector(".slider-prev");
+      this.#container = this.querySelector(".slider-container");
+      this.#itemsCount = this.dataset.items
+        ? parseInt(this.dataset.items, 10)
+        : null;
+      this.#columnSizes = this.dataset.columnSizes
+        ? JSON.parse(this.dataset.columnSizes)
+        : null;
+    }
+
+    getBreakpoint() {
+      const width = window.innerWidth;
+
+      if (width > 992) {
+        return "lg";
+      }
+
+      if (width > 576) {
+        return "sm";
+      }
+
+      return "xs";
+    }
+
+    connectedCallback() {
+      if (
+        this.#track === null ||
+        this.#container === null ||
+        this.#columnSizes === null ||
+        this.#itemsCount === null
+      ) {
+        return;
+      }
+
+      let currentBreakpoint: Breakpoint | null = null;
+      let currentIndex = 0;
+      let totalSlides = 0;
+      let slideWidth = 0;
+
+      const calculateColumns = () => {
+        if (this.#columnSizes === null || this.#itemsCount === null) {
+          // this shouldn't happen, but TS is complaining
+          return;
+        }
+
+        const newBreakpoint = this.getBreakpoint();
+
+        if (newBreakpoint !== currentBreakpoint) {
+          currentBreakpoint = newBreakpoint;
+          currentIndex = 0;
+
+          const { columns } = this.#columnSizes[newBreakpoint];
+          totalSlides = Math.ceil(this.#itemsCount / columns);
+
+          if (!this.#container) {
+            // this shouldn't happen, but TS is complaining
+            return;
+          }
+
+          slideWidth = this.#container.getBoundingClientRect().width;
+        }
+      };
+
+      const updateSlidePosition = () => {
+        calculateColumns();
+
+        if (
+          this.#track === null ||
+          this.#columnSizes === null ||
+          currentBreakpoint === null ||
+          this.#container === null
+        ) {
+          // this shouldn't happen, but TS is complaining
+          return;
+        }
+
+        // Get the actual gap size in pixels
+        const computedStyle = window.getComputedStyle(this.#track);
+        const actualGap = parseFloat(computedStyle.columnGap || "0");
+        // Calculate total width including the actual gap
+        const totalWidth = slideWidth + actualGap;
+        const offset = currentIndex * totalWidth;
+        this.#track.style.transform = `translateX(-${offset}px)`;
+
+        if (currentIndex === 0) {
+          this.#prevButton?.setAttribute("disabled", "disabled");
+        } else {
+          this.#prevButton?.removeAttribute("disabled");
+        }
+
+        if (currentIndex < totalSlides - 1) {
+          this.#nextButton?.removeAttribute("disabled");
+        } else {
+          this.#nextButton?.setAttribute("disabled", "disabled");
+        }
+      };
+
+      this.#prevButton?.addEventListener("click", () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateSlidePosition();
+        }
+      });
+
+      this.#nextButton?.addEventListener("click", () => {
+        if (currentIndex < totalSlides - 1) {
+          currentIndex++;
+          updateSlidePosition();
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        updateSlidePosition();
+      });
+
+      updateSlidePosition();
+    }
+  }
+
+  customElements.define("grid-slider", Slider);
+</script>
+<style>
+  .thumbnail {
+    display: block;
+    font-size: theme(fontSize.secondary);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .thumbnail:hover {
+    text-decoration: underline;
+  }
+
+  .thumbnail span {
+    display: flex;
+    align-items: center;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background-color: #000;
+    margin-bottom: theme(spacing.sm);
+  }
+
+  .thumbnail :global(img) {
+    width: 100%;
+  }
+
+  .slider-track {
+    transition: transform 200ms;
+  }
+
+  .slider-button {
+    cursor: pointer;
+    background-color: white;
+    font-size: 22px;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 50%;
+    margin-top: -1em;
+    transition: opacity 100ms;
+  }
+
+  .slider-button:disabled {
+    pointer-events: none;
+    opacity: 0;
+  }
+</style>

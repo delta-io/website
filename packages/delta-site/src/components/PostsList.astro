@@ -1,0 +1,29 @@
+---
+import type { Post } from "@config/types";
+import Grid from "delta-theme/components/Grid.astro";
+import PostItem from "./PostItem.astro";
+
+interface Props {
+  posts: Post[];
+  hasFeaturedItem?: boolean;
+}
+
+const { posts, hasFeaturedItem } = Astro.props;
+---
+
+<Grid columns={{ xs: 1, sm: 2, lg: 3 }} className="gap-xl">
+  {
+    hasFeaturedItem && posts.length > 0 && (
+      <PostItem
+        post={posts[0]!}
+        isFeatured
+        className="col-span-full sm:mb-xl"
+      />
+    )
+  }
+  {
+    (hasFeaturedItem ? posts.slice(1) : posts).map((post) => (
+      <PostItem post={post} />
+    ))
+  }
+</Grid>

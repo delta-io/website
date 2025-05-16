@@ -1,0 +1,22 @@
+---
+import { getCollection, render, getEntry } from "astro:content";
+import Post from "../../layouts/Post.astro";
+
+// Tell Astro to generate a path for each user story.
+export async function getStaticPaths() {
+  const posts = await getCollection("userStories");
+  return posts.map((userStory) => ({
+    params: { id: userStory.id },
+    props: { userStory },
+  }));
+}
+
+// Get the blog post entry from the prop
+const { userStory } = Astro.props;
+const { Content } = await render(userStory);
+const author = await getEntry(userStory.data.author);
+---
+
+<Post post={userStory} authors={[author]}>
+  <Content />
+</Post>

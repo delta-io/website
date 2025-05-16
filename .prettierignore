@@ -1,6 +1,7 @@
-/.cache
-/.husky
-/node_modules
-/public
-/coverage
-/package-lock.json
+coverage
+public
+dist
+.astro
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.env

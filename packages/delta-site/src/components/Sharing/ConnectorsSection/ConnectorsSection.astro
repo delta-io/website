@@ -1,0 +1,81 @@
+---
+import { Image } from "astro:assets";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import pandasLogo from "./pandas.png";
+import sparkLogo from "./spark.png";
+import powerBiLogo from "./powerbi.png";
+
+const connectors = [
+  {
+    name: "Pandas",
+    description: "Load table as Pandas DataFrame",
+    logo: pandasLogo,
+    code: '<span class="text-textSecondary">delta_sharing.</span><span class="text-[theme(colors.primary)]">load_as_pandas(…)</span>',
+  },
+  {
+    name: "Apache Spark",
+    description: "Load table as Spark DataFrame",
+    logo: sparkLogo,
+    code: '<span class="text-textSecondary">delta_sharing.</span><span class="text-[theme(colors.primary)]">load_as_spark(…)</span>',
+  },
+  {
+    name: "Power BI",
+    description: "Load directly into Power BI",
+    logo: powerBiLogo,
+    code: false,
+  },
+];
+---
+
+<Section title="Connecting to Delta Sharing" padding="xxxl" isHeaderCentered>
+  <Grid columns={{ xs: 1, md: 2, xl: 3 }} className="grid">
+    {
+      connectors.map((connector) => (
+        <Typography variant="prose" className="connector">
+          <p>
+            <Image
+              src={connector.logo}
+              alt={connector.name}
+              width="111"
+              height="53"
+              densities={[1, 2]}
+            />
+          </p>
+          <p>{connector.description}</p>
+          {
+            // pre cares about whitespace
+            // prettier-ignore
+            connector.code && <pre><code set:html={connector.code} /></pre>
+          }
+        </Typography>
+      ))
+    }
+  </Grid>
+</Section>
+<style>
+  .grid {
+    gap: theme(spacing.xl);
+  }
+
+  .connector {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    padding: theme(spacing.lg) theme(spacing.md);
+    text-align: center;
+  }
+
+  .connector img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: calc(-1 * theme(spacing.md));
+  }
+
+  .connector pre {
+    background-color: theme(colors.lightBg);
+    padding: theme(spacing.sm);
+    font-size: theme(fontSize.primary);
+    font-weight: theme(fontWeight.bold);
+  }
+</style>

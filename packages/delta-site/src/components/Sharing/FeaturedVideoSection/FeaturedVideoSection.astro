@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import mateiVideoImg from "./matei-video.jpg";
+---
+
+<Section
+  title="Watch the Data+AI Summit 2021 Sharing Announcement"
+  padding="xxxl"
+  isHeaderCentered
+>
+  <Typography variant="prose" className="text-center">
+    <p>
+      <a href="https://youtu.be/HQRusxdkwFo" target="_blank">
+        <Image
+          src={mateiVideoImg}
+          alt="Watch the video"
+          class="w-[600px] max-w-full mx-auto"
+        />
+      </a>
+    </p>
+    <Typography variant="p2">
+      Open Data Sharing Keynote by Matei Zaharia, original creator of Apache
+      Spark™ and MLFLow.
+    </Typography>
+  </Typography>
+</Section>

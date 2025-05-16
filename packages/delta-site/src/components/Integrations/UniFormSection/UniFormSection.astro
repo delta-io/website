@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import uniFormImg from "./delta-uniform.jpg";
+---
+
+<Section padding="xxl" className="section">
+  <Grid columns={{ xs: 1, md: ["18%", "1fr"] }} className="grid">
+    <div>
+      <Image src={uniFormImg} alt="UniForm" class="image" loading="eager" />
+    </div>
+    <Typography variant="prose" className="text">
+      <h3>
+        Delta Universal Format (UniForm)
+        <br />
+        allows you to read Delta tables with Iceberg and Hudi clients
+      </h3>
+      <p>
+        <a
+          target="_blank"
+          href="https://docs.delta.io/latest/delta-uniform.html#requirements"
+          >Requirements</a
+        >
+        <a
+          target="_blank"
+          href="https://docs.delta.io/latest/delta-uniform.html#enable-delta-lake-uniform"
+          >Enable UniForm</a
+        >
+      </p>
+    </Typography>
+  </Grid>
+</Section>
+<style>
+  .section {
+    color: white;
+    background-color: theme(colors.primary);
+  }
+
+  .grid {
+    gap: 50px;
+    align-items: center;
+  }
+
+  .image {
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .text h3 {
+    font-weight: normal;
+  }
+
+  .text p {
+    font-size: theme(fontSize.h4);
+  }
+
+  .text a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .text a:hover {
+    text-decoration: underline;
+  }
+
+  .text a + a:before {
+    content: "|";
+    display: inline-block;
+    margin-left: theme(spacing.sm);
+    margin-right: theme(spacing.sm);
+  }
+
+  @media screen(sm) {
+    .image {
+      width: 100%;
+    }
+  }
+</style>

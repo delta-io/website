@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://delta.io">
-    <img alt="Delta Lake" src="static/images/icon.png" width="60" />
+    <img alt="Delta Lake" src="packages/delta-site/public/images/icon.png" width="60" />
   </a>
 </p>
 <h1 align="center">Delta Lake Website</h1>
@@ -13,40 +13,54 @@
   </a>
 </p>
 
-## :rocket: Getting up and running locally
+## Developer guide
 
-This site requires Node 20 or above, which you can install with `brew install node@20`.
+### Getting started
 
-> If you are using vscode, you can use the dev container to simplify getting started.
-
-This site requires a development `YOUTUBE_API_KEY` which populates the YouTube videos in the learn > videos, learn > tutorials, and community pages. That is, ensure you have created a `.env.development` file in the root folder; the file should look like:
-
-```
-//.env.development
-
-YOUTUBE_API_KEY = $API_KEY$
-```
+This site requires a development `YOUTUBE_API_KEY` which populates the YouTube videos in the learn > videos, learn > tutorials, and community pages.
 
 - To generate an API key, refer to [How to Get a YouTube API Key [Tutorial + Examples]](https://blog.hubspot.com/website/how-to-get-youtube-api-key)
-- For more information on Gatsby environment files, please refer to [How to implement '.env' variables in Gatsby and React](https://dev.to/steeeeeph/how-to-implement-env-variables-in-gatsby-and-react-252d)
 
-Simply check out this repo, run `npm install --legacy-peer-deps`, then run `npm run develop`.
+Install dependencies and start the local development server:
 
-To open a localhost version of the site, run `npm run start`.
+```ts
+pnpm i
+YOUTUBE_API_KEY=<string> pnpm --filter delta-site dev
+```
 
 ### Code formatting
 
-If you use Visual Studio Code, install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions to automatically format your code as you make changes.
+Global operations
+Lint (via eslint) the entire repo: `pnpm lint`
+Format (via prettier) the entire repo: `pnpm format`
 
-Alternatively, you may run `npm run lint` or `npm run lint:fix` to both check for and fix lint issues, respectively. All changes are automatically linted (and will attempt to auto-fix) on the git pre-commit hook.
+### Helpful resources
 
-This repo runs automated checks on PRs, like the lint check above. Sometimes this process can hang. If you see the process hang, try running an empty commit and push the commit to rerun the checks. You can do this by running the following git command `git commit --allow-empty -m "Empty commit"` then pushing the commit to origin.
+- [Astro documentation](https://docs.astro.build/en/getting-started/) — guides, API reference, and more.
+- [Tailwind v3 documentation](https://v3.tailwindcss.com/docs/) — for understanding the various classnames for styling.
+- [YouTube Data API](https://developers.google.com/youtube/v3/docs) - for working with the YouTube API. 
+- [Netlify documentation](https://docs.netlify.com/)
 
-**All PRs require linters to pass in order to deploy to production.**
+### Project structure
 
-## :handshake: Contributing
+We use a monorepo pattern to separate individual packages. We currently have two packages:
 
-All changes are proposed as a [pull request](https://github.com/delta-io/website/pulls). Simply create a pull request and request a review and we'll get on it.
+- delta-site - The delta.io website source code
+- delta-theme - The underlying theme used by delta-site
+
+#### delta-site
+
+We mostly follow Astro's [standard project structure](https://docs.astro.build/en/basics/project-structure/). The most notable directory is the `src` folder, which includes the following folders:
+
+- `src/components` - Contains various shared components. The "standard" component library is located directly in this folder, while page layouts are located in `src/components/layouts` and page-specific components are located in `src/components/pages`.
+- `src/config` - Site configuration, which are "globals" for various things such as menus, site title, etc.
+- `src/content` - Content collections. See below for how to use them.
+- `src/pages` - Page routes. Astro uses this directory to generate the page routing structure.
+- `src/utils` - Various utility functions used by different pages, including fetching data from the YouTube Data API.
+
+#### delta-theme
+
+This is the theme source code for delta-site. It includes various plugin configurations, as well as the components used by the site.
 
 ### Blog posts
 
@@ -61,11 +75,12 @@ Blog posts should generally be around 2,000 words, target a relevant, high-value
 You can add a blog by adding a directory with some files to `src/blog`. Here's an example:
 
 ```
-src/
-  blog/
-    convert-parquet-to-delta/
-      index.mdx
-      thumbnail.png
+delta-site/
+         src/
+           blog/
+              2023-10-22-delta-rs-python/
+                index.mdx
+                thumbnail.png
 ```
 
 All of the images that correspond to the blog post should be saved in the respective folder.
@@ -74,9 +89,10 @@ The top of the `index.mdx` file should contain the following metadata:
 
 ```
 ---
-title: Converting from Parquet to Delta Lake
-description: This post shows how to convert a Parquet table to a Delta Lake.
-thumbnail: ./thumbnail.png
-author: Matthew Powers
+title: New features in the Python deltalake 0.12.0 release
+description: This post explains the new features in the Python deltalake 0.12.0 release
+thumbnail: "./thumbnail.png"
+author: ion-koutsouris
+publishedAt: 2023-10-22
 ---
 ```

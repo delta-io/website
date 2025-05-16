@@ -1,0 +1,36 @@
+name: Pull request workflow
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: Linting and formatting checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.14.0"
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm format
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - delta-theme
+          - delta-site
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.14.0"
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm  --filter ${{ matrix.package }} test:ci

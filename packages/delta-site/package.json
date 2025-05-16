@@ -1,0 +1,33 @@
+{
+  "name": "delta-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The delta site source code.",
+  "scripts": {
+    "dev": "astro dev",
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": [],
+  "author": "jakebellacera",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.1",
+    "@fontsource-variable/source-code-pro": "^5.1.1",
+    "@fontsource/source-sans-pro": "^5.1.0",
+    "astro": "^5.5.4",
+    "astro-favicons": "^3.1.5",
+    "googleapis": "^144.0.0",
+    "delta-theme": "workspace:*"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.3.0",
+    "clsx": "^2.1.1",
+    "sharp": "^0.33.0",
+    "vitest": "^3.0.6"
+  }
+}

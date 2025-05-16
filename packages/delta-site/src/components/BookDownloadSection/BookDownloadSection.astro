@@ -1,0 +1,88 @@
+---
+import { Image } from "astro:assets";
+import Button from "delta-theme/components/Button.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import dldgCoverImg from "./dldg-cover.jpg";
+import downloadArrowImg from "./download-arrow.png";
+---
+
+<Section className="section">
+  <div class="download-wrap">
+    <div class="download-img-item">
+      <Image src={dldgCoverImg} alt="The Definitive Guide" loading="lazy" />
+    </div>
+    <Typography variant="prose" className="download-text-item">
+      <h3>Delta&nbsp;Lake: The Definitive Guide</h3>
+      <p>
+        Building modern data lakehouse architectures with Delta Lake with
+        forewords by Michael Armbrust and Dominique Brezinski.
+      </p>
+      <Button
+        href="/pdfs/dldg_databricks.pdf"
+        isDownload
+        className="download-cta"
+        >Download <Image src={downloadArrowImg} alt="" loading="lazy" /></Button
+      >
+    </Typography>
+  </div>
+</Section>
+<style>
+  .section {
+    padding: 50px 0;
+  }
+
+  .download-wrap {
+    background: theme(colors.bgDarkBlue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: theme(colors.darkColor);
+    padding: 48px 30px;
+    border-radius: 5px;
+    flex-direction: column;
+  }
+
+  .download-img-item {
+    max-width: 175px;
+    width: 100%;
+    margin-bottom: 38px;
+  }
+  .download-img-item img {
+    width: 100%;
+  }
+
+  .download-text-item {
+    text-align: center;
+  }
+  .download-text-item p {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    line-height: theme(lineHeight.header);
+    opacity: 0.8;
+  }
+
+  .download-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: theme(spacing.xs);
+    margin: 0 auto;
+  }
+
+  @media screen(md) {
+    .download-wrap {
+      flex-direction: row;
+    }
+
+    .download-img-item {
+      flex-basis: 50%;
+      margin-right: 70px;
+      margin-bottom: 0;
+    }
+
+    .download-text-item {
+      text-align: left;
+      flex-basis: 50%;
+    }
+  }
+</style>
