@@ -4,7 +4,7 @@ import { deltaTheme, remarkPlugins } from "delta-theme";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://delta-io-staging.netlify.app/",
+  site: "https://delta.io/",
   scopedStyleStrategy: "where",
   env: {
     schema: {
@@ -45,7 +45,7 @@ export default defineConfig({
           { label: "Community", url: "/community" },
           {
             label: "Docs",
-            url: "https://delta-docs-incubator.netlify.app/latest/",
+            url: "https://docs.delta.io/",
           },
         ],
         footerMain: [

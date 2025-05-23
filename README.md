@@ -26,6 +26,8 @@ Install dependencies and start the local development server:
 ```ts
 pnpm i
 YOUTUBE_API_KEY=<string> pnpm --filter delta-site dev
+YOUTUBE_API_KEY=<string> pnpm --filter delta-site build
+YOUTUBE_API_KEY=<string> pnpm --filter delta-site preview
 ```
 
 ### Code formatting
