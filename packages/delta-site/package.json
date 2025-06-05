@@ -16,18 +16,18 @@
   "author": "jakebellacera",
   "license": "ISC",
   "dependencies": {
-    "@astrojs/tailwind": "^6.0.1",
-    "@fontsource-variable/source-code-pro": "^5.1.1",
-    "@fontsource/source-sans-pro": "^5.1.0",
-    "astro": "^5.5.4",
+    "@astrojs/tailwind": "^6.0.2",
+    "@fontsource-variable/source-code-pro": "^5.2.6",
+    "@fontsource/source-sans-pro": "^5.2.5",
+    "astro": "^5.8.2",
     "astro-favicons": "^3.1.5",
-    "googleapis": "^144.0.0",
-    "delta-theme": "workspace:*"
+    "delta-theme": "workspace:*",
+    "googleapis": "^149.0.0"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.3.0",
+    "@astrojs/sitemap": "^3.4.1",
     "clsx": "^2.1.1",
-    "sharp": "^0.33.0",
-    "vitest": "^3.0.6"
+    "sharp": "^0.34.2",
+    "vitest": "^3.2.1"
   }
 }
