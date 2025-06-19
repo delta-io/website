@@ -30,6 +30,6 @@ pnpm dlx @astrojs/upgrade
 
 # Upgrade remaining packages
 cd ../../
-pnpm --recursive upgrade --latest
+pnpm upgrade "!tailwindcss" --recursive --latest 
 
 echo "✅ Upgrade process completed! Please verify that things work as expected."
