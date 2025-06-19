@@ -19,15 +19,15 @@
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource-variable/source-code-pro": "^5.2.6",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "astro": "^5.8.2",
+    "astro": "^5.10.0",
     "astro-favicons": "^3.1.5",
     "delta-theme": "workspace:*",
-    "googleapis": "^149.0.0"
+    "googleapis": "^150.0.1"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.4.1",
     "clsx": "^2.1.1",
     "sharp": "^0.34.2",
-    "vitest": "^3.2.1"
+    "vitest": "^3.2.4"
   }
 }
