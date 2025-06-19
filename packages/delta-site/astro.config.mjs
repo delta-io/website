@@ -2,6 +2,8 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import { deltaTheme, remarkPlugins } from "delta-theme";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://delta.io/",
@@ -23,6 +25,9 @@ export default defineConfig({
     "/blog/1": "/blog",
     "/user-stories/1": "/user-stories",
   },
+  adapter: netlify({
+    imageCDN: false,
+  }),
   integrations: [
     sitemap(),
     deltaTheme({
