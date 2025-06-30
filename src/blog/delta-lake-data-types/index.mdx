@@ -1,0 +1,226 @@
+---
+title: Data Types and Type Widening in Delta Lake
+description: Learn how to work with data types in Delta Lake, incl. type widening.
+thumbnail: ./thumbnail.png
+author: Avril Aysha
+date: 2024-07-15
+---
+
+Data types are a foundational and important component of any data engineering pipeline. Data types can affect query performance, storage cost, and interoperability across teams and platforms.
+
+This article explains which data types Delta Lake supports, how it handles type changes, and how it compares to other formats like Parquet, CSV and JSON. We will also take a look at how to handle unstructured and geospatial data with Delta Lake.
+
+Let's dive in. 🤿
+
+## Which data types does Delta Lake support?
+
+Delta Lake uses the same data types as Apache Spark. That means you get strong support for both primitive and complex types:
+
+Primitive types
+
+- `STRING`
+- `BOOLEAN`
+- `INT / INTEGER`
+- `BIGINT`
+- `FLOAT`
+- `DOUBLE`
+- `DECIMAL`
+- `DATE`
+- `TIMESTAMP`
+
+Complex types
+
+- `ARRAY`
+- `MAP`
+- `STRUCT`
+
+If you're using Delta Lake through Spark, it uses Spark SQL's data types. If you're using Delta Lake via [delta-rs](https://delta-io.github.io/delta-rs/) (the Rust implementation of the Delta Lake protocol), then the library maps data types through Apache Arrow-compatible schemas, which can be automatically converted to/from Spark types when needed. Read more about [Delta Lake and Apache Arrow](#link-when-live).
+
+## Delta Lake data types: Schema Enforcement
+
+Delta Lake uses schema enforcement to secure your data [against accidental corruptions](#link-to-ACID-blog-when-live). The schema enforcement feature guarantees that all new data that is added to your Delta table will follow the predefined schema, including the defined data types.
+
+Let's see this is in action. We'll create a Delta table with a predefined schema:
+
+```python
+df = spark.createDataFrame([("bob", 47), ("li", 23), ("leonard", 51)]).toDF(
+    "first_name", "age"
+)
+
+df.write.format("delta").save("tmp/fun_people")
+```
+
+Now, let's try to write data with a different schema to this same Delta table:
+
+```python
+df = spark.createDataFrame([("frank", 68, "usa"), ("jordana", 26, "brasil")]).toDF(
+    "first_name", "age", "country"
+)
+
+df.write.format("delta").mode("append").save("tmp/fun_people")
+```
+
+This operation will error out with an `AnalysisException`. Delta Lake does not allow you to append data with mismatched schema by default. Read more in the [Delta Lake schema enforcement blog](https://delta.io/blog/2022-11-16-delta-lake-schema-enforcement/).
+
+## Delta Lake data types: Schema Evolution
+
+When you need more flexibility in your schema, Delta Lake also supports Schema Evolution. To update the schema of your Delta table, you can write data with the `mergeSchema` option.
+
+Let's try this for the example that we just saw above:
+
+```python
+df.write.option("mergeSchema", "true").mode("append").format("delta").save(
+    "tmp/fun_people"
+)
+```
+
+Here are the contents of your Delta table after the write:
+
+```python
+spark.read.format("delta").load("tmp/fun_people").show()
+
++----------+---+-------+
+|first_name|age|country|
++----------+---+-------+
+|   jordana| 26| brasil| # new
+|     frank| 68|    usa| # new
+|   leonard| 51|   null|
+|       bob| 47|   null|
+|        li| 23|   null|
++----------+---+-------+
+```
+
+The Delta table now has three columns. It previously only had two columns. Rows that don't have any data for the new column will be marked as null when new columns are added.
+
+You can also set Schema Evolution by default. Read more in the [Delta Lake Schema Evolution](https://delta.io/blog/2023-02-08-delta-lake-schema-evolution/) blog post.
+
+## Type widening with Delta Lake
+
+Type widening is a specific schema evolution feature in Delta Lake. It lets you change column types in a safe, controlled way, without breaking your table or needed to rewrite the underlying Parquet files.
+
+For example, let's say you have a table with a column `net_worth` defined as `INT`(integer) data type. The `INT` data type has a width of 32 bits: it can contain any value from -2.15Bln to 2.15Bln.
+
+This is not wide enough to contain the net worth of some of the richest people on the planet, so you want to widen the column's data type to the `BIGINT` type which will allow values with a width up to 64bits.
+
+```SQL
+    -- Original column type is INT
+    ALTER TABLE users ALTER COLUMN net_worth TYPE BIGINT;
+```
+
+This is called a type widening operation because it allows for a larger range of values. You can go from `INT` to `BIGINT`, or from `FLOAT` to `DOUBLE`, but not the other way around. Narrowing types (e.g. `DOUBLE` to `FLOAT`) is not allowed because that would risk data loss.
+
+Delta Lake tracks all schema changes in the transaction log, so you can always inspect or roll back if needed using [the time travel feature](https://delta.io/blog/2023-02-01-delta-lake-time-travel/).
+
+### How to enable type widening
+
+You can enable type widening on an existing table by setting the `delta.enableTypeWidening` table property to `true`:
+
+```SQL
+ ALTER TABLE <table_name> SET TBLPROPERTIES ('delta.enableTypeWidening' = 'true')
+```
+
+You can also enable type widening during table creation:
+
+```SQL
+ CREATE TABLE <table_name> USING DELTA TBLPROPERTIES('delta.enableTypeWidening' = 'true')
+```
+
+### How to apply a type change
+
+When type widening is enabled on a Delta table, you can change the type of a column using the ALTER COLUMN command:
+
+```SQL
+ALTER TABLE <table_name> ALTER COLUMN <col_name> TYPE <new_type>
+```
+
+The table schema is updated without rewriting the underlying Parquet files.
+
+Note that the type widening feature is available in preview in Delta Lake 3.2 and above, and fully supported in Delta Lake 4.0 and above. Read more in the [official Delta Lake documentation](https://docs.delta.io/latest/delta-type-widening.html).
+
+## Delta Lake data types vs. CSV, Parquet, and JSON
+
+Let's compare how Delta Lake handles data types compared to other common formats:
+
+| Format  | Schema Support           | Strong Typing | Nested Data  | Schema Enforcement | Schema Evolution                    |
+| ------- | ------------------------ | ------------- | ------------ | ------------------ | ----------------------------------- |
+| CSV     | ❌ None                  | ❌ No         | ❌ Flat only | ❌ No              | ❌ No                               |
+| JSON    | ⚠️ Inferred              | ⚠️ Loose      | ✅ Yes       | ❌ No              | ❌ No                               |
+| Parquet | ⚠️ Yes, but not enforced | ✅ Yes        | ✅ Yes       | ❌ No              | ⚠️ Limited, requires manual rewrite |
+| Delta   | ✅ Enforced              | ✅ Yes        | ✅ Yes       | ✅ Yes             | ✅ Yes (incl. type widening)        |
+
+CSV is easy and human-readable but comes with no type safety. JSON supports nesting, but it's hard to enforce consistency. Parquet does a better job, but is still limited in schema enforcement and evolution support. Delta Lake adds transactions, time travel, and version control on top of your data lake.
+
+Delta Lake is built on top of Parquet, so you get all of Parquet's type support plus better governance and schema enforcement. Read more in the [Delta Lake vs Data Lake post](https://delta.io/blog/delta-lake-vs-data-lake/).
+
+## Delta Lake data types: Unstructured Data
+
+Delta Lake is built for structured and semi-structured data. It's not meant for storing raw binary files like images, PDFs, or audio. You can use Delta Lake to store metadata and references to unstructured data stored elsewhere.
+
+For example:
+
+```SQL
+CREATE TABLE files (
+  id STRING,
+  filename STRING,
+  s3_path STRING,
+  file_type STRING,
+  upload_time TIMESTAMP
+) USING DELTA;
+```
+
+This lets you build pipelines around unstructured content, even if you don't store the raw bytes in Delta itself.
+
+For large-scale unstructured data, consider pairing Delta Lake with object storage like:
+
+- [S3](https://delta.io/blog/delta-lake-s3/)
+- [GCP](https://delta.io/blog/delta-lake-gcp/)
+- [Azure](https://delta.io/blog/delta-lake-azure-data-lake-storage/).
+
+## Delta Lake data types: Geospatial Data
+
+Delta offers great geospatial support thanks to open-source integrations. The most popular one is [Apache Sedona](https://sedona.apache.org), which adds native spatial types and functions to Spark. With Sedona + Delta Lake, you can store and query geographic shapes using columns like:
+
+- `Point`
+- `Polygon`
+- `LineString`
+
+For example, you can use Sedona to read geospatial data stored in GeoParquet format:
+
+```python
+data =  (
+    "s3a://wherobots-examples/data/overturemaps-us-west-2/release/2023-07-26-alpha.0/"
+)
+
+df = sedona.read.format("geoparquet").load(data + "theme=places/type=place")
+```
+
+And then run spatial queries:
+
+```python
+spatial_filter = "POLYGON(<define-your-polygon-coordinates>)"
+
+df_filter = df.filter(
+    "ST_Contains(ST_GeomFromWKT('" + spatial_filter + "'), geometry) = true"
+)
+```
+
+Or use SQL:
+
+```SQL
+SELECT name FROM regions
+WHERE ST_Contains(boundary, ST_Point(40.7128, -74.0060))
+```
+
+This makes Delta Lake a great backend for location analytics, urban planning data, and mapping apps. Read more in the [Working with Apache Sedona tutorial](https://delta.io/blog/apache-sedona/).
+
+## Delta Lake and Data Types for Managing Complexity
+
+Here's what you should take away:
+
+- Delta Lake supports rich data types, including nested structures
+- Delta Lake guarantees data type consistency via schema evolution.
+- Type widening lets you evolve your data types safely without rewriting your table.
+- Compared to formats like CSV, Parquet or JSON, Delta gives you strong typing, better enforcement, and time-travel support.
+- Delta Lake is great for indexing and organizing unstructured data. You can use Apache Sedona to work with geospatial data directly in Delta Lake.
+
+If you're managing a modern data lake with growing schema complexity, Delta Lake gives you the power and reliability you need.
