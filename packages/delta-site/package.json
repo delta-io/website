@@ -16,11 +16,11 @@
   "author": "jakebellacera",
   "license": "ISC",
   "dependencies": {
-    "@astrojs/netlify": "^6.4.0",
+    "@astrojs/netlify": "^6.4.1",
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource-variable/source-code-pro": "^5.2.6",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "astro": "^5.10.0",
+    "astro": "^5.11.0",
     "astro-favicons": "^3.1.5",
     "delta-theme": "workspace:*",
     "googleapis": "^150.0.1"
