@@ -155,9 +155,9 @@
   {
     "name": "Daft",
     "description": "Daft is a python data engine that can read from and write to Delta Lake, supports parallel and distributed reads, ensures data skipping, and has multi-cloud support",
-    "url": "https://www.getdaft.io/",
-    "docs": "https://www.getdaft.io/projects/docs/en/stable/integrations/delta_lake/",
-    "source_code": "https://github.com/Eventual-Inc/Daft/tree/main/daft/delta_lake",
+    "url": "https://www.daft.ai/",
+    "docs": "https://docs.daft.ai/en/stable/io/delta_lake/",
+    "source_code": "https://github.com/Eventual-Inc/Daft/tree/main/daft/io/delta_lake",
     "tags": ["Daft"],
     "thumbnail": "./images/connectors/daft.png"
   }
