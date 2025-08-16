@@ -36,8 +36,5 @@
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "typescript-eslint": "^8.39.1"
-  },
-  "dependencies": {
-    "sharp": "^0.34.3"
   }
 }
