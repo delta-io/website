@@ -16,19 +16,19 @@
   "author": "jakebellacera",
   "license": "ISC",
   "dependencies": {
-    "@astrojs/netlify": "^6.4.1",
+    "@astrojs/netlify": "^6.5.7",
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource-variable/source-code-pro": "^5.2.6",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "astro": "^5.11.0",
+    "astro": "^5.13.2",
     "astro-favicons": "^3.1.5",
     "delta-theme": "workspace:*",
-    "googleapis": "^150.0.1"
+    "googleapis": "^156.0.0"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/sitemap": "^3.5.0",
     "clsx": "^2.1.1",
-    "sharp": "^0.34.2",
+    "sharp": "^0.34.3",
     "vitest": "^3.2.4"
   }
 }
