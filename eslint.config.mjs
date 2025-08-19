@@ -14,20 +14,23 @@ export default [
       "**/.astro",
       "pnpm-lock.yaml",
       "pnpm-workspace.yaml",
+      "**/node_modules/**",
     ],
   },
   { files: ["**/*.{js,mjs,cjs,ts}"] },
   { languageOptions: { globals: globals.browser } },
-  importPlugin.flatConfigs.recommended,
+  {
+    plugins: {
+      import: importPlugin,
+    },
+    rules: {
+      "import/export": "error",
+      "import/no-duplicates": "warn",
+      "import/order": "error",
+    },
+  },
   pluginJs.configs.recommended,
   eslintPluginPrettierRecommended,
   ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
-  {
-    rules: {
-      "import/no-named-as-default-member": "off",
-      "import/no-unresolved": "off",
-      "import/order": ["error"],
-    },
-  },
 ];
