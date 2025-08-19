@@ -1,0 +1,61 @@
+---
+import clsx from "clsx";
+
+interface Props {
+  label: string;
+  children: unknown;
+  toggleClassName?: string;
+}
+const { label, toggleClassName } = Astro.props;
+---
+
+<dropdown-container>
+  <button
+    type="button"
+    class={clsx("dropdown-toggle", toggleClassName)}
+    aria-expanded="false"
+    data-toggle>{label}</button
+  >
+  <div class="hidden lg:absolute" data-container>
+    <slot />
+  </div>
+</dropdown-container>
+<script>
+  class Dropdown extends HTMLElement {
+    #button: HTMLButtonElement | null = null;
+    #container: HTMLElement | null = null;
+
+    constructor() {
+      super();
+
+      this.#button = this.querySelector("[data-toggle]");
+      this.#container = this.querySelector("[data-container]");
+    }
+
+    connectedCallback() {
+      this.#button?.addEventListener("click", () => {
+        if (this.#button?.getAttribute("aria-expanded") === "true") {
+          this.#button?.setAttribute("aria-expanded", "false");
+          this.#container?.classList.replace("block", "hidden");
+        } else {
+          this.#button?.setAttribute("aria-expanded", "true");
+          this.#container?.classList.replace("hidden", "block");
+        }
+      });
+    }
+  }
+
+  customElements.define("dropdown-container", Dropdown);
+</script>
+<style>
+  .dropdown-toggle::after {
+    border-bottom: 0;
+    border-left: 0.3rem solid transparent;
+    border-right: 0.3rem solid transparent;
+    border-top: 0.3rem solid;
+    content: "";
+    display: inline-block;
+    margin-left: 0.255rem;
+    vertical-align: 0.255rem;
+  }
+</style>

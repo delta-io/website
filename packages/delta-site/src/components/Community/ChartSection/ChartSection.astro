@@ -1,0 +1,20 @@
+---
+import { Image } from "astro:assets";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import chartImage from "./chart.png";
+---
+
+<Section padding="xl">
+  <Typography variant="h4" className="font-normal mb-xl text-center">
+    Because of the contributions from our amazing community, Delta Lake is now
+    up to 20M monthly downloads! We&rsquo;re proud of the progress this project
+    is making and invite you to get involved.{" "}
+    <a href="https://github.com/delta-io">Get started</a> today.
+  </Typography>
+  <Image
+    src={chartImage}
+    alt="Delta Lake monthly downloads chart"
+    class="mx-auto"
+  />
+</Section>

@@ -1,0 +1,37 @@
+---
+/**
+ * Container
+ *
+ * Creates a centered "container" which will contain your HTML. This container
+ * is responsive and will adjust depending on the screen size.
+ */
+---
+
+<div class="container px-[16px] w-full mx-auto">
+  <slot />
+</div>
+<style>
+  @media screen(sm) {
+    .container {
+      width: calc(theme(width.screen-sm) - 32px);
+    }
+  }
+
+  @media screen(md) {
+    .container {
+      width: calc(theme(width.screen-md) - 32px);
+    }
+  }
+
+  @media screen(lg) {
+    .container {
+      width: calc(theme(width.screen-lg) - 32px);
+    }
+  }
+
+  @media screen(xl) {
+    .container {
+      width: calc(theme(width.screen-xl) - 32px);
+    }
+  }
+</style>

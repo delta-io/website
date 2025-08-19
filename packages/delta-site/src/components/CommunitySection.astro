@@ -1,0 +1,22 @@
+---
+import Typography from "delta-theme/components/Typography.astro";
+import { LakeSection } from "./LakeSection";
+import { SocialTiles } from "./SocialTiles";
+---
+
+<LakeSection
+  title="Join the Delta Lake Community"
+  padding="xxl"
+  isHeaderCentered
+>
+  <Fragment slot="subtitle">
+    <Typography variant="p">
+      Delta Lake is supported by more than 190 developers from over 70
+      organizations across multiple repositories.
+      <br />
+      Chat with fellow Delta Lake users and contributors, ask questions and share
+      tips.
+    </Typography>
+  </Fragment>
+  <SocialTiles isDark isCentered />
+</LakeSection>

@@ -1,7 +1,8 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
+    "astro-build.astro-vscode",
     "esbenp.prettier-vscode",
-    "silvenon.mdx"
-  ]
+    "dbaeumer.vscode-eslint"
+  ],
+  "unwantedRecommendations": []
 }

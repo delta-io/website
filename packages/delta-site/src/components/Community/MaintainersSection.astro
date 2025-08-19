@@ -1,0 +1,157 @@
+---
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+
+const maintainers = [
+  {
+    name: "Michael Armbrust",
+    organization: "Databricks",
+    areas: ["delta", "connectors", "delta-sharing"],
+    link: "",
+  },
+  {
+    name: "R. Tyler Croy",
+    organization: "Scribd",
+    areas: ["delta", "delta-rs", "kafka-delta-ingest"],
+    link: "/profiles/tyler-croy",
+  },
+  {
+    name: "Tathagata Das",
+    organization: "Databricks",
+    areas: ["delta", "connectors"],
+    link: "",
+  },
+  {
+    name: "QP Hou",
+    organization: "Neuralink",
+    areas: ["delta", "delta-rs"],
+    link: "",
+  },
+  {
+    name: "Will Jones",
+    organization: "Voltron Data",
+    areas: ["delta", "delta-rs"],
+    link: "",
+  },
+  {
+    name: "Venki Korukanti",
+    organization: "Databricks",
+    areas: ["delta", "connectors"],
+    link: "",
+  },
+  {
+    name: "Denny Lee",
+    organization: "Databricks",
+    areas: ["delta", "connectors", "delta-sharing", "delta-rs", "website"],
+    link: "",
+  },
+  {
+    name: "Mykhailo Osypov",
+    organization: "Scribd",
+    areas: ["delta-rs", "kafka-delta-ingest"],
+    link: "",
+  },
+  {
+    name: "Robert Pack",
+    organization: "BASF",
+    areas: ["delta", "delta-rs"],
+    link: "",
+  },
+  {
+    name: "Allison Portis",
+    organization: "Databricks",
+    areas: ["delta", "connectors"],
+    link: "",
+  },
+  {
+    name: "Scott Sandre",
+    organization: "Databricks",
+    areas: ["delta", "connectors"],
+    link: "",
+  },
+  {
+    name: "Florian Valeye",
+    organization: "Backmarket",
+    areas: ["delta", "delta-rs"],
+    link: "/profiles/florian-valeye",
+  },
+  {
+    name: "Thomas Vollmer",
+    organization: "Microsoft",
+    areas: ["delta-rs"],
+    link: "",
+  },
+  {
+    name: "Christian Williams",
+    organization: "Scribd",
+    areas: ["delta", "delta-rs", "kafka-delta-ingest"],
+    link: "",
+  },
+  {
+    name: "Ryan Zhu",
+    organization: "Databricks",
+    areas: ["delta", "connectors", "delta-sharing"],
+    link: "",
+  },
+  {
+    name: "Gerhard Brueckl",
+    organization: "Paiqo GmbH",
+    areas: ["delta", "connectors", "delta-sharing"],
+    link: "/profiles/gerhard-brueckl",
+  },
+  {
+    name: "Ion Koutsouris",
+    organization: "ASML",
+    areas: ["delta", "delta-rs"],
+    link: "",
+  },
+];
+---
+
+<Section
+  title="Project Maintainers"
+  padding="xxl"
+  isHeaderCentered
+  className="bg-white"
+>
+  <Fragment slot="subtitle">
+    <Typography variant="prose">
+      <p>
+        Want to dive deeper into Delta Lake, please chat with any of our
+        maintainers!
+      </p>
+      <p>
+        For more information on how to contribute, please refer to the <a
+          href="/resources/contributing-to-delta"
+          >Delta Lake contribution guide</a
+        >.
+      </p>
+    </Typography>
+  </Fragment>
+  <Typography variant="table" className="mx-auto max-w-screen-md">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Organization</th>
+        <th>Focal Areas</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        maintainers.map((maintainer) => (
+          <tr>
+            <td>
+              {maintainer.link ? (
+                <a href={maintainer.link}>{maintainer.name}</a>
+              ) : (
+                maintainer.name
+              )}
+            </td>
+            <td>{maintainer.organization}</td>
+            <td class="max-w-[250px]">{maintainer.areas.join(", ")}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </Typography>
+</Section>

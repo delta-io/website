@@ -1,0 +1,68 @@
+---
+import clsx from "clsx";
+import type { ComponentProps } from "astro/types";
+import Icon from "./Icon.astro";
+
+type IconType = ComponentProps<typeof Icon>["icon"];
+
+interface Props {
+  initialValue: string;
+  label: string;
+  name: string;
+  type: "text" | "search";
+  icon?: IconType;
+  isCompact?: boolean;
+  placeholder?: string;
+  theme?: "dark" | "default";
+  className?: string;
+}
+
+const {
+  initialValue,
+  label,
+  name,
+  type,
+  icon,
+  isCompact,
+  placeholder,
+  theme,
+  className,
+} = Astro.props;
+---
+
+<div class={className}>
+  {!isCompact && <label>{label}</label>}
+  <div class="relative">
+    {
+      icon && (
+        <Icon
+          icon={icon}
+          alt=""
+          className="absolute top-[50%] left-xs translate-y-[-50%] text-xl"
+        />
+      )
+    }
+    <input
+      type={type}
+      value={initialValue}
+      name={name}
+      placeholder={placeholder}
+      aria-label={isCompact ? label : undefined}
+      class={clsx(
+        "w-full border-1 placeholder:text-secondary px-sm py-xs focus:outline-none",
+        {
+          "border-border bg-white text-lightColor": theme === "default",
+          "border-darkBorder bg-darkBorder text-darkColor": theme === "dark",
+          "has-icon-padding": !!icon,
+        },
+      )}
+    />
+  </div>
+</div>
+<style>
+  .has-icon-padding {
+    padding-left: calc(
+      theme(spacing.xs) + theme(fontSize.xl) + theme(spacing.xs)
+    );
+  }
+</style>

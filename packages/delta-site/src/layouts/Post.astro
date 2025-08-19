@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import { getPermalink } from "@utils/getPermalink";
+import type { CollectionEntry } from "astro:content";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import Layout from "./Layout.astro";
+import LinkedInLogo from "./linkedin-logo.svg";
+
+interface Props {
+  post: CollectionEntry<"blog" | "userStories">;
+  authors: CollectionEntry<"profiles">[];
+  showLinkedinProfiles?: boolean;
+}
+
+const { post, authors, showLinkedinProfiles } = Astro.props;
+---
+
+<Layout title={post.data.title} image={post.data.thumbnail}>
+  <Section padding="xxl" isPrimary>
+    <div class="max-w-screen-md mx-auto">
+      <Typography
+        variant="prose"
+        className="pb-xl mb-xl border-b border-border "
+      >
+        <h1>{post.data.title}</h1>
+        <p class="p2 text-textSecondary">
+          By {
+            authors.map((author, i) => (
+              <>
+                <a href={getPermalink(author)}>{author.data.name}</a>
+                {i < authors.length - 1 ? ", " : ""}
+              </>
+            ))
+          }
+        </p>
+      </Typography>
+      <Typography variant="prose">
+        <slot />
+      </Typography>
+      {
+        showLinkedinProfiles &&
+          authors.some((author) => author.data.linkedin) && (
+            <>
+              <Typography variant="h6" className="mt-xxl mb-md">
+                Follow our authors on{" "}
+                <Image
+                  src={LinkedInLogo}
+                  alt="LinkedIn"
+                  class="inline h-[1em] leading-none mt-[-.15em] ml-[.15em]"
+                />
+              </Typography>
+              <div class="flex gap-xl justify-center">
+                {authors
+                  .filter((author) => author.data.linkedin)
+                  .map((author) => (
+                    <Typography variant="p2">
+                      <a
+                        href={author.data.linkedin}
+                        class="text-inherit no-underline hover:underline flex flex-col items-center w-fit"
+                      >
+                        {author.data.photo && (
+                          <Image
+                            src={author.data.photo}
+                            alt={`Photo of ${author.data.name}`}
+                            class="block rounded-full overflow-hidden w-[80px] mb-xs"
+                          />
+                        )}
+                        {author.data.name}
+                      </a>
+                    </Typography>
+                  ))}
+              </div>
+            </>
+          )
+      }
+    </div>
+  </Section>
+</Layout>

@@ -1,0 +1,158 @@
+---
+import Grid from "delta-theme/components/Grid.astro";
+import Icon from "delta-theme/components/Icon.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+
+const repos = [
+  {
+    name: "Delta",
+    description:
+      "Delta Lake connectors for Apache Spark™, with Scala/Java and Python APIs, and for Java-based engines like Hive, Flink, PrestoDB, etc.",
+    contributors: 192,
+    orgs: 43,
+    url: "https://github.com/delta-io/delta",
+  },
+  {
+    name: "Delta Rust",
+    description:
+      "Delta Lake connector written natively in Rust, with Python bindings.",
+    contributors: 50,
+    orgs: 26,
+    url: "https://github.com/delta-io/delta-rs",
+  },
+  {
+    name: "Delta Sharing",
+    description: "An open protocol for simple and secure data sharing.",
+    contributors: 19,
+    orgs: 2,
+    url: "https://github.com/delta-io/delta-sharing",
+  },
+  {
+    name: "kafka-delta-ingest",
+    description:
+      "Delta Lake connector for streaming data from Kafka into Delta tables.",
+    contributors: 6,
+    orgs: 2,
+    url: "https://github.com/delta-io/kafka-delta-ingest",
+  },
+  {
+    name: "delta.io website",
+    description:
+      "Delta Lake website and documentation built on Gatsby.js framework.",
+    contributors: 7,
+    orgs: 3,
+    url: "https://github.com/delta-io/website",
+  },
+];
+---
+
+<Section
+  title="Contribute"
+  padding="xxl"
+  className="bg-[#cdd9f4]"
+  isHeaderCentered
+>
+  <Fragment slot="subtitle">
+    <Typography variant="p">
+      Help us build the simplest, most complete, battle-tested open-source
+      storage framework ever!
+      <br />
+      Below are a few great ways to get started to contribute.
+    </Typography>
+  </Fragment>
+  <Grid columns={{ xs: 1, md: 2, lg: 3 }} className="gap-lg mb-xl">
+    {
+      repos.map((repo) => (
+        <Typography variant="prose" className="bg-white p-md">
+          <div class="text-[35px] text-center">
+            <Icon icon="github" alt="Github" className="mb-sm" />
+          </div>
+          <h3 class="font-normal mt-0 mb-xs">
+            <a href={repo.url} class="text-inherit no-underline">
+              {repo.name}
+            </a>
+          </h3>
+          <p class="p2 mb-sm">
+            {repo.contributors} contributors | {repo.orgs} organizations
+          </p>
+          <p class="mb-md">{repo.description}</p>
+          <p>
+            <a href={`${repo.url}/issues/new/choose`}>Report an issue</a>
+            <br />
+            <a href={`${repo.url}/pulls`}>View Pull Requests</a>
+          </p>
+        </Typography>
+      ))
+    }
+  </Grid>
+  <Typography
+    variant="prose"
+    className="mb-xl md:text-center max-w-screen-lg mx-auto"
+  >
+    <p>
+      Refer to the
+      <a href="/resources/contributing-to-delta">
+        Delta Lake contribution guide
+      </a>
+      for the latest on communication, coding style, and how to sign your work.
+    </p>
+    <p>
+      Refer to the
+      <a href="https://github.com/delta-io/delta/blob/master/PROTOCOL.md">
+        Delta Lake Protocol
+      </a>
+      for the specification for the Delta Transaction Protocol, which brings
+      <a href="https://en.wikipedia.org/wiki/ACID">ACID properties</a>
+      to large collections of data, stored as files, in a distributed file system
+      or object store.
+    </p>
+  </Typography>
+  <Section
+    title="Want to help or help out?"
+    padding="xs"
+    titleSize="h3"
+    className="bg-[#cdd9f4]"
+    isHeaderCentered
+  >
+    <Typography variant="p" className="text-center"
+      >Looking for ways to help or to get help? Refer to the <a
+        href="/resources/getting-help/">Getting Help Guide</a
+      >.</Typography
+    >
+  </Section>
+  <Section
+    title="Governance"
+    titleSize="h3"
+    padding="xxl"
+    className="bg-[#cdd9f4]"
+    isHeaderCentered
+  >
+    <Grid columns={{ xs: 1, md: 2 }} className="mb-xl">
+      <Typography variant="p">
+        Delta Lake is an independent open-source project and not controlled by
+        any single company. To emphasize this we joined the Delta Lake Project
+        in 2019, which is a sub-project of the Linux Foundation Projects. Within
+        the project, we make decisions based on <a
+          href="/pdfs/delta-charter.pdf"
+          target="_blank">these rules</a
+        >.
+      </Typography>
+      <Typography variant="p">
+        Delta Lake is supported by a wide set of developers from over 70
+        organizations across multiple repositories. Since 2019, more than 190
+        developers have contributed to Delta Lake! The Delta Lake community is
+        growing by leaps and bounds with more than 6200 members in the <a
+          href="https://go.delta.io/slack"
+          target="_blank">Delta Users slack</a
+        >.
+      </Typography>
+    </Grid>
+    <Typography variant="p" className="text-center">
+      For more information, please refer to the <a
+        href="/pdfs/delta-charter.pdf"
+        target="_blank">founding technical charter</a
+      >.
+    </Typography>
+  </Section>
+</Section>

@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+import logoImg from "./delta-lake-logo.png";
+
+interface Props {
+  loading?: "eager" | "lazy";
+}
+
+const { loading = "lazy" } = Astro.props;
+---
+
+<Image
+  src={logoImg}
+  alt="logo"
+  width="150"
+  densities={[1, 2]}
+  loading={loading}
+/>
+<style>
+  img {
+    margin: 0 auto 1rem;
+  }
+</style>

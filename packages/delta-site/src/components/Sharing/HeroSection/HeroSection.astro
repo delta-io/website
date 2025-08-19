@@ -1,0 +1,114 @@
+---
+import { Image } from "astro:assets";
+import Button from "delta-theme/components/Button.astro";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import heroDesktopImg from "./hero-desktop.png";
+import heroMobileImg from "./hero-mobile.png";
+import DeltaSharingLogo from "./delta-sharing-logo.svg";
+---
+
+<Section
+  padding="xxxl"
+  title=" "
+  isPrimary
+  isHeaderCentered
+  className="bg-white"
+>
+  <Image
+    src={DeltaSharingLogo}
+    alt="Delta Sharing"
+    class="sharing-logo"
+    slot="title"
+    loading="eager"
+  />
+  <Typography variant="prose" slot="subtitle">
+    <h3>An open standard for secure data sharing</h3>
+    <p>
+      Delta Sharing is the industry’s first open protocol for secure data
+      sharing, making it simple to share data with other organizations
+      regardless of which computing platforms they use.
+    </p>
+    <Grid columns={["min-content", "min-content"]} className="button-row">
+      <Button href="https://github.com/delta-io/delta-sharing" target="_blank"
+        >Get started</Button
+      >
+      <Button
+        href="https://databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html"
+        variant="secondary"
+        target="_blank">Read more</Button
+      >
+    </Grid>
+    <Grid columns={2} className="links-row">
+      <Typography variant="p2" className="text-right">
+        <a href="https://github.com/delta-io/delta-sharing" target="_blank"
+          >GitHub</a
+        >
+      </Typography>
+      <Typography variant="p2" className="text-left">
+        <a
+          href="https://github.com/delta-io/delta-sharing/releases"
+          target="_blank">Releases</a
+        >
+      </Typography>
+    </Grid>
+  </Typography>
+  <Image src={heroMobileImg} alt="" loading="lazy" class="img-mobile" />
+  <Image src={heroDesktopImg} alt="" loading="eager" class="img-desktop" />
+</Section>
+<style>
+  .sharing-logo {
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  .button-row {
+    justify-content: center;
+    margin-bottom: theme(spacing.md);
+  }
+
+  .links-row a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .links-row a:hover {
+    text-decoration: underline;
+  }
+
+  .img-mobile,
+  .img-desktop {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .img-mobile {
+    max-width: 366px;
+  }
+
+  .img-desktop {
+    display: none;
+  }
+
+  @media screen(md) {
+    .sharing-logo {
+      width: 300px;
+    }
+
+    .img-mobile {
+      display: none;
+    }
+
+    .img-desktop {
+      max-width: 989px;
+      display: block;
+    }
+  }
+
+  @media screen(lg) {
+    .sharing-logo {
+      width: auto;
+    }
+  }
+</style>

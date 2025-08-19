@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://delta.io">
-    <img alt="Delta Lake" src="static/images/icon.png" width="60" />
+    <img alt="Delta Lake" src="packages/delta-site/public/images/icon.png" width="60" />
   </a>
 </p>
 <h1 align="center">Delta Lake Website</h1>
@@ -15,34 +15,61 @@
 
 ## :rocket: Getting up and running locally
 
-This site requires Node 20 or above, which you can install with `brew install node@20`.
+### Quick start
 
-> If you are using vscode, you can use the dev container to simplify getting started.
+This project requires a YouTube API key which is used on various pages across the site. To generate an API key, refer to the docs on [Google Cloud](https://developers.google.com/youtube/v3/getting-started#before-you-start). Once you have generated an API key, create a file at `packages/delta-site/.env` with the following contents:
 
-This site requires a development `YOUTUBE_API_KEY` which populates the YouTube videos in the learn > videos, learn > tutorials, and community pages. That is, ensure you have created a `.env.development` file in the root folder; the file should look like:
-
-```
-//.env.development
-
-YOUTUBE_API_KEY = $API_KEY$
+```sh
+YOUTUBE_API_KEY=<api_key>
 ```
 
-- To generate an API key, refer to [How to Get a YouTube API Key [Tutorial + Examples]](https://blog.hubspot.com/website/how-to-get-youtube-api-key)
-- For more information on Gatsby environment files, please refer to [How to implement '.env' variables in Gatsby and React](https://dev.to/steeeeeph/how-to-implement-env-variables-in-gatsby-and-react-252d)
+Then, to get up and running on your machine, first start by [installing pnpm](https://pnpm.io/installation).
 
-Simply check out this repo, run `npm install --legacy-peer-deps`, then run `npm run develop`.
+Afterwards, install dependencies:
 
-To open a localhost version of the site, run `npm run start`.
+```sh
+pnpm install
+```
+
+Finally, you can run a local Astro dev server by running the following command:
+
+```sh
+pnpm --filter delta-site dev
+```
 
 ### Code formatting
 
 If you use Visual Studio Code, install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions to automatically format your code as you make changes.
 
-Alternatively, you may run `npm run lint` or `npm run lint:fix` to both check for and fix lint issues, respectively. All changes are automatically linted (and will attempt to auto-fix) on the git pre-commit hook.
+Alternatively, you may run `pnpm lint` or `pnpm format` to run ESLint and Prettier, respectively. All changes are automatically linted (and will atempt to auto-fix) on the git pre-commit hook.
 
-This repo runs automated checks on PRs, like the lint check above. Sometimes this process can hang. If you see the process hang, try running an empty commit and push the commit to rerun the checks. You can do this by running the following git command `git commit --allow-empty -m "Empty commit"` then pushing the commit to origin.
+This repo runs automated checks on PRs, including the lint and formatting checks above. All PRs require linters to pass in order to deploy to production.
 
-**All PRs require linters to pass in order to deploy to production.**
+### Deployment process
+
+The deployment process is automated. When the `main` branch is updated, the site is automatically deployed to production. On every PR, a branch preview will automatically be generated. This allows reviewers to preview your work in progress.
+
+### Project structure
+
+We use a monorepo pattern to separate individual packages. We currently have two packages:
+
+- **delta-site** - The delta.io website source code. Contains the site content, including blog posts.
+- **delta-theme** - The underlying theme and plugin configuration used by delta-site.
+
+Please refer to the README for each respective package for more details about them.
+
+### Upgrading dependencies
+
+It's a best practice to make sure that our dependencies are always up to date. You can run `scripts/upgrade-dependencies` to automatically install upgrades across all packages.
+
+Do note that you will still need to verify that things work as expected.
+
+### Helpful resources
+
+- [Astro documentation](https://docs.astro.build/en/getting-started/) — guides, API reference, and more.
+- [Tailwind v3 documentation](https://v3.tailwindcss.com/docs/) — for understanding the various classnames for styling.
+- [YouTube Data API](https://developers.google.com/youtube/v3/docs) - for working with the YouTube API. 
+- [Netlify documentation](https://docs.netlify.com/)
 
 ## :handshake: Contributing
 
@@ -58,25 +85,32 @@ Please create an issue with your proposed title before writing the blog post!
 
 Blog posts should generally be around 2,000 words, target a relevant, high-value keyword, and be easy to read.
 
-You can add a blog by adding a directory with some files to `src/blog`. Here's an example:
+You can add a blog by adding a directory with some files to `packages/delta-site/src/content/blog`. Here's an example:
 
 ```
-src/
-  blog/
-    convert-parquet-to-delta/
-      index.mdx
-      thumbnail.png
+packages/
+  delta-site/
+    src/
+      blog/
+        2023-10-22-delta-rs-python/
+          index.mdx
+          thumbnail.png
 ```
 
-All of the images that correspond to the blog post should be saved in the respective folder.
+Guidelines:
 
-The top of the `index.mdx` file should contain the following metadata:
+- The directory name should contain the following format: `YYYY-MM-DD-blog-title`
+- All of the images that correspond to the blog post should be saved in the respective folder.
+- The top of the `index.mdx` file should contain the following metadata:
 
-```
----
-title: Converting from Parquet to Delta Lake
-description: This post shows how to convert a Parquet table to a Delta Lake.
-thumbnail: ./thumbnail.png
-author: Matthew Powers
----
-```
+  ```md
+  ---
+  title: New features in the Python deltalake 0.12.0 release
+  description: This post explains the new features in the Python deltalake 0.12.0 release
+  thumbnail: "./thumbnail.png"
+  author: ion-koutsouris
+  publishedAt: 2023-10-22
+  ---
+  ```
+
+  Keep in mind that the `author` metadata refers to a profile under `packages/delta-site/src/content/profiles`.

@@ -1,0 +1,317 @@
+---
+/*
+ * Typography
+ *
+ * Used to render a single text element. If you need to render a lot of text,
+ * wrap it with the Prose component instead.
+ *
+ * Note: the ".typography-prose" styles use the :where() selector to avoid adding
+ * specificity to the styling. This allows other components to easily override
+ * the prose styling if they wish.
+ */
+import type { JSX } from "astro/jsx-runtime";
+import clsx from "clsx";
+
+export type HeaderVariant = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+// for some reason prettier will mess up the build here
+// prettier-ignore
+export type BlockVariant = "p" | "p2" | "ol" | "ul" | "li" | "table" | "blockquote" | "cite";
+export type ChildlessVariant = "hr";
+
+interface ContainerProps {
+  variant: HeaderVariant | BlockVariant | "prose";
+  children: unknown;
+  className?: string;
+}
+interface ChildlessProps {
+  variant: ChildlessVariant;
+  className?: string;
+}
+type Props = ContainerProps | ChildlessProps;
+
+interface VariantElementMap {
+  tag: keyof JSX.DefinedIntrinsicElements;
+  className?: string;
+}
+
+/**
+ * If any variants need to change the HTML element they render, add the mapping
+ * to this object.
+ */
+const variantElements: { [key: string]: VariantElementMap } = {
+  prose: {
+    tag: "div",
+    className: "typography-prose",
+  },
+  p2: {
+    tag: "p",
+    className: "p2",
+  },
+  callout: {
+    tag: "div",
+    className: "callout",
+  },
+};
+
+const isChildless = (
+  variant: Props["variant"],
+): variant is ChildlessProps["variant"] => {
+  return variant === "hr";
+};
+
+const { variant, className } = Astro.props;
+const Element = variantElements[variant]?.tag ?? variant;
+const classNames = clsx(variantElements[variant]?.className, className);
+---
+
+{
+  isChildless(variant) ? (
+    <Element class={classNames} />
+  ) : (
+    <Element class={classNames}>
+      <slot />
+    </Element>
+  )
+}
+<style>
+  /*
+   * Block-level elements
+   */
+  p,
+  ol,
+  ul,
+  blockquote,
+  .callout,
+  :global(p:where(.typography-prose p)),
+  :global(ol:where(.typography-prose ol)),
+  :global(ul:where(.typography-prose ul)),
+  :global(blockquote:where(.typography-prose blockquote)),
+  :global(div:where(.typography-prose .callout)) {
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: theme(fontSize.primary);
+  }
+
+  .p2,
+  :global(p:where(.typography-prose p.p2)) {
+    font-size: theme(fontSize.secondary);
+  }
+
+  ol,
+  ul,
+  :global(ol:where(.typography-prose ol)),
+  :global(ul:where(.typography-prose ul)) {
+    padding-left: 2em;
+  }
+
+  ol,
+  :global(ol:where(.typography-prose ol)) {
+    list-style-type: decimal;
+  }
+
+  ul,
+  :global(ul:where(.typography-prose ul)) {
+    list-style-type: disc;
+  }
+
+  li + li,
+  :global(li:where(.typography-prose li + li)) {
+    margin-top: 1em;
+  }
+
+  blockquote,
+  :global(blockquote:where(.typography-prose blockquote)) {
+    padding: 1em;
+    color: theme(colors.textSecondary);
+    background-color: theme(colors.bgLightSecond);
+    font-style: italic;
+  }
+
+  cite,
+  :global(cite:where(.typography-prose cite)) {
+    display: block;
+    font-style: normal;
+    margin-top: theme(spacing.sm);
+  }
+
+  cite:before,
+  :global(cite:where(.typography-prose cite)):before {
+    content: "— ";
+  }
+
+  /*
+   * Headings
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  :global(h1:where(.typography-prose h1)),
+  :global(h2:where(.typography-prose h2)),
+  :global(h3:where(.typography-prose h3)),
+  :global(h4:where(.typography-prose h4)),
+  :global(h5:where(.typography-prose h5)),
+  :global(h6:where(.typography-prose h6)) {
+    line-height: theme(lineHeight.header);
+    margin-top: theme(spacing.lg);
+    margin-bottom: 0.5em;
+    font-weight: theme(fontWeight.bold);
+  }
+  h1,
+  :global(h1:where(.typography-prose h1)) {
+    font-size: theme(fontSize.h1);
+  }
+  h2,
+  :global(h2:where(.typography-prose h2)) {
+    font-size: theme(fontSize.h2);
+  }
+  h3,
+  :global(h3:where(.typography-prose h3)) {
+    font-size: theme(fontSize.h3);
+  }
+  h4,
+  :global(h4:where(.typography-prose h4)) {
+    font-size: theme(fontSize.h4);
+  }
+  h5,
+  :global(h5:where(.typography-prose h5)) {
+    font-size: theme(fontSize.h5);
+  }
+  h6,
+  :global(h6:where(.typography-prose h6)) {
+    font-size: theme(fontSize.h6);
+  }
+
+  /*
+   * Table
+   */
+  table,
+  :global(table:where(.typography-prose table)) {
+    width: 100%;
+    font-size: theme(fontSize.primary);
+  }
+
+  table :global(th),
+  :global(th:where(.typography-prose table th)) {
+    text-align: left;
+  }
+
+  table :global(th),
+  table :global(td),
+  :global(th:where(.typography-prose table th)),
+  :global(th:where(.typography-prose table td)) {
+    padding: theme(spacing.xs);
+  }
+
+  /*
+   * Other elements
+   */
+  hr,
+  :global(hr:where(.typography-prose hr)) {
+    margin: theme(spacing.lg) 0;
+    border: none;
+    height: 1px;
+    background: theme(colors.border);
+  }
+
+  /*
+   * Callouts
+   */
+  .callout,
+  :global(div:where(.typography-prose .callout)) {
+    background-color: theme(colors.bgLight);
+    border: 1px solid theme(colors.border);
+    border-radius: theme(borderRadius.sm);
+    padding: 1em;
+  }
+
+  .callout-note,
+  .callout-info,
+  :global(div:where(.typography-prose .callout-note)),
+  :global(div:where(.typography-prose .callout-info)) {
+    background-color: #f3fdff;
+    border-color: theme(colors.info);
+  }
+
+  .callout:before,
+  :global(div:where(.typography-prose .callout):before) {
+    font-weight: theme(fontWeight.bold);
+    font-size: theme(fontSize.secondary);
+    display: block;
+    margin-bottom: theme(spacing.sm);
+    text-transform: uppercase;
+  }
+
+  .callout-info:before,
+  .callout-note:before,
+  :global(div:where(.typography-prose .callout-info):before),
+  :global(div:where(.typography-prose .callout-note):before) {
+    color: theme(colors.info);
+  }
+
+  .callout-info:before,
+  :global(div:where(.typography-prose .callout-info):before) {
+    content: "Info";
+  }
+
+  .callout-note:before,
+  :global(div:where(.typography-prose .callout-note):before) {
+    content: "Note";
+  }
+
+  .callout-warning,
+  :global(div:where(.typography-prose .callout-warning)) {
+    border-color: theme(colors.warning);
+    background-color: #fff6d0;
+  }
+
+  .callout-warning:before,
+  :global(div:where(.typography-prose .callout-warning):before) {
+    content: "Warning";
+    color: #bd9700;
+  }
+
+  .callout-danger,
+  :global(div:where(.typography-prose .callout-danger)) {
+    border-color: theme(colors.danger);
+    background-color: #ffd8d8;
+  }
+
+  .callout-danger:before,
+  :global(div:where(.typography-prose .callout-danger):before) {
+    content: "Danger";
+    color: theme(colors.danger);
+  }
+
+  /*
+   * Prose
+   */
+  :global(code:where(.typography-prose code)),
+  :global(kbd:where(.typography-prose kbd)),
+  :global(samp:where(.typography-prose samp)),
+  :global(pre:where(.typography-prose pre)) {
+    font-family: theme(fontFamily.code);
+    font-size: theme(fontSize.code);
+  }
+  :global(code:where(.typography-prose :not(.astro-code) > code)) {
+    color: theme(colors.code);
+  }
+
+  blockquote > :first-child,
+  .callout > :first-child,
+  :global(blockquote:where(.typography-prose blockquote) > :first-child),
+  :global(div:where(.typography-prose .callout) > :first-child),
+  .typography-prose > :global(:first-child) {
+    margin-top: 0;
+  }
+
+  blockquote > :last-child,
+  .callout > :last-child,
+  :global(blockquote:where(.typography-prose blockquote) > :last-child),
+  :global(div:where(.typography-prose .callout) > :last-child),
+  .typography-prose > :global(:last-child) {
+    margin-bottom: 0;
+  }
+</style>
