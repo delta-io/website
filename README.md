@@ -13,28 +13,56 @@
   </a>
 </p>
 
-## Developer guide
+## :rocket: Getting up and running locally
 
-### Getting started
+### Quick start
 
-This site requires a development `YOUTUBE_API_KEY` which populates the YouTube videos in the learn > videos, learn > tutorials, and community pages.
+This project requires a YouTube API key which is used on various pages across the site. To generate an API key, refer to the docs on [Google Cloud](https://developers.google.com/youtube/v3/getting-started#before-you-start). Once you have generated an API key, create a file at `packages/delta-site/.env` with the following contents:
 
-- To generate an API key, refer to [How to Get a YouTube API Key [Tutorial + Examples]](https://blog.hubspot.com/website/how-to-get-youtube-api-key)
+```sh
+YOUTUBE_API_KEY=<api_key>
+```
 
-Install dependencies and start the local development server:
+Then, to get up and running on your machine, first start by [installing pnpm](https://pnpm.io/installation).
 
-```ts
-pnpm i
-YOUTUBE_API_KEY=<string> pnpm --filter delta-site dev
-YOUTUBE_API_KEY=<string> pnpm --filter delta-site build
-YOUTUBE_API_KEY=<string> pnpm --filter delta-site preview
+Afterwards, install dependencies:
+
+```sh
+pnpm install
+```
+
+Finally, you can run a local Astro dev server by running the following command:
+
+```sh
+pnpm --filter delta-site dev
 ```
 
 ### Code formatting
 
-Global operations
-Lint (via eslint) the entire repo: `pnpm lint`
-Format (via prettier) the entire repo: `pnpm format`
+If you use Visual Studio Code, install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions to automatically format your code as you make changes.
+
+Alternatively, you may run `pnpm lint` or `pnpm format` to run ESLint and Prettier, respectively. All changes are automatically linted (and will atempt to auto-fix) on the git pre-commit hook.
+
+This repo runs automated checks on PRs, including the lint and formatting checks above. All PRs require linters to pass in order to deploy to production.
+
+### Deployment process
+
+The deployment process is automated. When the `main` branch is updated, the site is automatically deployed to production. On every PR, a branch preview will automatically be generated. This allows reviewers to preview your work in progress.
+
+### Project structure
+
+We use a monorepo pattern to separate individual packages. We currently have two packages:
+
+- **delta-site** - The delta.io website source code. Contains the site content, including blog posts.
+- **delta-theme** - The underlying theme and plugin configuration used by delta-site.
+
+Please refer to the README for each respective package for more details about them.
+
+### Upgrading dependencies
+
+It's a best practice to make sure that our dependencies are always up to date. You can run `scripts/upgrade-dependencies` to automatically install upgrades across all packages.
+
+Do note that you will still need to verify that things work as expected.
 
 ### Helpful resources
 
@@ -43,26 +71,9 @@ Format (via prettier) the entire repo: `pnpm format`
 - [YouTube Data API](https://developers.google.com/youtube/v3/docs) - for working with the YouTube API. 
 - [Netlify documentation](https://docs.netlify.com/)
 
-### Project structure
+## :handshake: Contributing
 
-We use a monorepo pattern to separate individual packages. We currently have two packages:
-
-- delta-site - The delta.io website source code
-- delta-theme - The underlying theme used by delta-site
-
-#### delta-site
-
-We mostly follow Astro's [standard project structure](https://docs.astro.build/en/basics/project-structure/). The most notable directory is the `src` folder, which includes the following folders:
-
-- `src/components` - Contains various shared components. The "standard" component library is located directly in this folder, while page layouts are located in `src/components/layouts` and page-specific components are located in `src/components/pages`.
-- `src/config` - Site configuration, which are "globals" for various things such as menus, site title, etc.
-- `src/content` - Content collections. See below for how to use them.
-- `src/pages` - Page routes. Astro uses this directory to generate the page routing structure.
-- `src/utils` - Various utility functions used by different pages, including fetching data from the YouTube Data API.
-
-#### delta-theme
-
-This is the theme source code for delta-site. It includes various plugin configurations, as well as the components used by the site.
+All changes are proposed as a [pull request](https://github.com/delta-io/website/pulls). Simply create a pull request and request a review and we'll get on it.
 
 ### Blog posts
 
@@ -74,33 +85,32 @@ Please create an issue with your proposed title before writing the blog post!
 
 Blog posts should generally be around 2,000 words, target a relevant, high-value keyword, and be easy to read.
 
-You can add a blog by adding a directory with some files to `src/blog`. Here's an example:
+You can add a blog by adding a directory with some files to `packages/delta-site/src/content/blog`. Here's an example:
 
 ```
-delta-site/
-         src/
-           blog/
-              2023-10-22-delta-rs-python/
-                index.mdx
-                thumbnail.png
+packages/
+  delta-site/
+    src/
+      blog/
+        2023-10-22-delta-rs-python/
+          index.mdx
+          thumbnail.png
 ```
 
-All of the images that correspond to the blog post should be saved in the respective folder.
+Guidelines:
 
-The top of the `index.mdx` file should contain the following metadata:
+- The directory name should contain the following format: `YYYY-MM-DD-blog-title`
+- All of the images that correspond to the blog post should be saved in the respective folder.
+- The top of the `index.mdx` file should contain the following metadata:
 
-```
----
-title: New features in the Python deltalake 0.12.0 release
-description: This post explains the new features in the Python deltalake 0.12.0 release
-thumbnail: "./thumbnail.png"
-author: ion-koutsouris
-publishedAt: 2023-10-22
----
-```
+  ```md
+  ---
+  title: New features in the Python deltalake 0.12.0 release
+  description: This post explains the new features in the Python deltalake 0.12.0 release
+  thumbnail: "./thumbnail.png"
+  author: ion-koutsouris
+  publishedAt: 2023-10-22
+  ---
+  ```
 
-## Upgrading dependencies
-
-It's a best practice to make sure that our dependencies are always up to date. You can run `scripts/upgrade-dependencies` to automatically install upgrades across all packages.
-
-Do note that you will still need to verify that things work as expected.
+  Keep in mind that the `author` metadata refers to a profile under `packages/delta-site/src/content/profiles`.
