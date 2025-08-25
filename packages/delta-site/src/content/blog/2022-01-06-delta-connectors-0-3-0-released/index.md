@@ -11,7 +11,6 @@ We are excited to announce the release of Delta Connectors 0.3.0, which introduc
 #### Delta Standalone
 
 - **Write functionality** - This release introduces new APIs to support creating and writing Delta tables without Apache Spark™. External processing engines can write parquet data files themselves and then use the APIs to add the files to the Delta table atomically. Following the [Delta Transaction Log Protocol](https://github.com/delta-io/delta/blob/master/PROTOCOL.md), the implementation uses optimistic concurrency control to manage multiple writers, automatically generates checkpoint files, and manages log and checkpoint cleanup according to the protocol. The main Java class exposed is `OptimisticTransaction`, which is accessed via `DeltaLog.startTransaction()`.
-
   - `OptimisticTransaction.markFilesAsRead(readPredicates)` must be used to read all metadata during the transaction (and not the `DeltaLog`). It is used to detect concurrent updates and determine if logical conflicts between this transaction and previously-committed transactions can be resolved.
   - `OptimisticTransaction.commit(actions, operation, engineInfo)` is used to commit changes to the table. If a conflicting transaction has been committed first (see above) an exception is thrown, otherwise the table version that was committed is returned.
   - Idempotent writes can be implemented using `OptimisticTransaction.txnVersion(appId)` to check for version increases committed by the same application.
@@ -23,7 +22,6 @@ We are excited to announce the release of Delta Connectors 0.3.0, which introduc
 - **Partition filtering for metadata reads and conflict detection in writes** - This release introduces a simple expression framework for partition pruning in metadata queries. When reading files in a snapshot, filter the returned `AddFiles` on partition columns by passing a `predicate` into `Snapshot.scan(predicate)`. When updating a table during a transaction, specify which partitions were read by passing a `readPredicate` into `OptimisticTransaction.markFilesAsRead(readPredicate)` to detect logical conflicts and avoid transaction conflicts when possible.
 
 - **Miscellaneous updates:**
-
   - `ParquetSchemaConverter` converts a `StructType` schema to a Parquet schema.
   - `Iterator<VersionLog> DeltaLog.getChanges()` exposes an incremental metadata changes API. VersionLog wraps the version number, and the list of actions in that version.
   - Fix [#197](https://github.com/delta-io/connectors/pull/197) for `RowRecord` so that values in partition columns can be read.

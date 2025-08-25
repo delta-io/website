@@ -96,13 +96,11 @@ While not a user-facing feature in itself, it is a revolutionary internal mechan
 Delta on Spark already supports creating, writing, and reading tables with the above features, and support for engines is coming via the Delta Kernel project (to be discussed further in part 2 of this blog post). In addition, there have been major improvements in the user interfaces and operations in the last 12 months.
 
 - **Most advanced MERGE API ever** - Since the inception of [MERGE support in Delta 0.3](https://github.com/delta-io/delta/releases/tag/v0.3.0) in 2019, we have always pushed the boundary of MERGE capabilities. We were the first open-source format to introduce support for the following:
-
   - Automatic schema evolution with `INSERT *` and `UPDATE SET * `([Delta 0.6](https://github.com/delta-io/delta/releases/tag/v0.6.0))
   - Unlimited conditional `WHEN MATCHED` and `WHEN NOT MATCHED` clauses ([Delta 1.0](https://github.com/delta-io/delta/releases/tag/v1.0.0))
   - Complex types support ([Delta 0.8](https://github.com/delta-io/delta/releases/tag/v0.8.0) and [Delta 1.1](https://github.com/delta-io/delta/releases/tag/v1.1.0))
 
 - Over the last year, we have been improving APIs and improving performance
-
   - [WHEN NOT MATCHED BY SOURCE clause](https://docs.delta.io/2.3.0/delta-update.html#modify-all-unmatched-rows-using-merge) (Scala in [Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0) and SQL in [Delta 2.4](https://github.com/delta-io/delta/releases/tag/v2.4.0)), which allows you to perform more complicated data updates in a single MERGE operation (instead of multiple `UPDATE/DELETE/MERGE` operations).
   - Arbitrary column support in automatic schema evolution ([Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0))
   - [Idempotency in MERGE ](https://docs.delta.io/2.3.0/delta-batch.html#idempotent-writes)for ensuring failures in periodic jobs are handled gracefully ([Delta 2.3](https://github.com/delta-io/delta/releases/tag/v2.3.0))

@@ -9,7 +9,6 @@ publishedAt: 2021-12-03
 We are excited to announce the release of [Delta Lake 1.1.0](https://github.com/delta-io/delta/releases/tag/v1.1.0) on [Apache Spark 3.2](https://spark.apache.org/releases/spark-release-3-2-0.html). Similar to Apache Spark™, we have released Maven artifacts for both Scala 2.12 and Scala 2.13. The key features in this release are as follows.
 
 - **Performance improvements in MERGE operation**
-
   - On partitioned tables, MERGE operations will automatically [repartition the output data before writing to files](https://docs.delta.io/latest/delta-update.html#performance-tuning). This ensures better performance out-of-the-box for both the MERGE operation as well as subsequent read operations.
   - On very wide tables (e.g., 1000 columns), MERGE operation can be faster since it now [avoids quadratic complexity when resolving column names](https://github.com/delta-io/delta/commit/83780aeeadd67893ad69ed6481f7c6bce5be563c) in a table with ~1000 or more columns.
 

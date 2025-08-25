@@ -4,6 +4,7 @@ import Section from "delta-theme/components/Section.astro";
 import type { GetStaticPaths, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 import Pagination from "delta-theme/components/Pagination.astro";
+import Icon from "delta-theme/components/Icon.astro";
 import PostsList from "../../components/PostsList.astro";
 import Layout from "../../layouts/Layout.astro";
 
@@ -39,6 +40,17 @@ latestPosts.sort(sortBlogs);
     padding="xxl"
     className="bg-white"
   >
+    <div class="flex justify-between items-center mb-8">
+      <div></div>
+      <a
+        href="/rss.xml"
+        class="inline-flex items-center gap-2 text-sm text-link transition-colors"
+        title="Subscribe to RSS feed"
+      >
+        <Icon icon="rss" alt="RSS Feed" className="w-4 h-4" />
+        RSS Feed
+      </a>
+    </div>
     {
       page.currentPage === 1 && (
         <PostsList posts={latestPosts.slice(0, 1)} hasFeaturedItem />

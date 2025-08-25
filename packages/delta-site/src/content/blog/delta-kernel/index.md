@@ -80,7 +80,6 @@ Let's explore why designing Delta Kernel posed a unique set of challenges.
 - **Challenge 2: Support for distributed engines with the right level of abstraction -** If an engine wants to read data in a single thread or process, then Delta Kernel simply needs to return table data when given a Path. However, distributed engines like Apache Spark or Trino, or DuckDB's multi-threaded parquet reader, operate differently: they require the table's metadata (schema, list of files, etc.) in order to plan out the tasks of the distributed jobs. These tasks, running on different machines or threads, read different parts of the table data based on the parts of the metadata they were given.
 
   To support distributed engines, Delta Kernel must provide the right level of abstraction. It needs to:
-
   1. Expose just enough "abstract metadata" that an engine can use for planning without having to understand protocol details.
   2. Allow reading of table data with the necessary abstract metadata.
 

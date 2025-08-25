@@ -53,7 +53,6 @@ While we are racing to add all the existing protocol features support to this gr
 - **[Trino](https://trino.io/docs/current/connector/delta-lake.html)** - The Delta Trino connector now supports Deletion Vectors, Column Mapping, and other key features from the main Delta Lake spec. It also saw performance improvements across the board.
 - **[Apache Druid](https://druid.apache.org/docs/latest/development/extensions-contrib/delta-lake/)** - [Apache Druid 29 has added support for Delta Lake](https://druid.apache.org/docs/latest/release-info/release-notes/#druid-2900) using [Delta Kernel](https://github.com/apache/druid/blob/master/docs/development/extensions-contrib/delta-lake.md#version-support).
 - **[Delta Rust](https://github.com/delta-io/delta-rs)** **(delta-rs crate / deltalake PyPI)** - This immensely popular project ([2M+ PyPI downloads/month as of April 3, 2024](https://pypistats.org/packages/deltalake)) has added many API improvements:
-
   - Support for popular operations - `DELETE, UPDATE, MERGE, OPTIMIZE ZORDER, CONVERT TO DELTA`
   - Support for table constraints - writes will ensure data constraints defined in the table will not be violated
   - Support for schema evolution
