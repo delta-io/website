@@ -63,12 +63,10 @@ If you're not yet familiar with StarRocks, here's what you need to know. Designe
 architecture optimized for running customer-facing workloads on open data lakehouses, StarRocks' core components include:
 
 - **Frontend (FE)**:
-
   - Responsible for query parsing, plan generation, and metadata management.
     It acts as the brain, orchestrating query execution across multiple nodes.
 
 - **Compute Node (CN):**
-
   - Handles data caching, retrieval, and execution of distributed query plans.
     It is the muscle that delivers fast and scalable data processing.
 
@@ -137,11 +135,9 @@ minimize metadata-related overhead in the FE, ensuring responsiveness for high-c
 Today, StarRocks’ Delta Lake connector supports:
 
 1. **Wide Data Type Coverage**:
-
    1. Handles core data types like INT, STRING, and FLOAT, with ongoing development for complex types like MAP and STRUCT.
 
 2. **Data Skipping**:
-
    1. Efficiently skips irrelevant data based on Parquet file statistics and Delta transaction logs, drastically reducing scan times.
 
 3. **Advanced Table Features**:
