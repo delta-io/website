@@ -88,13 +88,11 @@ for type widening.
 These are just a few highlights. Additional features include:
 
 - Liquid Clustering convenience and performance features:
-
   - [OPTIMIZE FULL](https://github.com/delta-io/delta/pull/3793): Recluster all records in a table for peak performance.
   - [Unpartitioned Tables](https://github.com/delta-io/delta/pull/3174): Enable clustering on an existing, unpartitioned table.
   - [External Locations](https://github.com/delta-io/delta/pull/3251): Create clustered tables from external storage.
 
 - UniForm performance optimizations and functionality:
-
   - Support for [timestamp-type partition columns](https://github.com/delta-io/delta/commit/7a0db43df1ef8236e4db8a57837734b83ed15153) for UniForm Iceberg
   - Automatic manifest cleanups via [expireSnapshot](https://github.com/delta-io/delta/commit/7bb979205d7eb4cd8aaa04da8fd960f3862b53b7) whenever OPTIMIZE is run on the Delta table
   - [List and map](https://github.com/delta-io/delta/commit/dd39415912f6009fb9e5d2f4057288bb1e9fd117) data types for UniForm Hudi

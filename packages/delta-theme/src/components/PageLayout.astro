@@ -55,6 +55,12 @@ const shouldExcludeFromSearch = excludedPaths.some(
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Delta Lake Blog"
+      href="/rss.xml"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title ? `${title} | ${config.title}` : config.title}</title>
     {description && <meta name="description" content={description} />}
