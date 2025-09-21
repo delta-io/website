@@ -202,6 +202,31 @@ stream2 = spark.readStream.format("delta") \
   .start()
 ```
 
+## Use Delta Lake without Spark (delta-rs: Rust & Python)
+
+Not every workflow needs Apache Spark. You can also use **delta-rs** and its Python bindings to manage Delta tables with full ACID guarantees.
+
+**Docs**
+- **Rust**: https://delta-io.github.io/delta-rs/
+- **Python (deltalake)**: https://pypi.org/project/deltalake/
+
+> delta-rs is a native implementation of the Delta Lake protocol with Python bindings. It supports ACID transactions, time travel, vacuum, and more—no Spark required. See the delta-rs documentation for the latest capabilities and examples.
+
+### Quick Python example
+
+```python
+# pip install deltalake
+from deltalake import DeltaTable, write_deltalake
+import pandas as pd
+
+# Write a Pandas DataFrame to a new Delta table
+df = pd.DataFrame({"id": [1, 2, 3]})
+write_deltalake("tmp/delta_table", df)
+
+# Read it back as a Pandas DataFrame
+dt = DeltaTable("tmp/delta_table")
+print(dt.to_pandas().head())
+
 ## Next Steps
 
 Here are some further resources for learning more about Delta Lake:
