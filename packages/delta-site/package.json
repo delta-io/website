@@ -21,7 +21,7 @@
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource-variable/source-code-pro": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "astro": "^5.14.1",
+    "astro": "^5.14.3",
     "astro-favicons": "^3.1.5",
     "delta-theme": "workspace:*",
     "googleapis": "^161.0.0"
