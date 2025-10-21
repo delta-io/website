@@ -44,8 +44,18 @@ Overview of each field:
 - **title:** Blog post title
 - **description:** Blog post description
 - **thumbnail:** Relative path to blog post thumbnail (usually `./thumbnail.png`)
-- **author:** One or more `profile` IDs (see below)
-- **publishedAt:** `YYYY-MM-DD` format date of when the post was published (this should match the date in the directory name)
+- **author:** One or more `profile` IDs (see below). **IMPORTANT:** Profile IDs must exactly match the directory name in `src/content/profiles/`. For multiple authors, use a YAML array format:
+  ```
+  author:
+  - carly-akerly
+  - robert-pack
+  ```
+  Or for a single author:
+  ```
+  author: ion-koutsouris
+  ```
+  **If adding a new author:** Create a new profile folder in `src/content/profiles/[author-name]/` with an `index.md` file containing the required frontmatter (see Profiles section below).
+- **publishedAt:** `YYYY-MM-DD` format date of when the post was published. **REQUIRED FIELD** - This date must exactly match the date in the directory name (e.g., if directory is `2025-09-25-Delta-Lake-4.0`, then `publishedAt` must be `2025-09-25`)
 
 Other optional fields:
 
