@@ -277,6 +277,11 @@
   font-size: var(--font-size-code);
 }
 
+/* Ensure no-underline works properly */
+@utility no-underline {
+  text-decoration-line: none;
+}
+
 /* Responsive utilities */
 @media (max-width: 991px) {
   .max-lg\\:flex-col {
