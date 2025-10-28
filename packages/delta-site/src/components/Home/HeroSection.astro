@@ -66,7 +66,7 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
   }
 
   .description {
-    max-width: theme(screens.md);
+    max-width: 768px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -82,7 +82,7 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
   .button-row {
     display: flex;
     justify-content: center;
-    gap: theme(spacing.lg);
+    gap: var(--spacing-lg);
   }
 
   .hero-link {
@@ -91,7 +91,7 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
   }
 
   .hero-link:hover {
-    color: theme(colors.accent);
+    color: var(--color-accent);
   }
 
   @media screen(sm) {

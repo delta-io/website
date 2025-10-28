@@ -35,7 +35,7 @@ import uniFormImg from "./delta-uniform.jpg";
 <style>
   .section {
     color: white;
-    background-color: theme(colors.primary);
+    background-color: var(--color-primary);
   }
 
   .grid {
@@ -53,7 +53,7 @@ import uniFormImg from "./delta-uniform.jpg";
   }
 
   .text p {
-    font-size: theme(fontSize.h4);
+    font-size: var(--font-size-h4);
   }
 
   .text a {
@@ -67,8 +67,8 @@ import uniFormImg from "./delta-uniform.jpg";
   .text a + a:before {
     content: "|";
     display: inline-block;
-    margin-left: theme(spacing.sm);
-    margin-right: theme(spacing.sm);
+    margin-left: var(--spacing-sm);
+    margin-right: var(--spacing-sm);
   }
 
   @media screen(sm) {

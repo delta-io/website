@@ -24,19 +24,19 @@ const classes = clsx("tag", { "tag-dark": isDark }, className);
 }
 <style>
   .tag {
-    color: theme(colors.textSecondary);
-    background-color: theme(colors.bgLightSecond);
-    border: 1px solid theme(colors.border);
-    font-size: theme(fontSize.small);
-    font-weight: theme(fontWeight.bold);
-    padding: 5px theme(spacing.xs);
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-light-second);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+    padding: 5px var(--spacing-xs);
     line-height: 1;
     border-radius: 3px;
   }
   .tag-dark {
-    color: theme(colors.white / 75%);
-    background-color: theme(colors.darkBorder);
-    border-color: theme(colors.darkBorder);
+    color: rgba(255, 255, 255, 0.75);
+    background-color: var(--color-dark-border);
+    border-color: var(--color-dark-border);
   }
 
   a {

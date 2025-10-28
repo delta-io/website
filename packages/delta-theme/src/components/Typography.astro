@@ -89,12 +89,12 @@ const classNames = clsx(variantElements[variant]?.className, className);
   :global(div:where(.typography-prose .callout)) {
     margin-top: 0;
     margin-bottom: 1em;
-    font-size: theme(fontSize.primary);
+    font-size: var(--font-size-primary);
   }
 
   .p2,
   :global(p:where(.typography-prose p.p2)) {
-    font-size: theme(fontSize.secondary);
+    font-size: var(--font-size-secondary);
   }
 
   ol,
@@ -122,8 +122,8 @@ const classNames = clsx(variantElements[variant]?.className, className);
   blockquote,
   :global(blockquote:where(.typography-prose blockquote)) {
     padding: 1em;
-    color: theme(colors.textSecondary);
-    background-color: theme(colors.bgLightSecond);
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-light-second);
     font-style: italic;
   }
 
@@ -131,7 +131,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
   :global(cite:where(.typography-prose cite)) {
     display: block;
     font-style: normal;
-    margin-top: theme(spacing.sm);
+    margin-top: var(--spacing-sm);
   }
 
   cite:before,
@@ -154,34 +154,34 @@ const classNames = clsx(variantElements[variant]?.className, className);
   :global(h4:where(.typography-prose h4)),
   :global(h5:where(.typography-prose h5)),
   :global(h6:where(.typography-prose h6)) {
-    line-height: theme(lineHeight.header);
-    margin-top: theme(spacing.lg);
+    line-height: var(--line-height-header);
+    margin-top: var(--spacing-lg);
     margin-bottom: 0.5em;
-    font-weight: theme(fontWeight.bold);
+    font-weight: var(--font-weight-bold);
   }
   h1,
   :global(h1:where(.typography-prose h1)) {
-    font-size: theme(fontSize.h1);
+    font-size: var(--font-size-h1);
   }
   h2,
   :global(h2:where(.typography-prose h2)) {
-    font-size: theme(fontSize.h2);
+    font-size: var(--font-size-h2);
   }
   h3,
   :global(h3:where(.typography-prose h3)) {
-    font-size: theme(fontSize.h3);
+    font-size: var(--font-size-h3);
   }
   h4,
   :global(h4:where(.typography-prose h4)) {
-    font-size: theme(fontSize.h4);
+    font-size: var(--font-size-h4);
   }
   h5,
   :global(h5:where(.typography-prose h5)) {
-    font-size: theme(fontSize.h5);
+    font-size: var(--font-size-h5);
   }
   h6,
   :global(h6:where(.typography-prose h6)) {
-    font-size: theme(fontSize.h6);
+    font-size: var(--font-size-h6);
   }
 
   /*
@@ -190,7 +190,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
   table,
   :global(table:where(.typography-prose table)) {
     width: 100%;
-    font-size: theme(fontSize.primary);
+    font-size: var(--font-size-primary);
   }
 
   table :global(th),
@@ -202,7 +202,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
   table :global(td),
   :global(th:where(.typography-prose table th)),
   :global(th:where(.typography-prose table td)) {
-    padding: theme(spacing.xs);
+    padding: var(--spacing-xs);
   }
 
   /*
@@ -210,10 +210,10 @@ const classNames = clsx(variantElements[variant]?.className, className);
    */
   hr,
   :global(hr:where(.typography-prose hr)) {
-    margin: theme(spacing.lg) 0;
+    margin: var(--spacing-lg) 0;
     border: none;
     height: 1px;
-    background: theme(colors.border);
+    background: var(--color-border);
   }
 
   /*
@@ -221,9 +221,9 @@ const classNames = clsx(variantElements[variant]?.className, className);
    */
   .callout,
   :global(div:where(.typography-prose .callout)) {
-    background-color: theme(colors.bgLight);
-    border: 1px solid theme(colors.border);
-    border-radius: theme(borderRadius.sm);
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: 0.125rem;
     padding: 1em;
   }
 
@@ -232,15 +232,15 @@ const classNames = clsx(variantElements[variant]?.className, className);
   :global(div:where(.typography-prose .callout-note)),
   :global(div:where(.typography-prose .callout-info)) {
     background-color: #f3fdff;
-    border-color: theme(colors.info);
+    border-color: var(--color-info);
   }
 
   .callout:before,
   :global(div:where(.typography-prose .callout):before) {
-    font-weight: theme(fontWeight.bold);
-    font-size: theme(fontSize.secondary);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-secondary);
     display: block;
-    margin-bottom: theme(spacing.sm);
+    margin-bottom: var(--spacing-sm);
     text-transform: uppercase;
   }
 
@@ -248,7 +248,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
   .callout-note:before,
   :global(div:where(.typography-prose .callout-info):before),
   :global(div:where(.typography-prose .callout-note):before) {
-    color: theme(colors.info);
+    color: var(--color-info);
   }
 
   .callout-info:before,
@@ -263,7 +263,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
 
   .callout-warning,
   :global(div:where(.typography-prose .callout-warning)) {
-    border-color: theme(colors.warning);
+    border-color: var(--color-warning);
     background-color: #fff6d0;
   }
 
@@ -275,14 +275,14 @@ const classNames = clsx(variantElements[variant]?.className, className);
 
   .callout-danger,
   :global(div:where(.typography-prose .callout-danger)) {
-    border-color: theme(colors.danger);
+    border-color: var(--color-danger);
     background-color: #ffd8d8;
   }
 
   .callout-danger:before,
   :global(div:where(.typography-prose .callout-danger):before) {
     content: "Danger";
-    color: theme(colors.danger);
+    color: var(--color-danger);
   }
 
   /*
@@ -292,11 +292,11 @@ const classNames = clsx(variantElements[variant]?.className, className);
   :global(kbd:where(.typography-prose kbd)),
   :global(samp:where(.typography-prose samp)),
   :global(pre:where(.typography-prose pre)) {
-    font-family: theme(fontFamily.code);
-    font-size: theme(fontSize.code);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-code);
   }
   :global(code:where(.typography-prose :not(.astro-code) > code)) {
-    color: theme(colors.code);
+    color: var(--color-code);
   }
 
   blockquote > :first-child,

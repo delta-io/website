@@ -79,7 +79,7 @@ const ContainerComponent = hasContainer ? Container : Fragment;
             {title}
             <slot name="title" />
           </Typography>
-          <div class="subtitle-container mx-auto max-w-[theme(screens.lg)]">
+          <div class="subtitle-container mx-auto max-w-[992px]">
             <slot name="subtitle" />
           </div>
         </div>
@@ -90,9 +90,9 @@ const ContainerComponent = hasContainer ? Container : Fragment;
 </div>
 <style>
   .subtitle-container > :global(:first-child) {
-    margin-top: theme(spacing.md);
+    margin-top: var(--spacing-md);
   }
   .subtitle-container > :global(:last-child) {
-    margin-bottom: theme(spacing.xxl);
+    margin-bottom: var(--spacing-xxl);
   }
 </style>

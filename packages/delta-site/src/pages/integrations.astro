@@ -113,8 +113,8 @@ const integrations = [
 </Layout>
 <style>
   .integrations {
-    column-gap: theme(spacing.lg);
-    row-gap: theme(spacing.xl);
+    column-gap: var(--spacing-lg);
+    row-gap: var(--spacing-xl);
   }
 
   .integration a {
@@ -134,25 +134,25 @@ const integrations = [
   }
 
   .integration .integration-links {
-    margin-bottom: theme(spacing.xs);
+    margin-bottom: var(--spacing-xs);
   }
 
   .integration-links {
-    color: theme(colors.textSecondary);
+    color: var(--color-text-secondary);
   }
 
   .integration-links a + a:before {
     content: "|";
-    margin-left: theme(spacing.xs);
-    margin-right: theme(spacing.xs);
+    margin-left: var(--spacing-xs);
+    margin-right: var(--spacing-xs);
   }
 
   .integration-tags {
     display: flex;
-    gap: theme(spacing.sm);
+    gap: var(--spacing-sm);
   }
 
   .integration .integration-description {
-    font-size: theme(fontSize.secondary);
+    font-size: var(--font-size-secondary);
   }
 </style>

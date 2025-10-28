@@ -18,7 +18,8 @@
   "dependencies": {
     "@astrojs/netlify": "^6.5.13",
     "@astrojs/rss": "^4.0.12",
-    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/vite": "^4.1.16",
+    "tailwindcss": "^4.1.16",
     "@fontsource-variable/source-code-pro": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
     "astro": "^5.14.7",

@@ -63,31 +63,31 @@ const classNames = clsx(
     line-height: 1;
     border-radius: 3px;
     text-decoration: none;
-    font-weight: theme(fontWeight.bold);
+    font-weight: var(--font-weight-bold);
     border: 1px solid;
     white-space: nowrap;
   }
 
   .button-size-sm {
-    padding: theme(spacing.xs) theme(spacing.sm);
-    font-size: theme(fontSize.small);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-small);
   }
   .button-size-md {
-    padding: theme(spacing.sm) theme(spacing.lg);
-    font-size: theme(fontSize.primary);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-primary);
   }
 
   .variant-primary {
     color: white;
-    background-color: theme(colors.primary);
-    border-color: theme(colors.primary);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
   }
   .variant-primary:hover {
     background-color: #00bee9;
     border-color: #00bee9;
   }
   .variant-primary.border-outlined {
-    color: theme(colors.primary);
+    color: var(--color-primary);
     background-color: white;
   }
   .variant-primary.border-outlined:hover {
@@ -96,33 +96,33 @@ const classNames = clsx(
   }
 
   .variant-secondary {
-    color: theme(colors.primary);
+    color: var(--color-primary);
     background-color: none;
-    border-color: theme(colors.primary);
+    border-color: var(--color-primary);
   }
   .variant-secondary:hover {
     color: white;
-    background-color: theme(colors.primary);
+    background-color: var(--color-primary);
   }
 
   .variant-accent {
-    color: theme(colors.text);
-    background-color: theme(colors.accent);
-    border-color: theme(colors.accent);
+    color: var(--color-text);
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
   }
   .variant-accent.border-outlined {
-    color: theme(colors.accent);
-    background-color: theme(colors.text);
+    color: var(--color-accent);
+    background-color: var(--color-text);
   }
 
   .variant-more {
     background-color: transparent;
     border: none;
-    color: theme(colors.primary);
-    font-weight: theme(fontWeight.bold);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
     padding: 0;
   }
   .variant-more:hover {
-    color: theme(colors.link);
+    color: var(--color-link);
   }
 </style>

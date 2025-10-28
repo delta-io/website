@@ -7,6 +7,7 @@ import { Header } from "./Header";
 import "@fontsource/source-sans-pro/400.css";
 import "@fontsource/source-sans-pro/600.css";
 import "@fontsource-variable/source-code-pro";
+import "../tailwind.css";
 
 interface Props {
   title?: string | undefined;
@@ -93,18 +94,18 @@ const shouldExcludeFromSearch = excludedPaths.some(
 </html>
 <style>
   body {
-    font-weight: theme(fontWeight.normal);
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
 
   :global(a) {
-    color: theme(colors.link);
+    color: #00819e;
     text-decoration: underline;
   }
 
   :global(.astro-code) {
-    padding: theme(spacing.sm);
-    font-weight: theme(fontWeight.code);
+    padding: 0.75rem;
+    font-weight: normal;
     border-radius: 0.25rem;
   }
 </style>

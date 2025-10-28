@@ -12,13 +12,13 @@ const connectors = [
     name: "Pandas",
     description: "Load table as Pandas DataFrame",
     logo: pandasLogo,
-    code: '<span class="text-textSecondary">delta_sharing.</span><span class="text-[theme(colors.primary)]">load_as_pandas(…)</span>',
+    code: '<span class="text-textSecondary">delta_sharing.</span><span class="text-[var(--color-primary)]">load_as_pandas(…)</span>',
   },
   {
     name: "Apache Spark",
     description: "Load table as Spark DataFrame",
     logo: sparkLogo,
-    code: '<span class="text-textSecondary">delta_sharing.</span><span class="text-[theme(colors.primary)]">load_as_spark(…)</span>',
+    code: '<span class="text-textSecondary">delta_sharing.</span><span class="text-[var(--color-primary)]">load_as_spark(…)</span>',
   },
   {
     name: "Power BI",
@@ -56,26 +56,26 @@ const connectors = [
 </Section>
 <style>
   .grid {
-    gap: theme(spacing.xl);
+    gap: var(--spacing-xl);
   }
 
   .connector {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     background-color: white;
-    padding: theme(spacing.lg) theme(spacing.md);
+    padding: var(--spacing-lg) var(--spacing-md);
     text-align: center;
   }
 
   .connector img {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: calc(-1 * theme(spacing.md));
+    margin-bottom: calc(-1 * var(--spacing-md));
   }
 
   .connector pre {
-    background-color: theme(colors.lightBg);
-    padding: theme(spacing.sm);
-    font-size: theme(fontSize.primary);
-    font-weight: theme(fontWeight.bold);
+    background-color: var(--color-light-bg);
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-primary);
+    font-weight: var(--font-weight-bold);
   }
 </style>

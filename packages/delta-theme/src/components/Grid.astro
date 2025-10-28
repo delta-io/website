@@ -114,7 +114,7 @@ const columnVars = makeColumnVars(columns);
 <style define:vars={columnVars}>
   div {
     grid-template-columns: var(--columns-xs);
-    column-gap: theme(spacing.md);
+    column-gap: var(--spacing-md);
   }
 
   @media screen(sm) {

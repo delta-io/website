@@ -51,11 +51,11 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
 
   dialog-container {
     display: block;
-    background-color: theme(colors.darkBg);
-    border: 1px solid theme(colors.darkBg);
+    background-color: var(--color-dark-bg);
+    border: 1px solid var(--color-dark-bg);
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
-    color: theme(colors.darkColor);
-    padding: theme(spacing.lg);
+    color: var(--color-dark-color);
+    padding: var(--spacing-lg);
     padding-top: 44px;
     border-radius: 0;
     width: 100vw;
@@ -67,24 +67,24 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
   @media screen(sm) {
     dialog {
       width: calc(100vw - 32px);
-      max-width: theme(screens.md);
-      max-height: calc(100vh - (theme(spacing.xxl) * 2));
-      margin: theme(spacing.xxl) auto auto;
+      max-width: 768px;
+      max-height: calc(100vh - (var(--spacing-xxl) * 2));
+      margin: var(--spacing-xxl) auto auto;
       height: fit-content;
     }
 
     dialog-container {
       width: 100%;
       height: auto;
-      padding-top: theme(spacing.lg);
-      border-radius: theme(borderRadius.md);
+      padding-top: var(--spacing-lg);
+      border-radius: 0.375rem;
     }
   }
 
   @media screen(md) {
     dialog {
-      margin-top: theme(spacing.xxxl);
-      max-height: calc(100vh - (theme(spacing.xxxl) * 2));
+      margin-top: var(--spacing-xxxl);
+      max-height: calc(100vh - (var(--spacing-xxxl) * 2));
     }
   }
 

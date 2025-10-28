@@ -1,6 +1,7 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import { deltaTheme, remarkPlugins } from "delta-theme";
+import tailwindcss from "@tailwindcss/vite";
 
 import netlify from "@astrojs/netlify";
 
@@ -137,4 +138,7 @@ export default defineConfig({
       },
     }),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

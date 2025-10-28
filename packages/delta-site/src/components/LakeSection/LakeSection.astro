@@ -27,15 +27,15 @@ const { className, ...props } = Astro.props;
 
 <style define:vars={{ bgDesktop, bgMobile }}>
   div {
-    background-color: theme(colors.darkBg);
-    color: theme(colors.darkColor);
+    background-color: var(--color-dark-bg);
+    color: var(--color-dark-color);
     background-image: var(--bgMobile);
     background-size: cover;
     background-position: 50%;
   }
 
   div :global(a) {
-    color: theme(colors.accent);
+    color: var(--color-accent);
   }
 
   @media screen(sm) {

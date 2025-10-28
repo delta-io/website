@@ -27,7 +27,7 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
 <style define:vars={offsetCssVars}>
   .section {
     padding-top: 0;
-    padding-bottom: theme(spacing.xxxl);
+    padding-bottom: var(--spacing-xxxl);
   }
 
   .diagram-container {

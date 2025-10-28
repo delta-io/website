@@ -235,7 +235,7 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
 <style>
   .thumbnail {
     display: block;
-    font-size: theme(fontSize.secondary);
+    font-size: var(--font-size-secondary);
     color: inherit;
     text-decoration: none;
   }
@@ -250,7 +250,7 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
     aspect-ratio: 16/9;
     overflow: hidden;
     background-color: #000;
-    margin-bottom: theme(spacing.sm);
+    margin-bottom: var(--spacing-sm);
   }
 
   .thumbnail :global(img) {
