@@ -61,7 +61,23 @@
   --line-height-base: 1.5;
   --line-height-header: 1.2;
 
-  /* Spacing */
+  /* Spacing - Map to standard Tailwind spacing scale */
+  --spacing-0: 0rem;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+
+  /* Custom spacing for backward compatibility */
   --spacing-none: 0rem;
   --spacing-xxs: 0.25rem;
   --spacing-xs: 0.375rem;

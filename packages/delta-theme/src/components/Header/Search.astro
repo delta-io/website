@@ -8,12 +8,12 @@ import HeaderButton from "./HeaderButton.astro";
 
 <search-container class="lg:flex-1" data-modal-id="search">
   <HeaderButton
-    className="header-open-search-modal lg:flex lg:items-center lg:bg-darkBorder lg:border lg:border-darkBorder lg:w-full lg:text-left lg:px-sm lg:h-[32px] lg:rounded lg:text-[rgba(255,255,255,.75)] lg:hover:text-white lg:hover:border-white"
+    className="header-open-search-modal lg:flex lg:items-center lg:bg-darkBorder lg:border lg:border-darkBorder lg:w-full lg:text-left lg:px-3 lg:h-[32px] lg:rounded lg:text-[rgba(255,255,255,.75)] lg:hover:text-white lg:hover:border-white"
   >
     <Icon
       icon="search"
       alt=""
-      className="lg:mr-sm lg:w-[1.25em] lg:h-[1.25em]"
+      className="lg:mr-3 lg:w-[1.25em] lg:h-[1.25em]"
     />
     <div class="hidden lg:block">Search</div>
     <kbd
@@ -30,7 +30,7 @@ import HeaderButton from "./HeaderButton.astro";
         <Typography variant="prose" className="text-center">
           <p>To view search results, run a production build:</p>
           <p>
-            <code class="text-white bg-darkBorder rounded px-sm py-xs ml-sm">
+            <code class="text-white bg-darkBorder rounded px-3 py-2 ml-3">
               $ pnpm build && pnpm preview
             </code>
           </p>

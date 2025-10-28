@@ -42,7 +42,7 @@ const { post, authors, showLinkedinProfiles } = Astro.props;
         showLinkedinProfiles &&
           authors.some((author) => author.data.linkedin) && (
             <>
-              <Typography variant="h6" className="mt-xxl mb-md">
+              <Typography variant="h6" className="mt-8 mb-4">
                 Follow our authors on{" "}
                 <Image
                   src={LinkedInLogo}
@@ -50,7 +50,7 @@ const { post, authors, showLinkedinProfiles } = Astro.props;
                   class="inline h-[1em] leading-none mt-[-.15em] ml-[.15em]"
                 />
               </Typography>
-              <div class="flex gap-xl justify-center">
+              <div class="flex gap-8 justify-center">
                 {authors
                   .filter((author) => author.data.linkedin)
                   .map((author) => (
@@ -63,7 +63,7 @@ const { post, authors, showLinkedinProfiles } = Astro.props;
                           <Image
                             src={author.data.photo}
                             alt={`Photo of ${author.data.name}`}
-                            class="block rounded-full overflow-hidden w-[80px] mb-xs"
+                            class="block rounded-full overflow-hidden w-[80px] mb-2"
                           />
                         )}
                         {author.data.name}

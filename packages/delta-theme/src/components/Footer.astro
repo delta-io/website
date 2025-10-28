@@ -38,7 +38,7 @@ const menus: FooterMenu[] = [
   <Section padding="xl">
     <Grid
       columns={{ xs: 1, lg: ["133px", "auto", "250px"] }}
-      className="gap-y-lg lg:gap-x-xl"
+      className="gap-y-6 lg:gap-x-8"
     >
       <div>
         <Image
@@ -50,15 +50,15 @@ const menus: FooterMenu[] = [
         />
       </div>
       <div>
-        <Grid columns={{ xs: 1, lg: menus.length }} className="gap-y-lg">
+        <Grid columns={{ xs: 1, lg: menus.length }} className="gap-y-6">
           {
             menus.map(({ title, menu }) => (
               <div>
-                <div class="font-bold uppercase mb-sm">{title}</div>
+                <div class="font-bold uppercase mb-3">{title}</div>
                 <Menu
                   items={menu}
                   itemClassName="text-white"
-                  menuClassName="gap-xs"
+                  menuClassName="gap-2"
                 />
               </div>
             ))
@@ -66,7 +66,7 @@ const menus: FooterMenu[] = [
         </Grid>
       </div>
       <div>
-        <Typography variant="p2" className="mb-md">
+        <Typography variant="p2" className="mb-4">
           Copyright © {new Date().getFullYear()} Delta Lake, a series of LF Projects,
           LLC. For web site terms of use, trademark policy and other project polcies
           please see{" "}

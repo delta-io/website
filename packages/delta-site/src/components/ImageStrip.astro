@@ -52,7 +52,7 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
   <div class="slider-container w-full overflow-hidden">
     <Grid
       columns={gridColumnRules}
-      className={clsx("slider-track gap-xl grid-flow-col", className)}
+      className={clsx("slider-track gap-8 grid-flow-col", className)}
     >
       {
         items.map(({ title, thumbnail, url }) => (
