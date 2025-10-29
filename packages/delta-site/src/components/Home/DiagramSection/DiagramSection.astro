@@ -36,25 +36,25 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
     margin-right: auto;
   }
 
-  @media screen(sm) {
+  @media (min-width: 576px) {
     .diagram-container {
       margin-top: calc(-1 * var(--offset-sm));
     }
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     .diagram-container {
       margin-top: calc(-1 * var(--offset-md));
     }
   }
 
-  @media screen(lg) {
+  @media (min-width: 992px) {
     .diagram-container {
       margin-top: calc(-1 * var(--offset-lg));
     }
   }
 
-  @media screen(xl) {
+  @media (min-width: 1200px) {
     .diagram-container {
       margin-top: calc(-1 * var(--offset-xl));
     }

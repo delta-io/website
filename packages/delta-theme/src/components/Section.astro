@@ -46,14 +46,14 @@ const ContainerComponent = hasContainer ? Container : Fragment;
 <div
   class={clsx(
     {
-      "py-0": padding === "none",
-      "py-2": padding === "xs",
-      "py-3": padding === "sm",
-      "py-4": padding === "md",
-      "py-6": padding === "lg",
-      "py-8": padding === "xl",
-      "py-12": padding === "xxl",
-      "py-16": padding === "xxxl",
+      "py-none": padding === "none",
+      "py-xs": padding === "xs",
+      "py-sm": padding === "sm",
+      "py-md": padding === "md",
+      "py-lg": padding === "lg",
+      "py-xl": padding === "xl",
+      "py-xxl": padding === "xxl",
+      "py-xxxl": padding === "xxxl",
 
       // Dark bg
       "bg-darkBg": background === "dark",
@@ -79,7 +79,7 @@ const ContainerComponent = hasContainer ? Container : Fragment;
             {title}
             <slot name="title" />
           </Typography>
-          <div class="subtitle-container mx-auto max-w-[992px]">
+          <div class="subtitle-container mx-auto max-w-4xl">
             <slot name="subtitle" />
           </div>
         </div>
@@ -89,10 +89,10 @@ const ContainerComponent = hasContainer ? Container : Fragment;
   </ContainerComponent>
 </div>
 <style>
-  .subtitle-container > :global(:first-child) {
+  .subtitle-container > :first-child {
     margin-top: var(--spacing-md);
   }
-  .subtitle-container > :global(:last-child) {
+  .subtitle-container > :last-child {
     margin-bottom: var(--spacing-xxl);
   }
 </style>

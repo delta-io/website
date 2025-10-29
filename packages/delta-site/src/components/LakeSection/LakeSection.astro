@@ -34,11 +34,9 @@ const { className, ...props } = Astro.props;
     background-position: 50%;
   }
 
-  div :global(a) {
-    color: var(--color-accent);
-  }
+  /* Removed div a rule to allow description-link and hero-link classes to work properly */
 
-  @media screen(sm) {
+  @media (min-width: 576px) {
     div {
       background-image: var(--bgDesktop);
     }

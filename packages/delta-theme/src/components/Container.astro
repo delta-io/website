@@ -7,29 +7,29 @@
  */
 ---
 
-<div class="container px-[16px] w-full mx-auto">
+<div class="container px-4 w-full mx-auto">
   <slot />
 </div>
 <style>
-  @media screen(sm) {
+  @media (min-width: 576px) {
     .container {
       width: calc(576px - 32px);
     }
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     .container {
       width: calc(768px - 32px);
     }
   }
 
-  @media screen(lg) {
+  @media (min-width: 992px) {
     .container {
       width: calc(992px - 32px);
     }
   }
 
-  @media screen(xl) {
+  @media (min-width: 1200px) {
     .container {
       width: calc(1200px - 32px);
     }

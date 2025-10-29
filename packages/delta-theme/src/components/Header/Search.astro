@@ -8,16 +8,12 @@ import HeaderButton from "./HeaderButton.astro";
 
 <search-container class="lg:flex-1" data-modal-id="search">
   <HeaderButton
-    className="header-open-search-modal lg:flex lg:items-center lg:bg-darkBorder lg:border lg:border-darkBorder lg:w-full lg:text-left lg:px-3 lg:h-[32px] lg:rounded lg:text-[rgba(255,255,255,.75)] lg:hover:text-white lg:hover:border-white"
+    className="header-open-search-modal lg:flex lg:items-center lg:bg-darkBorder lg:border lg:border-darkBorder lg:w-full lg:text-left lg:px-3 lg:h-8 lg:rounded lg:text-white/75 lg:hover:text-white lg:hover:border-white"
   >
-    <Icon
-      icon="search"
-      alt=""
-      className="lg:mr-3 lg:w-[1.25em] lg:h-[1.25em]"
-    />
+    <Icon icon="search" alt="" className="lg:mr-3 text-2xl" />
     <div class="hidden lg:block">Search</div>
     <kbd
-      class="hidden lg:block ml-auto rounded text-xs py-[0.125em] px-[0.5em] bg-[rgba(225,225,225,0.25)]"
+      class="hidden lg:block ml-auto rounded text-xs py-0.5 px-2 bg-white/25"
       data-pagefind-ignore
     >
       <kbd>ctrl</kbd>
@@ -43,7 +39,7 @@ import HeaderButton from "./HeaderButton.astro";
 </search-container>
 <style>
   kbd {
-    font-family: var(--font-family-default) !important;
+    font-family: var(--font-family-default);
   }
 </style>
 <style is:global>

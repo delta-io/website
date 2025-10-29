@@ -21,7 +21,7 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
     <button
       type="button"
       class={clsx(
-        "w-[44px] h-[44px] absolute right-0 top-0 text-[rgba(255,255,255,0.75)] hover:text-white",
+        "w-11 h-11 absolute right-0 top-0 text-rgba-255-255-255-75 hover:text-white",
         {
           "sm:hidden": hideCloseButton,
         },
@@ -64,7 +64,7 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
     max-width: 100vw;
   }
 
-  @media screen(sm) {
+  @media (min-width: 576px) {
     dialog {
       width: calc(100vw - 32px);
       max-width: 768px;
@@ -81,7 +81,7 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
     }
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     dialog {
       margin-top: var(--spacing-xxxl);
       max-height: calc(100vh - (var(--spacing-xxxl) * 2));

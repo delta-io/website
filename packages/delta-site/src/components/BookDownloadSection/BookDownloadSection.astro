@@ -21,7 +21,7 @@ import downloadArrowImg from "./download-arrow.png";
       <Button
         href="/pdfs/dldg_databricks.pdf"
         isDownload
-        className="download-cta"
+        className="download-cta white-button"
         >Download <Image src={downloadArrowImg} alt="" loading="lazy" /></Button
       >
     </Typography>
@@ -69,7 +69,7 @@ import downloadArrowImg from "./download-arrow.png";
     margin: 0 auto;
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     .download-wrap {
       flex-direction: row;
     }

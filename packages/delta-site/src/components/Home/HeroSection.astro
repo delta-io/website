@@ -30,8 +30,10 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
       <slot name="description" />
     </div>
     <p>
-      <Button href={ctaUrl} variant="accent" className="button"
-        >{ctaLabel}</Button
+      <Button
+        href={ctaUrl}
+        variant="accent"
+        className="button get-started-button">{ctaLabel}</Button
       >
     </p>
     <div class="button-row">
@@ -71,8 +73,25 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
     margin-right: auto;
   }
 
-  .description :global(p) {
+  .content .description .hero-description {
     font-size: 1.35rem;
+  }
+
+  .content .description .hero-description .description-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+  }
+
+  .content .description .hero-description .description-link:hover {
+    color: var(--color-accent);
+    text-decoration-color: var(--color-accent);
+  }
+
+  .get-started-button {
+    color: #002638;
+    text-decoration: underline;
+    text-decoration-color: #002638;
   }
 
   .button {
@@ -86,7 +105,7 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
   }
 
   .hero-link {
-    color: inherit;
+    color: white;
     text-decoration: none;
   }
 
@@ -94,25 +113,25 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
     color: var(--color-accent);
   }
 
-  @media screen(sm) {
+  @media (min-width: 576px) {
     .diagram-offset {
       height: var(--offset-sm);
     }
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     .diagram-offset {
       height: var(--offset-md);
     }
   }
 
-  @media screen(lg) {
+  @media (min-width: 992px) {
     .diagram-offset {
       height: var(--offset-lg);
     }
   }
 
-  @media screen(xl) {
+  @media (min-width: 1200px) {
     .diagram-offset {
       height: var(--offset-xl);
     }

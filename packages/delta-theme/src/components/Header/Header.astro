@@ -18,10 +18,10 @@ import Search from "./Search.astro";
     loading="eager"
   />
 </Section>
-<Section background="dark" className="min-h-[48px] flex items-center">
+<Section background="dark" className="min-h-12 flex items-center">
   <header-container class="flex items-center relative gap-4 justify-between">
     <HeaderButton className="header-open-menu">
-      <Icon icon="menu" alt="Open menu" />
+      <Icon icon="menu" alt="Open menu" className="text-2xl" />
     </HeaderButton>
     <a href="/" class="text-inherit font-bold no-underline leading-none">
       <Image
@@ -34,7 +34,7 @@ import Search from "./Search.astro";
     </a>
     <div class="header-menu-wrapper" data-toggled="false">
       <button type="button" class="header-close-menu">
-        <Icon icon="close" alt="Close menu" />
+        <Icon icon="close" alt="Close menu" className="text-2xl" />
       </button>
       <Menu items={config.menus.header} theme="header" direction="horizontal" />
     </div>
@@ -45,7 +45,7 @@ import Search from "./Search.astro";
         theme="header"
         direction="horizontal"
         isIconMenu
-        className="text-[1.625em] leading-none"
+        className="text-1-625em leading-none"
       />
     </div>
     <div class="header-menu-backdrop" tabindex="-1"></div>
@@ -75,7 +75,7 @@ import Search from "./Search.astro";
     background-color: rgba(0, 0, 0, 0.35);
   }
 
-  @media not all and screen(lg) {
+  @media (max-width: 991px) {
     .header-menu-wrapper {
       position: fixed;
       top: 0;
