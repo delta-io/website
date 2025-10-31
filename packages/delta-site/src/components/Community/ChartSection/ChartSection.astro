@@ -6,7 +6,10 @@ import chartImage from "./chart.png";
 ---
 
 <Section padding="xl">
-  <Typography variant="h4" className="font-normal mb-xl text-center">
+  <Typography
+    variant="h4"
+    className="chart-section-text font-normal text-center"
+  >
     Because of the contributions from our amazing community, Delta Lake is now
     up to 20M monthly downloads! We&rsquo;re proud of the progress this project
     is making and invite you to get involved.{" "}
@@ -18,3 +21,25 @@ import chartImage from "./chart.png";
     class="mx-auto"
   />
 </Section>
+
+<style>
+  .chart-section-text {
+    font-weight: 400;
+    line-height: 1.2;
+    color: rgb(0, 38, 56);
+    font-size: 1.5625rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.875rem;
+    text-align: center;
+  }
+
+  .chart-section-text a {
+    color: rgb(0, 38, 56);
+    text-decoration: none;
+  }
+
+  .chart-section-text a:hover {
+    text-decoration: underline;
+    color: rgb(0, 38, 56);
+  }
+</style>

@@ -233,15 +233,16 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
   customElements.define("grid-slider", Slider);
 </script>
 <style>
-  .thumbnail {
+  grid-slider a.thumbnail {
     display: block;
     font-size: var(--font-size-secondary);
-    color: inherit;
+    color: rgb(0, 38, 56);
     text-decoration: none;
   }
 
-  .thumbnail:hover {
+  grid-slider a.thumbnail:hover {
     text-decoration: underline;
+    color: rgb(0, 38, 56);
   }
 
   .thumbnail span {

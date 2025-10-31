@@ -25,7 +25,7 @@ import profileImg from "./Tyler-Croy-min.jpg";
         class="max-xl:w-[60px]"
       />
     </a>
-    <Typography variant="prose">
+    <Typography variant="prose" className="twitch-section-text">
       <h3 class="font-normal">
         Watch Delta Rust code development LIVE on Twitch.tv!
       </h3>
@@ -50,3 +50,36 @@ import profileImg from "./Tyler-Croy-min.jpg";
     </a>
   </Grid>
 </Section>
+
+<style>
+  .twitch-section-text {
+    color: rgb(0, 38, 56);
+    font-weight: 400;
+    line-height: 1.5;
+    font-family: var(--font-family-default);
+  }
+
+  .twitch-section-text h3 {
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgb(0, 38, 56);
+    margin-top: 0;
+  }
+
+  .twitch-section-text p {
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgb(0, 38, 56);
+    font-size: var(--font-size-h4);
+  }
+
+  .twitch-section-text p a {
+    color: rgb(0, 38, 56);
+    text-decoration: none;
+  }
+
+  .twitch-section-text p a:hover {
+    text-decoration: underline;
+    color: rgb(0, 38, 56);
+  }
+</style>

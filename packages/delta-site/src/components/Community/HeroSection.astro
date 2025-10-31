@@ -11,7 +11,7 @@ import { SocialTiles } from "../SocialTiles";
   isHeaderCentered
 >
   <Fragment slot="subtitle">
-    <Typography variant="p">
+    <Typography variant="p" className="hero-subtitle-text">
       Delta Lake is supported by more than 190 developers from over 70
       organizations across multiple repositories.
       <br />
@@ -21,3 +21,9 @@ import { SocialTiles } from "../SocialTiles";
   </Fragment>
   <SocialTiles isDark isCentered />
 </LakeSection>
+
+<style>
+  .hero-subtitle-text {
+    margin-bottom: 3.75rem;
+  }
+</style>
