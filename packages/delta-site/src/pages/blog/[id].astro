@@ -1,0 +1,34 @@
+---
+import { getCollection, render, getEntries } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import Post from "../../layouts/Post.astro";
+
+// Tell Astro to generate a path for each blog post.
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+// Get the blog post entry from the prop
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+// Handle both single author and multiple authors
+let authors: CollectionEntry<"profiles">[] = [];
+if (post.data.author) {
+  // Convert to array if it's a single reference
+  const authorRefs = Array.isArray(post.data.author)
+    ? post.data.author
+    : [post.data.author];
+
+  // Get all authors at once
+  authors = await getEntries(authorRefs);
+}
+---
+
+<Post post={post} authors={authors} showLinkedinProfiles>
+  <Content />
+</Post>

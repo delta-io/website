@@ -1,0 +1,86 @@
+---
+import { config } from "virtual:delta-theme/config";
+import { Image } from "astro:assets";
+import type { MenuItem } from "./Menu";
+import { Menu } from "./Menu";
+import Grid from "./Grid.astro";
+import Section from "./Section.astro";
+import Typography from "./Typography.astro";
+import DeltaLogo from "./assets/delta-lake-logo.svg";
+import LinuxFoundationLogo from "./assets/the-linux-foundation-projects.svg";
+
+interface FooterMenu {
+  title: string;
+  menu: MenuItem[];
+}
+
+const menus: FooterMenu[] = [
+  {
+    title: "Delta Lake",
+    menu: config.menus.footerMain,
+  },
+  {
+    title: "Learn",
+    menu: config.menus.footerLearn,
+  },
+  {
+    title: "Community",
+    menu: config.menus.footerCommunity,
+  },
+  {
+    title: "Social Channels",
+    menu: config.menus.social,
+  },
+];
+---
+
+<footer class="text-darkTextSecondary">
+  <Section padding="xl">
+    <Grid
+      columns={{ xs: 1, lg: ["133px", "auto", "250px"] }}
+      className="gap-y-lg lg:gap-x-xl"
+    >
+      <div>
+        <Image
+          src={DeltaLogo}
+          alt="Delta Lake"
+          width="133"
+          height="28"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <Grid columns={{ xs: 1, lg: menus.length }} className="gap-y-lg">
+          {
+            menus.map(({ title, menu }) => (
+              <div>
+                <div class="font-bold uppercase mb-sm">{title}</div>
+                <Menu
+                  items={menu}
+                  itemClassName="text-white"
+                  menuClassName="gap-xs"
+                />
+              </div>
+            ))
+          }
+        </Grid>
+      </div>
+      <div>
+        <Typography variant="p2" className="mb-md">
+          Copyright © {new Date().getFullYear()} Delta Lake, a series of LF Projects,
+          LLC. For web site terms of use, trademark policy and other project polcies
+          please see{" "}
+          <a href="https://lfprojects.org" target="_blank">
+            https://lfprojects.org
+          </a>.
+        </Typography>
+        <Image
+          src={LinuxFoundationLogo}
+          alt="The Linux Foundation"
+          width="100"
+          loading="lazy"
+        />
+      </div>
+    </Grid>
+  </Section>
+</footer>

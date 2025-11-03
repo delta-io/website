@@ -1,0 +1,158 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import clsx from "clsx";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Tag from "delta-theme/components/Tag.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import Layout from "../layouts/Layout.astro";
+import { Logo } from "../components/Logo";
+import { UniFormSection } from "../components/Integrations";
+
+const integrations = [
+  {
+    title: "Frameworks",
+    subtitle:
+      "Use the following frameworks and languages including but not limited to Apache Flink, Apache Spark, Trino, and Rust.",
+    items: await getCollection("integration-connectors"),
+  },
+  {
+    title: "Sharing",
+    subtitle:
+      "Use the following clients that integrate with Delta Sharing from C++ to Rust.",
+    items: await getCollection("integration-sharing"),
+  },
+  {
+    title: "Services",
+    subtitle:
+      "Use the managed services of your choice that integrate with Delta Lake.",
+    items: await getCollection("integration-services"),
+  },
+  {
+    title: "Community",
+    subtitle: "Try out the following community integrations with Delta Lake.",
+    items: await getCollection("integration-community"),
+  },
+];
+---
+
+<Layout title="Integrations">
+  <Section
+    title="Delta Lake Integrations"
+    isPrimary
+    padding="xl"
+    isHeaderCentered
+    className="bg-white"
+  >
+    <Logo loading="eager" slot="before-header" />
+    <Fragment slot="subtitle">
+      <Typography variant="p">
+        Use the following frameworks, Delta Sharing clients, managed services,
+        and/or community integrations <br /> for Delta Lake and Delta Sharing.
+      </Typography>
+    </Fragment>
+  </Section>
+  <UniFormSection />
+  {
+    integrations.map((integration, i) => (
+      <Section
+        title={integration.title}
+        isHeaderCentered
+        padding="xxl"
+        className={clsx({
+          "bg-white": i % 2 === 0,
+        })}
+      >
+        <Typography variant="p" slot="subtitle">
+          {integration.subtitle}
+        </Typography>
+        <Grid columns={{ xs: 1, md: 2, lg: 3 }} className="integrations">
+          {integration.items.map(({ data }) => (
+            <Typography variant="prose" className="integration">
+              <div class="image-container">
+                <Image
+                  src={data.thumbnail}
+                  alt=""
+                  height="70"
+                  loading="lazy"
+                  densities={[1, 2]}
+                />
+              </div>
+              <h4>
+                <a href={data.url} target="_blank">
+                  {data.name}
+                </a>
+              </h4>
+              <Typography variant="p2" className="integration-links">
+                {data.docs !== "" && (
+                  <a href={data.docs} target="_blank">
+                    docs
+                  </a>
+                )}
+                {data.source_code !== "" && (
+                  <a href={data.source_code} target="_blank">
+                    source code
+                  </a>
+                )}
+              </Typography>
+              {data.tags.length > 0 && (
+                <Typography variant="p2" className="integration-tags">
+                  {data.tags.map((tag) => (
+                    <Tag label={tag} />
+                  ))}
+                </Typography>
+              )}
+              <p class="integration-description">{data.description}</p>
+            </Typography>
+          ))}
+        </Grid>
+      </Section>
+    ))
+  }
+</Layout>
+<style>
+  .integrations {
+    column-gap: theme(spacing.lg);
+    row-gap: theme(spacing.xl);
+  }
+
+  .integration a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .integration a:hover {
+    text-decoration: underline;
+  }
+
+  .image-container {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .integration .integration-links {
+    margin-bottom: theme(spacing.xs);
+  }
+
+  .integration-links {
+    color: theme(colors.textSecondary);
+  }
+
+  .integration-links a + a:before {
+    content: "|";
+    margin-left: theme(spacing.xs);
+    margin-right: theme(spacing.xs);
+  }
+
+  .integration-tags {
+    display: flex;
+    gap: theme(spacing.sm);
+  }
+
+  .integration .integration-description {
+    font-size: theme(fontSize.secondary);
+  }
+</style>

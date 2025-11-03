@@ -1,0 +1,74 @@
+---
+import clsx from "clsx";
+import Grid from "delta-theme/components/Grid.astro";
+import Tile from "./Tile.astro";
+import slack from "./logos/slack.png";
+import googleGroups from "./logos/google-groups.png";
+import youtube from "./logos/youtube.png";
+import linkedin from "./logos/linkedin.png";
+import spotify from "./logos/d3l2-crab-spotify.png";
+
+interface Props {
+  isDark?: boolean;
+  isCentered?: boolean;
+}
+
+const { isDark, isCentered } = Astro.props;
+
+const communities = [
+  {
+    thumbnail: slack,
+    label: "Slack",
+    url: "https://go.delta.io/slack",
+  },
+  {
+    thumbnail: googleGroups,
+    label: "Google Groups",
+    url: "https://go.delta.io/groups",
+  },
+  {
+    thumbnail: linkedin,
+    label: "LinkedIn",
+    url: "https://go.delta.io/linkedin",
+  },
+  {
+    thumbnail: youtube,
+    label: "YouTube",
+    url: "https://go.delta.io/youtube",
+  },
+  {
+    thumbnail: spotify,
+    label: "D3L2 | Spotify",
+    url: "https://go.delta.io/spotify",
+  },
+];
+---
+
+<Grid
+  columns={{
+    xs: 1,
+    md: communities.map(() => "140px"),
+  }}
+  className={clsx("grid", { "grid-centered": isCentered })}
+>
+  {
+    communities.map((community) => (
+      <Tile
+        label={community.label}
+        thumbnail={community.thumbnail}
+        thumbnailWidth={60}
+        href={community.url}
+        isDark={isDark}
+      />
+    ))
+  }
+</Grid>
+<style>
+  .grid {
+    gap: theme(spacing.lg);
+  }
+
+  .grid-centered {
+    justify-content: center;
+  }
+</style>

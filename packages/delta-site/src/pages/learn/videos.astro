@@ -1,0 +1,81 @@
+---
+import { site } from "@config/site";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import {
+  fetchChannelPlaylists,
+  fetchPlaylistVideos,
+} from "@utils/fetchYoutube";
+import ImageStrip from "../../components/ImageStrip.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const title = "Delta Lake Videos";
+const orderedPlaylistIds = [
+  "PLzxP01GQMpjdCmKNjmMldcmi7UUluAOmo", // Delta Lake Shorts
+  "PLzxP01GQMpjeCBRoqIN5T4ZcLTtM1oF4e", // Delta Lake Deep Dives
+  "PLzxP01GQMpjeBlOKv7iOXOJIw5aFdx1B5", // Delta Rust
+];
+const { youtubeChannelId } = site;
+
+const playlists = await fetchChannelPlaylists(youtubeChannelId, { limit: 50 });
+
+// Sort playlists so that orderedPlaylistIds come first
+playlists.sort((a, b) => {
+  const aIndex = orderedPlaylistIds.indexOf(a.id);
+  const bIndex = orderedPlaylistIds.indexOf(b.id);
+
+  // If both playlists are in orderedPlaylistIds, sort by their order
+  if (aIndex !== -1 && bIndex !== -1) {
+    return aIndex - bIndex;
+  }
+
+  // If only one playlist is in orderedPlaylistIds, it should come first
+  if (aIndex !== -1) return -1;
+  if (bIndex !== -1) return 1;
+
+  // If neither playlist is in orderedPlaylistIds, maintain their original order
+  return 0;
+});
+
+const playlistVideos = await Promise.all(
+  playlists.map(async (playlist) => {
+    const videos = await fetchPlaylistVideos(playlist.id, { limit: 20 });
+
+    return {
+      ...playlist,
+      videos,
+    };
+  }),
+);
+---
+
+<Layout title={title}>
+  <Section title={title} isPrimary padding="xxl" className="bg-white">
+    <Typography variant="prose">
+      <p>
+        Watch the latest videos and webinars for the open-source Delta Lake
+        project.
+      </p>
+      {
+        playlistVideos.map((playlist) => {
+          return (
+            <Fragment>
+              <h2>{playlist.name}</h2>
+              {playlist.description && <p>{playlist.description}</p>}
+              <ImageStrip
+                items={playlist.videos.map((video) => {
+                  return {
+                    title: video.title,
+                    url: video.permalink,
+                    thumbnail: video.thumbnail.url,
+                  };
+                })}
+                columns={5}
+              />
+            </Fragment>
+          );
+        })
+      }
+    </Typography>
+  </Section>
+</Layout>

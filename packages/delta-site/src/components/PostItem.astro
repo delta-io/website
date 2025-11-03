@@ -1,0 +1,84 @@
+---
+import { getEntries } from "astro:content";
+import { Image } from "astro:assets";
+import { getPermalink } from "@utils/getPermalink";
+import clsx from "clsx";
+import Grid from "delta-theme/components/Grid.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import type { CollectionEntry } from "astro:content";
+import type { Post } from "../../config/types";
+
+interface Props {
+  post: Post;
+  isFeatured?: boolean;
+  className?: string;
+}
+
+const { post, isFeatured, className } = Astro.props;
+
+// Convert to array if single author
+const authorRefs = Array.isArray(post.data.author)
+  ? post.data.author
+  : [post.data.author];
+
+// Get all authors in one call
+const authors: CollectionEntry<"profiles">[] = await getEntries(authorRefs);
+
+const postPermalink = getPermalink(post);
+---
+
+<div class={clsx({ "sm:border sm:border-border": isFeatured }, className)}>
+  <Grid
+    columns={isFeatured ? { xs: 1, md: 2, xl: [5, 7] } : 1}
+    className={clsx("gap-lg md:gap-xl", { "sm:p-lg": isFeatured })}
+  >
+    <a href={postPermalink}
+      ><Image
+        src={post.data.thumbnail}
+        alt=`Thumbnail for ${post.data.title}`
+        densities={[1, 2]}
+        loading={isFeatured ? "eager" : "lazy"}
+      /></a
+    >
+    <Typography variant="prose">
+      {
+        isFeatured && (
+          <span
+            class={clsx({
+              "hidden sm:inline-block px-xs py-xxs text-xs bg-accent text-text font-bold mb-xs":
+                isFeatured,
+            })}
+          >
+            Latest Post
+          </span>
+        )
+      }
+      <h3
+        class={clsx("mt-0 mb-sm", {
+          "text-h4": !isFeatured,
+          "max-sm:text-h4": isFeatured,
+        })}
+      >
+        <a
+          href={postPermalink}
+          class="no-underline hover:underline text-inherit">{post.data.title}</a
+        >
+      </h3>
+      <p
+        class={clsx("p2 border-b border-borderLight pb-sm mb-sm", {
+          "sm:pb-md sm:mb-md": isFeatured,
+        })}
+      >
+        By {
+          authors.map((author, index) => (
+            <>
+              <a href={getPermalink(author)}>{author.data.name}</a>
+              {index < authors.length - 1 ? ", " : ""}
+            </>
+          ))
+        }
+      </p>
+      <p class="p2 mt-0">{post.data.description}</p>
+    </Typography>
+  </Grid>
+</div>

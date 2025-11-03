@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import Section from "delta-theme/components/Section.astro";
+import type { GetStaticPaths, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+import Pagination from "delta-theme/components/Pagination.astro";
+import Icon from "delta-theme/components/Icon.astro";
+import PostsList from "../../components/PostsList.astro";
+import Layout from "../../layouts/Layout.astro";
+
+export const sortBlogs = (
+  a: CollectionEntry<"blog">,
+  b: CollectionEntry<"blog">,
+): number => b.data.publishedAt.getTime() - a.data.publishedAt.getTime();
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("blog");
+
+  posts.sort(sortBlogs);
+
+  // Omit the first post as this will be "featured"
+  return paginate(posts.slice(1), { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+type Props = {
+  page: Page<CollectionEntry<"blog">>;
+};
+
+const { page } = Astro.props;
+
+// Perform a separate query to get the first blog to feature on the first page
+const latestPosts = page.currentPage === 1 ? await getCollection("blog") : [];
+latestPosts.sort(sortBlogs);
+---
+
+<Layout title="Delta Lake Blogs">
+  <Section
+    title="Delta Lake Blogs"
+    isPrimary
+    padding="xxl"
+    className="bg-white"
+  >
+    <div class="flex justify-between items-center mb-8">
+      <div></div>
+      <a
+        href="/rss.xml"
+        class="inline-flex items-center gap-2 text-sm text-link transition-colors"
+        title="Subscribe to RSS feed"
+      >
+        <Icon icon="rss" alt="RSS Feed" className="w-4 h-4" />
+        RSS Feed
+      </a>
+    </div>
+    {
+      page.currentPage === 1 && (
+        <PostsList posts={latestPosts.slice(0, 1)} hasFeaturedItem />
+      )
+    }
+    <PostsList posts={page.data} />
+    {
+      page.lastPage > 1 && (
+        <Pagination
+          prevUrl={page.url.prev}
+          nextUrl={page.url.next}
+          currentPage={page.currentPage}
+          lastPage={page.lastPage}
+        />
+      )
+    }
+  </Section>
+</Layout>

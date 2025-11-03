@@ -1,0 +1,47 @@
+---
+import Icon from "delta-theme/components/Icon.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+}
+
+const { title, description, url } = Astro.props;
+---
+
+<Section padding="sm" className="section">
+  <Typography variant="prose">
+    <p class="text">
+      <a href={url}>
+        <strong>{title}:</strong>
+        {description}
+        <Icon icon="more" alt="" className="icon" />
+      </a>
+    </p>
+  </Typography>
+</Section>
+<style>
+  .section {
+    background-color: theme(colors.accent);
+    text-align: center;
+
+    a {
+      color: #000;
+      text-decoration: none;
+      display: inline-block;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

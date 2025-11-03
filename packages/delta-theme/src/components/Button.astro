@@ -1,0 +1,128 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import clsx from "clsx";
+
+interface Props {
+  href?: HTMLAttributes<"a">["href"];
+  id?: string;
+  children: unknown;
+  borderStyle?: "outlined" | "normal";
+  className?: string;
+  isDownload?: boolean;
+  size?: "sm" | "md";
+  target?: HTMLAttributes<"a">["target"];
+  variant?: "primary" | "secondary" | "accent" | "more";
+}
+
+const {
+  id,
+  href,
+  variant = "primary",
+  borderStyle = "normal",
+  isDownload,
+  size = "md",
+  target,
+  className,
+} = Astro.props;
+
+const classNames = clsx(
+  {
+    "button-size-sm": size === "sm",
+    "button-size-md": size === "md",
+    "variant-primary": variant === "primary",
+    "variant-secondary": variant === "secondary",
+    "variant-accent": variant === "accent",
+    "variant-more": variant === "more",
+    "border-outlined": borderStyle === "outlined",
+  },
+  className,
+);
+---
+
+{
+  typeof href === "string" ? (
+    <a
+      href={href}
+      class={classNames}
+      target={target}
+      download={isDownload}
+      id={id}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button class={classNames} id={id}>
+      <slot />
+    </button>
+  )
+}
+<style>
+  a,
+  button {
+    display: inline-block;
+    line-height: 1;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: theme(fontWeight.bold);
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .button-size-sm {
+    padding: theme(spacing.xs) theme(spacing.sm);
+    font-size: theme(fontSize.small);
+  }
+  .button-size-md {
+    padding: theme(spacing.sm) theme(spacing.lg);
+    font-size: theme(fontSize.primary);
+  }
+
+  .variant-primary {
+    color: white;
+    background-color: theme(colors.primary);
+    border-color: theme(colors.primary);
+  }
+  .variant-primary:hover {
+    background-color: #00bee9;
+    border-color: #00bee9;
+  }
+  .variant-primary.border-outlined {
+    color: theme(colors.primary);
+    background-color: white;
+  }
+  .variant-primary.border-outlined:hover {
+    color: #00bee9;
+    background-color: white;
+  }
+
+  .variant-secondary {
+    color: theme(colors.primary);
+    background-color: none;
+    border-color: theme(colors.primary);
+  }
+  .variant-secondary:hover {
+    color: white;
+    background-color: theme(colors.primary);
+  }
+
+  .variant-accent {
+    color: theme(colors.text);
+    background-color: theme(colors.accent);
+    border-color: theme(colors.accent);
+  }
+  .variant-accent.border-outlined {
+    color: theme(colors.accent);
+    background-color: theme(colors.text);
+  }
+
+  .variant-more {
+    background-color: transparent;
+    border: none;
+    color: theme(colors.primary);
+    font-weight: theme(fontWeight.bold);
+    padding: 0;
+  }
+  .variant-more:hover {
+    color: theme(colors.link);
+  }
+</style>

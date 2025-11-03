@@ -1,0 +1,39 @@
+---
+import { site } from "@config/site";
+import { fetchChannelVideos } from "@utils/fetchYoutube";
+import Layout from "../layouts/Layout.astro";
+import {
+  ArticleVideoSection,
+  ChartSection,
+  ContributeSection,
+  HeroSection,
+  LatestVideosSection,
+  MaintainersSection,
+  TwitchSection,
+} from "../components/Community";
+import AnnouncementSection from "../components/AnnouncementSection.astro";
+import { BookDownloadSection } from "../components/BookDownloadSection";
+import { ContributorsSection } from "../components/ContributorsSection";
+import { ProjectGovernanceSection } from "../components/ProjectGovernanceSection";
+
+const { youtubeChannelId } = site;
+const videos = await fetchChannelVideos(youtubeChannelId, { limit: 5 });
+---
+
+<Layout title="Join the Delta Lake Community">
+  <HeroSection />
+  <AnnouncementSection
+    title="Check out Last Week in a Byte newsletter"
+    description="for the latest Delta events...a week late!"
+    url="http://go.delta.io/lastweek"
+  />
+  <LatestVideosSection videos={videos} />
+  <TwitchSection />
+  <ChartSection />
+  <ContributeSection />
+  <ArticleVideoSection />
+  <BookDownloadSection />
+  <MaintainersSection />
+  <ContributorsSection className="bg-lightBg" />
+  <ProjectGovernanceSection />
+</Layout>

@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {
+  DiagramSection,
+  HeroSection,
+  KeyFeaturesSection,
+  LatestUpdatesSection,
+  ValuePropsSection,
+  WhitepaperSection,
+} from "../components/Home";
+import AnnouncementSection from "../components/AnnouncementSection.astro";
+import { BookDownloadSection } from "../components/BookDownloadSection";
+import { ContributorsSection } from "../components/ContributorsSection";
+import CommunitySection from "../components/CommunitySection.astro";
+import { ProjectGovernanceSection } from "../components/ProjectGovernanceSection";
+
+const diagramOffsets = {
+  sm: "35px",
+  md: "48px",
+  lg: "63px",
+  xl: "66px",
+};
+---
+
+<Layout title="Home">
+  <AnnouncementSection
+    title="Announcing Delta Lake 4.0 on Apache Spark™ 4.0"
+    description="Try out the latest release today!"
+    url="https://github.com/delta-io/delta/releases/tag/v4.0.0"
+  />
+  <HeroSection
+    title="Build Lakehouses with Delta Lake"
+    ctaLabel="Get Started"
+    ctaUrl="/learn/getting-started"
+    offsets={diagramOffsets}
+  >
+    <Fragment slot="description">
+      <p>
+        <a
+          href="https://databricks.com/wp-content/uploads/2020/08/p975-armbrust.pdf"
+          target="_blank">Delta Lake</a
+        >{" "}
+        is an open-source storage framework that enables building a format agnostic
+        <a
+          href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
+          target="_blank">Lakehouse architecture</a
+        >{" "}
+        with compute engines including Spark, PrestoDB, Flink, Trino, Hive, Snowflake,
+        Google BigQuery, Athena, Redshift, Databricks, Azure Fabric and APIs for
+        Scala, Java, Rust, and Python. With{" "}
+        <a
+          href="https://docs.delta.io/latest/delta-uniform.html"
+          target="_blank">Delta Universal Format</a
+        >{" "}
+        aka UniForm, you can read now Delta tables with Iceberg and Hudi clients.
+      </p>
+    </Fragment>
+  </HeroSection>
+  <DiagramSection offsets={diagramOffsets} />
+  <ValuePropsSection />
+  <LatestUpdatesSection />
+  <KeyFeaturesSection />
+  <BookDownloadSection />
+  <WhitepaperSection />
+  <ContributorsSection />
+  <CommunitySection />
+  <AnnouncementSection
+    title="Check out Last Week in a Byte newsletter"
+    description="for the latest Delta events...a week late!"
+    url="http://go.delta.io/lastweek"
+  />
+  <ProjectGovernanceSection />
+</Layout>
