@@ -1,0 +1,108 @@
+---
+import { Image } from "astro:assets";
+import Section from "delta-theme/components/Section.astro";
+import Grid from "delta-theme/components/Grid.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import { Logo } from "../../Logo";
+import acidTransactionsImg from "./acid-transactions.png";
+import scalableMetadataImg from "./scalable-metadata.png";
+import timeTravelImg from "./time-travel.png";
+import openSourceImg from "./open-source.png";
+import unifiedBatchImg from "./unified-batch.png";
+import schemaEvolutionImg from "./schema-evolution.png";
+import auditHistoryImg from "./audit-history.png";
+import dmlOperationsImg from "./dml-operations.png";
+
+const keyFeatures = [
+  {
+    image: acidTransactionsImg,
+    name: "ACID Transactions",
+    description:
+      "Protect your data with serializability, the strongest level of isolation",
+  },
+  {
+    image: scalableMetadataImg,
+    name: "Scalable Metadata",
+    description:
+      "Handle petabyte-scale tables with billions of partitions and files with ease",
+  },
+  {
+    image: timeTravelImg,
+    name: "Time Travel",
+    description:
+      "Access/revert to earlier versions of data for audits, rollbacks, or reproduce",
+  },
+  {
+    image: openSourceImg,
+    name: "Open Source",
+    description:
+      "Community driven, open standards, open protocol, open discussions",
+  },
+  {
+    image: unifiedBatchImg,
+    name: "Unified Batch/Streaming",
+    description:
+      "Exactly once semantics ingestion to backfill to interactive queries",
+  },
+  {
+    image: schemaEvolutionImg,
+    name: "Schema Evolution / Enforcement",
+    description: "Prevent bad data from causing data corruption",
+  },
+  {
+    image: auditHistoryImg,
+    name: "Audit History",
+    description:
+      "Delta Lake log all change details providing a fill audit trail",
+  },
+  {
+    image: dmlOperationsImg,
+    name: "DML Operations",
+    description:
+      "SQL, Scala/Java and Python APIs to merge, update and delete datasets",
+  },
+];
+---
+
+<Section
+  title="Key Features"
+  isHeaderCentered
+  padding="xxxl"
+  className="bg-white"
+>
+  <Logo slot="before-header" />
+  <Grid columns={{ md: 2, lg: 4 }} className="grid">
+    {
+      keyFeatures.map(({ name, image, description }) => (
+        <Typography variant="prose" className="key-feature">
+          <Image src={image} alt="" class="image" />
+          <h4>{name}</h4>
+          <p>{description}</p>
+        </Typography>
+      ))
+    }
+  </Grid>
+</Section>
+<style>
+  .grid {
+    gap: theme(spacing.lg);
+  }
+
+  .key-feature {
+    align-items: center;
+    text-align: center;
+  }
+
+  .key-feature img {
+    max-width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 0;
+    display: block;
+    margin-bottom: theme(spacing.sm);
+  }
+
+  .key-feature h4 {
+    font-weight: normal;
+  }
+</style>

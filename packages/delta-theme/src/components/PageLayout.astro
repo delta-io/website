@@ -1,0 +1,110 @@
+---
+import { getImage } from "astro:assets";
+import { localizedHTML as favicons } from "astro-favicons/middleware";
+import { config } from "virtual:delta-theme/config";
+import Footer from "./Footer.astro";
+import { Header } from "./Header";
+import "@fontsource/source-sans-pro/400.css";
+import "@fontsource/source-sans-pro/600.css";
+import "@fontsource-variable/source-code-pro";
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: string | Parameters<typeof getImage>[0]["src"] | undefined;
+}
+
+const { title, description, image } = Astro.props;
+const imageUrl =
+  !image || typeof image === "string"
+    ? image
+    : (await getImage({ src: image })).src;
+
+// Define paths that should be excluded from search
+const excludedPaths = ["/", "/blog", "/sharing"];
+
+// Determine content type based on URL path
+const getContentType = (pathname: string) => {
+  if (pathname.startsWith("/blog/")) return "Blog Post";
+  if (pathname.startsWith("/user-stories/")) return "User Story";
+  if (pathname.startsWith("/roadmap/")) return "Roadmap";
+  if (pathname.startsWith("/community/")) return "Community";
+  if (pathname.startsWith("/learn/")) return "Learning Material";
+  if (pathname.startsWith("/profiles/")) return "Profile";
+  return "Resources";
+};
+
+const contentType = getContentType(Astro.url.pathname);
+
+// Check if current path should be excluded
+const shouldExcludeFromSearch = excludedPaths.some(
+  (path) =>
+    Astro.url.pathname === path ||
+    Astro.url.pathname.endsWith(path + "/") ||
+    // Exclude pagination pages like /blog/2/, /blog/3/, etc.
+    /^\/blog\/\d+\/?$/.test(Astro.url.pathname),
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <slot name="head-first" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Delta Lake Blog"
+      href="/rss.xml"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title ? `${title} | ${config.title}` : config.title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta
+      name="image"
+      property="og:image"
+      content={new URL(
+        imageUrl ? imageUrl : "/images/default-thumbnail.png",
+        Astro.site,
+      )}
+    />
+    <Fragment set:html={favicons(Astro.currentLocale)} />
+    <slot name="head-last" />
+  </head>
+  <body class="font-default leading-base m-none bg-darkBg text-darkColor">
+    <slot name="body-first" />
+    <Header />
+    <main
+      class="bg-lightBg text-lightColor"
+      {...shouldExcludeFromSearch && { "data-pagefind-ignore": "" }}
+      {...!shouldExcludeFromSearch && {
+        "data-pagefind-filter": `type:${contentType}`,
+      }}
+    >
+      <slot />
+    </main>
+    <Footer />
+    <slot name="body-last" />
+  </body>
+</html>
+<style>
+  body {
+    font-weight: theme(fontWeight.normal);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :global(a) {
+    color: theme(colors.link);
+    text-decoration: underline;
+  }
+
+  :global(.astro-code) {
+    padding: theme(spacing.sm);
+    font-weight: theme(fontWeight.code);
+    border-radius: 0.25rem;
+  }
+</style>

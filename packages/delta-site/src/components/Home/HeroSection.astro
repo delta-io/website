@@ -1,0 +1,120 @@
+---
+import { mapKeys } from "@utils/mapKeys";
+import clsx from "clsx";
+import Button from "delta-theme/components/Button.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import { LakeSection } from "../LakeSection";
+
+interface Props {
+  title: string;
+  ctaLabel: string;
+  ctaUrl: string;
+  children: unknown /* slots: description */;
+  offsets: {
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+}
+
+const { title, ctaLabel, ctaUrl, offsets } = Astro.props;
+
+const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
+---
+
+<LakeSection padding="xxxl" isPrimary>
+  <Typography variant="prose" className="content">
+    <h1 class="title">{title}</h1>
+    <div class="description">
+      <slot name="description" />
+    </div>
+    <p>
+      <Button href={ctaUrl} variant="accent" className="button"
+        >{ctaLabel}</Button
+      >
+    </p>
+    <div class="button-row">
+      <Typography variant="p">
+        <a
+          href="https://github.com/delta-io/delta"
+          class={clsx("hero-link", "align-left")}
+          target="_blank">GitHub</a
+        >
+      </Typography>
+      <Typography variant="p">
+        <a href="http://go.delta.io/releases" class="hero-link" target="_blank"
+          >Releases</a
+        >
+      </Typography>
+      <Typography variant="p">
+        <a href="https://go.delta.io/roadmap" class="hero-link" target="_blank"
+          >Roadmap</a
+        >
+      </Typography>
+    </div>
+  </Typography>
+  <div class="diagram-offset"></div>
+</LakeSection>
+<style define:vars={offsetCssVars}>
+  .content {
+    text-align: center;
+  }
+
+  .title {
+    margin-top: 0;
+  }
+
+  .description {
+    max-width: theme(screens.md);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .description :global(p) {
+    font-size: 1.35rem;
+  }
+
+  .button {
+    min-width: 200px;
+  }
+
+  .button-row {
+    display: flex;
+    justify-content: center;
+    gap: theme(spacing.lg);
+  }
+
+  .hero-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .hero-link:hover {
+    color: theme(colors.accent);
+  }
+
+  @media screen(sm) {
+    .diagram-offset {
+      height: var(--offset-sm);
+    }
+  }
+
+  @media screen(md) {
+    .diagram-offset {
+      height: var(--offset-md);
+    }
+  }
+
+  @media screen(lg) {
+    .diagram-offset {
+      height: var(--offset-lg);
+    }
+  }
+
+  @media screen(xl) {
+    .diagram-offset {
+      height: var(--offset-xl);
+    }
+  }
+</style>

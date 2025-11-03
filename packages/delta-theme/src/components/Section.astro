@@ -1,0 +1,98 @@
+---
+/**
+ * Section
+ * =======
+ * Creates a "section", which is a basic building-block style component for our layout.
+ *
+ * Slots
+ * -----
+ * Section has three slots:
+ * - default: Section content
+ * - before-header: Content to put before the section's header
+ * - title: Content to put in the title (requries title to be set -- use " " as the title if you want it empty).
+ * - subtitle: Content to put in the header, below the title (requries title to be set).
+ */
+import clsx from "clsx";
+import Container from "./Container.astro";
+import type { HeaderVariant } from "./Typography.astro";
+import Typography from "./Typography.astro";
+
+interface Props {
+  children: unknown;
+  background?: "dark" | "light";
+  className?: string;
+  hasContainer?: boolean;
+  isHeaderCentered?: boolean;
+  isPrimary?: boolean;
+  padding?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl";
+  title?: string;
+  titleSize?: HeaderVariant;
+}
+
+const {
+  background,
+  className,
+  hasContainer = true,
+  isHeaderCentered = false,
+  isPrimary = false,
+  padding,
+  title,
+  titleSize = "h2",
+} = Astro.props;
+
+const ContainerComponent = hasContainer ? Container : Fragment;
+---
+
+<div
+  class={clsx(
+    {
+      "py-none": padding === "none",
+      "py-xs": padding === "xs",
+      "py-sm": padding === "sm",
+      "py-md": padding === "md",
+      "py-lg": padding === "lg",
+      "py-xl": padding === "xl",
+      "py-xxl": padding === "xxl",
+      "py-xxxl": padding === "xxxl",
+
+      // Dark bg
+      "bg-darkBg": background === "dark",
+      "text-darkColor": background === "dark",
+
+      // Light bg
+      "bg-lightBg": background === "light",
+      "bg-lightColor": background === "light",
+    },
+    className,
+  )}
+>
+  <ContainerComponent>
+    <slot name="before-header" />
+    {
+      title && (
+        <div
+          class={clsx("mb-xl", {
+            "text-center": isHeaderCentered,
+          })}
+        >
+          <Typography variant={isPrimary ? "h1" : titleSize}>
+            {title}
+            <slot name="title" />
+          </Typography>
+          <div class="subtitle-container mx-auto max-w-[theme(screens.lg)]">
+            <slot name="subtitle" />
+          </div>
+        </div>
+      )
+    }
+    <slot />
+  </ContainerComponent>
+</div>
+<style>
+  .subtitle-container > :global(:first-child) {
+    margin-top: theme(spacing.md);
+  }
+  .subtitle-container > :global(:last-child) {
+    margin-bottom: theme(spacing.xxl);
+  }
+</style>

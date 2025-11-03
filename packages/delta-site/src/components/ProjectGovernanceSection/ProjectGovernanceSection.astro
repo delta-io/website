@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import linuxFoundationImg from "./linux-foundation.png";
+---
+
+<Section padding="xxxl">
+  <Grid columns={{ xs: 1, lg: [1, 3] }} className="gap-lg lg:items-center">
+    <Image
+      src={linuxFoundationImg}
+      alt="The Linux Foundation"
+      width="241"
+      height="81"
+      densities={[1, 2]}
+    />
+    <Typography variant="prose">
+      <h5>Project Governance</h5>
+      <p>
+        Delta Lake is an independent open-source project and not controlled by
+        any single company. To emphasize this we joined the Delta Lake Project
+        in 2019, which is a sub-project of the Linux Foundation Projects. Within
+        the project, we make decisions based on <a
+          href="https://delta.io/pdfs/delta-charter.pdf"
+          target="_blank">these rules</a
+        >.
+      </p>
+    </Typography>
+  </Grid>
+</Section>

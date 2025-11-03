@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import Section from "delta-theme/components/Section.astro";
+import ImageStrip from "../ImageStrip.astro";
+
+const posts = await getCollection("blog");
+
+const latestBlogs = posts.slice(0, 5).map((post) => {
+  return {
+    title: post.data.title,
+    thumbnail: post.data.thumbnail,
+    url: `/blog/${post.id}`,
+  };
+});
+---
+
+<Section
+  title="The Latest"
+  titleSize="h2"
+  isHeaderCentered
+  padding="xxxl"
+  className="section"
+>
+  <ImageStrip items={latestBlogs} />
+</Section>
+<style>
+  .section {
+    background-color: theme(colors.lightBg);
+  }
+</style>

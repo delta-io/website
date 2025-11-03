@@ -1,0 +1,157 @@
+---
+import { config } from "virtual:delta-theme/config";
+import { Image } from "astro:assets";
+import Section from "../Section.astro";
+import Icon from "../Icon.astro";
+import { Menu } from "../Menu";
+import DeltaLogo from "../assets/delta-lake-logo.svg";
+import LinuxFoundationLogo from "../assets/the-linux-foundation-projects.svg";
+import HeaderButton from "./HeaderButton.astro";
+import Search from "./Search.astro";
+---
+
+<Section className="tlf-banner">
+  <Image
+    src={LinuxFoundationLogo}
+    alt="The Linux Foundation Projects"
+    width="300"
+    loading="eager"
+  />
+</Section>
+<Section background="dark" className="min-h-[48px] flex items-center">
+  <header-container class="flex items-center relative gap-md justify-between">
+    <HeaderButton className="header-open-menu">
+      <Icon icon="menu" alt="Open menu" />
+    </HeaderButton>
+    <a href="/" class="text-inherit font-bold no-underline leading-none">
+      <Image
+        src={DeltaLogo}
+        alt="Delta Lake"
+        width={133}
+        height={28}
+        loading="eager"
+      />
+    </a>
+    <div class="header-menu-wrapper" data-toggled="false">
+      <button type="button" class="header-close-menu">
+        <Icon icon="close" alt="Close menu" />
+      </button>
+      <Menu items={config.menus.header} theme="header" direction="horizontal" />
+    </div>
+    <Search />
+    <div class="header-search-wrapper">
+      <Menu
+        items={config.menus.social}
+        theme="header"
+        direction="horizontal"
+        isIconMenu
+        className="text-[1.625em] leading-none"
+      />
+    </div>
+    <div class="header-menu-backdrop" tabindex="-1"></div>
+  </header-container>
+</Section>
+<style>
+  .tlf-banner {
+    background-color: black;
+    height: 32px;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-open-menu,
+  .header-close-menu {
+    display: none;
+  }
+
+  .header-menu-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 49;
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+
+  @media not all and screen(lg) {
+    .header-menu-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 50;
+      padding: theme(spacing.md);
+      width: 80vw;
+      max-width: 320px;
+      overflow: auto;
+      background-color: white;
+      color: theme(colors.text);
+      box-shadow: 2px 0 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-menu-wrapper[data-toggled="false"] {
+      display: none;
+    }
+
+    .header-menu-wrapper[data-toggled="true"] ~ .header-menu-backdrop {
+      display: block;
+    }
+
+    .header-open-menu,
+    .header-close-menu {
+      display: block;
+    }
+
+    .header-close-menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 44px;
+      height: 44px;
+      font-size: theme(fontSize.small);
+      color: theme(colors.textSecondary);
+    }
+
+    .header-search-wrapper {
+      display: none;
+    }
+  }
+</style>
+<script>
+  class HeaderContainer extends HTMLElement {
+    #menuWrapper: HTMLElement | null = null;
+    #backdrop: HTMLElement | null = null;
+    #openButton: HTMLElement | null = null;
+    #closeButton: HTMLElement | null = null;
+
+    constructor() {
+      super();
+
+      this.#menuWrapper = this.querySelector(".header-menu-wrapper");
+      this.#backdrop = this.querySelector(".header-menu-backdrop");
+      this.#openButton = this.querySelector(".header-open-menu");
+      this.#closeButton = this.querySelector(".header-close-menu");
+    }
+
+    connectedCallback() {
+      this.#openButton?.addEventListener("click", () => this.#toggleMenu());
+      this.#closeButton?.addEventListener("click", () => this.#toggleMenu());
+      this.#backdrop?.addEventListener("click", () => this.#toggleMenu());
+    }
+
+    #toggleMenu() {
+      if (this.#menuWrapper) {
+        const state = this.#menuWrapper.dataset.toggled;
+
+        if (state === "true") {
+          this.#menuWrapper.dataset.toggled = "false";
+        } else {
+          this.#menuWrapper.dataset.toggled = "true";
+        }
+      }
+    }
+  }
+  customElements.define("header-container", HeaderContainer);
+</script>

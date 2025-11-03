@@ -1,0 +1,37 @@
+---
+import type { ComponentProps } from "astro/types";
+import { site } from "@config/site";
+import PageLayout from "delta-theme/components/PageLayout.astro";
+import GoogleAnalytics from "../components/GoogleAnalytics.astro";
+
+type PageLayoutProps = ComponentProps<typeof PageLayout>;
+
+interface Props {
+  title?: PageLayoutProps["title"];
+  description?: PageLayoutProps["description"];
+  image?: PageLayoutProps["image"];
+}
+
+const { title, description, image } = Astro.props;
+---
+
+<PageLayout title={title} description={description} image={image}>
+  <Fragment name="head-first">
+    {
+      !import.meta.env.DEV && (
+        <>
+          <GoogleAnalytics id={site.googleAnalyticsId} />
+          {/* @ts-expect-error -- the "key" attribute is technically not valid */}
+          <script
+            is:inline
+            key="plausible-script"
+            defer
+            data-domain="delta.io"
+            src="https://plausible.io/js/script.js"
+          />
+        </>
+      )
+    }
+  </Fragment>
+  <slot />
+</PageLayout>

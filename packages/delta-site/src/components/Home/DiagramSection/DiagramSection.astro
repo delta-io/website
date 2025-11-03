@@ -1,0 +1,62 @@
+---
+import { mapKeys } from "@utils/mapKeys";
+import { Image } from "astro:assets";
+import Section from "delta-theme/components/Section.astro";
+import diagram from "./delta-uniform-hero-v5.png";
+
+interface Props {
+  offsets: {
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+}
+const { offsets } = Astro.props;
+
+const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
+---
+
+<Section className="section">
+  <div class="diagram-container">
+    <a href="/integrations">
+      <Image src={diagram} alt="Delta Lake Integrations" loading="eager" />
+    </a>
+  </div>
+</Section>
+<style define:vars={offsetCssVars}>
+  .section {
+    padding-top: 0;
+    padding-bottom: theme(spacing.xxxl);
+  }
+
+  .diagram-container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen(sm) {
+    .diagram-container {
+      margin-top: calc(-1 * var(--offset-sm));
+    }
+  }
+
+  @media screen(md) {
+    .diagram-container {
+      margin-top: calc(-1 * var(--offset-md));
+    }
+  }
+
+  @media screen(lg) {
+    .diagram-container {
+      margin-top: calc(-1 * var(--offset-lg));
+    }
+  }
+
+  @media screen(xl) {
+    .diagram-container {
+      margin-top: calc(-1 * var(--offset-xl));
+    }
+  }
+</style>

@@ -1,0 +1,236 @@
+---
+import { Image } from "astro:assets";
+import clsx from "clsx";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import adobe from "./logos/adobe.png";
+import kubit from "./logos/kubit.png";
+import scribd from "./logos/scribd.png";
+import ebay from "./logos/ebay.png";
+import samba from "./logos/samba.png";
+import comcast from "./logos/comcast.png";
+import alibaba from "./logos/alibaba.png";
+import apple from "./logos/apple.png";
+import backMarket from "./logos/backMarket.png";
+import byteDance from "./logos/byteDance.png";
+import canva from "./logos/canva.png";
+import ibm from "./logos/ibm.png";
+import microsoft from "./logos/microsoft.png";
+import atlassian from "./logos/atlassian.png";
+import amazon from "./logos/amazon.png";
+import cockroachdb from "./logos/cockroachdb.png";
+import databricks from "./logos/databricks.png";
+import disney from "./logos/disney.png";
+import grafana from "./logos/grafana.png";
+import safeGraph from "./logos/safeGraph.png";
+import starBust from "./logos/starBurst.png";
+import td from "./logos/td.png";
+import talend from "./logos/talend.png";
+import twilio from "./logos/twilio.png";
+import ucDavis from "./logos/ucDavis.png";
+
+interface Props {
+  className?: string;
+}
+
+const contributors = [
+  {
+    name: "adobe",
+    src: adobe,
+    link: "",
+  },
+  {
+    name: "atlassian",
+    src: atlassian,
+    link: "",
+  },
+  {
+    name: "apple",
+    src: apple,
+    link: "",
+  },
+  {
+    name: "amazon",
+    src: amazon,
+    link: "",
+  },
+  {
+    name: "alibaba",
+    src: alibaba,
+    link: "",
+  },
+  {
+    name: "backMarket",
+    src: backMarket,
+    link: "",
+  },
+  {
+    name: "byteDance",
+    src: byteDance,
+    link: "",
+  },
+  {
+    name: "canva",
+    src: canva,
+    link: "",
+  },
+  {
+    name: "cockroachdb",
+    src: cockroachdb,
+    link: "",
+  },
+  {
+    name: "comcast",
+    src: comcast,
+    link: "",
+  },
+  {
+    name: "databricks",
+    src: databricks,
+    link: "",
+  },
+  {
+    name: "disney",
+    src: disney,
+    link: "",
+  },
+  {
+    name: "ebay",
+    src: ebay,
+    link: "",
+  },
+  {
+    name: "grafana",
+    src: grafana,
+    link: "",
+  },
+  {
+    name: "ibm",
+    src: ibm,
+    link: "",
+  },
+  {
+    name: "microsoft",
+    src: microsoft,
+    link: "",
+  },
+  {
+    name: "safeGraph",
+    src: safeGraph,
+    link: "",
+  },
+  {
+    name: "sambaTv",
+    src: samba,
+    link: "",
+  },
+  {
+    name: "scribd",
+    src: scribd,
+    link: "/user-stories/scribd/",
+  },
+  {
+    name: "starburst",
+    src: starBust,
+    link: "",
+  },
+  {
+    name: "td",
+    src: td,
+    link: "",
+  },
+  {
+    name: "talend",
+    src: talend,
+    link: "",
+  },
+  {
+    name: "twilio",
+    src: twilio,
+    link: "",
+  },
+  {
+    name: "ucDavis",
+    src: ucDavis,
+    link: "",
+  },
+  {
+    name: "kubit",
+    src: kubit,
+    link: "",
+  },
+];
+
+const { className } = Astro.props;
+---
+
+<Section
+  title="Organizations that have contributed to Delta Lake"
+  isHeaderCentered
+  padding="xxxl"
+  className={clsx({ "bg-white": !className?.match(/bg-/) }, className)}
+>
+  <Fragment slot="subtitle">
+    <Typography variant="p">
+      Together we have made Delta Lake the most widely used lakehouse format in
+      the world!
+    </Typography>
+  </Fragment>
+  <Grid columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} className="grid">
+    {
+      contributors.map(({ name, src, link }) => (
+        <div class="contributor">
+          {link !== "" ? (
+            <a href={link}>
+              <Image
+                src={src}
+                alt={name}
+                loading="lazy"
+                height="60"
+                densities={[1, 2]}
+              />
+            </a>
+          ) : (
+            <Image
+              src={src}
+              alt={name}
+              loading="lazy"
+              height="60"
+              densities={[1, 2]}
+            />
+          )}
+        </div>
+      ))
+    }
+  </Grid>
+</Section>
+<style>
+  .grid {
+    column-gap: theme(spacing.lg);
+    row-gap: theme(spacing.xxl);
+  }
+
+  .contributor {
+    width: 100%;
+    height: 60px;
+    position: relative;
+  }
+
+  .contributor a {
+    transition: 0.3s;
+  }
+  .contributor a:hover {
+    opacity: 0.7;
+  }
+
+  .contributor img {
+    max-width: 100%;
+    position: absolute;
+    max-height: 100%;
+    max-width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>

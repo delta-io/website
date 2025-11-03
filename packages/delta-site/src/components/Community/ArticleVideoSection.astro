@@ -1,0 +1,115 @@
+---
+import Button from "delta-theme/components/Button.astro";
+import Icon from "delta-theme/components/Icon.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+---
+
+<Section
+  title="Integrating a Data Warehouse and a Data Lake"
+  isHeaderCentered
+  padding="xxl"
+  className="bg-white"
+>
+  <Typography variant="prose">
+    <div class="mb-lg lg:float-right lg:ml-md">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/kYBpEZ2nQjA?si=g0CAQ3XwbrMieihI"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+        class="max-w-full mx-auto"></iframe>
+    </div>
+    <h4 class="mb-xs">FLORIAN VALEYE</h4>
+    <h6 class="mt-none">STAFF DATA ENGINEER, BACK MARKET</h6>
+    <p>
+      This conversation from the Open Source Summit in Spain provides valuable
+      insights into the significance of Delta Lake, the role of Rust in data
+      engineering, and the collaborative nature of open source communities.
+    </p>
+    <p>
+      The Delta Lake open source project integrates data lakes and data
+      warehouses, a needed combination in this new age of scale-out data
+      requiring reliability and controls.
+    </p>
+    <p>
+      A data lakehouse integrates the advanced data analytics and low-cost
+      storage of a data lake with the performance and reliability of a data
+      warehouse, said Florian Valeye, a data engineer with Back Market, in this
+      episode of The New Stack Makers, recorded at the Open Source Summit in
+      Bilbao, Spain, earlier this fall.
+    </p>
+    <div class="hidden article-video-content">
+      <p>
+        The data warehouse is an approach that emerged over the past two
+        decades. It consists of structured data models that allow for better
+        performance. The datasets are small and constrained, Valeye said. In
+        contrast, the data lake consists of unstructured data from multiple
+        sources . The volume size of data lakes reaches petabytes or even
+        exabytes.
+      </p>
+      <p>
+        Delta Lake, created by Databricks, breaks down the barriers between data
+        warehouses and data lakes by providing more performance and features in
+        the data lake, Valeye said.
+      </p>
+      <p>
+        ACID transactions are a staple of a data warehouse, Valeye said. When
+        thinking about the relational database or a data warehouse, a focus is
+        put on model representations and the data structure. A data lake is an
+        open way to push data and add a schema. Data lakes magnify data. Through
+        the “wall breaking,” the lake house provides ACID transactions, Read,
+        Process, Interpret (RPI) ingestions, and metadata scalability. The
+        strength comes with a way to attain knowledge for any usage without a
+        barrier between the data analyst side of the house and the data
+        engineering and data scientist teams.
+      </p>
+      <p>
+        Databricks is now working on providing ways for anyone to contribute
+        their connectors through Delta Lake, allowing gateways that can be used
+        with, for example, different databases.
+      </p>
+      <p>
+        “And that&rsquo;s why it&rsquo;s really nice when you are working on a
+        specific cloud provider; you don&rsquo;t want to be bundled, locked
+        inside it,” Valerie said. “So that&rsquo;s why having this kind of
+        standard format, you can switch and move from one to another, and
+        don&rsquo;t feel stuck with one provider and one format.”
+      </p>
+      <p>
+        Valeye said Back Market sells refurbished devices. To determine device
+        quality, the company developed an algorithm to determine whether a
+        device is viable for sale. Back Market uses Delta Lake to ingest data
+        from APIs and other data sources.
+      </p>
+      <p>
+        Delta Lake is a platform to connect data scientists and data engineers,
+        said Valeye, who previously worked as a data engineer. Before using
+        Delta Lake, deploying models could be complicated due to the
+        complexities of the different tools and programming languages used. The
+        Delta Lake infrastructure closes the gaps. It allows everyone to work on
+        the same infrastructure.
+      </p>
+    </div>
+    <Button id="expand-button" variant="more"
+      >Learn more <Icon icon="more" alt="" /></Button
+    >
+  </Typography>
+</Section>
+<script>
+  const button = document.getElementById("expand-button");
+
+  if (button) {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".article-video-content").forEach((content) => {
+        content.classList.remove("hidden");
+      });
+
+      button.remove();
+    });
+  }
+</script>

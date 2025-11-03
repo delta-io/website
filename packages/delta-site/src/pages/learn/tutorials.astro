@@ -1,0 +1,60 @@
+---
+import { site } from "@config/site";
+import {
+  fetchChannelPlaylists,
+  fetchPlaylistVideos,
+} from "@utils/fetchYoutube";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import Layout from "../../layouts/Layout.astro";
+import ImageStrip from "../../components/ImageStrip.astro";
+
+const title = "Delta Lake Tutorials";
+const { youtubeChannelId } = site;
+
+const playlists = await fetchChannelPlaylists(youtubeChannelId, {
+  limit: 50,
+  sectionTitle: "Techniques and Tutorials",
+});
+
+const playlistVideos = await Promise.all(
+  playlists.map(async (playlist) => {
+    const videos = await fetchPlaylistVideos(playlist.id, { limit: 20 });
+
+    return {
+      ...playlist,
+      videos,
+    };
+  }),
+);
+---
+
+<Layout title={title}>
+  <Section title={title} isPrimary padding="xxl" className="bg-white">
+    <Typography variant="prose">
+      <p>
+        Try out the latest tutorials for the open-source Delta Lake project.
+      </p>
+      {
+        playlistVideos.map((playlist) => {
+          return (
+            <Fragment>
+              <h2>{playlist.name}</h2>
+              {playlist.description && <p>{playlist.description}</p>}
+              <ImageStrip
+                items={playlist.videos.map((video) => {
+                  return {
+                    title: video.title,
+                    url: video.permalink,
+                    thumbnail: video.thumbnail.url,
+                  };
+                })}
+                columns={5}
+              />
+            </Fragment>
+          );
+        })
+      }
+    </Typography>
+  </Section>
+</Layout>

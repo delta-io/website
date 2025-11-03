@@ -1,0 +1,52 @@
+---
+import Image from "astro/components/Image.astro";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import TwitchLogo from "delta-theme/components/assets/twitch-logo.svg";
+import profileImg from "./Tyler-Croy-min.jpg";
+---
+
+<Section padding="xl" isHeaderCentered className="bg-white">
+  <Grid
+    columns={{
+      xs: ["60px", "auto"],
+      md: ["60px", "auto", "60px"],
+      xl: ["120px", "auto", "120px"],
+    }}
+    className="gap-xl xl:items-center xl:justify-between"
+  >
+    <a href="https://www.twitch.tv/agentdero" target="_blank">
+      <Image
+        src={profileImg}
+        alt="R. Tyler Croy"
+        width="120"
+        loading="lazy"
+        class="max-xl:w-[60px]"
+      />
+    </a>
+    <Typography variant="prose">
+      <h3 class="font-normal">
+        Watch Delta Rust code development LIVE on Twitch.tv!
+      </h3>
+      <p class="text-h4 font-normal">
+        with <a href="https://www.twitch.tv/agentdero" target="_blank"
+          >R. Tyler Croy (agentdero)</a
+        >, Delta Lake maintainer,<br />Director of Platform Engineering, Scribd
+      </p>
+    </Typography>
+    <a
+      href="https://www.twitch.tv/agentdero"
+      target="_blank"
+      class="max-md:hidden"
+    >
+      <Image
+        src={TwitchLogo}
+        alt="Twitch Logo"
+        width="120"
+        loading="lazy"
+        class="max-xl:w-[60px]"
+      />
+    </a>
+  </Grid>
+</Section>

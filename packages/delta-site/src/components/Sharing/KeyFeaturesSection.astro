@@ -1,0 +1,59 @@
+---
+import Section from "delta-theme/components/Section.astro";
+import Grid from "delta-theme/components/Grid.astro";
+import Typography from "delta-theme/components/Typography.astro";
+
+const features = [
+  {
+    title: "Share live data directly",
+    description:
+      "Easily share live data in your Delta Lake without copying it to another system.",
+  },
+  {
+    title: "Support diverse clients",
+    description:
+      "Data recipients can directly connect to Delta Shares from Pandas, Apache Spark™, Rust, and other systems without having to first deploy a specific compute pattern. Reduce the friction to get your data to your users.",
+  },
+  {
+    title: "Security and governance",
+    description:
+      "Delta Sharing allows you to easily govern, track, and audit access to your shared datasets.",
+  },
+  {
+    title: "Scalability",
+    description:
+      "Share terabyte-scale datasets reliably and efficiently by leveraging cloud storage systems like S3, ADLS, and GCS.",
+  },
+];
+---
+
+<Section
+  title="Key Features"
+  padding="xxxl"
+  isHeaderCentered
+  className="bg-white"
+>
+  <Grid columns={{ xs: 1, md: [1, 2], xl: [1, 3] }} className="grid">
+    {
+      features.map(({ title, description }) => (
+        <Fragment>
+          <Typography variant="p" className="feature-title">
+            <strong>{title}</strong>
+          </Typography>
+          <Typography variant="p">{description}</Typography>
+        </Fragment>
+      ))
+    }
+  </Grid>
+</Section>
+<style>
+  p {
+    margin-bottom: 0;
+  }
+
+  @media screen(md) {
+    .grid {
+      gap: theme(spacing.xl);
+    }
+  }
+</style>

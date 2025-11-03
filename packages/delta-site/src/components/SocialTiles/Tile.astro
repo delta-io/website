@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import type { ComponentProps } from "astro/types";
+import clsx from "clsx";
+
+interface Props {
+  label: string;
+  href: string;
+  thumbnail: ComponentProps<typeof Image>["src"];
+  thumbnailWidth?: number;
+  isDark?: boolean | undefined;
+}
+
+const { label, href, thumbnail, thumbnailWidth, isDark } = Astro.props;
+---
+
+<div
+  class={clsx("tile", {
+    "tile-dark": isDark,
+  })}
+>
+  <a href={href}>
+    <Image src={thumbnail} alt="" width={thumbnailWidth} densities={[1, 2]} />
+    <span>{label}</span>
+  </a>
+</div>
+<style>
+  .tile {
+    padding: theme(spacing.lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+  }
+
+  .tile-dark {
+    color: theme(colors.text);
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .tile a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tile a:hover {
+    text-decoration: underline;
+  }
+
+  .tile img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: theme(spacing.sm);
+  }
+</style>
