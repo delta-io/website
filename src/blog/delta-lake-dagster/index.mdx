@@ -30,15 +30,17 @@ Let's take a quick look at how Delta Lake and Dagster work together to provide p
 
 ![](image1.png)
 
-At the storage layer, datasets live as **Delta tables**, either on local disk or in cloud platforms like [S3](https://delta.io/blog/delta-lake-s3/), [GCP](https://delta.io/blog/delta-lake-gcp/), or [Azure](https://delta.io/blog/delta-lake-azure-data-lake-storage/). Delta Lake adds the [open table format mechanics](https://delta.io/blog/open-table-formats/) on top of Parquet to give you ACID commits, a [transaction log](#link-when-live), version history, and [advanced data skipping](#link-when-live). This guarantees that each data operation completes atomically and that each read sees a consistent snapshot, even across multiple concurrent engines.
+At the storage layer, datasets live as **Delta tables**, either on local disk or in cloud platforms like [S3](https://delta.io/blog/delta-lake-s3/), [GCP](https://delta.io/blog/delta-lake-gcp/), or [Azure](https://delta.io/blog/delta-lake-azure-data-lake-storage/). Delta Lake adds the [open table format mechanics](https://delta.io/blog/open-table-formats/) on top of Parquet to give you [ACID commits](#link-when-live), a [transaction log](#link-when-live), version history, and [advanced data skipping](#link-when-live). This guarantees that each data operation completes atomically and that each read sees a consistent snapshot, even across multiple concurrent engines.
 
 Dagster then sits on top of this as the orchestration layer. Pipelines are expressed as assets with explicit dependencies (for example: `raw_orders` → `clean_orders` → `aggregated_orders`). Dagster's asset graph drives scheduling, backfills, and retries. When an upstream asset changes, it computes the minimal set of downstream assets to materialize and runs them in a safe order. Lineage and run metadata are captured automatically in the UI.
+
+### Defining Dagster Assets
 
 Dagster calls asset code that reads and writes Delta tables using Arrow-compatible DataFrames (pandas/Polars/DuckDB). This asset code is defined by writing simple Python functions and decorating them with the `@asset` decorator.
 
 Here's an example from the Dagster documentation that shows how you can create Dagster Assets and create dependency chains:
 
-```
+```python
     @dagster.asset
     def hello(context: dg.AssetExecutionContext):
        context.log.info("Hello!")
@@ -56,13 +58,13 @@ Delta Lake provides reliable storage semantics and Dagster provides dependency-a
 
 Delta Lake gives you some great features to improve your pipeline performance.
 
-Delta Lake speeds up your queries by skipping files you don't need. It stores min/max stats and paths for your entire table in the transaction log, so engines can prune whole files before scanning. Regular Parquet lacks that central index, which means you often list folders and touch far more data than necessary. This will slow down your work significantly, especially if your data is stored in the cloud where file listing is slow.
+Delta Lake speeds up your queries by [skipping files](#link-when-live) you don't need. It stores min/max stats and paths for your entire table in the transaction log, so engines can prune whole files before scanning. Regular Parquet lacks that central index, which means you often list folders and touch far more data than necessary. This will slow down your work significantly, especially if your data is stored in the cloud where file listing is slow.
 
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/image2.png "image_tooltip")
+![](image2.png)
 
 Delta Lake also helps you avoid heavy rewrites. With Delta you can **append, update, and upsert** instead of replacing entire datasets. Dagster's asset graph then materializes only what's downstream of the change, which guarantees minimal extra work. Together, you get faster reads, smaller scans, safer writes, and quicker recovery when something goes wrong.
+
+Read more about these Delta Lake features in the [Delta Lake vs Data Lake tutorial](https://delta.io/blog/delta-lake-vs-data-lake/).
 
 ## Delta Lake and Dagster: Reliability
 
@@ -82,7 +84,7 @@ In this example, will build [an ETL pipeline](https://delta.io/blog/delta-lake-e
 
 - `raw_orders`: small raw dataset (with one duplicate and one missing value)
 - `clean_orders`: filters bad rows and deduplicates
-- `agg_orders`: joins to a lookup table and aggregates totals per day & category \
+- `agg_orders`: joins to a lookup table and aggregates totals per day & category
 
 We will build a simple Dagster pipeline to orchestrate the assets. We will use the Delta Lake IO Manager built by Dagster to automatically read/write Delta tables for each asset. This IO Manager handles storage paths and read/writes for you in an easy and reliable way. This means that you can just return DataFrames in your code and the IO Manager persists them as Delta Lake tables on disk.
 
@@ -96,7 +98,7 @@ Make sure to:
 
 - Install the CLI command tool
 - Create a virtual environment and activate it
-- Install your project as an editable package
+- Install your project as an editable package by running `pip install -e .` in your project root
 
 After completing the Quickstart steps in the Dagster documentation, create a new project using the following command. Make sure to run it in the directory where you want to create your project folder:
 
@@ -147,7 +149,7 @@ This will add a new <code>[assets.py](assets.py)</code> file to the `defs` direc
 
 Now let's start building our ETL pipeline!
 
-We will walk through our pipeline step by step and the compile it into one single Python script that will go into the <code>[assets.py](assets.py)</code> script that we've just created.
+We will walk through our pipeline step by step and then compile it into one single Python script that will go into the <code>[assets.py](assets.py)</code> script that we've just created.
 
 We will need the `dagster-deltalake` and `dagster-deltalake-pandas` libraries to build our pipeline. Install them into your virtual environment using:
 
@@ -161,7 +163,7 @@ Start by configuring a single IO Manager that writes all data output to Delta ta
 
 Here's how to configure the Delta Lake IO Manager when using `pandas`:
 
-```
+```python
     from __future__ import annotations
     import os
 
@@ -202,7 +204,7 @@ Next, let's define our assets. These are the three tables that form our simple E
 
 Here's how we will generate our `raw_orders` table. We are hard-coding the data here for simplicity. In real-world scenarios you would probably ingest this data from an external source.
 
-```
+```python
     df = pd.DataFrame(
         {
             "order_id":    ["A1", "A2", "A2", "A3"],   # duplicate A2
@@ -233,7 +235,7 @@ The `raw_orders` table contains two intentionally faulty rows: one duplicate and
 
 The next step will be to clean this raw data in order to get our `clean_orders` table:
 
-```
+```python
     df_clean = df.dropna(subset=["order_id", "customer_id", "product_id"]).copy()
     df_clean["order_ts_dt"] = pd.to_datetime(df_clean["order_ts"])
     df_clean = df_clean.sort_values(["order_id", "order_ts_dt"]).drop_duplicates(
@@ -252,7 +254,7 @@ Our cleaned table has no missing value and no duplicate records:
 
 Finally, let's join our cleaned orders to a lookup table that contains information about the product category:
 
-```
+```python
     product_lookup = pd.DataFrame(
         {"product_id": ["p1", "p2", "p3"], "category": ["widgets", "gadgets", "gadgets"]}
     )
@@ -282,7 +284,7 @@ Dagster assets are simply Python functions decorated with the `@assets` decorato
 
 We first generate our `raw_orders` asset:
 
-```
+```python
     @asset(io_manager_key="io_manager")
     def raw_orders() -> pd.DataFrame:
        df = pd.DataFrame(
@@ -315,7 +317,7 @@ The Delta Lake IO Manager will take care of writing this DataFrame to a Delta La
 
 Next let's filter this raw data to create our `clean_orders` asset:
 
-```
+```python
     @asset(io_manager_key="io_manager")
     def clean_orders(raw_orders: pd.DataFrame) -> pd.DataFrame:
        df = raw_orders.dropna(subset=["order_id", "customer_id", "product_id"]).copy()
@@ -336,7 +338,7 @@ Again, we don't need to worry about loading the underlying Delta table. This is 
 
 Finally, we join our cleaned rows to the lookup table to create our `agg_orders` asset:
 
-```
+```python
     @asset(io_manager_key="io_manager")
     def agg_orders(clean_orders: pd.DataFrame) -> pd.DataFrame:
        product_lookup = pd.DataFrame(
@@ -360,7 +362,7 @@ Great work. Now let's stitch it all together.
 
 Here is the complete script that you can paste into your project's <code>[assets.py](assets.py)</code> file:
 
-```
+```python
     from __future__ import annotations
     from __future__ import annotations
     import os
@@ -442,33 +444,27 @@ Now we're all set to run our ETL pipeline.
 
 Run `dagster dev` from the project root. You can access the Dagster web UI at <code>[http://127.0.0.1:3000/](http://127.0.0.1:3000/)</code>:
 
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/image3.png "image_tooltip")
+![](image3.png)
 
 Click on `Materialize an asset`:
 
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/image4.png "image_tooltip")
+![](image4.png)
 
 Click on `Materialize all` and then navigate to `Runs` to see your completed pipeline:
 
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image5.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/image5.png "image_tooltip")
+![](image5.png)
 
 You can then inspect information about each Asset in more detail, for example here's the `agg_orders` Asset:
 
-<p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image6.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/image6.png "image_tooltip")
+![](image6.png)
 
 Well done!
 
 ## Can I use Delta Lake and Dagster with other query engines?
 
-Yes, you can use the Delta Lake and Dagster integration with other query engines. Take a look at [the Delta Lake documentation](https://delta-io.github.io/delta-rs/integrations/delta-lake-dagster/#using-delta-lake-and-dagster-with-pandas) for instructions on how to run queries with Polars.
+Yes, you can use the Delta Lake and Dagster integration with other query engines. Take a look at [the Delta Lake documentation](https://delta-io.github.io/delta-rs/integrations/delta-lake-dagster/#using-delta-lake-and-dagster-with-polars) for instructions on how to run queries with Polars.
+
+You can also check out the [Delta Lake in Python tutorial](#link-when-live) for more examples of using Delta Lake with different query engines.
 
 ## A Note on the IO Manager
 
