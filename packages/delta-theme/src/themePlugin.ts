@@ -1,4 +1,5 @@
 import type { AstroIntegration } from "astro";
+import tailwindcss from "@tailwindcss/vite";
 import type { ConfigOptions } from "./configSchema";
 import { makeViteVirtualImportPlugin } from "./utils/makeViteVirtualImportPlugin";
 
@@ -11,6 +12,7 @@ export const themePlugin = (config: ConfigOptions): AstroIntegration => {
         updateConfig({
           vite: {
             plugins: [
+              tailwindcss(),
               makeViteVirtualImportPlugin(
                 "delta-theme-config",
                 "virtual:delta-theme/config",
