@@ -142,12 +142,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
   /*
    * Headings
    */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
+  :where(h1, h2, h3, h4, h5, h6),
   :global(h1:where(.typography-prose h1)),
   :global(h2:where(.typography-prose h2)),
   :global(h3:where(.typography-prose h3)),
@@ -159,27 +154,27 @@ const classNames = clsx(variantElements[variant]?.className, className);
     margin-bottom: 0.5em;
     font-weight: var(--font-weight-bold);
   }
-  h1,
+  :where(h1),
   :global(h1:where(.typography-prose h1)) {
     font-size: var(--font-size-h1);
   }
-  h2,
+  :where(h2),
   :global(h2:where(.typography-prose h2)) {
     font-size: var(--font-size-h2);
   }
-  h3,
+  :where(h3),
   :global(h3:where(.typography-prose h3)) {
     font-size: var(--font-size-h3);
   }
-  h4,
+  :where(h4),
   :global(h4:where(.typography-prose h4)) {
     font-size: var(--font-size-h4);
   }
-  h5,
+  :where(h5),
   :global(h5:where(.typography-prose h5)) {
     font-size: var(--font-size-h5);
   }
-  h6,
+  :where(h6),
   :global(h6:where(.typography-prose h6)) {
     font-size: var(--font-size-h6);
   }

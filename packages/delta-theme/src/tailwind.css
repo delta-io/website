@@ -446,8 +446,10 @@
   font-size: var(--font-size-h3);
 }
 
-@utility text-h4 {
-  font-size: var(--font-size-h4);
+@layer utilities {
+  .text-h4 {
+    font-size: var(--font-size-h4);
+  }
 }
 
 @utility text-h5 {
@@ -462,6 +464,10 @@
   font-size: var(--font-size-code);
 }
 
+@utility text-white {
+  color: var(--color-white);
+}
+
 /* Ensure these utilities work - higher specificity to override global a rule */
 /* Using a.no-underline to increase specificity over :global(a) */
 a.no-underline {
@@ -470,6 +476,20 @@ a.no-underline {
 
 a.text-inherit {
   color: inherit;
+}
+
+a.text-white {
+  color: var(--color-white);
+}
+
+/* Subtitle container styles - unlayered to override Typography p styles */
+.subtitle-container > :first-child {
+  margin-top: 1.125rem;
+}
+
+.subtitle-container > :last-child,
+.subtitle-container > p:last-child {
+  margin-bottom: 3.75rem;
 }
 
 /* hover:underline utility - Tailwind v4 should generate this but defining explicitly ensures it works */
