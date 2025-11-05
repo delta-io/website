@@ -78,30 +78,30 @@ const classNames = clsx(
   }
 
   .variant-primary {
-    color: white;
+    color: var(--color-white);
     background-color: var(--color-primary);
     border-color: var(--color-primary);
   }
   .variant-primary:hover {
-    background-color: #00bee9;
-    border-color: #00bee9;
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
   }
   .variant-primary.border-outlined {
     color: var(--color-primary);
-    background-color: white;
+    background-color: var(--color-white);
   }
   .variant-primary.border-outlined:hover {
-    color: #00bee9;
-    background-color: white;
+    color: var(--color-primary-hover);
+    background-color: var(--color-white);
   }
 
   .variant-secondary {
     color: var(--color-primary);
-    background-color: none;
+    background-color: transparent;
     border-color: var(--color-primary);
   }
   .variant-secondary:hover {
-    color: white;
+    color: var(--color-white);
     background-color: var(--color-primary);
   }
 
@@ -116,11 +116,15 @@ const classNames = clsx(
   }
 
   .white-button {
-    color: white;
+    color: var(--color-white);
     text-decoration: underline;
-    text-decoration-color: white;
-    background-color: #00bee9;
-    border-color: #00bee9;
+    text-decoration-color: var(--color-white);
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+
+  .button-underline {
+    text-decoration: underline;
   }
 
   .variant-more {

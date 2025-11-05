@@ -21,12 +21,12 @@ import uniFormImg from "./delta-uniform.jpg";
         <a
           target="_blank"
           href="https://docs.delta.io/latest/delta-uniform.html#requirements"
-          >Requirements</a
+          class="uniform-link no-underline hover:underline">Requirements</a
         >
         <a
           target="_blank"
           href="https://docs.delta.io/latest/delta-uniform.html#enable-delta-lake-uniform"
-          >Enable UniForm</a
+          class="uniform-link no-underline hover:underline">Enable UniForm</a
         >
       </p>
     </Typography>
@@ -34,7 +34,7 @@ import uniFormImg from "./delta-uniform.jpg";
 </Section>
 <style>
   .section {
-    color: white;
+    color: var(--color-white);
     background-color: var(--color-primary);
   }
 
@@ -56,12 +56,9 @@ import uniFormImg from "./delta-uniform.jpg";
     font-size: var(--font-size-h4);
   }
 
-  .text a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .text a:hover {
-    text-decoration: underline;
+  /* Uniform links: white color, no underline by default, underline on hover */
+  .text .uniform-link {
+    color: var(--color-white);
   }
 
   .text a + a:before {

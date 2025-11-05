@@ -98,12 +98,8 @@ const shouldExcludeFromSearch = excludedPaths.some(
     -webkit-font-smoothing: antialiased;
   }
 
-  :global(
-    a:not(.no-underline):not(.hero-link):not(.description-link):not(
-        .announcement-link
-      ):not(.get-started-button):not(.white-button):not(.thumbnail)
-  ) {
-    color: #00819e;
+  :global(a) {
+    color: var(--color-link);
     text-decoration: underline;
   }
 

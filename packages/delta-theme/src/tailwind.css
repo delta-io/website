@@ -6,6 +6,7 @@
 @theme {
   /* Colors */
   --color-primary: #00add4;
+  --color-primary-hover: #00bee9;
   --color-link: #00819e;
   --color-accent: #ffda47;
   --color-text: #002638;
@@ -461,9 +462,21 @@
   font-size: var(--font-size-code);
 }
 
-/* Ensure no-underline works properly */
-@utility no-underline {
+/* Ensure these utilities work - higher specificity to override global a rule */
+/* Using a.no-underline to increase specificity over :global(a) */
+a.no-underline {
   text-decoration: none;
+}
+
+a.text-inherit {
+  color: inherit;
+}
+
+/* hover:underline utility - Tailwind v4 should generate this but defining explicitly ensures it works */
+@media (hover: hover) {
+  a.hover\:underline:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Responsive utilities */
