@@ -26,7 +26,7 @@ const { className, ...props } = Astro.props;
 </div>
 
 <style define:vars={{ bgDesktop, bgMobile }}>
-  div {
+  :where(div) {
     background-color: var(--color-dark-bg);
     color: var(--color-dark-color);
     background-image: var(--bgMobile);
@@ -37,7 +37,7 @@ const { className, ...props } = Astro.props;
   /* Removed div a rule to allow description-link and hero-link classes to work properly */
 
   @media (min-width: 576px) {
-    div {
+    :where(div) {
       background-image: var(--bgDesktop);
     }
   }

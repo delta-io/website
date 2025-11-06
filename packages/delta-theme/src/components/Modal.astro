@@ -34,7 +34,7 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
   </dialog-container>
 </dialog>
 <style define:vars={{ transitionDuration, slideAnimationDistance }}>
-  dialog {
+  :where(dialog) {
     background: transparent;
     max-width: none;
     max-height: none;
@@ -65,7 +65,7 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
   }
 
   @media (min-width: 576px) {
-    dialog {
+    :where(dialog) {
       width: calc(100vw - 32px);
       max-width: 768px;
       max-height: calc(100vh - (var(--spacing-xxl) * 2));
@@ -82,25 +82,25 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
   }
 
   @media (min-width: 768px) {
-    dialog {
+    :where(dialog) {
       margin-top: var(--spacing-xxxl);
       max-height: calc(100vh - (var(--spacing-xxxl) * 2));
     }
   }
 
-  dialog[open] {
+  :where(dialog)[open] {
     opacity: 1;
     transform: translateY(0);
   }
 
   @starting-style {
-    dialog[open] {
+    :where(dialog)[open] {
       opacity: 0;
       transform: translateY(calc(-1 * var(--slideAnimationDistance)));
     }
   }
 
-  dialog::backdrop {
+  :where(dialog)::backdrop {
     background-color: rgba(0, 0, 0, 0);
     transition:
       display var(--transitionDuration) allow-discrete,
@@ -108,12 +108,12 @@ const { id, isOpen, hideCloseButton, className } = Astro.props;
       background-color var(--transitionDuration);
   }
 
-  dialog[open]::backdrop {
+  :where(dialog)[open]::backdrop {
     background-color: rgba(0, 0, 0, 0.35);
   }
 
   @starting-style {
-    dialog[open]::backdrop {
+    :where(dialog)[open]::backdrop {
       background-color: rgba(0, 0, 0, 0%);
     }
   }

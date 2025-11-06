@@ -77,10 +77,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
   /*
    * Block-level elements
    */
-  p,
-  ol,
-  ul,
-  blockquote,
+  :where(p, ol, ul, blockquote),
   .callout,
   :global(p:where(.typography-prose p)),
   :global(ol:where(.typography-prose ol)),
@@ -97,29 +94,28 @@ const classNames = clsx(variantElements[variant]?.className, className);
     font-size: var(--font-size-secondary);
   }
 
-  ol,
-  ul,
+  :where(ol, ul),
   :global(ol:where(.typography-prose ol)),
   :global(ul:where(.typography-prose ul)) {
     padding-left: 2em;
   }
 
-  ol,
+  :where(ol),
   :global(ol:where(.typography-prose ol)) {
     list-style-type: decimal;
   }
 
-  ul,
+  :where(ul),
   :global(ul:where(.typography-prose ul)) {
     list-style-type: disc;
   }
 
-  li + li,
+  :where(li + li),
   :global(li:where(.typography-prose li + li)) {
     margin-top: 1em;
   }
 
-  blockquote,
+  :where(blockquote),
   :global(blockquote:where(.typography-prose blockquote)) {
     padding: 1em;
     color: var(--color-text-secondary);
@@ -127,14 +123,14 @@ const classNames = clsx(variantElements[variant]?.className, className);
     font-style: italic;
   }
 
-  cite,
+  :where(cite),
   :global(cite:where(.typography-prose cite)) {
     display: block;
     font-style: normal;
     margin-top: var(--spacing-sm);
   }
 
-  cite:before,
+  :where(cite):before,
   :global(cite:where(.typography-prose cite)):before {
     content: "— ";
   }
@@ -182,19 +178,19 @@ const classNames = clsx(variantElements[variant]?.className, className);
   /*
    * Table
    */
-  table,
+  :where(table),
   :global(table:where(.typography-prose table)) {
     width: 100%;
     font-size: var(--font-size-primary);
   }
 
-  table :global(th),
+  :where(table) :global(th),
   :global(th:where(.typography-prose table th)) {
     text-align: left;
   }
 
-  table :global(th),
-  table :global(td),
+  :where(table) :global(th),
+  :where(table) :global(td),
   :global(th:where(.typography-prose table th)),
   :global(th:where(.typography-prose table td)) {
     padding: var(--spacing-xs);
@@ -203,7 +199,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
   /*
    * Other elements
    */
-  hr,
+  :where(hr),
   :global(hr:where(.typography-prose hr)) {
     margin: var(--spacing-lg) 0;
     border: none;
@@ -294,7 +290,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
     color: var(--color-code);
   }
 
-  blockquote > :first-child,
+  :where(blockquote) > :first-child,
   .callout > :first-child,
   :global(blockquote:where(.typography-prose blockquote) > :first-child),
   :global(div:where(.typography-prose .callout) > :first-child),
@@ -302,7 +298,7 @@ const classNames = clsx(variantElements[variant]?.className, className);
     margin-top: 0;
   }
 
-  blockquote > :last-child,
+  :where(blockquote) > :last-child,
   .callout > :last-child,
   :global(blockquote:where(.typography-prose blockquote) > :last-child),
   :global(div:where(.typography-prose .callout) > :last-child),

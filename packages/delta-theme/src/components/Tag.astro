@@ -39,10 +39,10 @@ const classes = clsx("tag", { "tag-dark": isDark }, className);
     border-color: var(--color-dark-border);
   }
 
-  a {
+  :where(a) {
     text-decoration: none;
   }
-  a:hover {
+  :where(a):hover {
     text-decoration: underline;
   }
 </style>

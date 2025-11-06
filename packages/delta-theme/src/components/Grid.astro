@@ -112,7 +112,7 @@ const columnVars = makeColumnVars(columns);
   <slot />
 </div>
 <style define:vars={columnVars}>
-  div {
+  :where(div) {
     grid-template-columns: var(--columns-xs);
     column-gap: var(--spacing-md);
   }

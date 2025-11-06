@@ -93,12 +93,12 @@ const shouldExcludeFromSearch = excludedPaths.some(
   </body>
 </html>
 <style>
-  body {
+  :where(body) {
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
 
-  :global(a) {
+  :global(:where(a)) {
     color: var(--color-link);
     text-decoration: underline;
   }

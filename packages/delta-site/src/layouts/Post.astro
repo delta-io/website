@@ -18,7 +18,7 @@ const { post, authors, showLinkedinProfiles } = Astro.props;
 
 <Layout title={post.data.title} image={post.data.thumbnail}>
   <Section padding="xxl" isPrimary>
-    <div class="max-w-screen-md mx-auto">
+    <div class="max-w-(--breakpoint-md) mx-auto">
       <Typography
         variant="prose"
         className="pb-xl mb-xl border-b border-border "
