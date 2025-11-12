@@ -62,8 +62,11 @@ import downloadArrowImg from "./download-arrow.png";
     opacity: 0.8;
   }
 
-  .download-cta {
-    display: inline-flex;
+  a.download-cta.button-size-sm,
+  a.download-cta.button-size-md,
+  button.download-cta.button-size-sm,
+  button.download-cta.button-size-md {
+    display: inline-flex !important;
     align-items: center;
     gap: var(--spacing-xs);
     margin: 0 auto;

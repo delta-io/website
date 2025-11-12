@@ -96,7 +96,39 @@
   --breakpoint-xl: 1200px;
 }
 
-/* Custom utility classes for backward compatibility */
+@layer base {
+  h1 {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+  }
+  h2 {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+  }
+  h3 {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+  }
+  h4 {
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+  }
+  h5 {
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+  }
+  h6 {
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+  }
+}
+
 @utility bg-bgDark {
   background-color: var(--color-bg-dark);
 }
@@ -147,7 +179,6 @@
   width: min-content;
 }
 
-/* Icon size utilities - using standard Tailwind values */
 @utility w-1em {
   width: 1em;
 }
@@ -156,7 +187,6 @@
   height: 1em;
 }
 
-/* Additional spacing utilities */
 @utility px-sm {
   padding-left: var(--spacing-sm);
   padding-right: var(--spacing-sm);
@@ -181,7 +211,6 @@
   color: var(--color-light-color);
 }
 
-/* Additional utility classes for spacing and layout */
 @utility gap-xs {
   gap: var(--spacing-xs);
 }
@@ -329,9 +358,6 @@
   color: var(--color-white);
 }
 
-/* Removed custom utilities - using standard Tailwind classes */
-
-/* Hero section specific styles */
 .hero-description {
   font-size: 1.35rem;
 }
@@ -347,9 +373,6 @@
   text-decoration-color: var(--color-accent);
 }
 
-/* Removed arbitrary value utilities - using standard Tailwind classes instead */
-
-/* Responsive utilities - using CSS media queries */
 @media (min-width: 576px) {
   .sm\:flex {
     display: flex;
@@ -462,8 +485,6 @@
   }
 }
 
-/* Ensure these utilities work - higher specificity to override global a rule */
-/* Using a.no-underline to increase specificity over :global(a) */
 a.no-underline {
   text-decoration: none;
 }
@@ -476,7 +497,6 @@ a.text-white {
   color: var(--color-white);
 }
 
-/* Subtitle container styles - unlayered to override Typography p styles */
 .subtitle-container > :first-child {
   margin-top: 1.125rem;
 }
@@ -486,7 +506,6 @@ a.text-white {
   margin-bottom: 3.75rem;
 }
 
-/* hover:underline utility - Tailwind v4 should generate this but defining explicitly ensures it works */
 @media (hover: hover) {
   a.hover\:underline:hover {
     text-decoration: underline;

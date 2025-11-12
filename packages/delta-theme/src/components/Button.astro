@@ -57,14 +57,26 @@ const classNames = clsx(
   )
 }
 <style>
-  :where(a, button) {
+  a,
+  button {
     display: inline-block;
     line-height: 1;
     border-radius: 3px;
     text-decoration: none;
     font-weight: var(--font-weight-bold);
-    border: 1px solid;
     white-space: nowrap;
+  }
+
+  a.variant-more,
+  button.variant-more {
+    display: inline-block;
+    line-height: 1;
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+    border: none;
+    white-space: nowrap;
+    background-color: transparent;
+    padding: 0;
   }
 
   .button-size-sm {
@@ -79,9 +91,10 @@ const classNames = clsx(
   .variant-primary {
     color: var(--color-white);
     background-color: var(--color-primary);
-    border-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
   }
-  .variant-primary:hover {
+  a.variant-primary:hover,
+  button.variant-primary:hover {
     background-color: var(--color-primary-hover);
     border-color: var(--color-primary-hover);
   }
@@ -89,7 +102,8 @@ const classNames = clsx(
     color: var(--color-primary);
     background-color: var(--color-white);
   }
-  .variant-primary.border-outlined:hover {
+  a.variant-primary.border-outlined:hover,
+  button.variant-primary.border-outlined:hover {
     color: var(--color-primary-hover);
     background-color: var(--color-white);
   }
@@ -97,9 +111,10 @@ const classNames = clsx(
   .variant-secondary {
     color: var(--color-primary);
     background-color: transparent;
-    border-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
   }
-  .variant-secondary:hover {
+  a.variant-secondary:hover,
+  button.variant-secondary:hover {
     color: var(--color-white);
     background-color: var(--color-primary);
   }
@@ -107,33 +122,18 @@ const classNames = clsx(
   .variant-accent {
     color: var(--color-text);
     background-color: var(--color-accent);
-    border-color: var(--color-accent);
+    border: 1px solid var(--color-accent);
   }
   .variant-accent.border-outlined {
     color: var(--color-accent);
     background-color: var(--color-text);
   }
 
-  .white-button {
-    color: var(--color-white);
-    text-decoration: underline;
-    text-decoration-color: var(--color-white);
-    background-color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
-  }
-
-  .button-underline {
-    text-decoration: underline;
-  }
-
   .variant-more {
-    background-color: transparent;
-    border: none;
     color: var(--color-primary);
-    font-weight: var(--font-weight-bold);
-    padding: 0;
   }
-  .variant-more:hover {
+  a.variant-more:hover,
+  button.variant-more:hover {
     color: var(--color-link);
   }
 </style>
