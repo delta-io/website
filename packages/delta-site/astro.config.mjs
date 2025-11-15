@@ -4,6 +4,7 @@ import favicons from "astro-favicons";
 import { deltaTheme, remarkPlugins } from "delta-theme";
 import astroConfig from "astro-config";
 import netlify from "@astrojs/netlify";
+import { searchPlugin } from "./lib/searchPlugin";
 
 const siteTitle = "Delta Lake";
 
@@ -38,6 +39,7 @@ export default defineConfig({
       background: "#042436",
       themes: ["#00ADD4"],
     }),
+    searchPlugin(),
     astroConfig({
       name: "config",
       config: {
