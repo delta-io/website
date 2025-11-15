@@ -124,9 +124,6 @@ importers:
       astro:
         specifier: ^5
         version: 5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1)
-      astro-favicons:
-        specifier: ^3
-        version: 3.1.5(astro@5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1

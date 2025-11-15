@@ -21,7 +21,6 @@
     "@fontsource/source-sans-pro": "^5",
     "@tailwindcss/vite": "^4.1.16",
     "astro": "^5",
-    "astro-favicons": "^3",
     "tailwindcss": "^4.1.16"
   },
   "dependencies": {
