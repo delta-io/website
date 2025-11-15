@@ -5,13 +5,16 @@ import ImageStrip from "../ImageStrip.astro";
 
 const posts = await getCollection("blog");
 
-const latestBlogs = posts.slice(0, 5).map((post) => {
-  return {
-    title: post.data.title,
-    thumbnail: post.data.thumbnail,
-    url: `/blog/${post.id}`,
-  };
-});
+const latestBlogs = posts
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 5)
+  .map((post) => {
+    return {
+      title: post.data.title,
+      thumbnail: post.data.thumbnail,
+      url: `/blog/${post.id}`,
+    };
+  });
 ---
 
 <Section
