@@ -1,11 +1,11 @@
 ---
-import { config } from "virtual:delta-theme/config";
+import { config } from "virtual:config";
 import { Image } from "astro:assets";
-import Section from "../Section.astro";
-import Icon from "../Icon.astro";
-import { Menu } from "../Menu";
+import Section from "delta-theme/components/Section.astro";
+import Icon from "delta-theme/components/Icon.astro";
+import { Menu } from "delta-theme/components/Menu/index.ts";
+import LinuxFoundationLogo from "delta-theme/components/assets/the-linux-foundation-projects.svg";
 import DeltaLogo from "../assets/delta-lake-logo.svg";
-import LinuxFoundationLogo from "../assets/the-linux-foundation-projects.svg";
 import HeaderButton from "./HeaderButton.astro";
 import Search from "./Search.astro";
 ---
@@ -36,10 +36,12 @@ import Search from "./Search.astro";
       <button type="button" class="header-close-menu">
         <Icon icon="close" alt="Close menu" className="text-2xl" />
       </button>
+      {/* @ts-expect-error These are the same type */}
       <Menu items={config.menus.header} theme="header" direction="horizontal" />
     </div>
     <Search />
     <div class="header-search-wrapper">
+      {/* @ts-expect-error These are the same type  */}
       <Menu
         items={config.menus.social}
         theme="header"
