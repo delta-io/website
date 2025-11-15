@@ -2,7 +2,10 @@
 import type { ComponentProps } from "astro/types";
 import { site } from "@config/site";
 import PageLayout from "delta-theme/components/PageLayout.astro";
+import { config } from "virtual:config";
 import GoogleAnalytics from "../components/GoogleAnalytics.astro";
+import { Header } from "../components/Header";
+import Footer from "../components/Footer.astro";
 
 type PageLayoutProps = ComponentProps<typeof PageLayout>;
 
@@ -13,9 +16,11 @@ interface Props {
 }
 
 const { title, description, image } = Astro.props;
+
+const pageTitle = title ? `${title} | ${config.title}` : config.title;
 ---
 
-<PageLayout title={title} description={description} image={image}>
+<PageLayout title={pageTitle} description={description} image={image}>
   <Fragment name="head-first">
     {
       !import.meta.env.DEV && (
@@ -33,5 +38,11 @@ const { title, description, image } = Astro.props;
       )
     }
   </Fragment>
+  <Fragment name="body-first">
+    <Header />
+  </Fragment>
   <slot />
+  <Fragment name="body-last">
+    <Footer />
+  </Fragment>
 </PageLayout>

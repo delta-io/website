@@ -1,12 +1,10 @@
 ---
 import { getImage } from "astro:assets";
 import { localizedHTML as favicons } from "astro-favicons/middleware";
-import { config } from "virtual:delta-theme/config";
-import Footer from "./Footer.astro";
-import { Header } from "./Header";
 import "@fontsource/source-sans-pro/400.css";
 import "@fontsource/source-sans-pro/600.css";
 import "@fontsource-variable/source-code-pro";
+import "@pagefind/default-ui/css/ui.css";
 import "../tailwind.css";
 
 interface Props {
@@ -63,7 +61,7 @@ const shouldExcludeFromSearch = excludedPaths.some(
       href="/rss.xml"
     />
     <meta name="generator" content={Astro.generator} />
-    <title>{title ? `${title} | ${config.title}` : config.title}</title>
+    <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <meta
       name="image"
@@ -78,7 +76,6 @@ const shouldExcludeFromSearch = excludedPaths.some(
   </head>
   <body class="font-default leading-base m-none bg-darkBg text-darkColor">
     <slot name="body-first" />
-    <Header />
     <main
       class="bg-lightBg text-lightColor"
       {...shouldExcludeFromSearch && { "data-pagefind-ignore": "" }}
@@ -88,7 +85,6 @@ const shouldExcludeFromSearch = excludedPaths.some(
     >
       <slot />
     </main>
-    <Footer />
     <slot name="body-last" />
   </body>
 </html>

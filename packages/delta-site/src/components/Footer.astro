@@ -1,13 +1,13 @@
 ---
-import { config } from "virtual:delta-theme/config";
+import { config } from "virtual:config";
 import { Image } from "astro:assets";
-import type { MenuItem } from "./Menu";
-import { Menu } from "./Menu";
-import Grid from "./Grid.astro";
-import Section from "./Section.astro";
-import Typography from "./Typography.astro";
+import type { MenuItem } from "delta-theme/components/Menu/index.ts";
+import { Menu } from "delta-theme/components/Menu/index.ts";
+import Grid from "delta-theme/components/Grid.astro";
+import Section from "delta-theme/components/Section.astro";
+import Typography from "delta-theme/components/Typography.astro";
+import LinuxFoundationLogo from "delta-theme/components/assets/the-linux-foundation-projects.svg";
 import DeltaLogo from "./assets/delta-lake-logo.svg";
-import LinuxFoundationLogo from "./assets/the-linux-foundation-projects.svg";
 
 interface FooterMenu {
   title: string;
@@ -35,7 +35,7 @@ const menus: FooterMenu[] = [
 ---
 
 <footer class="text-darkTextSecondary">
-  <Section padding="xl">
+  <Section background="dark" padding="xl">
     <Grid
       columns={{ xs: 1, lg: ["133px", "auto", "250px"] }}
       className="gap-y-6 lg:gap-x-8"
