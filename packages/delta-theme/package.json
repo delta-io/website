@@ -10,21 +10,17 @@
     "build": "echo \"Error: no build specified\" && exit 0"
   },
   "exports": {
-    ".": "./src/index.ts",
+    "./remarkPlugins": "./src/remarkPlugins.ts",
+    "./theme.css": "./src/theme.css",
     "./components/*": "./src/components/*"
   },
   "keywords": [],
   "author": "jakebellacera",
   "license": "ISC",
   "peerDependencies": {
-    "@fontsource-variable/source-code-pro": "^5",
-    "@fontsource/source-sans-pro": "^5",
-    "@tailwindcss/vite": "^4.1.16",
-    "astro": "^5",
-    "tailwindcss": "^4.1.16"
+    "astro": "^5"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.0.0",
     "clsx": "^2.1.1",
     "remark-directive": "^4.0.0",
     "unist-util-visit": "^5.0.0"

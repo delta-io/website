@@ -1,9 +1,6 @@
-@import "tailwindcss";
-
-@source "../../../delta-site/src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 @source "./components/**/*.astro";
 
-@theme {
+:root {
   /* Colors */
   --color-primary: #00add4;
   --color-primary-hover: #00bee9;
