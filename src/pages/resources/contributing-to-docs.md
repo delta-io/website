@@ -17,13 +17,13 @@ Initial setup to contribute to [Delta.io](http://Delta.io)
   - Install _Visual Studio Code_
   - Install _Prettier - Code formatter_ extension
 - Fork the https://github.com/delta-io/website site to your own (e.g. https://github.com/dennyglee/website) so you can make edits to your fork of the site.
-- **NOTE:** Most of the changes we will be doing are in the **`packages/delta-site/src/content/blog`** folder.
+- **NOTE:** Most of the changes we will be doing are in the **`src/content/blog`** folder.
 
 ## Adding a new blog to [Delta.io](http://Delta.io)
 
 To demonstrate how a contributor can add or edit content to Delta.io, we will step through how to add a new blog to the site.
 
-- Each blog is stored as its own separate folder in the **`packages/delta-site/src/content/blog`** folder organized by date.
+- Each blog is stored as its own separate folder in the **`src/content/blog`** folder organized by date.
 - Each folder contains an **`index.mdx`** file (Markdown extension) plus the associated images
   - There typically is a thumbnail.png which is the image that shows up on the https://delta.io/blog as a featured image
   - You can also include any other images that are needed for the blog.
@@ -46,7 +46,9 @@ After completing changes locally, like the one above, you can now push to Github
 
 ## Running the website locally
 
-To run the website locally, run the command **`YOUTUBE_API_KEY=<string> pnpm --filter delta-site dev`** from the repo folder. If you have never done this before, you first set up npm. To do so, run the following commands:
+To run the website locally, run the command **`YOUTUBE_API_KEY=<string> pnpm dev`** from the repo folder. If you have never done this before, you first set up npm. To do so, run the following commands:
 
-- pnpm i
-- YOUTUBE_API_KEY=<string> pnpm --filter delta-site dev
+```
+pnpm i
+YOUTUBE_API_KEY=<string> pnpm dev
+```

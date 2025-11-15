@@ -14,7 +14,7 @@ confirm() {
 
 # Check for outdated dependencies
 echo "Checking for outdated dependencies..."
-if pnpm outdated --recursive; then
+if pnpm outdated; then
     echo "✅ All packages are up to date! No upgrades needed."
     exit 0
 fi
@@ -25,11 +25,9 @@ confirm
 echo "Starting upgrade process..."
 
 # Upgrade astro first
-cd packages/delta-site
 pnpm dlx @astrojs/upgrade
 
 # Upgrade remaining packages
-cd ../../
-pnpm upgrade "!tailwindcss" --recursive --latest 
+pnpm upgrade --latest 
 
 echo "✅ Upgrade process completed! Please verify that things work as expected."
