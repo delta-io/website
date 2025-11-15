@@ -10,7 +10,6 @@
     "build": "echo \"Error: no build specified\" && exit 0"
   },
   "exports": {
-    "./remarkPlugins": "./src/remarkPlugins.ts",
     "./theme.css": "./src/theme.css",
     "./components/*": "./src/components/*"
   },
@@ -21,11 +20,6 @@
     "astro": "^5"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "remark-directive": "^4.0.0",
-    "unist-util-visit": "^5.0.0"
-  },
-  "devDependencies": {
-    "@types/mdast": "^4.0.4"
+    "clsx": "^2.1.1"
   }
 }
