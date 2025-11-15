@@ -1,9 +1,10 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import favicons from "astro-favicons";
-import { deltaTheme, remarkPlugins } from "delta-theme";
+import astroOrbit from "astro-orbit";
 import astroConfig from "astro-config";
 import netlify from "@astrojs/netlify";
+import { remarkPlugins } from "./lib/remarkPlugins";
 import { searchPlugin } from "./lib/searchPlugin";
 
 const siteTitle = "Delta Lake";
@@ -40,6 +41,7 @@ export default defineConfig({
       themes: ["#00ADD4"],
     }),
     searchPlugin(),
+    astroOrbit(),
     astroConfig({
       name: "config",
       config: {
@@ -149,6 +151,5 @@ export default defineConfig({
         },
       },
     }),
-    deltaTheme(),
   ],
 });

@@ -1,12 +1,12 @@
 ---
 import { getEntries } from "astro:content";
 import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import type { Post } from "@config/types";
 import { getPermalink } from "@utils/getPermalink";
 import clsx from "clsx";
-import Grid from "delta-theme/components/Grid.astro";
-import Typography from "delta-theme/components/Typography.astro";
-import type { CollectionEntry } from "astro:content";
-import type { Post } from "../../config/types";
+import Grid from "../../lib/delta-theme/components/Grid.astro";
+import Typography from "../../lib/delta-theme/components/Typography.astro";
 
 interface Props {
   post: Post;

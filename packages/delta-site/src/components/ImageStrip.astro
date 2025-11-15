@@ -2,8 +2,8 @@
 import { Image } from "astro:assets";
 import type { ComponentProps } from "astro/types";
 import clsx from "clsx";
-import Grid from "delta-theme/components/Grid.astro";
-import Icon from "delta-theme/components/Icon.astro";
+import Grid from "../../lib/delta-theme/components/Grid.astro";
+import Icon from "../../lib/delta-theme/components/Icon.astro";
 
 interface ImageItem {
   title: string;
@@ -201,7 +201,7 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
           // Parse the gap value - should be in pixels from getComputedStyle
           // But handle "2rem" format just in case
           const gapMatch = gapStr.match(/^([\d.]+)(px|rem|em)$/);
-          if (gapMatch) {
+          if (gapMatch && gapMatch[1]) {
             const value = parseFloat(gapMatch[1]);
             const unit = gapMatch[2];
             if (unit === "px") {

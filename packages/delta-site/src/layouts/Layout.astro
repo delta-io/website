@@ -1,12 +1,17 @@
 ---
 import type { ComponentProps } from "astro/types";
 import { site } from "@config/site";
-import PageLayout from "delta-theme/components/PageLayout.astro";
+import { localizedHTML as favicons } from "astro-favicons/middleware";
 import { config } from "virtual:config";
+import PageLayout from "../../lib/delta-theme/components/PageLayout.astro";
 import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 import { Header } from "../components/Header";
 import Footer from "../components/Footer.astro";
+import "@fontsource/source-sans-pro/400.css";
+import "@fontsource/source-sans-pro/600.css";
+import "@fontsource-variable/source-code-pro";
 import "@pagefind/default-ui/css/ui.css";
+import "./theme.css";
 
 type PageLayoutProps = ComponentProps<typeof PageLayout>;
 
@@ -38,6 +43,9 @@ const pageTitle = title ? `${title} | ${config.title}` : config.title;
         </>
       )
     }
+  </Fragment>
+  <Fragment name="head-last">
+    <Fragment set:html={favicons(Astro.currentLocale)} />
   </Fragment>
   <Fragment name="body-first">
     <Header />
