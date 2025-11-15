@@ -1,6 +1,5 @@
 ---
 import { getImage } from "astro:assets";
-import { localizedHTML as favicons } from "astro-favicons/middleware";
 import "@fontsource/source-sans-pro/400.css";
 import "@fontsource/source-sans-pro/600.css";
 import "@fontsource-variable/source-code-pro";
@@ -70,7 +69,6 @@ const shouldExcludeFromSearch = excludedPaths.some(
         Astro.site,
       )}
     />
-    <Fragment set:html={favicons(Astro.currentLocale)} />
     <slot name="head-last" />
   </head>
   <body class="font-default leading-base m-none bg-darkBg text-darkColor">

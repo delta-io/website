@@ -1,6 +1,7 @@
 ---
 import type { ComponentProps } from "astro/types";
 import { site } from "@config/site";
+import { localizedHTML as favicons } from "astro-favicons/middleware";
 import PageLayout from "delta-theme/components/PageLayout.astro";
 import { config } from "virtual:config";
 import GoogleAnalytics from "../components/GoogleAnalytics.astro";
@@ -38,6 +39,9 @@ const pageTitle = title ? `${title} | ${config.title}` : config.title;
         </>
       )
     }
+  </Fragment>
+  <Fragment name="head-last">
+    <Fragment set:html={favicons(Astro.currentLocale)} />
   </Fragment>
   <Fragment name="body-first">
     <Header />
