@@ -38,7 +38,7 @@ const {
         <Icon
           icon={icon}
           alt=""
-          className="absolute top-[50%] left-xs translate-y-[-50%] text-xl"
+          className="absolute top-1/2 left-2 -translate-y-1/2 text-xl"
         />
       )
     }
@@ -49,7 +49,7 @@ const {
       placeholder={placeholder}
       aria-label={isCompact ? label : undefined}
       class={clsx(
-        "w-full border-1 placeholder:text-secondary px-sm py-xs focus:outline-none",
+        "w-full border placeholder:text-secondary px-sm py-xs focus:outline-none",
         {
           "border-border bg-white text-lightColor": theme === "default",
           "border-darkBorder bg-darkBorder text-darkColor": theme === "dark",
@@ -61,8 +61,6 @@ const {
 </div>
 <style>
   .has-icon-padding {
-    padding-left: calc(
-      theme(spacing.xs) + theme(fontSize.xl) + theme(spacing.xs)
-    );
+    padding-left: calc(var(--spacing-xs) + 1.25rem + var(--spacing-xs));
   }
 </style>

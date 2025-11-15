@@ -14,10 +14,7 @@ const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
 <nav class="flex items-center justify-center gap-4 mt-8">
   {
     prevUrl && (
-      <a
-        href={prevUrl}
-        class="slider-prev slider-button left-[-10px] sm:left-[-1em]"
-      >
+      <a href={prevUrl} class="slider-prev slider-button -left-2.5 sm:-left-4">
         <Icon icon="chevronLeft" alt="Previous page" />
       </a>
     )
@@ -27,7 +24,7 @@ const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
     nextUrl && (
       <a
         href={nextUrl}
-        class="slider-next slider-button right-[-10px] sm:right-[-1em]"
+        class="slider-next slider-button -right-2.5 sm:-right-4"
       >
         <Icon icon="chevronRight" alt="Next page" />
       </a>

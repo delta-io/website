@@ -11,7 +11,7 @@ interface Props {
 const { posts, hasFeaturedItem } = Astro.props;
 ---
 
-<Grid columns={{ xs: 1, sm: 2, lg: 3 }} className="gap-xl">
+<Grid columns={{ xs: 1, sm: 2, lg: 3 }} className="gap-8">
   {
     hasFeaturedItem && posts.length > 0 && (
       <PostItem

@@ -31,25 +31,31 @@ import DeltaSharingLogo from "./delta-sharing-logo.svg";
       regardless of which computing platforms they use.
     </p>
     <Grid columns={["min-content", "min-content"]} className="button-row">
-      <Button href="https://github.com/delta-io/delta-sharing" target="_blank"
-        >Get started</Button
+      <Button
+        href="https://github.com/delta-io/delta-sharing"
+        target="_blank"
+        className="button-underline">Get started</Button
       >
       <Button
         href="https://databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html"
         variant="secondary"
-        target="_blank">Read more</Button
+        target="_blank"
+        className="button-underline">Read more</Button
       >
     </Grid>
     <Grid columns={2} className="links-row">
       <Typography variant="p2" className="text-right">
-        <a href="https://github.com/delta-io/delta-sharing" target="_blank"
-          >GitHub</a
+        <a
+          href="https://github.com/delta-io/delta-sharing"
+          target="_blank"
+          class="sharing-link no-underline hover:underline">GitHub</a
         >
       </Typography>
       <Typography variant="p2" className="text-left">
         <a
           href="https://github.com/delta-io/delta-sharing/releases"
-          target="_blank">Releases</a
+          target="_blank"
+          class="sharing-link no-underline hover:underline">Releases</a
         >
       </Typography>
     </Grid>
@@ -65,16 +71,12 @@ import DeltaSharingLogo from "./delta-sharing-logo.svg";
 
   .button-row {
     justify-content: center;
-    margin-bottom: theme(spacing.md);
+    margin-bottom: var(--spacing-md);
   }
 
-  .links-row a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .links-row a:hover {
-    text-decoration: underline;
+  /* Sharing links: black color, no underline by default, underline on hover */
+  .links-row a.sharing-link {
+    color: var(--color-text);
   }
 
   .img-mobile,
@@ -91,7 +93,7 @@ import DeltaSharingLogo from "./delta-sharing-logo.svg";
     display: none;
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     .sharing-logo {
       width: 300px;
     }
@@ -106,7 +108,7 @@ import DeltaSharingLogo from "./delta-sharing-logo.svg";
     }
   }
 
-  @media screen(lg) {
+  @media (min-width: 992px) {
     .sharing-logo {
       width: auto;
     }

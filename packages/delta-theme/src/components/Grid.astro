@@ -112,30 +112,30 @@ const columnVars = makeColumnVars(columns);
   <slot />
 </div>
 <style define:vars={columnVars}>
-  div {
+  :where(div) {
     grid-template-columns: var(--columns-xs);
-    column-gap: theme(spacing.md);
+    column-gap: var(--spacing-md);
   }
 
-  @media screen(sm) {
+  @media (min-width: 576px) {
     .grid-columns-sm {
       grid-template-columns: var(--columns-sm);
     }
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     .grid-columns-md {
       grid-template-columns: var(--columns-md);
     }
   }
 
-  @media screen(lg) {
+  @media (min-width: 992px) {
     .grid-columns-lg {
       grid-template-columns: var(--columns-lg);
     }
   }
 
-  @media screen(xl) {
+  @media (min-width: 1200px) {
     .grid-columns-xl {
       grid-template-columns: var(--columns-xl);
     }

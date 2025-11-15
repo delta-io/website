@@ -72,10 +72,10 @@ references.sort((a, b) => {
       <Typography variant="prose">
         <Grid
           columns={{ xs: 1, lg: ["auto", "max-content"] }}
-          className="gap-sm lg:gap-lg lg:items-center"
+          className="gap-3 lg:gap-6 lg:items-center"
         >
           <div>
-            <h1 class="text-h2 font-normal mb-sm">{profile.data.name}</h1>
+            <h1 class="text-h2 font-normal mb-3">{profile.data.name}</h1>
             {
               profile.data.role && (
                 <h3 class="text-h4 font-normal mt-0">{profile.data.role}</h3>
@@ -84,7 +84,7 @@ references.sort((a, b) => {
           </div>
           {
             profile.data.linkedin && (
-              <div class="flex text-h2 gap-sm">
+              <div class="flex text-h2 gap-3">
                 <a
                   href={profile.data.linkedin}
                   target="_blank"
@@ -98,7 +98,7 @@ references.sort((a, b) => {
         </Grid>
         {
           profile.data.quote && (
-            <blockquote class="mt-md">
+            <blockquote class="mt-4">
               &ldquo;{profile.data.quote}&rdquo;
               {profile.data.quoteSource && (
                 <cite>

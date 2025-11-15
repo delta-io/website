@@ -27,7 +27,7 @@ const {
 const itemClassNames = [
   "text-inherit no-underline",
   {
-    "lg:min-h-[48px]": theme === "header" && !isNested,
+    "lg:min-h-12": theme === "header" && !isNested,
   },
   itemClassName,
 ];
@@ -37,13 +37,13 @@ const itemClassNames = [
   class={clsx(
     "m-0 p-0 list-none flex",
     {
-      "flex flex-col gap-sm": isNested || direction === "vertical",
-      "flex items-center gap-sm": !isNested && direction === "horizontal",
+      "flex flex-col gap-3": isNested || direction === "vertical",
+      "flex items-center gap-3": !isNested && direction === "horizontal",
       "max-lg:flex-col max-lg:items-start": theme === "header",
 
-      "min-w-[160px] px-sm py-xs": isNested,
+      "min-w-40 px-sm py-xs": isNested,
       "border bg-white shadow": isNested && theme === "default",
-      "lg:bg-bgDark lg:text-darkColor lg:rounded-b -ml-sm max-lg:mt-xs max-lg:ml-sm":
+      "lg:bg-bgDark lg:text-darkColor lg:rounded-b -ml-3 max-lg:mt-2 max-lg:ml-3":
         isNested && theme === "header",
     },
     className,
@@ -63,14 +63,12 @@ const itemClassNames = [
                 <Icon
                   icon={item.icon}
                   alt=""
-                  Icon
-                  is
+                  className={clsx("text-2xl", { "mr-2": !isIconMenu })}
                   decorative
                   when
                   label
                   is
                   visible
-                  className={clsx({ "mr-[0.5em]": !isIconMenu })}
                   aria-hidden={!isIconMenu}
                 />
               )}

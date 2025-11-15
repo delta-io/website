@@ -26,7 +26,7 @@ const { label, href, thumbnail, thumbnailWidth, isDark } = Astro.props;
 </div>
 <style>
   .tile {
-    padding: theme(spacing.lg);
+    padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,7 +35,7 @@ const { label, href, thumbnail, thumbnailWidth, isDark } = Astro.props;
   }
 
   .tile-dark {
-    color: theme(colors.text);
+    color: var(--color-text);
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   }
@@ -52,6 +52,6 @@ const { label, href, thumbnail, thumbnailWidth, isDark } = Astro.props;
   .tile img {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: theme(spacing.sm);
+    margin-bottom: var(--spacing-sm);
   }
 </style>

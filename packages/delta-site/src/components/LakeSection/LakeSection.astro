@@ -26,20 +26,18 @@ const { className, ...props } = Astro.props;
 </div>
 
 <style define:vars={{ bgDesktop, bgMobile }}>
-  div {
-    background-color: theme(colors.darkBg);
-    color: theme(colors.darkColor);
+  :where(div) {
+    background-color: var(--color-dark-bg);
+    color: var(--color-dark-color);
     background-image: var(--bgMobile);
     background-size: cover;
     background-position: 50%;
   }
 
-  div :global(a) {
-    color: theme(colors.accent);
-  }
+  /* Removed div a rule to allow description-link and hero-link classes to work properly */
 
-  @media screen(sm) {
-    div {
+  @media (min-width: 576px) {
+    :where(div) {
       background-image: var(--bgDesktop);
     }
   }

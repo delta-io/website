@@ -19,7 +19,10 @@ import streamTableStorageImg from "./stream-table-storage.jpg";
       compare Delta Lake, Apache Hudi, and Apache Iceberg. They also explain the
       benefits of Lakehouse storage systems and show key performance benchmarks.
     </p>
-    <Button href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">
+    <Button
+      href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
+      className="white-button"
+    >
       Read the whitepaper
     </Button>
   </Typography>
@@ -47,14 +50,15 @@ import streamTableStorageImg from "./stream-table-storage.jpg";
     </Typography>
   </Grid>
   <div class="link-wrapper">
-    <Button href="https://dl.acm.org/doi/10.14778/3415478.3415560"
-      >Read the article</Button
+    <Button
+      href="https://dl.acm.org/doi/10.14778/3415478.3415560"
+      className="white-button">Read the article</Button
     >
   </div>
 </Section>
 <style>
   .grid {
-    gap: theme(spacing.xxl);
+    gap: var(--spacing-xxl);
   }
 
   .whitepaper-column {
@@ -70,7 +74,7 @@ import streamTableStorageImg from "./stream-table-storage.jpg";
     color: inherit;
   }
   .whitepaper-column a:hover {
-    color: theme(colors.link);
+    color: var(--color-link);
   }
 
   .whitepaper-column span {

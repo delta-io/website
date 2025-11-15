@@ -47,13 +47,13 @@ const features = [
   </Grid>
 </Section>
 <style>
-  p {
+  :where(p) {
     margin-bottom: 0;
   }
 
-  @media screen(md) {
+  @media (min-width: 768px) {
     .grid {
-      gap: theme(spacing.xl);
+      gap: var(--spacing-xl);
     }
   }
 </style>

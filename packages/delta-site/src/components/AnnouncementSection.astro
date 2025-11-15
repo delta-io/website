@@ -15,7 +15,7 @@ const { title, description, url } = Astro.props;
 <Section padding="sm" className="section">
   <Typography variant="prose">
     <p class="text">
-      <a href={url}>
+      <a href={url} class="announcement-link">
         <strong>{title}:</strong>
         {description}
         <Icon icon="more" alt="" className="icon" />
@@ -25,10 +25,10 @@ const { title, description, url } = Astro.props;
 </Section>
 <style>
   .section {
-    background-color: theme(colors.accent);
+    background-color: var(--color-accent);
     text-align: center;
 
-    a {
+    .announcement-link {
       color: #000;
       text-decoration: none;
       display: inline-block;

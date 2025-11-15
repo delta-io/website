@@ -52,7 +52,7 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
   <div class="slider-container w-full overflow-hidden">
     <Grid
       columns={gridColumnRules}
-      className={clsx("slider-track gap-xl grid-flow-col", className)}
+      className={clsx("slider-track gap-8 grid-flow-col", className)}
     >
       {
         items.map(({ title, thumbnail, url }) => (
@@ -174,6 +174,123 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
         }
       };
 
+      // Get the actual gap size - use getComputedStyle which returns values in pixels
+      // We explicitly set gap: 2rem in CSS, so this should always work
+      const getActualGap = (): number => {
+        if (!this.#track) return 0;
+
+        const computedStyle = window.getComputedStyle(this.#track);
+
+        // Try columnGap first (most direct)
+        const columnGapStr = computedStyle.columnGap || "";
+        if (columnGapStr) {
+          const columnGap = parseFloat(columnGapStr);
+          if (columnGap > 0 && !isNaN(columnGap)) {
+            return columnGap;
+          }
+        }
+
+        // Try gap property - getComputedStyle should return it in pixels
+        const gapStr = computedStyle.gap || "";
+        if (
+          gapStr &&
+          gapStr !== "normal" &&
+          gapStr !== "0px" &&
+          gapStr !== "0"
+        ) {
+          // Parse the gap value - should be in pixels from getComputedStyle
+          // But handle "2rem" format just in case
+          const gapMatch = gapStr.match(/^([\d.]+)(px|rem|em)$/);
+          if (gapMatch) {
+            const value = parseFloat(gapMatch[1]);
+            const unit = gapMatch[2];
+            if (unit === "px") {
+              return value;
+            } else if (unit === "rem") {
+              // Convert rem to px using root font size
+              const rootFontSize = parseFloat(
+                getComputedStyle(document.documentElement).fontSize || "16",
+              );
+              return value * rootFontSize;
+            } else if (unit === "em") {
+              // Convert em to px using element font size
+              const elementFontSize = parseFloat(
+                computedStyle.fontSize || "16",
+              );
+              return value * elementFontSize;
+            }
+          } else {
+            // If it's already in pixels (just a number), parseFloat should work
+            const gapPx = parseFloat(gapStr.split(/\s+/)[0] || gapStr);
+            if (gapPx > 0 && !isNaN(gapPx)) {
+              return gapPx;
+            }
+          }
+        }
+
+        // Fallback: calculate 2rem based on root font size (since we set gap: 2rem explicitly)
+        const rootFontSize = parseFloat(
+          getComputedStyle(document.documentElement).fontSize || "16",
+        );
+        return 2 * rootFontSize; // 2rem
+      };
+
+      // Calculate slide width by measuring the actual distance between slides
+      // Measure relative to the track element to account for any transforms
+      const getSlideWidth = (): number => {
+        if (
+          !this.#track ||
+          !this.#columnSizes ||
+          !currentBreakpoint ||
+          !this.#container
+        ) {
+          return slideWidth;
+        }
+
+        const { columns } = this.#columnSizes[currentBreakpoint];
+        const items = Array.from(
+          this.#track.querySelectorAll("[data-imagestrip-item]"),
+        ) as HTMLElement[];
+
+        // If we have enough items to measure between slides
+        if (items.length > columns && items[columns]) {
+          const firstItem = items[0];
+          const nextSlideFirstItem = items[columns];
+
+          if (firstItem && nextSlideFirstItem) {
+            // Get positions relative to the track element
+            const trackRect = this.#track.getBoundingClientRect();
+            const firstRect = firstItem.getBoundingClientRect();
+            const nextRect = nextSlideFirstItem.getBoundingClientRect();
+
+            // Calculate positions relative to track
+            const firstItemLeft = firstRect.left - trackRect.left;
+            const nextItemLeft = nextRect.left - trackRect.left;
+
+            // This gives us the exact width of one slide (N items + gaps)
+            const measuredSlideWidth = nextItemLeft - firstItemLeft;
+
+            // Validate it's reasonable (should be close to container width)
+            const containerWidth =
+              this.#container.getBoundingClientRect().width;
+            if (
+              measuredSlideWidth > 0 &&
+              measuredSlideWidth >= containerWidth * 0.8 &&
+              measuredSlideWidth <= containerWidth * 2
+            ) {
+              return measuredSlideWidth;
+            }
+          }
+        }
+
+        // Fallback: container width + gap (original logic that worked before)
+        const containerWidth = this.#container.getBoundingClientRect().width;
+        const actualGap = getActualGap();
+
+        // The original code added gap - this was working before migration
+        return containerWidth + actualGap;
+      };
+
       const updateSlidePosition = () => {
         calculateColumns();
 
@@ -187,11 +304,12 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
           return;
         }
 
-        // Get the actual gap size in pixels
-        const computedStyle = window.getComputedStyle(this.#track);
-        const actualGap = parseFloat(computedStyle.columnGap || "0");
-        // Calculate total width including the actual gap
-        const totalWidth = slideWidth + actualGap;
+        // Force a reflow to ensure layout is complete before measuring
+        void this.#track.offsetHeight;
+
+        // Calculate the width of one slide by measuring the DOM
+        // This is more reliable than trying to parse CSS gap values
+        const totalWidth = getSlideWidth();
         const offset = currentIndex * totalWidth;
         this.#track.style.transform = `translateX(-${offset}px)`;
 
@@ -223,25 +341,31 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
       });
 
       window.addEventListener("resize", () => {
+        // Reset currentIndex on resize to prevent being stuck mid-slide
+        currentIndex = 0;
         updateSlidePosition();
       });
 
-      updateSlidePosition();
+      // Initial update - use requestAnimationFrame to ensure layout is complete
+      requestAnimationFrame(() => {
+        updateSlidePosition();
+      });
     }
   }
 
   customElements.define("grid-slider", Slider);
 </script>
 <style>
-  .thumbnail {
+  grid-slider a.thumbnail {
     display: block;
-    font-size: theme(fontSize.secondary);
-    color: inherit;
+    font-size: var(--font-size-secondary);
+    color: rgb(0, 38, 56);
     text-decoration: none;
   }
 
-  .thumbnail:hover {
+  grid-slider a.thumbnail:hover {
     text-decoration: underline;
+    color: rgb(0, 38, 56);
   }
 
   .thumbnail span {
@@ -250,15 +374,17 @@ const gridColumnRules = Object.entries(gridColumnSizes).reduce(
     aspect-ratio: 16/9;
     overflow: hidden;
     background-color: #000;
-    margin-bottom: theme(spacing.sm);
+    margin-bottom: var(--spacing-sm);
   }
 
-  .thumbnail :global(img) {
+  .thumbnail img {
     width: 100%;
   }
 
   .slider-track {
     transition: transform 200ms;
+    /* Ensure gap-8 overrides any default gap from Grid component */
+    gap: 2rem;
   }
 
   .slider-button {

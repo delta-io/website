@@ -30,7 +30,7 @@ const postPermalink = getPermalink(post);
 <div class={clsx({ "sm:border sm:border-border": isFeatured }, className)}>
   <Grid
     columns={isFeatured ? { xs: 1, md: 2, xl: [5, 7] } : 1}
-    className={clsx("gap-lg md:gap-xl", { "sm:p-lg": isFeatured })}
+    className={clsx("gap-6 md:gap-8", { "sm:p-6": isFeatured })}
   >
     <a href={postPermalink}
       ><Image
@@ -45,7 +45,7 @@ const postPermalink = getPermalink(post);
         isFeatured && (
           <span
             class={clsx({
-              "hidden sm:inline-block px-xs py-xxs text-xs bg-accent text-text font-bold mb-xs":
+              "hidden sm:inline-block px-2 py-1 text-xs bg-accent text-text font-bold mb-2":
                 isFeatured,
             })}
           >
@@ -54,7 +54,7 @@ const postPermalink = getPermalink(post);
         )
       }
       <h3
-        class={clsx("mt-0 mb-sm", {
+        class={clsx("mt-0 mb-3", {
           "text-h4": !isFeatured,
           "max-sm:text-h4": isFeatured,
         })}
@@ -65,8 +65,8 @@ const postPermalink = getPermalink(post);
         >
       </h3>
       <p
-        class={clsx("p2 border-b border-borderLight pb-sm mb-sm", {
-          "sm:pb-md sm:mb-md": isFeatured,
+        class={clsx("p2 border-b border-borderLight pb-3 mb-3", {
+          "sm:pb-4 sm:mb-4": isFeatured,
         })}
       >
         By {

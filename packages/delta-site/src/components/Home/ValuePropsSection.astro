@@ -49,7 +49,7 @@ const valueProps = [
             alt={name}
             width={100}
             height={100}
-            class="max-w-[35%] mx-auto block mb-[theme(spacing.sm)]"
+            class="max-w-[35%] mx-auto block mb-(--spacing-sm)"
             loading="lazy"
           />
           <h4>{name}</h4>
@@ -62,7 +62,7 @@ const valueProps = [
 <style>
   .section {
     color: white;
-    background-color: theme(colors.primary);
+    background-color: var(--color-primary);
   }
 
   .value-prop {

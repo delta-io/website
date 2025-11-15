@@ -18,10 +18,10 @@ import Search from "./Search.astro";
     loading="eager"
   />
 </Section>
-<Section background="dark" className="min-h-[48px] flex items-center">
-  <header-container class="flex items-center relative gap-md justify-between">
+<Section background="dark" className="min-h-12 flex items-center">
+  <header-container class="flex items-center relative gap-4 justify-between">
     <HeaderButton className="header-open-menu">
-      <Icon icon="menu" alt="Open menu" />
+      <Icon icon="menu" alt="Open menu" className="text-2xl" />
     </HeaderButton>
     <a href="/" class="text-inherit font-bold no-underline leading-none">
       <Image
@@ -34,7 +34,7 @@ import Search from "./Search.astro";
     </a>
     <div class="header-menu-wrapper" data-toggled="false">
       <button type="button" class="header-close-menu">
-        <Icon icon="close" alt="Close menu" />
+        <Icon icon="close" alt="Close menu" className="text-2xl" />
       </button>
       <Menu items={config.menus.header} theme="header" direction="horizontal" />
     </div>
@@ -45,7 +45,7 @@ import Search from "./Search.astro";
         theme="header"
         direction="horizontal"
         isIconMenu
-        className="text-[1.625em] leading-none"
+        className="text-1-625em leading-none"
       />
     </div>
     <div class="header-menu-backdrop" tabindex="-1"></div>
@@ -75,19 +75,19 @@ import Search from "./Search.astro";
     background-color: rgba(0, 0, 0, 0.35);
   }
 
-  @media not all and screen(lg) {
+  @media (max-width: 991px) {
     .header-menu-wrapper {
       position: fixed;
       top: 0;
       left: 0;
       bottom: 0;
       z-index: 50;
-      padding: theme(spacing.md);
+      padding: 1.125rem;
       width: 80vw;
       max-width: 320px;
       overflow: auto;
       background-color: white;
-      color: theme(colors.text);
+      color: #002638;
       box-shadow: 2px 0 3px rgba(0, 0, 0, 0.15);
     }
 
@@ -110,8 +110,8 @@ import Search from "./Search.astro";
       right: 0;
       width: 44px;
       height: 44px;
-      font-size: theme(fontSize.small);
-      color: theme(colors.textSecondary);
+      font-size: 0.875rem;
+      color: #536974;
     }
 
     .header-search-wrapper {

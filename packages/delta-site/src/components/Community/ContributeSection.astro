@@ -61,22 +61,22 @@ const repos = [
       Below are a few great ways to get started to contribute.
     </Typography>
   </Fragment>
-  <Grid columns={{ xs: 1, md: 2, lg: 3 }} className="gap-lg mb-xl">
+  <Grid columns={{ xs: 1, md: 2, lg: 3 }} className="gap-6 mb-8">
     {
       repos.map((repo) => (
-        <Typography variant="prose" className="bg-white p-md">
+        <Typography variant="prose" className="bg-white p-4">
           <div class="text-[35px] text-center">
-            <Icon icon="github" alt="Github" className="mb-sm" />
+            <Icon icon="github" alt="Github" className="mb-3" />
           </div>
-          <h3 class="font-normal mt-0 mb-xs">
+          <h3 class="font-normal mt-0 mb-2">
             <a href={repo.url} class="text-inherit no-underline">
               {repo.name}
             </a>
           </h3>
-          <p class="p2 mb-sm">
+          <p class="p2 mb-3">
             {repo.contributors} contributors | {repo.orgs} organizations
           </p>
-          <p class="mb-md">{repo.description}</p>
+          <p class="mb-4">{repo.description}</p>
           <p>
             <a href={`${repo.url}/issues/new/choose`}>Report an issue</a>
             <br />
@@ -88,7 +88,7 @@ const repos = [
   </Grid>
   <Typography
     variant="prose"
-    className="mb-xl md:text-center max-w-screen-lg mx-auto"
+    className="mb-8 md:text-center max-w-(--breakpoint-lg) mx-auto"
   >
     <p>
       Refer to the
@@ -128,7 +128,7 @@ const repos = [
     className="bg-[#cdd9f4]"
     isHeaderCentered
   >
-    <Grid columns={{ xs: 1, md: 2 }} className="mb-xl">
+    <Grid columns={{ xs: 1, md: 2 }} className="mb-8">
       <Typography variant="p">
         Delta Lake is an independent open-source project and not controlled by
         any single company. To emphasize this we joined the Delta Lake Project
