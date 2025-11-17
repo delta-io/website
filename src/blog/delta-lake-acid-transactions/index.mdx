@@ -6,9 +6,9 @@ author: Avril Aysha
 date: 2025-05-01
 ---
 
-This article explains how Delta Lake uses ACID transactions to make your data workloads more secure and reliable.
+This article explains how Delta Lake uses ACID transactions to make your data workloads more reliable.
 
-When you work with valuable data, you need to be able to trust that it's accurate and safe. ACID transactions provide this kind of reliability guarantee so that you don't have to worry about corrupted data, accidental deletes or partial overwrites.
+When you work with valuable data, you need to to be able to trust how changes are applied. ACID transactions guarantee the behavior of a write: all-or-nothing, consistent with rules, isolated from other work, and durable. ACID transactions won't stop a bad query due to human error, but they will protect you from partial writes and mixed snapshots. On top of this, with Delta Lake you can use history and time travel to inspect and recover from mistakes when they do occur.
 
 Let's take a closer look at what ACID transactions are and how Delta Lake uses them to improve your data workloads.
 
@@ -16,9 +16,9 @@ Let's take a closer look at what ACID transactions are and how Delta Lake uses t
 
 A **transaction** is any operation or set of operations that modify your data, for example updating a table or writing new records. Transactions should be processed reliably.
 
-**ACID** is an acronym that stands for: **A**tomicity, **C**onsistency, **I**solation, and **D**urability. They are the four guarantees that keep your data reliable even if something goes wrong, like an accidental delete or partial overwrite. Here's what each guarantee means:
+**ACID** is an acronym that stands for: **A**tomicity, **C**onsistency, **I**solation, and **D**urability. They are the four guarantees that make sure that changes to your data are reliable and consistent. Here's what each guarantee means:
 
-- **Atomicity** means that a transaction is all or nothing. If one part fails, the entire operation is rolled back, so you never end up with incomplete data.
+- **Atomicity** means that a transaction is all or nothing. If one part fails, the entire operation is rolled back (or not committed in case of Delta Lake), so that you never end up with partial writes.
 
 - **Consistency** means that your data always follows defined rules, like your table schema for example. Every transaction moves the system from one valid state to another, preventing corruption.
 
@@ -30,9 +30,9 @@ A **transaction** is any operation or set of operations that modify your data, f
 
 ## A brief history of ACID transactions
 
-ACID transactions were first developed in the 1970s to keep database operations reliable. They quickly became the standard for database management. But in the 2010s, many organizations shifted to data lakes for storing large-scale data. Unlike databases, traditional data lakes were built on cloud object stores and [didn't enforce ACID guarantees](https://delta.io/blog/delta-lake-vs-data-lake/). This created problems with incomplete writes, data corruption, and conflicting updates.
+ACID transactions were first developed in the 1970s to add predictability and reliability to database operations, and as the foundational definition of a transactional database. They quickly became the standard for database management. But in the 2010s, many organizations shifted to data lakes for storing large-scale data. Unlike databases, traditional data lakes were built on cloud object stores and [didn't enforce ACID guarantees](https://delta.io/blog/delta-lake-vs-data-lake/). This created problems with incomplete writes and conflicting updates.
 
-Delta Lake solves these problems. It brings ACID transactions to your data lake. Every data change is guaranteed to be either fully completed or undone. This keeps your data consistent and secure, no matter what happens.
+Delta Lake solves these problems by bringing ACID transactions to your data lake. Every data change is guaranteed to be either fully completed or undone. This keeps your data consistent and reliable, even in the face of write failures or concurrent updates.
 
 ## Why do I need ACID transactions?
 
@@ -48,15 +48,15 @@ This is one of the many reasons why Delta Lake is better than a traditional data
 
 ## How does Delta Lake use ACID transactions?
 
-Delta Lake brings ACID transactions to your data lake by using a transaction log. This log is stored in a lightweight JSON file and tracks every change to your data. This makes sure that every operation is **atomic** (all or nothing), **consistent** (follows defined rules), **isolated** (avoids conflicts), and **durable** (permanently stored).
+Delta Lake brings ACID transactions to your data lake by using [a transaction log](https://delta.io/blog/2023-07-07-delta-lake-transaction-log-protocol/). This log is stored in a lightweight JSON file and tracks every change to your data. This makes sure that every operation is **atomic** (all or nothing), **consistent** (follows defined rules), **isolated** (avoids conflicts), and **durable** (permanently stored).
 
 ![](image3.png)
 
 This approach gives you the following peace-of-mind guarantees:
 
 - **No Partial Writes** - If a job fails mid-operation, Delta Lake ensures that incomplete changes are rolled back, so your data remains clean.
-- **Consistent Reads** - Since all operations are tracked, queries always see a valid and up-to-date view of the data.
-- **Concurrent Writes Without Conflicts** - Multiple users can modify data safely without interfering with each other, preventing corruption.
+- **Consistent Reads** - Since all operations are tracked, queries always see one consistent, valid and up-to-date view of the data throughout their transaction.
+- **Concurrent Writes Without Conflicts** - Multiple users can modify data safely with security mechanisms in place to prevent corruption.
 
 The transaction log also enables [time travel](https://delta.io/blog/2023-02-01-delta-lake-time-travel/), which means that you can roll back to previous versions of your data if something goes wrong.
 
