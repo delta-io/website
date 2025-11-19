@@ -1,0 +1,33 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  prevUrl?: string | undefined;
+  nextUrl?: string | undefined;
+  currentPage: number;
+  lastPage: number;
+}
+
+const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
+---
+
+<nav class="flex items-center justify-center gap-4 mt-8">
+  {
+    prevUrl && (
+      <a href={prevUrl} class="slider-prev slider-button -left-2.5 sm:-left-4">
+        <Icon icon="chevronLeft" alt="Previous page" />
+      </a>
+    )
+  }
+  <p class="text-gray-600">Page {currentPage} of {lastPage}</p>
+  {
+    nextUrl && (
+      <a
+        href={nextUrl}
+        class="slider-next slider-button -right-2.5 sm:-right-4"
+      >
+        <Icon icon="chevronRight" alt="Next page" />
+      </a>
+    )
+  }
+</nav>

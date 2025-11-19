@@ -1,0 +1,97 @@
+---
+import clsx from "clsx";
+import type { MenuItem } from "../types";
+import Dropdown from "../Dropdown.astro";
+import Icon from "../Icon.astro";
+
+interface Props {
+  items: MenuItem[];
+  theme: "header" | "default";
+  direction: "horizontal" | "vertical";
+  isIconMenu?: boolean;
+  isNested?: boolean;
+  className?: string | undefined;
+  itemClassName?: string | undefined;
+}
+
+const {
+  items,
+  isIconMenu = false,
+  isNested = false,
+  theme,
+  direction,
+  className,
+  itemClassName,
+} = Astro.props;
+
+const itemClassNames = [
+  "text-inherit no-underline",
+  {
+    "lg:min-h-12": theme === "header" && !isNested,
+  },
+  itemClassName,
+];
+---
+
+<ul
+  class={clsx(
+    "m-0 p-0 list-none flex",
+    {
+      "flex flex-col gap-3": isNested || direction === "vertical",
+      "flex items-center gap-3": !isNested && direction === "horizontal",
+      "max-lg:flex-col max-lg:items-start": theme === "header",
+
+      "min-w-40 px-sm py-xs": isNested,
+      "border bg-white shadow": isNested && theme === "default",
+      "lg:bg-bgDark lg:text-darkColor lg:rounded-b -ml-3 max-lg:mt-2 max-lg:ml-3":
+        isNested && theme === "header",
+    },
+    className,
+  )}
+>
+  {
+    items.map((item, i) => {
+      if ("url" in item) {
+        return (
+          <li class={clsx(isNested && i > 0 && "mt-1")}>
+            <a
+              href={item.url}
+              class={clsx(itemClassNames)}
+              aria-label={isIconMenu ? item.label : ""}
+            >
+              {item.icon && (
+                <Icon
+                  icon={item.icon}
+                  alt=""
+                  className={clsx("text-2xl", { "mr-2": !isIconMenu })}
+                  decorative
+                  when
+                  label
+                  is
+                  visible
+                  aria-hidden={!isIconMenu}
+                />
+              )}
+              {(!item.icon || !isIconMenu) && item.label}
+            </a>
+          </li>
+        );
+      }
+
+      return (
+        <li>
+          <Dropdown label={item.label} toggleClassName={clsx(itemClassNames)}>
+            <Astro.self
+              items={item.items}
+              theme={theme}
+              direction={direction}
+              isNested
+              className={className}
+              itemClassName={itemClassName}
+            />
+          </Dropdown>
+        </li>
+      );
+    })
+  }
+</ul>

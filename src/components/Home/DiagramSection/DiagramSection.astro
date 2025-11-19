@@ -36,6 +36,12 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
     margin-right: auto;
   }
 
+  .diagram-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   @media (min-width: 576px) {
     .diagram-container {
       margin-top: calc(-1 * var(--offset-sm));
