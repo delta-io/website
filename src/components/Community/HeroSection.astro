@@ -1,16 +1,12 @@
 ---
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
+import Typography from "../ui/Typography.astro";
 import { LakeSection } from "../LakeSection";
 import { SocialTiles } from "../SocialTiles";
 ---
 
-<LakeSection
-  title="Join the Delta Lake Community"
-  isPrimary
-  padding="xxl"
-  isHeaderCentered
->
-  <Fragment slot="subtitle">
+<LakeSection padding="none" className="py-xxl">
+  <div class="hero-content">
+    <h1 class="hero-title">Join the Delta Lake Community</h1>
     <Typography variant="p" className="hero-subtitle-text">
       Delta Lake is supported by more than 190 developers from over 70
       organizations across multiple repositories.
@@ -18,6 +14,22 @@ import { SocialTiles } from "../SocialTiles";
       Chat with fellow Delta Lake users and contributors, ask questions and share
       tips.
     </Typography>
-  </Fragment>
-  <SocialTiles isDark isCentered />
+    <SocialTiles isDark isCentered />
+  </div>
 </LakeSection>
+<style>
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero-subtitle-text {
+    margin-bottom: var(--spacing-xxl);
+  }
+</style>

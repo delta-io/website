@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import clsx from "clsx";
-import Grid from "../../../lib/delta-theme/components/Grid.astro";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Grid from "../ui/Grid.astro";
+import Typography from "../ui/Typography.astro";
 import adobe from "./logos/adobe.png";
 import kubit from "./logos/kubit.png";
 import scribd from "./logos/scribd.png";
@@ -168,8 +168,12 @@ const { className } = Astro.props;
 <Section
   title="Organizations that have contributed to Delta Lake"
   isHeaderCentered
-  padding="xxxl"
-  className={clsx({ "bg-white": !className?.match(/bg-/) }, className)}
+  padding="none"
+  className={clsx(
+    "py-xxxl",
+    { "bg-white": !className?.match(/bg-/) },
+    className,
+  )}
 >
   <Fragment slot="subtitle">
     <Typography variant="p">

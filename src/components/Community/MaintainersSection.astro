@@ -1,6 +1,6 @@
 ---
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Typography from "../ui/Typography.astro";
 
 const maintainers = [
   {
@@ -110,9 +110,9 @@ const maintainers = [
 
 <Section
   title="Project Maintainers"
-  padding="xxl"
+  padding="none"
+  className="bg-white py-xxl"
   isHeaderCentered
-  className="bg-white"
 >
   <Fragment slot="subtitle">
     <Typography variant="prose">

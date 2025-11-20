@@ -2,8 +2,8 @@
 import { Image } from "astro:assets";
 import { getPermalink } from "@utils/getPermalink";
 import type { CollectionEntry } from "astro:content";
-import Section from "../../lib/delta-theme/components/Section.astro";
-import Typography from "../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Typography from "../components/ui/Typography.astro";
 import Layout from "./Layout.astro";
 import LinkedInLogo from "./linkedin-logo.svg";
 
@@ -17,7 +17,7 @@ const { post, authors, showLinkedinProfiles } = Astro.props;
 ---
 
 <Layout title={post.data.title} image={post.data.thumbnail}>
-  <Section padding="xxl" isPrimary>
+  <Section padding="none" className="py-xxl">
     <div class="max-w-(--breakpoint-md) mx-auto">
       <Typography
         variant="prose"

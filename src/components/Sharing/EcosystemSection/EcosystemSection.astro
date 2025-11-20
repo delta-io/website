@@ -1,14 +1,14 @@
 ---
 import { Image } from "astro:assets";
-import Section from "../../../../lib/delta-theme/components/Section.astro";
+import { Section } from "astro-orbit/components";
 import ecosystemImg from "./ecosystem-desktop.png";
 ---
 
 <Section
   title="Delta Sharing Ecosystem"
-  padding="xxxl"
+  padding="none"
+  className="bg-white py-xxxl"
   isHeaderCentered
-  className="bg-white"
 >
   <Image src={ecosystemImg} alt="ecosystem" class="w-full" loading="lazy" />
 </Section>

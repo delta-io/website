@@ -2,9 +2,9 @@
 import type { GetStaticPaths, Page } from "astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Pagination from "../../../lib/delta-theme/components/Pagination.astro";
-import Icon from "../../../lib/delta-theme/components/Icon.astro";
+import { Section } from "astro-orbit/components";
+import Pagination from "../../components/ui/Pagination.astro";
+import Icon from "../../components/ui/Icon.astro";
 import PostsList from "../../components/PostsList.astro";
 import Layout from "../../layouts/Layout.astro";
 
@@ -34,12 +34,8 @@ latestPosts.sort(sortBlogs);
 ---
 
 <Layout title="Delta Lake Blogs">
-  <Section
-    title="Delta Lake Blogs"
-    isPrimary
-    padding="xxl"
-    className="bg-white"
-  >
+  <Section padding="none" className="bg-white py-xxl">
+    <h1>Delta Lake Blogs</h1>
     <div class="flex justify-between items-center mb-8">
       <div></div>
       <a

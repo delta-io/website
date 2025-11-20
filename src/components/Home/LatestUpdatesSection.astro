@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Section from "../../../lib/delta-theme/components/Section.astro";
+import { Section } from "astro-orbit/components";
 import ImageStrip from "../ImageStrip.astro";
 
 const posts = await getCollection("blog");
@@ -21,8 +21,8 @@ const latestBlogs = posts
   title="The Latest"
   titleSize="h2"
   isHeaderCentered
-  padding="xxxl"
-  className="section"
+  padding="none"
+  className="section py-xxxl"
 >
   <ImageStrip items={latestBlogs} />
 </Section>

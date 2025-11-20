@@ -7,8 +7,8 @@
 import type { GetStaticPaths, Page } from "astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Pagination from "../../../lib/delta-theme/components/Pagination.astro";
+import { Section } from "astro-orbit/components";
+import Pagination from "../../components/ui/Pagination.astro";
 import Layout from "../../layouts/Layout.astro";
 import PostsList from "../../components/PostsList.astro";
 
@@ -39,7 +39,7 @@ latestPosts.sort(sortUserStories);
 ---
 
 <Layout title="Case Studies">
-  <Section title="Case Studies" isPrimary padding="xxl" className="bg-white">
+  <Section title="Case Studies" padding="none" className="bg-white py-xxl">
     {
       page.currentPage === 1 && (
         <PostsList posts={latestPosts.slice(0, 1)} hasFeaturedItem />

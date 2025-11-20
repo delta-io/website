@@ -1,8 +1,8 @@
 ---
-import Grid from "../../../lib/delta-theme/components/Grid.astro";
-import Icon from "../../../lib/delta-theme/components/Icon.astro";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Grid from "../ui/Grid.astro";
+import Icon from "../ui/Icon.astro";
+import Typography from "../ui/Typography.astro";
 
 const repos = [
   {
@@ -49,8 +49,8 @@ const repos = [
 
 <Section
   title="Contribute"
-  padding="xxl"
-  className="bg-[#cdd9f4]"
+  padding="none"
+  className="bg-[#cdd9f4] py-xxl"
   isHeaderCentered
 >
   <Fragment slot="subtitle">
@@ -110,9 +110,9 @@ const repos = [
   </Typography>
   <Section
     title="Want to help or help out?"
-    padding="xs"
+    padding="none"
     titleSize="h3"
-    className="bg-[#cdd9f4]"
+    className="bg-[#cdd9f4] py-xs"
     isHeaderCentered
   >
     <Typography variant="p" className="text-center"
@@ -124,8 +124,8 @@ const repos = [
   <Section
     title="Governance"
     titleSize="h3"
-    padding="xxl"
-    className="bg-[#cdd9f4]"
+    padding="none"
+    className="bg-[#cdd9f4] py-xxl"
     isHeaderCentered
   >
     <Grid columns={{ xs: 1, md: 2 }} className="mb-8">

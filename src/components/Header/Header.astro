@@ -1,10 +1,10 @@
 ---
 import { config } from "virtual:config";
 import { Image } from "astro:assets";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Icon from "../../../lib/delta-theme/components/Icon.astro";
-import { Menu } from "../../../lib/delta-theme/components/Menu/index.ts";
-import LinuxFoundationLogo from "../../../lib/delta-theme/components/assets/the-linux-foundation-projects.svg";
+import { Section } from "astro-orbit/components";
+import Icon from "../ui/Icon.astro";
+import Menu from "../ui/Menu/Menu.astro";
+import LinuxFoundationLogo from "../ui/assets/the-linux-foundation-projects.svg";
 import DeltaLogo from "../assets/delta-lake-logo.svg";
 import HeaderButton from "./HeaderButton.astro";
 import Search from "./Search.astro";
@@ -18,7 +18,10 @@ import Search from "./Search.astro";
     loading="eager"
   />
 </Section>
-<Section background="dark" className="min-h-12 flex items-center">
+<Section
+  padding="none"
+  className="min-h-12 flex items-center bg-darkBg text-darkColor"
+>
   <header-container class="flex items-center relative gap-4 justify-between">
     <HeaderButton className="header-open-menu">
       <Icon icon="menu" alt="Open menu" className="text-2xl" />

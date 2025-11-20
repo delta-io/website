@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
-import Grid from "../../../lib/delta-theme/components/Grid.astro";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Grid from "../ui/Grid.astro";
+import Typography from "../ui/Typography.astro";
 import linuxFoundationImg from "./linux-foundation.png";
 ---
 
-<Section padding="xxxl">
+<Section padding="none" className="py-xxxl">
   <Grid columns={{ xs: 1, lg: [1, 3] }} className="gap-6 lg:items-center">
     <Image
       src={linuxFoundationImg}

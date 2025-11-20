@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import Section from "../../../../lib/delta-theme/components/Section.astro";
-import Grid from "../../../../lib/delta-theme/components/Grid.astro";
-import Typography from "../../../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Grid from "../../ui/Grid.astro";
+import Typography from "../../ui/Typography.astro";
 import { Logo } from "../../Logo";
 import acidTransactionsImg from "./acid-transactions.png";
 import scalableMetadataImg from "./scalable-metadata.png";
@@ -67,8 +67,8 @@ const keyFeatures = [
 <Section
   title="Key Features"
   isHeaderCentered
-  padding="xxxl"
-  className="bg-white"
+  padding="none"
+  className="bg-white py-xxxl"
 >
   <Logo slot="before-header" />
   <Grid columns={{ md: 2, lg: 4 }} className="grid">

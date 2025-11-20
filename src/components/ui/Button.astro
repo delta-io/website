@@ -57,8 +57,19 @@ const classNames = clsx(
   )
 }
 <style>
-  a,
-  button {
+  /* Use :global() to make styles global so they override astro-orbit's button styles */
+  :global(a.variant-primary),
+  :global(button.variant-primary),
+  :global(a.variant-secondary),
+  :global(button.variant-secondary),
+  :global(a.variant-accent),
+  :global(button.variant-accent),
+  :global(a.variant-more),
+  :global(button.variant-more),
+  :global(a.button-size-sm),
+  :global(button.button-size-sm),
+  :global(a.button-size-md),
+  :global(button.button-size-md) {
     display: inline-block;
     line-height: 1;
     border-radius: 3px;
@@ -67,73 +78,74 @@ const classNames = clsx(
     white-space: nowrap;
   }
 
-  a.variant-more,
-  button.variant-more {
-    display: inline-block;
-    line-height: 1;
-    text-decoration: none;
-    font-weight: var(--font-weight-bold);
+  :global(a.variant-more),
+  :global(button.variant-more) {
     border: none;
-    white-space: nowrap;
     background-color: transparent;
     padding: 0;
   }
 
-  .button-size-sm {
+  :global(.button-size-sm) {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-small);
   }
-  .button-size-md {
+  :global(.button-size-md) {
     padding: var(--spacing-sm) var(--spacing-lg);
     font-size: var(--font-size-primary);
   }
 
-  .variant-primary {
+  :global(a.variant-primary),
+  :global(button.variant-primary) {
     color: var(--color-white);
     background-color: var(--color-primary);
     border: 1px solid var(--color-primary);
   }
-  a.variant-primary:hover,
-  button.variant-primary:hover {
+  :global(a.variant-primary:hover),
+  :global(button.variant-primary:hover) {
     background-color: var(--color-primary-hover);
     border-color: var(--color-primary-hover);
   }
-  .variant-primary.border-outlined {
+  :global(a.variant-primary.border-outlined),
+  :global(button.variant-primary.border-outlined) {
     color: var(--color-primary);
     background-color: var(--color-white);
   }
-  a.variant-primary.border-outlined:hover,
-  button.variant-primary.border-outlined:hover {
+  :global(a.variant-primary.border-outlined:hover),
+  :global(button.variant-primary.border-outlined:hover) {
     color: var(--color-primary-hover);
     background-color: var(--color-white);
   }
 
-  .variant-secondary {
+  :global(a.variant-secondary),
+  :global(button.variant-secondary) {
     color: var(--color-primary);
     background-color: transparent;
     border: 1px solid var(--color-primary);
   }
-  a.variant-secondary:hover,
-  button.variant-secondary:hover {
+  :global(a.variant-secondary:hover),
+  :global(button.variant-secondary:hover) {
     color: var(--color-white);
     background-color: var(--color-primary);
   }
 
-  .variant-accent {
+  :global(a.variant-accent),
+  :global(button.variant-accent) {
     color: var(--color-text);
     background-color: var(--color-accent);
     border: 1px solid var(--color-accent);
   }
-  .variant-accent.border-outlined {
+  :global(a.variant-accent.border-outlined),
+  :global(button.variant-accent.border-outlined) {
     color: var(--color-accent);
     background-color: var(--color-text);
   }
 
-  .variant-more {
+  :global(a.variant-more),
+  :global(button.variant-more) {
     color: var(--color-primary);
   }
-  a.variant-more:hover,
-  button.variant-more:hover {
+  :global(a.variant-more:hover),
+  :global(button.variant-more:hover) {
     color: var(--color-link);
   }
 </style>

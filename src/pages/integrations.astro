@@ -2,10 +2,10 @@
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import clsx from "clsx";
-import Grid from "../../lib/delta-theme/components/Grid.astro";
-import Section from "../../lib/delta-theme/components/Section.astro";
-import Tag from "../../lib/delta-theme/components/Tag.astro";
-import Typography from "../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Grid from "../components/ui/Grid.astro";
+import Tag from "../components/ui/Tag.astro";
+import Typography from "../components/ui/Typography.astro";
 import Layout from "../layouts/Layout.astro";
 import { Logo } from "../components/Logo";
 import { UniFormSection } from "../components/Integrations";
@@ -38,35 +38,31 @@ const integrations = [
 ---
 
 <Layout title="Integrations">
-  <Section
-    title="Delta Lake Integrations"
-    isPrimary
-    padding="xl"
-    isHeaderCentered
-    className="bg-white"
-  >
-    <Logo loading="eager" slot="before-header" />
-    <Fragment slot="subtitle">
-      <Typography variant="p">
+  <Section padding="none" className="py-xl bg-white">
+    <div class="integrations-hero text-center">
+      <Logo loading="eager" />
+      <h1 class="integrations-title">Delta Lake Integrations</h1>
+      <Typography variant="p" className="integrations-subtitle">
         Use the following frameworks, Delta Sharing clients, managed services,
         and/or community integrations <br /> for Delta Lake and Delta Sharing.
       </Typography>
-    </Fragment>
+    </div>
   </Section>
   <UniFormSection />
   {
     integrations.map((integration, i) => (
       <Section
-        title={integration.title}
-        isHeaderCentered
-        padding="xxl"
-        className={clsx({
+        padding="none"
+        className={clsx("py-xxl", {
           "bg-white": i % 2 === 0,
         })}
       >
-        <Typography variant="p" slot="subtitle">
-          {integration.subtitle}
-        </Typography>
+        <div class="text-center">
+          <h2 class="integrations-section-title">{integration.title}</h2>
+          <Typography variant="p" className="integrations-section-subtitle">
+            {integration.subtitle}
+          </Typography>
+        </div>
         <Grid columns={{ xs: 1, md: 2, lg: 3 }} className="integrations">
           {integration.items.map(({ data }) => (
             <Typography variant="prose" className="integration">
@@ -112,6 +108,30 @@ const integrations = [
   }
 </Layout>
 <style>
+  .integrations-hero {
+    margin-bottom: var(--spacing-xxl);
+  }
+  .integrations-title {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+    margin-bottom: var(--spacing-md);
+  }
+  .integrations-subtitle {
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+  .integrations-section-title {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-header);
+    margin-bottom: var(--spacing-md);
+  }
+  .integrations-section-subtitle {
+    max-width: 56rem;
+    margin: 0 auto;
+    margin-bottom: var(--spacing-xl);
+  }
   .integrations {
     column-gap: var(--spacing-lg);
     row-gap: var(--spacing-xl);

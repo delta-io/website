@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import Button from "../../../../lib/delta-theme/components/Button.astro";
-import Grid from "../../../../lib/delta-theme/components/Grid.astro";
-import Section from "../../../../lib/delta-theme/components/Section.astro";
-import Typography from "../../../../lib/delta-theme/components/Typography.astro";
+import { Section } from "astro-orbit/components";
+import Button from "../../ui/Button.astro";
+import Grid from "../../ui/Grid.astro";
+import Typography from "../../ui/Typography.astro";
 import separateStorageImg from "./separate-storage.jpg";
 import streamTableStorageImg from "./stream-table-storage.jpg";
 ---
@@ -11,7 +11,8 @@ import streamTableStorageImg from "./stream-table-storage.jpg";
 <Section
   title="Read the Lakehouse Storage Systems Whitepapers"
   isHeaderCentered
-  padding="xxxl"
+  padding="none"
+  className="py-xxxl"
 >
   <Typography variant="prose" slot="subtitle">
     <p>

@@ -9,10 +9,10 @@ import { getCollection, render } from "astro:content";
 import clsx from "clsx";
 import { fetchVideosByIds } from "@utils/fetchYoutube";
 import { getPermalink } from "@utils/getPermalink";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Grid from "../../../lib/delta-theme/components/Grid.astro";
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
-import Icon from "../../../lib/delta-theme/components/Icon.astro";
+import { Section } from "astro-orbit/components";
+import Grid from "../../components/ui/Grid.astro";
+import Typography from "../../components/ui/Typography.astro";
+import Icon from "../../components/ui/Icon.astro";
 import ImageStrip from "../../components/ImageStrip.astro";
 import Layout from "../../layouts/Layout.astro";
 
@@ -51,7 +51,7 @@ references.sort((a, b) => {
 ---
 
 <Layout title={profile.data.name}>
-  <Section padding="xxl" className="bg-white">
+  <Section padding="none" className="bg-white py-xxl">
     <Grid
       columns={profile.data.photo ? { xs: 1, md: ["200px", "auto"] } : 1}
       className={clsx("gap-xxl", {
@@ -126,7 +126,7 @@ references.sort((a, b) => {
   </Section>
   {
     references.length > 0 && (
-      <Section padding="xxl" title="References">
+      <Section padding="none" className="py-xxl" title="References">
         <ImageStrip
           items={references.map((reference) => {
             // blog reference
