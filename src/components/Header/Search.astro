@@ -202,7 +202,7 @@ import HeaderButton from "./HeaderButton.astro";
         }
       });
 
-      window.addEventListener("DOMContentLoaded", async () => {
+      const initPagefind = async () => {
         if (import.meta.env.DEV) return;
         const onIdle =
           window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
@@ -218,7 +218,14 @@ import HeaderButton from "./HeaderButton.astro";
             showImages: false,
           });
         });
-      });
+      };
+
+      // Check if DOM is already loaded, otherwise wait for DOMContentLoaded
+      if (document.readyState === "loading") {
+        window.addEventListener("DOMContentLoaded", initPagefind);
+      } else {
+        initPagefind();
+      }
     }
   }
 
