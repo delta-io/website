@@ -1,7 +1,7 @@
 ---
 import { mapKeys } from "@utils/mapKeys";
 import { Image } from "astro:assets";
-import Section from "../../../../lib/delta-theme/components/Section.astro";
+import Section from "../../ui/Section.astro";
 import diagram from "./delta-uniform-hero-v5.png";
 
 interface Props {
@@ -34,6 +34,12 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .diagram-container img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   @media (min-width: 576px) {

@@ -1,8 +1,8 @@
 ---
 import { mapKeys } from "@utils/mapKeys";
 import clsx from "clsx";
-import Button from "../../../lib/delta-theme/components/Button.astro";
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
+import Button from "../ui/Button.astro";
+import Typography from "../ui/Typography.astro";
 import { LakeSection } from "../LakeSection";
 
 interface Props {
@@ -23,7 +23,7 @@ const { title, ctaLabel, ctaUrl, offsets } = Astro.props;
 const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
 ---
 
-<LakeSection padding="xxxl" isPrimary>
+<LakeSection padding="none" className="py-xxxl">
   <Typography variant="prose" className="content">
     <h1 class="title">{title}</h1>
     <div class="description">
@@ -88,7 +88,9 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
     text-decoration-color: var(--color-accent);
   }
 
-  .get-started-button {
+  .get-started-button,
+  a.get-started-button,
+  button.get-started-button {
     color: #002638;
     text-decoration: underline;
     text-decoration-color: #002638;

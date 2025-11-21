@@ -1,0 +1,57 @@
+---
+import type { ComponentProps } from "astro/types";
+import { Section as OrbitSection } from "astro-orbit/components";
+import clsx from "clsx";
+
+type HeaderVariant = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface Props
+  extends Omit<
+    ComponentProps<typeof OrbitSection>,
+    "title" | "titleSize" | "isHeaderCentered"
+  > {
+  title?: string;
+  titleSize?: HeaderVariant;
+  isHeaderCentered?: boolean;
+  isPrimary?: boolean;
+}
+
+const {
+  title,
+  titleSize = "h2",
+  isHeaderCentered = false,
+  className,
+  ...props
+} = Astro.props;
+
+const HeaderTag = titleSize;
+const hasBeforeHeader = Astro.slots.has("before-header");
+const hasSubtitle = Astro.slots.has("subtitle");
+---
+
+<OrbitSection {...props} className={clsx(className)}>
+  {
+    hasBeforeHeader && (
+      <div class={clsx({ "text-center": isHeaderCentered })}>
+        <slot name="before-header" />
+      </div>
+    )
+  }
+  {
+    title && (
+      <HeaderTag class={clsx({ "text-center": isHeaderCentered })}>
+        {title}
+      </HeaderTag>
+    )
+  }
+  {
+    hasSubtitle && (
+      <div
+        class={clsx("subtitle-container", { "text-center": isHeaderCentered })}
+      >
+        <slot name="subtitle" />
+      </div>
+    )
+  }
+  <slot />
+</OrbitSection>
