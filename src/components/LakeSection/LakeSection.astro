@@ -6,7 +6,16 @@ import { Section } from "astro-orbit/components";
 import bgDesktopImg from "./bg-desktop.jpg";
 import bgMobileImg from "./bg-mobile.jpg";
 
-type Props = ComponentProps<typeof Section>;
+type HeaderVariant = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+type Props = Omit<
+  ComponentProps<typeof Section>,
+  "title" | "titleSize" | "isHeaderCentered"
+> & {
+  title?: string;
+  titleSize?: HeaderVariant;
+  isHeaderCentered?: boolean;
+};
 
 const bgDesktopResolved = await getImage({ src: bgDesktopImg });
 const bgMobileResolved = await getImage({ src: bgMobileImg });
@@ -14,23 +23,52 @@ const bgMobileResolved = await getImage({ src: bgMobileImg });
 const bgDesktop = `url(${bgDesktopResolved.src})`;
 const bgMobile = `url(${bgMobileResolved.src})`;
 
-const { className, ...props } = Astro.props;
+const {
+  title,
+  titleSize = "h2",
+  isHeaderCentered = false,
+  className,
+  ...props
+} = Astro.props;
+
+const HeaderTag = titleSize;
+const hasBeforeHeader = Astro.slots.has("before-header");
+const hasSubtitle = Astro.slots.has("subtitle");
 ---
 
-<div>
+<div class="lake-section-wrapper">
   <Section {...props} className={clsx("section", className)}>
-    <Fragment slot="before-header">
-      <slot name="before-header" />
-    </Fragment>
-    <Fragment slot="subtitle">
-      <slot name="subtitle" />
-    </Fragment>
+    {
+      hasBeforeHeader && (
+        <div class={clsx({ "text-center": isHeaderCentered })}>
+          <slot name="before-header" />
+        </div>
+      )
+    }
+    {
+      title && (
+        <HeaderTag class={clsx({ "text-center": isHeaderCentered })}>
+          {title}
+        </HeaderTag>
+      )
+    }
+    {
+      hasSubtitle && (
+        <div
+          class={clsx("subtitle-container", {
+            "text-center": isHeaderCentered,
+          })}
+        >
+          <slot name="subtitle" />
+        </div>
+      )
+    }
     <slot />
   </Section>
 </div>
 
 <style define:vars={{ bgDesktop, bgMobile }}>
-  :where(div) {
+  .lake-section-wrapper {
     background-color: var(--color-dark-bg);
     color: var(--color-dark-color);
     background-image: var(--bgMobile);
@@ -38,10 +76,18 @@ const { className, ...props } = Astro.props;
     background-position: 50%;
   }
 
-  /* Removed div a rule to allow description-link and hero-link classes to work properly */
+  .lake-section-wrapper .subtitle-container {
+    background-color: transparent;
+    background-image: none;
+  }
+
+  .lake-section-wrapper .subtitle-container * {
+    background-color: transparent;
+    background-image: none;
+  }
 
   @media (min-width: 576px) {
-    :where(div) {
+    .lake-section-wrapper {
       background-image: var(--bgDesktop);
     }
   }

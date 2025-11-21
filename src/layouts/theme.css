@@ -721,7 +721,7 @@ a.text-white {
 
 .subtitle-container > :last-child,
 .subtitle-container > p:last-child {
-  margin-bottom: 3.75rem;
+  margin-bottom: var(--spacing-xxl);
 }
 
 @media (hover: hover) {

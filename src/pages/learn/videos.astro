@@ -4,7 +4,7 @@ import {
   fetchChannelPlaylists,
   fetchPlaylistVideos,
 } from "@utils/fetchYoutube";
-import { Section } from "astro-orbit/components";
+import Section from "../../components/ui/Section.astro";
 import Typography from "../../components/ui/Typography.astro";
 import ImageStrip from "../../components/ImageStrip.astro";
 import Layout from "../../layouts/Layout.astro";
@@ -50,8 +50,12 @@ const playlistVideos = await Promise.all(
 ---
 
 <Layout title={title}>
-  <Section padding="none" className="bg-white py-xxl">
-    <h1>{title}</h1>
+  <Section
+    title={title}
+    titleSize="h1"
+    padding="none"
+    className="bg-white py-xxl"
+  >
     <Typography variant="prose">
       <p>
         Watch the latest videos and webinars for the open-source Delta Lake
