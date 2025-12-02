@@ -181,7 +181,7 @@ If you are working with existing data that is already organized using Hive-style
       <strong>Current Data Layout</strong>
     </td>
     <td>
-      <strong>Which columns to cluster</strong>
+      <strong>Which columns to cluster by</strong>
     </td>
   </tr>
   <tr>
