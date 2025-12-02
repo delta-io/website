@@ -151,7 +151,7 @@ You can read data in a clustered table using any Delta Lake client. For best que
 
 ## How to change your clustering columns
 
-Unlike traditional partitioning and Z-ordering, you can change your liquid clustering columns without having to rewrite all the data. This flexibility is what
+Unlike traditional partitioning and Z-ordering, you can change your liquid clustering columns without having to rewrite all the data. This flexibility is what makes liquid clustering a powerful tool for optimizing your data layout over time.
 
 Run an ALTER TABLE command, to change the clustering columns:
 
