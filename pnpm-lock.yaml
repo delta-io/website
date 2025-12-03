@@ -39,8 +39,8 @@ importers:
         specifier: ^3.1.5
         version: 3.1.5(astro@5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))
       astro-orbit:
-        specifier: ^0.1.0
-        version: 0.1.0(astro@5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))(vite@7.1.11(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1))
+        specifier: file:./path/astro-orbit-0.1.0.tgz
+        version: file:path/astro-orbit-0.1.0.tgz(astro@5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))(vite@7.1.11(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1))
       googleapis:
         specifier: ^164.1.0
         version: 164.1.0
@@ -1616,6 +1616,13 @@ packages:
 
   astro-orbit@0.1.0:
     resolution: {integrity: sha512-g4fAnDQ4gkVsMiT++UNll2bA9eNZ5k8tD3iqdE2/K+MEuaJobjYJurrtJYmkDZnnLDsi3cChBKH7IDHjNRjEcA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      astro: ^5.0.0
+
+  astro-orbit@file:path/astro-orbit-0.1.0.tgz:
+    resolution: {integrity: sha512-N8xSDqsjzl0iF2Z3ltDMyDr5tn6W1D0eqkatGmPE/ymT3OZNeqqGYoqvT532OTTYqJBN2DxYBJKi+Dj0efDdVQ==, tarball: file:path/astro-orbit-0.1.0.tgz}
+    version: 0.1.0
     engines: {node: '>=18.0.0'}
     peerDependencies:
       astro: ^5.0.0
@@ -6394,6 +6401,15 @@ snapshots:
     dependencies:
       '@tailwindcss/vite': 4.1.17(vite@7.1.11(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1))
       astro: 5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1)
+      tailwindcss: 4.1.17
+    transitivePeerDependencies:
+      - vite
+
+  astro-orbit@file:path/astro-orbit-0.1.0.tgz(astro@5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))(vite@7.1.11(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1)):
+    dependencies:
+      '@tailwindcss/vite': 4.1.17(vite@7.1.11(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1))
+      astro: 5.14.7(@netlify/blobs@10.1.0)(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1)
+      clsx: 2.1.1
       tailwindcss: 4.1.17
     transitivePeerDependencies:
       - vite

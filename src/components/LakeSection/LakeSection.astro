@@ -1,14 +1,18 @@
 ---
 import clsx from "clsx";
 import type { ComponentProps } from "astro/types";
-import Section from "../../../lib/delta-theme/components/Section.astro";
+import { getImage } from "astro:assets";
+import { Section } from "astro-orbit/components";
 import bgDesktopImg from "./bg-desktop.jpg";
 import bgMobileImg from "./bg-mobile.jpg";
 
 type Props = ComponentProps<typeof Section>;
 
-const bgDesktop = `url(${bgDesktopImg.src})`;
-const bgMobile = `url(${bgMobileImg.src})`;
+const bgDesktopResolved = await getImage({ src: bgDesktopImg });
+const bgMobileResolved = await getImage({ src: bgMobileImg });
+
+const bgDesktop = `url(${bgDesktopResolved.src})`;
+const bgMobile = `url(${bgMobileResolved.src})`;
 
 const { className, ...props } = Astro.props;
 ---

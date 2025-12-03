@@ -1,12 +1,9 @@
 ---
 import { config } from "virtual:config";
 import { Image } from "astro:assets";
-import type { MenuItem } from "../../lib/delta-theme/components/Menu/index.ts";
-import { Menu } from "../../lib/delta-theme/components/Menu/index.ts";
-import Grid from "../../lib/delta-theme/components/Grid.astro";
-import Section from "../../lib/delta-theme/components/Section.astro";
-import Typography from "../../lib/delta-theme/components/Typography.astro";
-import LinuxFoundationLogo from "../../lib/delta-theme/components/assets/the-linux-foundation-projects.svg";
+import type { MenuItem } from "astro-orbit/components";
+import { Menu, Grid, Section, Typography } from "astro-orbit/components";
+import LinuxFoundationLogo from "./assets/the-linux-foundation-projects.svg";
 import DeltaLogo from "./assets/delta-lake-logo.svg";
 
 interface FooterMenu {
