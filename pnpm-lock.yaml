@@ -1621,7 +1621,7 @@ packages:
       astro: ^5.0.0
 
   astro-orbit@file:path/astro-orbit-0.1.0.tgz:
-    resolution: {integrity: sha512-N8xSDqsjzl0iF2Z3ltDMyDr5tn6W1D0eqkatGmPE/ymT3OZNeqqGYoqvT532OTTYqJBN2DxYBJKi+Dj0efDdVQ==, tarball: file:path/astro-orbit-0.1.0.tgz}
+    resolution: {integrity: sha512-wLmsKOySrl7gOESUD8CnKOqmBhbwtCiDKzvtP7ydsJy2nPwgMmH8MZu5/oy21XlX0bpKp9o1b7/BhcvacdGIVg==, tarball: file:path/astro-orbit-0.1.0.tgz}
     version: 0.1.0
     engines: {node: '>=18.0.0'}
     peerDependencies:

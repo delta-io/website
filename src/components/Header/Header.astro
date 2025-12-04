@@ -79,7 +79,12 @@ import Search from "./Search.astro";
     background-color: rgba(0, 0, 0, 0.35);
   }
 
-  @media (max-width: 991px) {
+  /* Hide menu wrapper by default on smaller screens */
+  .header-menu-wrapper {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
     .header-menu-wrapper {
       position: fixed;
       top: 0;
@@ -97,6 +102,10 @@ import Search from "./Search.astro";
 
     .header-menu-wrapper[data-toggled="false"] {
       display: none;
+    }
+
+    .header-menu-wrapper[data-toggled="true"] {
+      display: block;
     }
 
     .header-menu-wrapper[data-toggled="true"] ~ .header-menu-backdrop {
@@ -120,6 +129,30 @@ import Search from "./Search.astro";
 
     .header-search-wrapper {
       display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* Show menu wrapper as horizontal menu on larger screens */
+    .header-menu-wrapper {
+      display: block;
+      position: static;
+      background-color: transparent;
+      color: inherit;
+      box-shadow: none;
+      padding: 0;
+      width: auto;
+      max-width: none;
+      overflow: visible;
+    }
+
+    .header-open-menu,
+    .header-close-menu {
+      display: none;
+    }
+
+    .header-menu-backdrop {
+      display: none !important;
     }
   }
 </style>
