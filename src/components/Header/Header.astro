@@ -1,16 +1,14 @@
 ---
 import { config } from "virtual:config";
 import { Image } from "astro:assets";
-import Section from "../../../lib/delta-theme/components/Section.astro";
-import Icon from "../../../lib/delta-theme/components/Icon.astro";
-import { Menu } from "../../../lib/delta-theme/components/Menu/index.ts";
-import LinuxFoundationLogo from "../../../lib/delta-theme/components/assets/the-linux-foundation-projects.svg";
+import { Section, Icon, Menu } from "astro-orbit/components";
+import LinuxFoundationLogo from "../assets/the-linux-foundation-projects.svg";
 import DeltaLogo from "../assets/delta-lake-logo.svg";
 import HeaderButton from "./HeaderButton.astro";
 import Search from "./Search.astro";
 ---
 
-<Section className="tlf-banner">
+<Section padding="none" className="tlf-banner">
   <Image
     src={LinuxFoundationLogo}
     alt="The Linux Foundation Projects"
@@ -18,7 +16,11 @@ import Search from "./Search.astro";
     loading="eager"
   />
 </Section>
-<Section background="dark" className="min-h-12 flex items-center">
+<Section
+  background="dark"
+  padding="none"
+  className="min-h-12 flex items-center"
+>
   <header-container class="flex items-center relative gap-4 justify-between">
     <HeaderButton className="header-open-menu">
       <Icon icon="menu" alt="Open menu" className="text-2xl" />
@@ -77,7 +79,12 @@ import Search from "./Search.astro";
     background-color: rgba(0, 0, 0, 0.35);
   }
 
-  @media (max-width: 991px) {
+  /* Hide menu wrapper by default on smaller screens */
+  .header-menu-wrapper {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
     .header-menu-wrapper {
       position: fixed;
       top: 0;
@@ -95,6 +102,10 @@ import Search from "./Search.astro";
 
     .header-menu-wrapper[data-toggled="false"] {
       display: none;
+    }
+
+    .header-menu-wrapper[data-toggled="true"] {
+      display: block;
     }
 
     .header-menu-wrapper[data-toggled="true"] ~ .header-menu-backdrop {
@@ -118,6 +129,30 @@ import Search from "./Search.astro";
 
     .header-search-wrapper {
       display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* Show menu wrapper as horizontal menu on larger screens */
+    .header-menu-wrapper {
+      display: block;
+      position: static;
+      background-color: transparent;
+      color: inherit;
+      box-shadow: none;
+      padding: 0;
+      width: auto;
+      max-width: none;
+      overflow: visible;
+    }
+
+    .header-open-menu,
+    .header-close-menu {
+      display: none;
+    }
+
+    .header-menu-backdrop {
+      display: none !important;
     }
   }
 </style>

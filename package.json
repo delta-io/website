@@ -40,7 +40,7 @@
     "@types/mdast": "^4.0.4",
     "astro-config": "^0.2.1",
     "astro-favicons": "^3.1.5",
-    "astro-orbit": "^0.1.0",
+    "astro-orbit": "^0.2.0",
     "astro": "^5.14.7",
     "googleapis": "^164.1.0",
     "pagefind": "^1.4.0",

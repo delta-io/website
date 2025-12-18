@@ -1,8 +1,7 @@
 ---
 import { mapKeys } from "@utils/mapKeys";
 import clsx from "clsx";
-import Button from "../../../lib/delta-theme/components/Button.astro";
-import Typography from "../../../lib/delta-theme/components/Typography.astro";
+import { Button, Typography } from "astro-orbit/components";
 import { LakeSection } from "../LakeSection";
 
 interface Props {
@@ -88,7 +87,8 @@ const offsetCssVars = mapKeys(offsets, (size) => `offset-${size}`);
     text-decoration-color: var(--color-accent);
   }
 
-  .get-started-button {
+  a.get-started-button.variant-accent,
+  button.get-started-button.variant-accent {
     color: #002638;
     text-decoration: underline;
     text-decoration-color: #002638;

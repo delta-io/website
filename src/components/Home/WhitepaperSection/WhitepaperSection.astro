@@ -1,9 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import Button from "../../../../lib/delta-theme/components/Button.astro";
-import Grid from "../../../../lib/delta-theme/components/Grid.astro";
-import Section from "../../../../lib/delta-theme/components/Section.astro";
-import Typography from "../../../../lib/delta-theme/components/Typography.astro";
+import { Button, Grid, Section, Typography } from "astro-orbit/components";
 import separateStorageImg from "./separate-storage.jpg";
 import streamTableStorageImg from "./stream-table-storage.jpg";
 ---
@@ -21,6 +18,7 @@ import streamTableStorageImg from "./stream-table-storage.jpg";
     </p>
     <Button
       href="http://cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
+      variant="primary"
       className="white-button"
     >
       Read the whitepaper
@@ -52,6 +50,7 @@ import streamTableStorageImg from "./stream-table-storage.jpg";
   <div class="link-wrapper">
     <Button
       href="https://dl.acm.org/doi/10.14778/3415478.3415560"
+      variant="primary"
       className="white-button">Read the article</Button
     >
   </div>
