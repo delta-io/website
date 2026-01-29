@@ -1,14 +1,12 @@
 ---
-title: The next evolution of Delta: Catalog-Managed Tables
+title: The next evolution of Delta Catalog-Managed Tables
 description: This article explains how to enable catalog-managed commits, a Delta table feature that shifts transaction coordination from the filesystem to Unity Catalog, making the catalog the single source of truth for table state.
-thumbnail: ./catalog-managed-tables.png
+thumbnail: ./thumbnail.png
 author:
-- benjamin-mathew
-- scott-sandre
-  publishedAt: 2026-02-02
+  - benjamin-mathew
+  - scottsandre
+publishedAt: 2026-02-02
 ---
-
-# The next evolution of Delta: Catalog-Managed Tables
 
 The data ecosystem is moving toward a catalog-centric model for managing open table formats. As open catalogs gain adoption, the catalog has emerged as the system of record for table identity, discovery, and authorization.
 
@@ -25,7 +23,9 @@ For more details, see the Delta protocol [RFC on Github here](https://github.com
 Before catalog-managed tables, the filesystem – not the catalog – was the primary authority for table access and changes to table state. Catalog-managed tables change this by involving the catalog in read and write coordination, which unlocks:
 
 1. <ins>Standardized table discovery and authorization</ins>: Historically, Delta clients needed to know the exact path of the table that they needed to read and credentials needed to be provisioned directly from the storage system. This made data discoverability very difficult and introduced risky coarse-grained authorization. For catalog-managed tables, the catalog facilitates access through logical table identifiers (e.g. Unity Catalog’s three-level namespace) and dynamically vends credentials scoped by the catalog’s policies. Ultimately, catalog-managed tables dramatically simplify how engines discover and access tables in a governed manner.<br/><br/>
+
 2. <ins>Enforceable constraints</ins>: Path-based schema writes that bypass the catalog can’t be rejected. When writes go directly to object storage, storage credentials are not fine-grained enough to differentiate between clients who only have permission to write data vs. clients who have permission to modify table metadata. As a result, path-based writes can result in schema changes that break downstream workloads. For catalog-managed tables, the catalog can authoritatively validate or reject invalid schema or constraint changes.<br/><br/>
+
 3. <ins>Faster query planning and faster writes</ins>: Delta engines have historically relied on the filesystem to replay the log, discover the latest table version or schema, and perform put-if-absent operations for commits. Each of these filesystem-imposed bottlenecks can add 100+ms to query execution. For catalog-managed tables, the catalog can directly inform the engine of this table-level metadata. This skips cloud storage entirely and removes a major source of metadata latency. This feature also opens the door for “inline commits” where the (metadata) content of the commit is sent directly to the catalog.<br/><br/>
 
 These capabilities of catalog-managed Delta tables improve read and write performance while streamlining governance. Table state updates are flushed to the filesystem, reinforcing Delta’s openness and portability.
