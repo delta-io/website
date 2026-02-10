@@ -40,9 +40,9 @@ For catalog-managed tables, Delta tables are discovered and accessed through the
 
 ### Reads
 
-A catalog-managed table may have commits that have been ratified by the catalog but not yet flushed, or “published”, to the filesystem. Reads therefore begin by getting these latest commits from the catalog, typically via a <span style="color:lightgreen">get_catalog_commits</span> API exposed by the catalog.
+A catalog-managed table may have commits that have been ratified by the catalog but not yet flushed, or “published”, to the filesystem. Reads therefore begin by getting these latest commits from the catalog, typically via a <span style="color:#d63384">get_catalog_commits</span> API exposed by the catalog.
 
-If additional history is required, such as older published commits or checkpoints, Delta clients can <span style="color:lightgreen">LIST</span> the filesystem and merge those published commits with the catalog-provided commits to construct a complete snapshot. This split view allows catalogs to always provide the most recent table state while offloading long-term commit storage to the filesystem.
+If additional history is required, such as older published commits or checkpoints, Delta clients can <span style="color:#d63384">LIST</span> the filesystem and merge those published commits with the catalog-provided commits to construct a complete snapshot. This split view allows catalogs to always provide the most recent table state while offloading long-term commit storage to the filesystem.
 
 ![From FileSystem Reads to Catalog Managed Reads](figure-1a_1b.png)
 
@@ -50,11 +50,11 @@ If additional history is required, such as older published commits or checkpoint
 
 Previously, writing to a Delta table involved calling filesystem “PUT-if-absent” APIs to perform atomic writes with mutual exclusion. In this model, the filesystem determined which writes win. While simple and scalable, this approach treated commits as opaque blobs: the filesystem could not inspect commit contents, enforce constraints, or coordinate writes across tables.
 
-For catalog-managed tables, clients propose commits to the catalog, typically by first staging commits in the filesystem’s <span style="color:lightgreen"><table_path>/\_delta_log/\_staged_commits</span> directory and then requesting ratification. Staging ensures that readers never observe unapproved commits. The protocol also allows for “inline” commits, where the contents of the commit are sent directly to the catalog, skipping the 100ms+ filesystem write. Staged commits are still performed using optimistic concurrency control to provide transactional guarantees.
+For catalog-managed tables, clients propose commits to the catalog, typically by first staging commits in the filesystem’s <span style="color:#d63384"><table_path>/\_delta_log/\_staged_commits</span> directory and then requesting ratification. Staging ensures that readers never observe unapproved commits. The protocol also allows for “inline” commits, where the contents of the commit are sent directly to the catalog, skipping the 100ms+ filesystem write. Staged commits are still performed using optimistic concurrency control to provide transactional guarantees.
 
 Catalogs can also define their own commit APIs, allowing them to accept richer commit payloads, inspect actions and metadata, enforce constraints, and apply catalog-level policies before ratifying a commit.
 
-To unburden catalogs from having to store these ratified commits indefinitely, ratified commits can be periodically “published” to the <span style="color:lightgreen">\_delta_log</span> in the filesystem. Once published, catalogs no longer need to retain or serve those commits because clients can easily discover them by listing.
+To unburden catalogs from having to store these ratified commits indefinitely, ratified commits can be periodically “published” to the <span style="color:#d63384">\_delta_log</span> in the filesystem. Once published, catalogs no longer need to retain or serve those commits because clients can easily discover them by listing.
 
 ![From FileSystem Writes to Catalog Managed Writes](figure-2a_2b.png)
 
@@ -68,7 +68,7 @@ We are excited to continue collaborating with the ecosystem to evolve open table
 
 Get started today with catalog-managed tables by downloading [Delta Spark 4.0.1](https://github.com/delta-io/delta/releases/tag/v4.0.1) and [Unity Catalog 0.3.1](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.3.1). Unity Catalog supports both static token authentication as well as OAuth with automatic token credential refresh.
 
-Below is an example of configuring Spark-SQL to work with UnityCatalog on S3. For this setup, you will need to know your UC <span style="color:lightgreen"><ENDPOINT></span> as well as PAT <span style="color:lightgreen"><TOKEN></span>. Then, configure the <span style="color:lightgreen"><CATALOG></span> to be the catalog identifier of your three part [namespace](https://docs.unitycatalog.io/quickstart/#unity-catalog-structure).
+Below is an example of configuring Spark-SQL to work with UnityCatalog on S3. For this setup, you will need to know your UC <span style="color:#d63384">ENDPOINT</span> as well as PAT <span style="color:#d63384">TOKEN</span>. Then, configure the <span style="color:#d63384">CATALOG</span> to be the catalog identifier of your three part [namespace](https://docs.unitycatalog.io/quickstart/#unity-catalog-structure).
 
 ```bash
 bin/spark-sql \
