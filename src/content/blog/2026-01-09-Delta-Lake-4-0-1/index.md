@@ -4,7 +4,7 @@ description: We're excited to announce the release of Delta Lake 4.0.1. This rel
 thumbnail: ./thumbnail.png
 author:
   - robert-pack
-  - zheng-hu
+  - timothy-wang
 publishedAt: 2026-01-11
 ---
 
@@ -61,42 +61,43 @@ OAuth authentication gives you:
 
 ## How to use OAuth with Unity Catalog
 
-1. Configure your UC catalog and endpoint
+**Step 1**: Configure your UC catalog and endpoint
 
-   ```shell
-   spark.sql.catalog.mycatalog = "io.unitycatalog.connectors.spark.UCSingleCatalog"
-   spark.sql.catalog.mycatalog.uri = "https://<your-workspace-host>"
-   ```
+```shell
+spark.sql.catalog.mycatalog = "io.unitycatalog.connectors.spark.UCSingleCatalog"
+spark.sql.catalog.mycatalog.uri = "https://<your-workspace-host>"
+```
 
-2. Choose an authentication mode:<br>
-   a. For static token mode (legacy-compatible)
+**Step 2**: Choose an authentication mode:<br>
+a. For static token mode (legacy-compatible)
 
-   ```shell
-   # Preferred (new) format
-   spark.sql.catalog.mycatalog.auth.type  = "static"
-   spark.sql.catalog.mycatalog.auth.token = "<personal-access-token>"
+```shell
+# Preferred (new) format
+spark.sql.catalog.mycatalog.auth.type  = "static"
+spark.sql.catalog.mycatalog.auth.token = "<personal-access-token>"
 
-   # Legacy (still supported; auto-mapped to static)
-   spark.sql.catalog.mycatalog.token = "<personal-access-token>"
-   ```
+# Legacy (still supported; auto-mapped to static)
+spark.sql.catalog.mycatalog.token = "<personal-access-token>"
+```
 
-   b. For OAuth (dynamic tokens via the ported provider on JDK 8)
+b. For OAuth (dynamic tokens via the ported provider on JDK 8)
 
-   ```shell
-   spark.sql.catalog.mycatalog.auth.type        = "oauth"
-   spark.sql.catalog.mycatalog.auth.oauth.uri   = "https://<auth-server-endpoint>"
-   # Add any other provider-specific keys under auth.oauth.* required by your IdP/UC setup
-   # (e.g., client credentials, scopes, audience, token endpoint, etc.)
-   ```
+```shell
+spark.sql.catalog.mycatalog.auth.type        = "oauth"
+spark.sql.catalog.mycatalog.auth.oauth.uri   = "https://<auth-server-endpoint>"
+# Add any other provider-specific keys under auth.oauth.* required by your IdP/UC setup
+# (e.g., client credentials, scopes, audience, token endpoint, etc.)
+```
 
 Delta constructs a TokenProvider from the auth.\* map and use it to obtain and refresh access tokens for UC operations.
 No static tokens are embedded in your configs.
 
-3. Run with Delta’s Spark extensions as usual:
-   ```shell
-   --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
-   --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
-   ```
+**Step 3**: Run with Delta’s Spark extensions as usual:
+
+```bash
+--conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension"
+--conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+```
 
 For an end-to-end example of the OAuth flow, including configuration and tests, see [PR #5742](https://github.com/delta-io/delta/pull/5742).
 
