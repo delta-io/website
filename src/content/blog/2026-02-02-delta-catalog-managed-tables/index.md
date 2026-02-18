@@ -16,7 +16,7 @@ With [Delta Lake 4.0.1](https://github.com/delta-io/delta/releases/tag/v4.0.1), 
 
 Catalog-Managed Tables is a Delta table feature that allows a catalog to manage the table. Once enabled, the catalog brokers table access as well as stores the table’s latest metadata and commits. Clients reference the table by name, not by path, and use the catalog to resolve the table's storage location. The catalog also manages concurrency control for proposed writes to a table. Writers leverage the catalog, not object store APIs, for atomic commits.
 
-For more details, see the Delta protocol [RFC on Github here](https://github.com/delta-io/delta/blob/master/protocol_rfcs/catalog-managed.md). See how Unity Catalog implements support for the [Catalog-Managed Tables specification here](https://github.com/unitycatalog/unitycatalog/blob/main/spec/protocols/ManagedTablesSpec.md).
+For more details, see the Delta protocol [RFC on Github here](https://github.com/delta-io/delta/blob/master/PROTOCOL.md#catalog-managed-tables). See how Unity Catalog implements support for the [Catalog-Managed Tables specification here](https://github.com/unitycatalog/unitycatalog/blob/main/spec/protocols/ManagedTablesSpec.md).
 
 ## Benefits of Catalog-Managed Tables
 
