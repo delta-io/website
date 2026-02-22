@@ -1,6 +1,6 @@
 ---
 title: Delta Lake 4.0
-description: My summary of Delta Lake 4.0.
+description: We’re thrilled to announce the release of Delta Lake 4.0, a milestone release packed with powerful new features, performance optimizations, and foundational enhancements for the future of open data lakehouses. With new catalog integration, enhanced support for semi-structured data, smarter change tracking, and improved performance, this release delivers practical solutions to everyday data challenges.
 thumbnail: ./thumbnail.png
 author:
   - carly-akerly
