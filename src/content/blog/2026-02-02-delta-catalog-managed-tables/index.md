@@ -11,7 +11,7 @@ publishedAt: 2026-02-26
 
 The data ecosystem is moving toward a catalog-centric model for managing open table formats. As open catalogs gain adoption, the catalog has emerged as the system of record for table identity, discovery, and authorization.
 
-With [Delta Lake 4.1.0](https://github.com/delta-io/delta/releases/tag/v4.1.0), Delta introduces catalog-managed tables, bringing the catalog directly into commit coordination. This simplifies how tables are discovered and secured, enables consistent governance across engines, and unlocks faster performance. The design also aligns Delta with the catalog-managed model pioneered by Iceberg, creating a shared foundation for interoperable, high-performance lakehouse tables. [Unity Catalog](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.3.1) is the first lakehouse catalog to support catalog-managed tables, extending unified governance across any format.
+With [Delta Lake 4.1.0](https://github.com/delta-io/delta/releases/tag/v4.1.0), Delta introduces catalog-managed tables, bringing the catalog directly into commit coordination. This simplifies how tables are discovered and secured, enables consistent governance across engines, and unlocks faster performance. The design also aligns Delta with the catalog-managed model pioneered by Iceberg, creating a shared foundation for interoperable, high-performance lakehouse tables. [Unity Catalog](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.4.0) is the first lakehouse catalog to support catalog-managed tables, extending unified governance across any format.
 
 ## What are Catalog-Managed Tables?
 
