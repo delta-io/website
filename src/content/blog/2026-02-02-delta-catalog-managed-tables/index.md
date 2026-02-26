@@ -1,16 +1,17 @@
 ---
 title: The next evolution of Delta Catalog-Managed Tables
 description: This article explains how to enable catalog-managed commits, a Delta table feature that shifts transaction coordination from the filesystem to Unity Catalog, making the catalog the single source of truth for table state.
-thumbnail: ./thumbnail.png
+thumbnail: ./catalog-managed-tables.png
 author:
   - benjamin-mathew
   - scottsandre
-publishedAt: 2026-02-02
+  - scott-haines
+publishedAt: 2026-02-26
 ---
 
 The data ecosystem is moving toward a catalog-centric model for managing open table formats. As open catalogs gain adoption, the catalog has emerged as the system of record for table identity, discovery, and authorization.
 
-With [Delta Lake 4.0.1](https://github.com/delta-io/delta/releases/tag/v4.0.1), Delta introduces catalog-managed tables, bringing the catalog directly into commit coordination. This simplifies how tables are discovered and secured, enables consistent governance across engines, and unlocks faster performance. The design also aligns Delta with the catalog-managed model pioneered by Iceberg, creating a shared foundation for interoperable, high-performance lakehouse tables. [Unity Catalog](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.3.1) is the first lakehouse catalog to support catalog-managed tables, extending unified governance across any format.
+With [Delta Lake 4.1.0](https://github.com/delta-io/delta/releases/tag/v4.1.0), Delta introduces catalog-managed tables, bringing the catalog directly into commit coordination. This simplifies how tables are discovered and secured, enables consistent governance across engines, and unlocks faster performance. The design also aligns Delta with the catalog-managed model pioneered by Iceberg, creating a shared foundation for interoperable, high-performance lakehouse tables. [Unity Catalog](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.3.1) is the first lakehouse catalog to support catalog-managed tables, extending unified governance across any format.
 
 ## What are Catalog-Managed Tables?
 
@@ -64,26 +65,181 @@ Catalog-managed Delta tables represent an important evolution in how Delta table
 
 We are excited to continue collaborating with the ecosystem to evolve open table formats so that they deliver performant commits, efficient metadata management, multi-engine interoperability, and unified governance.
 
-## How to get started
+## Getting started with Catalog Managed Tables
 
-Get started today with catalog-managed tables by downloading [Delta Spark 4.0.1](https://github.com/delta-io/delta/releases/tag/v4.0.1) and [Unity Catalog 0.3.1](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.3.1). Unity Catalog supports both static token authentication as well as OAuth with automatic token credential refresh.
+In order to get started with Catalog Managed Tables, you'll need both [Delta Lake 4.1.0](https://github.com/delta-io/delta/releases/tag/v4.1.0) and
+[Unity Catalog 0.4.0](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.4.0) installed and configured properly. We've simplified this process by
+providing a full docker environment called [unitycatalog-playground](https://github.com/newfront/unitycatalog-playground/) which can be used
+as a starting point for you to test out this new functionality. Let's take a look at the full end-to-end process.
 
-Below is an example of configuring Spark-SQL to work with UnityCatalog on S3. For this setup, you will need to know your UC <span style="color:#d63384">ENDPOINT</span> as well as PAT <span style="color:#d63384">TOKEN</span>. Then, configure the <span style="color:#d63384">CATALOG</span> to be the catalog identifier of your three part [namespace](https://docs.unitycatalog.io/quickstart/#unity-catalog-structure).
+> Note: This guide is a truncated version of the [Unity Catalog Playground](https://github.com/newfront/unitycatalog-playground/) guide.
+
+### 1. Configure your Spark Session
+
+This step configures your Spark Session to utilize the Unity Catalog UCSingleCatalog, enabling us to use the catalog-managed tables feature.
+
+```python
+DELTA_VERSION='4.1.0'
+UNITY_CATALOG_VERSION='0.4.0'
+unity_catalog_server_url = "http://unitycatalog:8080"
+
+config = {
+    "spark.jars.packages": f"io.delta:delta-spark_4.1_2.13:{DELTA_VERSION},io.unitycatalog:unitycatalog-spark_2.13:{UNITY_CATALOG_VERSION}",
+    "spark.sql.extensions": "io.delta.sql.DeltaSparkSessionExtension",
+    "spark.sql.catalog.spark_catalog": "org.apache.spark.sql.delta.catalog.DeltaCatalog",
+    f"spark.sql.catalog.unity": "io.unitycatalog.spark.UCSingleCatalog",
+    f"spark.sql.catalog.unity.uri": unity_catalog_server_url,
+    f"spark.sql.catalog.unity.token": "",
+    "spark.sql.defaultCatalog": catalog,
+}
+
+spark_config = (
+    SparkConf()
+        .setMaster('local[*]')
+        .setAppName("DeltaCatalogManagedTables")
+)
+for k, v in config.items():
+    spark_config = spark_config.set(k, v)
+
+# build the session
+spark: SparkSession = SparkSession.builder.config(conf=spark_config).getOrCreate()
+```
+
+### 2. Create a Schema and your first Catalog Managed Table
+
+With your session running, create a dedicated schema and then define your table using `CREATE TABLE ... USING DELTA`
+with the `delta.feature.catalogManaged` table property set to `supported`. This single property is what opts the table
+into catalog-managed commits — without it, Delta falls back to standard filesystem-based coordination.
+
+```python
+spark.sql("CREATE SCHEMA IF NOT EXISTS unity.sanctuary")
+
+ddl = """
+CREATE TABLE IF NOT EXISTS sanctuary.pets (
+    uuid    STRING  NOT NULL,
+    name    STRING  NOT NULL,
+    age     INT     NOT NULL,
+    adopted BOOLEAN NOT NULL
+)
+USING DELTA
+TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported')
+"""
+spark.sql(ddl)
+```
+
+### 3. Populate your Table
+
+Now that you have a table, let's add some records to it. We'll be using the `generate_pets` and `pets_to_dataframe`
+methods from the `unitycatalog-playground` library to generate some random data.
+
+```python
+# create 100 pets, grouped into litters of 10 pets
+pets = generate_pets(batch_size=10, total=100)
+litter_one = next(pets, None)
+df = pets_to_dataframe(litter_one, spark)
+
+# add the first set of records
+df.write.format("delta").mode("append").saveAsTable("sanctuary.pets")
+
+# now continue until we've accounted for all pets
+for litter in pets:
+    pets_to_dataframe(litter, spark).write.format("delta").mode("append").saveAsTable("sanctuary.pets")
+```
+
+### 4. Explore your Table
+
+Let's find all pet's who still need to find a home.
+
+```python
+spark.sql("select * from sanctuary.pets where NOT adopted").show()
+```
+
+Given the randomly generated data, you might have more or less pet's who need to be adopted still. In this case,
+there are four pet's left (Otis, Dexter, Bentley, and Fern).
 
 ```bash
-bin/spark-sql \
-  --master "local[*]" \
-  --packages "io.delta:delta-spark_2.13:4.0.1,io.unitycatalog:unitycatalog-spark_2.13:0.3.1,org.apache.hadoop:hadoop-aws:3.4.1" \
-  --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
-  --conf "spark.hadoop.fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem" \
-  --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
-  --conf "spark.sql.catalog.<CATALOG>=io.unitycatalog.spark.UCSingleCatalog" \
-  --conf "spark.sql.catalog.<CATALOG>.uri=<ENDPOINT>" \
-  --conf "spark.sql.catalog.<CATALOG>.token=<TOKEN>"
++--------------------+-------+---+-------+
+|                uuid|   name|age|adopted|
++--------------------+-------+---+-------+
+|100a76bf-d328-478...|   Otis|  7|  false|
+|aeb930bd-d189-46e...| Dexter|  6|  false|
+|bae52223-bac0-436...|Bentley| 12|  false|
+|0bddb1b0-4cf0-457...|   Fern| 14|  false|
++--------------------+-------+---+-------+
 ```
 
-Then you can create a catalog-managed table:
+Now you might be thinking that this feels the same as any standard Delta Lake workflow with Spark and you'd be correct.
+This is the magic of the catalog-managed feature. The catalog is the single source of truth for table state, and you
+no longer need to worry about the filesystem.
 
-```sql
-CREATE TABLE main.default.foo TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported')
+### 5. View the Catalog Commits
+
+We can view the catalog commit metadata using the Unity Catalog API. To query this API endpoint, we'll need to have the
+uuid of our table. We can get that by running the following query.
+
+```python
+spark.sql("describe extended sanctuary.pets").show(truncate=False)
 ```
+
+This will show us the following:
+
+```text
++----------------------------+----------------------------------------------------------------------------------------------+-------+
+|col_name                    |data_type                                                                                     |comment|
++----------------------------+----------------------------------------------------------------------------------------------+-------+
+|uuid                        |string                                                                                        |NULL   |
+|name                        |string                                                                                        |NULL   |
+|age                         |int                                                                                           |NULL   |
+|adopted                     |boolean                                                                                       |NULL   |
+|                            |                                                                                              |       |
+|# Detailed Table Information|                                                                                              |       |
+|Name                        |unity.sanctuary.pets                                                                          |       |
+|Type                        |MANAGED                                                                                       |       |
+|Location                    |file:/home/unitycatalog/etc/data/__unitystorage/tables/bfff9405-4b50-43e9-870b-2b25f2210cf2   |       |
+|Provider                    |delta                                                                                         |       |
+|Is_managed_location         |true                                                                                          |       |
+|Table Properties            |[delta.feature.catalogManaged=supported,delta.minReaderVersion=3,delta.minWriterVersion=7,...]|       |
++----------------------------+----------------------------------------------------------------------------------------------+-------+
+```
+
+The important thing to note here is that the `Location` column contains our `table_id`
+`bfff9405-4b50-43e9-870b-2b25f2210cf2`, as part of the storage location
+`file:/home/unitycatalog/etc/data/__unitystorage/tables/bfff9405-4b50-43e9-870b-2b25f2210cf2`.
+
+We'll use both values to craft a curl request to the `/delta/preview/commits` endpoint.
+
+```bash
+curl -X GET "http://localhost:8080/api/2.1/unity-catalog/delta/preview/commits" \
+  -H "Content-Type: application/json" \
+  -d '{"table_id":"bfff9405-4b50-43e9-870b-2b25f2210cf2", "table_uri":"file:///home/unitycatalog/etc/data/__unitystorage/tables/bfff9405-4b50-43e9-870b-2b25f2210cf2", "start_version":0}' \
+| jq .
+```
+
+The results of which show us the following:
+
+```text
+{
+  "commits": [
+    {
+      "version": 10,
+      "timestamp": 1772125957803,
+      "file_name": "00000000000000000010.a3b3b204-63a4-494d-8244-72824a97e4f2.json",
+      "file_size": 3614,
+      "file_modification_timestamp": 1772125957807
+    }
+  ],
+  "latest_table_version": 10
+}
+```
+
+## Wrapping things up
+
+We've learned how to move beyond the filesystem to discover and govern Delta tables using catalog-managed commits. We'd
+love your feedback on this feature, and welcome any questions or comments you may have. Please reach out to us on the
+[Delta Users Slack channel](https://go.delta.io/slack) or on the [Unity Catalog Slack channel](https://go.unitycatalog.io/slack).
+
+## Limitations
+
+At this point in time there are a few limitations to be aware of. First, the catalog-managed table cannot be vacuumed
+at this time. This behavior is due to the table being appendOnly (`delta.feature.appendOnly=supported`).
+This functionality will change as the catalog-managed feature matures, as of right now the feature is `experimental`.
