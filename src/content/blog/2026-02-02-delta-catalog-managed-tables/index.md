@@ -1,7 +1,7 @@
 ---
 title: The next evolution of Delta Catalog-Managed Tables
 description: This article explains how to enable catalog-managed commits, a Delta table feature that shifts transaction coordination from the filesystem to Unity Catalog, making the catalog the single source of truth for table state.
-thumbnail: ./catalog-managed-tables.png
+thumbnail: ./catalog-managed-tables-delta-og.png
 author:
   - benjamin-mathew
   - scottsandre
@@ -68,15 +68,31 @@ We are excited to continue collaborating with the ecosystem to evolve open table
 ## Getting started with Catalog Managed Tables
 
 In order to get started with Catalog Managed Tables, you'll need both [Delta Lake 4.1.0](https://github.com/delta-io/delta/releases/tag/v4.1.0) and
-[Unity Catalog 0.4.0](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.4.0) installed and configured properly. We've simplified this process by
-providing a full docker environment called [unitycatalog-playground](https://github.com/newfront/unitycatalog-playground/) which can be used
-as a starting point for you to test out this new functionality. Let's take a look at the full end-to-end process.
+[Unity Catalog 0.4.0](https://github.com/unitycatalog/unitycatalog/releases/tag/v0.4.0) installed and configured properly.
+The **server.properties** file of the Unity Catalog server should contain the following:
+
+```text
+## Experimental Feature Flags
+# Enable MANAGED table (experimental feature)
+# Default: false (disabled)
+server.managed-table.enabled=true
+
+# Set the UC storage root
+storage-root.tables=/home/unitycatalog/etc/data/
+```
+
+> Note: This properties file can be viewed in full [here](https://github.com/newfront/unitycatalog-playground/blob/main/etc/conf/server.properties).
+
+We've simplified this process for you by providing a full docker environment called
+[unitycatalog-playground](https://github.com/newfront/unitycatalog-playground/) which can be used as a starting point to
+test out this new functionality.
 
 > Note: This guide is a truncated version of the [Unity Catalog Playground](https://github.com/newfront/unitycatalog-playground/) guide.
 
 ### 1. Configure your Spark Session
 
-This step configures your Spark Session to utilize the Unity Catalog UCSingleCatalog, enabling us to use the catalog-managed tables feature.
+This step configures your Spark Session to use the Unity Catalog UCSingleCatalog, enabling the use of the
+catalog-managed tables feature.
 
 ```python
 DELTA_VERSION='4.1.0'
@@ -107,9 +123,9 @@ spark: SparkSession = SparkSession.builder.config(conf=spark_config).getOrCreate
 
 ### 2. Create a Schema and your first Catalog Managed Table
 
-With your session running, create a dedicated schema and then define your table using `CREATE TABLE ... USING DELTA`
-with the `delta.feature.catalogManaged` table property set to `supported`. This single property is what opts the table
-into catalog-managed commits — without it, Delta falls back to standard filesystem-based coordination.
+With your session running, create a dedicated schema and then define your table using **CREATE TABLE ... USING DELTA**
+with the **delta.feature.catalogManaged** table property set to **supported**. This single property is what opts the
+table into catalog-managed commits — without it, Delta falls back to standard filesystem-based coordination.
 
 ```python
 spark.sql("CREATE SCHEMA IF NOT EXISTS unity.sanctuary")
@@ -130,7 +146,8 @@ spark.sql(ddl)
 ### 3. Populate your Table
 
 Now that you have a table, let's add some records to it. We'll be using the `generate_pets` and `pets_to_dataframe`
-methods from the `unitycatalog-playground` library to generate some random data.
+methods from the [unitycatalog-playground](https://github.com/newfront/unitycatalog-playground/) library to
+generate some random data.
 
 ```python
 # create 100 pets, grouped into litters of 10 pets
@@ -148,7 +165,7 @@ for litter in pets:
 
 ### 4. Explore your Table
 
-Let's find all pet's who still need to find a home.
+Let's find all pets who still need to find a home.
 
 ```python
 spark.sql("select * from sanctuary.pets where NOT adopted").show()
@@ -202,11 +219,12 @@ This will show us the following:
 +----------------------------+----------------------------------------------------------------------------------------------+-------+
 ```
 
-The important thing to note here is that the `Location` column contains our `table_id`
-`bfff9405-4b50-43e9-870b-2b25f2210cf2`, as part of the storage location
-`file:/home/unitycatalog/etc/data/__unitystorage/tables/bfff9405-4b50-43e9-870b-2b25f2210cf2`.
+<br>
+The important thing to note here is that the **Location** column contains our **table_id**
+_bfff9405-4b50-43e9-870b-2b25f2210cf2_, as part of the storage location
+_file:/home/unitycatalog/etc/data/__unitystorage/tables/bfff9405-4b50-43e9-870b-2b25f2210cf2_.
 
-We'll use both values to craft a curl request to the `/delta/preview/commits` endpoint.
+We'll use both values to craft a curl request to the **/delta/preview/commits** endpoint.
 
 ```bash
 curl -X GET "http://localhost:8080/api/2.1/unity-catalog/delta/preview/commits" \
@@ -215,7 +233,11 @@ curl -X GET "http://localhost:8080/api/2.1/unity-catalog/delta/preview/commits" 
 | jq .
 ```
 
+<br>
+
 The results of which show us the following:
+
+<br>
 
 ```text
 {
@@ -241,5 +263,7 @@ love your feedback on this feature, and welcome any questions or comments you ma
 ## Limitations
 
 At this point in time there are a few limitations to be aware of. First, the catalog-managed table cannot be vacuumed
-at this time. This behavior is due to the table being appendOnly (`delta.feature.appendOnly=supported`).
-This functionality will change as the catalog-managed feature matures, as of right now the feature is `experimental`.
+at this time. This behavior is due to the table automatically receiving the **delta.feature.appendOnly=supported**
+property on table creation.
+
+This functionality will change as the catalog-managed feature matures, as of right now the feature is _experimental_.
