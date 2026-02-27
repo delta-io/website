@@ -1,5 +1,5 @@
 ---
-title: The next evolution of Delta Catalog-Managed Tables
+title: The next evolution of Delta - Catalog-Managed Tables
 description: This article explains how to enable catalog-managed commits, a Delta table feature that shifts transaction coordination from the filesystem to Unity Catalog, making the catalog the single source of truth for table state.
 thumbnail: ./catalog-managed-tables-delta-og.png
 author:
