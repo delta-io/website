@@ -46,7 +46,7 @@ After completing changes locally, like the one above, you can now push to Github
 
 ## Running the website locally
 
-To run the website locally, run the command **`YOUTUBE_API_KEY=<string> pnpm dev`** from the repo folder. If you have never done this before, you first set up npm. To do so, run the following commands:
+To run the website locally, run the command **`YOUTUBE_API_KEY=<string> pnpm dev`** from the repo folder. If you have never done this before, you first set up pnpm. To do so, run the following commands:
 
 ```
 pnpm i
