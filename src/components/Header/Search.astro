@@ -24,7 +24,7 @@ import HeaderButton from "./HeaderButton.astro";
           <p>To view search results, run a production build:</p>
           <p>
             <code class="text-white bg-darkBorder rounded px-3 py-2 ml-3">
-              $ pnpm build && pnpm preview
+              $ pnpm build && pnpm serve
             </code>
           </p>
         </Typography>
@@ -145,19 +145,6 @@ import HeaderButton from "./HeaderButton.astro";
     position: static;
   }
 </style>
-<script is:inline>
-  (() => {
-    const openBtn = document.querySelector(".header-open-search-modal");
-    const shortcut = openBtn?.querySelector("kbd");
-    if (!openBtn || !(shortcut instanceof HTMLElement)) return;
-    const platformKey = shortcut.querySelector("kbd");
-    if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
-      platformKey.textContent = "⌘";
-      openBtn.setAttribute("aria-keyshortcuts", "Meta+K");
-    }
-    shortcut.style.display = "";
-  })();
-</script>
 <script>
   class SearchContainer extends HTMLElement {
     #modal: HTMLDialogElement | null = null;
@@ -184,6 +171,16 @@ import HeaderButton from "./HeaderButton.astro";
     }
 
     connectedCallback() {
+      const shortcut = this.#button?.querySelector("kbd");
+      if (shortcut instanceof HTMLElement) {
+        const platformKey = shortcut.querySelector("kbd");
+        if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+          platformKey.textContent = "⌘";
+          this.#button?.setAttribute("aria-keyshortcuts", "Meta+K");
+        }
+        shortcut.style.display = "";
+      }
+
       this.#button?.addEventListener("click", () => {
         this.openModal();
       });
@@ -220,5 +217,15 @@ import HeaderButton from "./HeaderButton.astro";
     }
   }
 
-  customElements.define("search-container", SearchContainer);
+  /*
+    The guard (if statement) here is required because it works around a bug with
+    @astrojs/netlify which is causing this component to get imported twice.
+
+    @see https://github.com/withastro/astro/issues/16173
+
+    This should be fixed with Astro v6.1.3
+  */
+  if (!customElements.get("search-container")) {
+    customElements.define("search-container", SearchContainer);
+  }
 </script>
