@@ -116,7 +116,6 @@ The following are the key compatibility and breaking changes introduced in this 
 
 - **Java 17+**: Required for Delta Lake 4.1.0.
 - **Spark 3.5 Support Dropped**: Users must upgrade to Spark 4.0.1 or 4.1.0.
-- **Manual VACUUM Blocked**: For catalog-managed tables, data lifecycle must be managed through the catalog.
 
 ## Try Delta Lake 4.1.0 and Get Involved
 
