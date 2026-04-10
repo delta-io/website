@@ -46,7 +46,7 @@ While backward-compatible artifacts without the suffix are still published for t
 **Key benefits include:**
 
 - **Choice of Runtime**: Explicit artifacts for both Spark 4.1 and Spark 4.0.
-- **Java 17 Requirement**: This release fully embraces Java 17; Spark 3.5 support has been officially dropped.
+- **Java 17 Requirement**: This release fully embraces Java 17; Spark 3.5 support has been officially dropped. All releases will be focused on alignment with Spark >= 4.
 
 ## Server-Side Planning (Preview)
 
