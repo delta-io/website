@@ -81,6 +81,7 @@ FROM prod.consumer.clickstream_raw
 WHERE event_date = '2026-04-23';
 ```
 
+<br/>
 but that actually introduces some unintended side effects, since session-wide configuration can lead to unintended schema
 changes across multiple operations. This makes it harder to reason about which operations evolve the schema. In 4.2,
 you can enable _schema evolution_ within just the statement that needs it:
