@@ -66,7 +66,7 @@ collection during query planning, so data skipping works on newly-evolved column
 
 For example, let's say a clickstream has been missing <span style="color:#d63384">device_type</span> — the kind of
 surface (mobile, web, tablet) an event was recorded from. The upstream producer has already started emitting the new
-field into `prod.consumer.clickstream_raw`, and we want to fold it into the main table without a preliminary schema
+field into <span style="color:#d63384">prod.consumer.clickstream_raw</span>, and we want to fold it into the main table without a preliminary schema
 change.
 
 Previously, the only SQL option was to set a session-wide Spark config
@@ -85,6 +85,8 @@ WHERE event_date = '2026-04-23';
 but that actually introduces some unintended side effects, since session-wide configuration can lead to unintended schema
 changes across multiple operations. This makes it harder to reason about which operations evolve the schema. In 4.2,
 you can enable _schema evolution_ within just the statement that needs it:
+<br />
+<br/>
 
 ```sql
 -- New: schema evolution scoped to this single statement
