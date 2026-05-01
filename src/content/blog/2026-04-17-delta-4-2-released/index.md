@@ -57,22 +57,19 @@ INSERT INTO clickstream_raw VALUES
 
 ### Schema Evolution
 
-Schema evolution also gets smoother. <span style="color:#d63384">INSERT INTO</span> now supports
-a new <span style="color:#d63384">WITH SCHEMA EVOLUTION</span> SQL clause that enables automatic schema evolution
-directly in the statement, adding new columns to the table schema as part of the commit. And a new table
+Schema evolution also gets smoother. <span style="color:#d63384">INSERT INTO ... BY NAME</span> now supports automatic
+schema evolution when autoMerge is enabled, adding new columns to the table schema as part of the commit. For SQL-first
+teams, this removes one of the last reasons to drop into a DataFrame notebook just to evolve a schema. And a new table
 property (<span style="color:#d63384">delta.stats.skipping.forceOptimizeStatsCollection</span>) forces per-file stats
 collection during query planning, so data skipping works on newly-evolved columns immediately — no
 <span style="color:#d63384">OPTIMIZE</span> required.
 
 For example, let's say a clickstream has been missing <span style="color:#d63384">device_type</span> — the kind of
 surface (mobile, web, tablet) an event was recorded from. The upstream producer has already started emitting the new
-field into <span style="color:#d63384">prod.consumer.clickstream_raw</span>, and we want to fold it into the main table without a preliminary schema
+field into prod.consumer.clickstream_raw, and we want to fold it into the main table without a preliminary schema
 change.
 
-Previously, the only SQL option was to set a session-wide Spark config
-
 ```sql
--- Legacy: enables schema evolution for every write in the session
 SET spark.databricks.delta.schema.autoMerge.enabled = true;
 
 INSERT INTO prod.consumer.clickstream BY NAME
@@ -82,25 +79,9 @@ WHERE event_date = '2026-04-23';
 ```
 
 <br/>
-but that actually introduces some unintended side effects, since session-wide configuration can lead to unintended schema
-changes across multiple operations. This makes it harder to reason about which operations evolve the schema. In 4.2,
-you can enable _schema evolution_ within just the statement that needs it:
-<br />
-<br/>
-
-```sql
--- New: schema evolution scoped to this single statement
-INSERT INTO prod.consumer.clickstream WITH SCHEMA EVOLUTION
-SELECT event_date, event_type, user_id, device_type
-FROM prod.consumer.clickstream_raw
-WHERE event_date = '2026-04-23';
-```
-
-<br/>
-The end result is the addition of <span style="color:#d63384">device_type</span> to the table schema, as part of the commit, with 
-the added comfort of knowing that the rest of the session configurations remain in their original forms. Existing rows 
-will carry NULL for the new column, and every downstream reader continues to work without intervention. For SQL-first 
-teams, this removes one of the last reasons to drop into a DataFrame notebook just to get a pipeline unstuck.
+<span style="color:#d63384">device_type</span> is added to the table schema as part of the commit. Existing rows carry 
+NULL for the new column, and every downstream reader continues to work without intervention. For SQL-first teams, 
+this removes one of the last reasons to drop into a DataFrame notebook just to get a pipeline unstuck.
 
 ### Data Type Support
 
