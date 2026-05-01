@@ -55,34 +55,6 @@ INSERT INTO clickstream_raw VALUES
   ('2026-04-22', 'click',    'user_4');
 ```
 
-### Schema Evolution
-
-Schema evolution also gets smoother. <span style="color:#d63384">INSERT INTO ... BY NAME</span> now supports automatic
-schema evolution when autoMerge is enabled, adding new columns to the table schema as part of the commit. For SQL-first
-teams, this removes one of the last reasons to drop into a DataFrame notebook just to evolve a schema. And a new table
-property (<span style="color:#d63384">delta.stats.skipping.forceOptimizeStatsCollection</span>) forces per-file stats
-collection during query planning, so data skipping works on newly-evolved columns immediately — no
-<span style="color:#d63384">OPTIMIZE</span> required.
-
-For example, let's say a clickstream has been missing <span style="color:#d63384">device_type</span> — the kind of
-surface (mobile, web, tablet) an event was recorded from. The upstream producer has already started emitting the new
-field into prod.consumer.clickstream_raw, and we want to fold it into the main table without a preliminary schema
-change.
-
-```sql
-SET spark.databricks.delta.schema.autoMerge.enabled = true;
-
-INSERT INTO prod.consumer.clickstream BY NAME
-SELECT event_date, event_type, user_id, device_type
-FROM prod.consumer.clickstream_raw
-WHERE event_date = '2026-04-23';
-```
-
-<br/>
-<span style="color:#d63384">device_type</span> is added to the table schema as part of the commit. Existing rows carry 
-NULL for the new column, and every downstream reader continues to work without intervention. For SQL-first teams, 
-this removes one of the last reasons to drop into a DataFrame notebook just to get a pipeline unstuck.
-
 ### Data Type Support
 
 In Delta Kernel, we add support for <span style="color:#d63384">geospatial, collation, and variant types</span>:
@@ -110,6 +82,34 @@ SELECT event_date, event_type, user_id, device_type,
        parse_json(raw_properties) AS properties
 FROM prod.consumer.clickstream_raw WHERE event_date = '2026-04-24';
 ```
+
+## Schema Evolution
+
+Schema evolution also gets smoother. <span style="color:#d63384">INSERT INTO ... BY NAME</span> now supports automatic
+schema evolution when autoMerge is enabled, adding new columns to the table schema as part of the commit. For SQL-first
+teams, this removes one of the last reasons to drop into a DataFrame notebook just to evolve a schema. And a new table
+property (<span style="color:#d63384">delta.stats.skipping.forceOptimizeStatsCollection</span>) forces per-file stats
+collection during query planning, so data skipping works on newly-evolved columns immediately — no
+<span style="color:#d63384">OPTIMIZE</span> required.
+
+For example, let's say a clickstream has been missing <span style="color:#d63384">device_type</span> — the kind of
+surface (mobile, web, tablet) an event was recorded from. The upstream producer has already started emitting the new
+field into prod.consumer.clickstream_raw, and we want to fold it into the main table without a preliminary schema
+change.
+
+```sql
+SET spark.databricks.delta.schema.autoMerge.enabled = true;
+
+INSERT INTO prod.consumer.clickstream BY NAME
+SELECT event_date, event_type, user_id, device_type
+FROM prod.consumer.clickstream_raw
+WHERE event_date = '2026-04-23';
+```
+
+<br/>
+<span style="color:#d63384">device_type</span> is added to the table schema as part of the commit. Existing rows carry 
+NULL for the new column, and every downstream reader continues to work without intervention. For SQL-first teams, 
+this removes one of the last reasons to drop into a DataFrame notebook just to get a pipeline unstuck.
 
 ## Strengthening Catalog Managed Tables
 
