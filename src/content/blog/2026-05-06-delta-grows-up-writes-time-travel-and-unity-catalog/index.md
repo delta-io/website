@@ -301,4 +301,4 @@ A year ago, DuckDB could read Delta tables. Today it can insert data into them, 
 
 There's more to come: DDL support to create and manage tables directly, delete/update/merge support, and multi-table atomicity for writes that span more than one table. In the meantime, the playground image linked above has everything you need to kick the tires. As always, feedback and bug reports are welcome on [GitHub](https://github.com/duckdb/duckdb-delta).
 
-> This post is republished from the DuckDB blog with permission. Originally published April 29, 2026 by Ben Fleis at [Delta Grows Up: Writes, Unity Catalog and Time Travel](https://duckdb.org/2026/04/29/delta-uc-updates).
+> This post is republished from the DuckDB blog with permission. Originally published April 29, 2026 by Ben Fleis at [Delta Grows Up: Writes, Unity Catalog and Time Travel](https://duckdb.org/2026/05/07/delta-uc-updates).
