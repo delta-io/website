@@ -1,1 +1,115 @@
 @import "astro-orbit/theme.css";
+
+/*
+ * Inline code/kbd/samp inside prose should inherit the surrounding text size
+ * rather than snap to --font-size-code. Color and monospace font are still
+ * applied by astro-orbit's Typography rules. <pre> children are excluded so
+ * fenced/highlighted code blocks keep the theme's code size.
+ *
+ * :where() keeps specificity at 0 to match astro-orbit's own pattern.
+ */
+:where(.typography-prose) :not(pre) > code,
+:where(.typography-prose) :not(pre) > kbd,
+:where(.typography-prose) :not(pre) > samp {
+  font-size: 1rem;
+}
+
+/*
+ * Spacing below fenced/highlighted code blocks. astro-orbit's prose rules add
+ * margin-bottom to p/ol/ul/blockquote but not to <pre>/.astro-code, leaving
+ * code blocks visually flush against the next paragraph.
+ */
+.astro-code {
+  margin-bottom: 1rem;
+}
+
+/*
+ * Prose list markers + indent.
+ *
+ * Tailwind v4 preflight (loaded via astro-orbit's `@import "tailwindcss"`)
+ * resets `ol, ul, menu { list-style: none; margin: 0; padding: 0; }` at
+ * specificity 0,0,1. astro-orbit's own list rules use `:where()` which flattens
+ * to 0,0,1 as well — same specificity, preflight wins on source order, so
+ * bullets and indentation disappear in prose.
+ *
+ * These selectors carry specificity 0,1,1 (one class + one element) so they
+ * override the preflight without `!important`.
+ */
+.typography-prose ul {
+  list-style-type: disc;
+  padding-left: 2em;
+}
+
+.typography-prose ol {
+  list-style-type: decimal;
+  padding-left: 2em;
+}
+
+/*
+ * Prose tables — DuckDB-blog-inspired styling.
+ *
+ * Row dividers only (no outer box, no vertical lines), tabular numerics,
+ * subtle hover highlight, and horizontal scroll for tables wider than their
+ * container. Specificity is 0,1,1 (one class + one element) so it wins over
+ * astro-orbit's :where()-wrapped table rule (0,0,1) without needing !important.
+ */
+.typography-prose table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1em;
+  overflow-x: auto;
+  text-align: left;
+  font-size: var(--font-size-secondary);
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+  font-variant-ligatures: none;
+}
+
+.typography-prose table::-webkit-scrollbar {
+  height: 5px;
+}
+.typography-prose table::-webkit-scrollbar-track {
+  background: var(--color-bg-light);
+}
+.typography-prose table::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.typography-prose table th,
+.typography-prose table td {
+  padding: 0.625rem;
+  vertical-align: top;
+}
+
+.typography-prose table th {
+  font-weight: var(--font-weight-bold);
+  text-align: left;
+}
+
+.typography-prose table thead th {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.typography-prose table tr {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.typography-prose table tbody tr:hover {
+  background: var(--color-bg-light);
+}
+
+.typography-prose table a {
+  text-decoration: underline;
+  word-wrap: normal;
+  word-break: normal;
+}
+
+.typography-prose table pre {
+  margin: 0;
+}
+
+.typography-prose table.narrow {
+  width: auto;
+}
