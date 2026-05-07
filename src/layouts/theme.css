@@ -113,3 +113,17 @@
 .typography-prose table.narrow {
   width: auto;
 }
+
+/*
+ * Prose media sizing:
+ * keep intrinsic aspect ratio while allowing either viewport width or height
+ * to be the limiting dimension.
+ */
+.typography-prose img,
+.typography-prose video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}

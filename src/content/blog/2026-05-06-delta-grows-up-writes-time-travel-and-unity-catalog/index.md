@@ -1,13 +1,13 @@
 ---
-title: "Delta Grows Up: Writes, Time Travel, and Unity Catalog"
-description: DuckDB's Delta and Unity Catalog extensions shed their experimental tags - now with writes, time travel, and catalog managed table support.
+title: "Delta Grows Up: Writes, Unity Catalog and Time Travel"
+description: DuckDB's Delta and Unity Catalog extensions shed their experimental tags — now with writes, Unity Catalog and time travel support.
 thumbnail: ./thumbnail.png
 author:
   - ben-fleis
-publishedAt: 2026-05-08
+publishedAt: 2026-05-07
 ---
 
-**_TL;DR: DuckDB's Delta and Unity Catalog extensions shed their experimental tags — now with writes, time travel, and catalog managed table support._**
+**_TL;DR: DuckDB's Delta and Unity Catalog extensions shed their experimental tags — now with writes, Unity Catalog and time travel support_**
 
 Welcome back! While we here at DuckDB Labs are typically of the quacking persuasion, we've been busy as beavers, shoring up our Delta to prepare for what's next… Unity Catalog! Let's look at how DuckDB's [Delta](https://duckdb.org/docs/current/core_extensions/delta.html) and [Unity Catalog](https://duckdb.org/docs/current/core_extensions/unity_catalog.html) extensions have grown up – enough to shed the experimental tag – and see what has changed since our [last update](https://duckdb.org/2025/03/21/maximizing-your-delta-scan-performance).
 
@@ -15,7 +15,7 @@ Welcome back! While we here at DuckDB Labs are typically of the quacking persuas
 
 Before we jump in, let's review for a moment. Delta is a foundational [open table format and toolset](https://docs.delta.io/) for building and managing data lakes, related to Iceberg and other lakehouse formats. DuckDB supports Delta tables via its [Delta Extension](https://duckdb.org/docs/current/core_extensions/delta.html).
 
-In that last update we highlighted performance wins, particularly file skipping via filter pushdowns, and metadata caching with snapshot pinning. Now we build on those with extended functionality, and even more performance gains!
+In that last update we highlighted performance wins, particularly file skipping via filter pushdowns, and metadata caching with snapshot pinning. Now we build on these, and add writes, time travel and Unity Catalog support, plus more performance gains!
 
 ### Building Up the Delta (Lake): Writes
 
@@ -83,11 +83,11 @@ Data lake systems excel at scale. As your data assets multiply, you need a way t
 
 ### What is Unity Catalog?
 
-Unity Catalog (UC for short) is an open standard for governing data and AI assets, including tables, volumes, models, and functions, across engines and clouds. It turns your data lake into a lakehouse, and gives you a single place to discover, audit, and control access to your data, regardless of what's reading or writing it. DuckDB's Unity Catalog extension is built upon the [Unity Catalog Open API](https://docs.unitycatalog.io/). There are two main implementations: OSS Unity Catalog, which you can self-host (and Docker-ify in minutes), and Databricks Unity Catalog, the managed version. Like Delta, the DuckDB Unity Catalog extension has shed its experimental tag. Let's put both to work.
+Unity Catalog (UC for short) is an open standard for governing data and AI assets, including tables, volumes, models, and functions, across engines and clouds. It turns your data lake into a lakehouse, and gives you a single place to discover, audit, and control access to your data, regardless of what's reading or writing it. DuckDB's Unity Catalog extension is built upon the [Unity Catalog Open API](https://docs.unitycatalog.io/). There are two main implementations: [OSS Unity Catalog](https://unitycatalog.io/), which you can self-host (and Docker-ify in minutes), and [Databricks Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/), the managed version. Like Delta, the DuckDB Unity Catalog extension has shed its experimental tag. Let's put both to work.
 
 ### Getting Started: OSS Unity Catalog
 
-We've put together a [playground Docker image of OSS Unity Catalog and DuckDB bundled together](https://github.com/benfleis/duckdb-unitycatalog-playground/), so you can follow along without any setup beyond docker build-and-run. Grab it if you would like to walk through the samples or experiment on your own. (If you'd prefer to run OSS UC directly, the official image is the upstream of our playground.)
+We've set up a [Docker image playground bundling OSS Unity Catalog and DuckDB together](https://github.com/benfleis/duckdb-unitycatalog-playground/), so you can follow along with easy docker build-and-run setup. Grab it if you would like to walk through the samples or experiment on your own. (If you'd prefer to run OSS UC directly, the official image is the upstream of our playground.)
 
 Let's start with Docker. Assuming you now have the image running, it already executed (roughly) the following steps in the build phase to prepare our playground:
 
@@ -108,6 +108,8 @@ After that, we can test things out from DuckDB. To see for yourself, `docker exe
 Before doing anything meaningful we'll need to set up a DuckDB secret. In this example the `TOKEN` value is ignored by local OSS UC server, but the field is required. Create the secret, then you can immediately attach and read:
 
 ```sql
+LOAD unity_catalog;
+
 CREATE SECRET (
     TYPE     unity_catalog,
     TOKEN    'demo-ignored-token',
@@ -123,9 +125,9 @@ SELECT name, age, adopted FROM my_catalog.pets ORDER BY name;
 
 That's it! You just queried Unity-Catalog-managed, Delta-stored pets data.
 
-> **Tip:** Want to experiment with this on Databricks Unity Catalog? Setting up a Databricks Unity Catalog is out of scope for this blog, but if you have one ready to go, you will need these to get bootstrapped with DuckDB:
+> Tip Want to experiment with this on Databricks Unity Catalog? Setting up a Databricks Unity Catalog is out of scope for this blog, but if you have one ready to go, you will need these to get bootstrapped with DuckDB:
 >
-> - set `ENDPOINT` to [your Workspace URL](https://docs.databricks.com/aws/en/workspace/workspace-details#workspace-instance-names-urls-and-ids) (typically: `https://{instance}.cloud.databricks.com/`)
+> - set `ENDPOINT` to [your Workspace URL](https://docs.databricks.com/aws/en/workspace/workspace-details#workspace-instance-names-urls-and-ids) (typically: https://{instance}.cloud.databricks.com/)
 > - set `TOKEN` appropriately (e.g. [create a PAT](https://docs.databricks.com/aws/en/dev-tools/auth/pat) with `unity-catalog` scope); getting the correct token depends entirely on your setup. To dive in, see [Access Control in Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/).
 >
 > With these in hand you can use DuckDB directly, or access the extensive [UC Open API](https://docs.databricks.com/api/workspace/introduction) directly.
@@ -148,7 +150,7 @@ FROM range(10);
 SELECT count() FROM my_catalog.pets;
 ```
 
-You can also easily find and see the created files; check `data` (bind-mounted in Docker), and you should find both existing files, and a new Parquet file containing the new rows. In my case it looks like this:
+You can also easily find and see the created files; check the local `data` directory (also bind-mounted in Docker), and you should find both pre-existing files, and a new Parquet file containing the inserted rows. In my case it looks like this:
 
 ```bash
 tree data
@@ -173,11 +175,11 @@ data
 
 ### Catalog Managed Tables
 
-With the basics out of the way, we can talk about Catalog Managed Tables (CMT). This is available today in both [OSS](https://www.unitycatalog.io/) and [Databricks Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/).
+With the basics out of the way, we can talk about [Catalog Managed Tables (CMT)](https://docs.databricks.com/aws/en/tables/managed). This is available today in both [OSS](https://www.unitycatalog.io/) and [Databricks](https://docs.databricks.com/aws/en/data-governance/unity-catalog/) Unity Catalog.
 
 The big feature in CMT is coordinated concurrent writes. Without CMT, DuckDB writes go directly to the Delta log. While modern storage backends prevent outright lost writes, UC is left out of the loop entirely. Its metadata, audit trail, and statistics fall out of sync with the actual table state, and other engines querying through UC may see a stale view.
 
-CMT fixes this: every write is staged and registered through UC before it becomes visible. UC acts as the commit arbiter, preserving first writer commits, and sending a conflict error to later writers. This matters wherever multiple writers are appending simultaneously — parallel ETL pipelines, partitioned bulk loads, concurrent analytical inserts. Each writer works independently; UC ensures exactly one commit lands per version and keeps its own catalog in sync with every one of them.
+CMT fixes this: every write is staged and registered through UC before it becomes visible. UC acts as the commit arbiter, preserving first writer commits, and sending a conflict error to later writers. This matters wherever multiple writers are appending simultaneously, e.g., parallel ETL pipelines, partitioned bulk loads, and concurrent analytical inserts. Each writer works independently; UC ensures exactly one commit lands per version and keeps its own catalog in sync with every one of them.
 
 Consistent reads and audit history are already inherent to Delta and UC respectively. CMT doesn't add functionality, it just ensures UC stays in sync with every commit. And CMT coordinates commits per table; there is no cross-table atomicity. If you write to two tables in the same `BEGIN` / `COMMIT` block, each table commits independently.
 
@@ -202,7 +204,7 @@ INSERT INTO my_catalog.my_schema.concurrent_tbl
 VALUES (gen_random_uuid()::VARCHAR, 'Luna', 3, true);
 ```
 
-Now each DuckDB writer stages its commit to a `_staged_commits/` directory and registers it with UC before that data becomes visible. UC arbitrates: exactly one writer wins each version in a race, the rest get a conflict error and can retry. Next, let's look at how UC handles the race.
+Now each DuckDB writer stages its commit to a `_staged_commits/` directory and registers it with UC before that data becomes visible. UC arbitrates: exactly one writer wins each version in a race, the others get a conflict error and can retry. Next, let's look at how UC handles the race.
 
 ## Deeper Dive
 
@@ -256,7 +258,7 @@ SELECT count() AS total_rows FROM my_catalog.my_schema.concurrent_tbl;
 
 ### Travel in Time, Faster
 
-DuckDB's Delta snapshot loading is getting a serious speed boost: snapshots will load incrementally when possible, making time travel across nearby versions significantly faster. Consider a table where some initial queries are made against version 16:
+DuckDB's Delta snapshot loading is getting a speed boost: snapshots will load incrementally when possible, making time travel across nearby versions significantly faster. Consider a table where some initial queries are made against version 16:
 
 ```sql
 ATTACH './path/to/table' AS t (TYPE delta, VERSION 16);
@@ -276,8 +278,7 @@ SELECT count() FROM t;  -- → 21
 -- Delta kernel logs 'Provisionally selecting ... <version>.json'
 -- whenever it reads a log file from scratch. We search for any such
 -- message referencing a zero-padded log filename; zero matches
--- means the cached v16 snapshot was extended incrementally rather
--- than rebuilt.
+-- means the cached v16 snapshot was reused rather than rebuilt.
 SELECT count() FROM duckdb_logs
 WHERE type = 'DeltaKernel'
   AND message LIKE '%00000000000000000%.json%';
@@ -292,12 +293,12 @@ In Delta lakes with thousands or millions of snapshots, incremental loading prov
 > FORCE INSTALL delta FROM core_nightly;
 > ```
 >
-> Please be aware that nightly builds are not intended for production use. The implementation will be included in the next stable release, v1.5.3.
+> Please be aware that nightly builds are not intended for production use. The implementation will be included in the next stable release, [v1.5.3](https://duckdb.org/release_calendar.html).
 
 ## Conclusions
 
 A year ago, DuckDB could read Delta tables. Today it can insert data into them, travel through their history, and query and write through a governed catalog — without the experimental caveat on any of it. The combination of Delta for open storage, Unity Catalog for governance and coordination, and DuckDB for fast analytical queries is a stack you can build on.
 
-There's more to come: DDL support to create and manage tables directly, delete/update/merge support, and multi-table atomicity for writes that span more than one table. In the meantime, the playground image linked above has everything you need to kick the tires. As always, feedback and bug reports are welcome on GitHub.
+There's more to come: DDL support to create and manage tables directly, delete/update/merge support, and multi-table atomicity for writes that span more than one table. In the meantime, the playground image linked above has everything you need to kick the tires. As always, feedback and bug reports are welcome on [GitHub](https://github.com/duckdb/duckdb-delta).
 
-> This post is republished from the DuckDB blog with permission. Originally published April 29, 2026 by Ben Fleis at [Delta Grows Up: Writes, Time Travel and Unity Catalog](https://duckdb.org/2026/04/29/delta-uc-updates).
+> This post is republished from the DuckDB blog with permission. Originally published April 29, 2026 by Ben Fleis at [Delta Grows Up: Writes, Unity Catalog and Time Travel](https://duckdb.org/2026/04/29/delta-uc-updates).
