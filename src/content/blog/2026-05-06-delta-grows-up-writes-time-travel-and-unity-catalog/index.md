@@ -9,11 +9,11 @@ publishedAt: 2026-05-07
 
 **_TL;DR: DuckDB's Delta and Unity Catalog extensions shed their experimental tags — now with writes, Unity Catalog and time travel support_**
 
-Welcome back! While we here at DuckDB Labs are typically of the quacking persuasion, we've been busy as beavers, shoring up our Delta to prepare for what's next… Unity Catalog! Let's look at how DuckDB's [Delta](https://duckdb.org/docs/current/core_extensions/delta.html) and [Unity Catalog](https://duckdb.org/docs/current/core_extensions/unity_catalog.html) extensions have grown up – enough to shed the experimental tag – and see what has changed since our [last update](https://duckdb.org/2025/03/21/maximizing-your-delta-scan-performance).
+Welcome back! While we here at DuckDB Labs are typically of the quacking persuasion, we’ve been busy as beavers, shoring up our Delta to prepare for what’s next… Unity Catalog! Let’s look at how DuckDB’s [Delta](https://duckdb.org/docs/current/core_extensions/delta.html) and [Unity Catalog](https://duckdb.org/docs/current/core_extensions/unity_catalog.html) extensions have grown up – enough to shed the experimental tag – and see what has changed since our [last update](https://duckdb.org/2025/03/21/maximizing-your-delta-scan-performance).
 
 ## Time to Open the Delta
 
-Before we jump in, let's review for a moment. Delta is a foundational [open table format and toolset](https://docs.delta.io/) for building and managing data lakes, related to Iceberg and other lakehouse formats. DuckDB supports Delta tables via its [Delta Extension](https://duckdb.org/docs/current/core_extensions/delta.html).
+Before we jump in, let's review briefly. Delta is a foundational [open table format and toolset](https://docs.delta.io/) for building and managing data lakes, related to Iceberg and other lakehouse formats. DuckDB supports Delta tables via its [Delta Extension](https://duckdb.org/docs/current/core_extensions/delta.html).
 
 In that last update we highlighted performance wins, particularly file skipping via filter pushdowns, and metadata caching with snapshot pinning. Now we build on these, and add writes, time travel and Unity Catalog support, plus more performance gains!
 
@@ -33,7 +33,7 @@ INSERT INTO my_table
 FROM (SELECT text || ' (copy)', code + 100 FROM my_table);
 ```
 
-Also worth calling out — multiple `INSERT`s within a `BEGIN` / `COMMIT` block are stored as a single Delta version: one atomic commit, one new log entry. And, as you'll see later, this works with catalogs too! `UPDATE`, `MERGE`, and `DELETE` are not yet supported, but on our future work list.
+Also worth calling out – multiple `INSERT`s within a `BEGIN` / `COMMIT` block are stored as a single Delta version: one atomic commit, one new log entry. And, as you'll see later, this works with catalogs too! `UPDATE`, `MERGE`, and `DELETE` are not yet supported, but on our future work list.
 
 ### Time Travel
 
@@ -75,7 +75,8 @@ SELECT count() FROM my_table_pinned;  -- → 6
 
 ### Growing Up: No Longer a Kit 🦫
 
-The DuckDB Delta extension is no longer a [kit](https://duckduckgo.com/?q=what+is+a+baby+beaver+called) and has grown up quite a bit since a year ago. As you just saw, we added writes and time travel. These features open the door to something bigger: Unity Catalog coordination.
+The DuckDB Delta extension is no longer a [kit](https://duckduckgo.com/?q=what+is+a+baby+beaver+called) and has grown
+up quite a bit since a year ago. As you just saw, we added writes and time travel. These features open the door to something bigger: Unity Catalog coordination.
 
 ## Unity Catalog Support atop the Delta
 
@@ -83,7 +84,7 @@ Data lake systems excel at scale. As your data assets multiply, you need a way t
 
 ### What is Unity Catalog?
 
-Unity Catalog (UC for short) is an open standard for governing data and AI assets, including tables, volumes, models, and functions, across engines and clouds. It turns your data lake into a lakehouse, and gives you a single place to discover, audit, and control access to your data, regardless of what's reading or writing it. DuckDB's Unity Catalog extension is built upon the [Unity Catalog Open API](https://docs.unitycatalog.io/). There are two main implementations: [OSS Unity Catalog](https://unitycatalog.io/), which you can self-host (and Docker-ify in minutes), and [Databricks Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/), the managed version. Like Delta, the DuckDB Unity Catalog extension has shed its experimental tag. Let's put both to work.
+Unity Catalog (UC for short) is an open standard for governing data and AI assets, including tables, volumes, models, and functions, across engines and clouds. It turns your data lake into a lakehouse, and gives you a single place to discover, audit, and control access to your data, regardless of what's reading or writing it. DuckDB's Unity Catalog extension is built upon the [Unity Catalog Open API](https://go.unitycatalog.io/apidocs). There are two main implementations: [OSS Unity Catalog](https://unitycatalog.io/), which you can self-host (and Docker-ify in minutes), and [Databricks Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/), the managed version. Like Delta, the DuckDB Unity Catalog extension has shed its experimental tag. Let's put both to work.
 
 ### Getting Started: OSS Unity Catalog
 
@@ -177,13 +178,13 @@ data
 
 With the basics out of the way, we can talk about [Catalog Managed Tables (CMT)](https://docs.databricks.com/aws/en/tables/managed). This is available today in both [OSS](https://www.unitycatalog.io/) and [Databricks](https://docs.databricks.com/aws/en/data-governance/unity-catalog/) Unity Catalog.
 
-The big feature in CMT is coordinated concurrent writes. Without CMT, DuckDB writes go directly to the Delta log. While modern storage backends prevent outright lost writes, UC is left out of the loop entirely. Its metadata, audit trail, and statistics fall out of sync with the actual table state, and other engines querying through UC may see a stale view.
+The big feature in CMT is Catalog Commits, which enables coordinated concurrent writes. Without Catalog Commits, DuckDB writes go directly to the Delta log. While modern storage backends prevent outright lost writes, UC is left out of the loop entirely. Its metadata, audit trail, and statistics fall out of sync with the actual table state, and other engines querying through UC may see a stale view.
 
-CMT fixes this: every write is staged and registered through UC before it becomes visible. UC acts as the commit arbiter, preserving first writer commits, and sending a conflict error to later writers. This matters wherever multiple writers are appending simultaneously, e.g., parallel ETL pipelines, partitioned bulk loads, and concurrent analytical inserts. Each writer works independently; UC ensures exactly one commit lands per version and keeps its own catalog in sync with every one of them.
+Catalog Commits (CC) fixes this: every write is staged and registered through UC before it becomes visible. UC acts as the commit arbiter, preserving first writer commits, and sending a conflict error to later writers. This matters wherever multiple writers are appending simultaneously, e.g., parallel ETL pipelines, partitioned bulk loads, and concurrent analytical inserts. Each writer works independently; UC ensures exactly one commit lands per version and keeps its own catalog in sync with every one of them.
 
-Consistent reads and audit history are already inherent to Delta and UC respectively. CMT doesn't add functionality, it just ensures UC stays in sync with every commit. And CMT coordinates commits per table; there is no cross-table atomicity. If you write to two tables in the same `BEGIN` / `COMMIT` block, each table commits independently.
+Consistent reads and audit history are already inherent to Delta and UC respectively. CC doesn't add functionality, it just ensures UC stays in sync with every commit. And Catalog Commits coordinate per table; there is no cross-table atomicity. If you write to two tables in the same `BEGIN` / `COMMIT` block, each table commits independently.
 
-To opt a table into CMT, set the `delta.feature.catalogManaged` table property at creation time. This is done via Spark or the UC CLI, as DuckDB's Unity Catalog extension does not yet support `CREATE TABLE` DDL:
+To opt a table into CMT (and therefore CC), set the `delta.feature.catalogManaged` table property at creation time. This is done via Spark or the UC CLI, as DuckDB's Unity Catalog extension does not yet support `CREATE TABLE` DDL:
 
 ```sql
 -- Via Spark
@@ -196,7 +197,7 @@ CREATE TABLE my_catalog.my_schema.concurrent_tbl (
 TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported');
 ```
 
-Once CMT-enabled, DuckDB writes go through UC's commit staging automatically — the `INSERT` syntax is unchanged:
+Once enabled, DuckDB writes go through UC's commit staging automatically, the `INSERT` syntax is unchanged:
 
 ```sql
 INSERT INTO my_catalog.my_schema.concurrent_tbl
@@ -210,7 +211,7 @@ Now each DuckDB writer stages its commit to a `_staged_commits/` directory and r
 
 ### Racing Commits
 
-To see how CMT arbitrates, we launched 20 concurrent DuckDB writers, 8 at a time, all inserting into the same CMT table:
+To see how Catalog Commits arbitrates, we launched 20 concurrent DuckDB writers, 8 at a time, all inserting into the same managed table:
 
 ```bash
 seq 1 20 | xargs -P 8 -I{} scripts/unity/05-cmc/write-single {}
