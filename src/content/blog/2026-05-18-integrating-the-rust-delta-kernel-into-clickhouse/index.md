@@ -5,6 +5,7 @@ thumbnail: ./thumbnail.png
 author:
   - melvyn-peignon
   - kseniia-sumarokova
+  - raul-marin
 publishedAt: 2026-05-18
 ---
 
