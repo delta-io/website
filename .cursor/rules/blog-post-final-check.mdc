@@ -1,0 +1,33 @@
+---
+description: Reminds agent to sanitize example URLs in blog posts before publishing
+globs: src/content/blog/**/index.md
+alwaysApply: false
+---
+
+# Blog Post Final Check — URL Sanitization
+
+When the user asks for a **final check**, **ready to publish**, or **pre-publish review** on any blog post, always remind them to replace real or example URLs embedded in code blocks (e.g. SQL query results, curl examples, dataset paths) with safe fake placeholders.
+
+## Why
+
+Real URLs in code output may point to content that cannot be vetted — including adult content, defunct domains, or third-party sites whose content may change after publish.
+
+## What to check
+
+- SQL query result rows containing URLs (e.g. `┌─URL─...`)
+- `curl` command examples with third-party hostnames
+- Dataset paths pointing to real S3 buckets or external services that are not owned by the author
+
+## How to fix
+
+Replace real URLs with clearly fictional placeholders:
+
+```
+❌ http://bdsm_po_yers=0&with_video
+✅ http://example-query-result.com
+
+❌ https://datasets-documentation.s3.amazonaws.com/...  (if not author-controlled)
+✅ Leave S3 paths as-is only if the bucket is confirmed author-controlled
+```
+
+Adjust row counts to plausible round numbers if the original value came from the replaced URL. Also, use .com or .io domains.
