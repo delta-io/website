@@ -23,9 +23,20 @@ This project requires a YouTube API key which is used on various pages across th
 YOUTUBE_API_KEY=<api_key>
 ```
 
-Then, to get up and running on your machine. First start by [installing pnpm](https://pnpm.io/installation).
+Then, to get up and running on your machine. First start by installing the latest version of node with nvm:
 
-Afterwards, install dependencies:
+```sh
+nvm use
+```
+
+Next, install the latest version of [pnpm](https://pnpm.io/) with corepack:
+
+```sh
+npm install --global corepack@latest
+corepack install
+```
+
+Next, install dependencies:
 
 ```sh
 pnpm install
@@ -37,19 +48,29 @@ Finally, you can run a local Astro dev server by running the following command:
 pnpm dev
 ```
 
+### Developing for production
+
+If you need to develop against a production build (for example, testing search functionality), you can do so by running the following command:
+
+```sh
+pnpm build && pnpm preview
+```
+
+This will build a production version of the site and serve it locally. Keep in mind that this won't rebuild when making local changes.
+
 ### Code formatting
 
 If you use Visual Studio Code, install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions to automatically format your code as you make changes.
 
-Alternatively, you may run `pnpm lint` or `pnpm format` to run ESLint and Prettier, respectively. All changes are automatically linted (and will atempt to auto-fix) on the git pre-commit hook.
+Alternatively, you may run `pnpm lint:fix` or `pnpm format:fix` to run ESLint and Prettier, respectively. All changes are automatically linted (and will atempt to auto-fix) on the git pre-commit hook.
 
 This repo runs automated checks on PRs, including the lint and formatting checks above. All PRs require linters to pass in order to deploy to production.
 
 ### Upgrading dependencies
 
-It's a best practice to make sure that our dependencies are always up to date. You can run `scripts/upgrade-dependencies` to automatically install upgrades across all packages.
+We strive make sure that our dependencies are always up to date, on known secure versions, and using exact versions specified in the package.json and in Github Actions workflows.
 
-Do note that you will still need to verify that things work as expected.
+To upgrade node dependencies, you can run `scripts/upgrade-dependencies` to automatically update all packages. Keep in mind that packages can have breaking changes between versions — please test upgrades and verify there are no known vulnerabilities (using `pnpm audit`) before merging them.
 
 ### Helpful resources
 

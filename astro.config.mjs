@@ -9,7 +9,7 @@ import { searchPlugin } from "./lib/searchPlugin";
 
 const siteTitle = "Delta Lake";
 
-export default defineConfig({
+const config = {
   site: "https://delta.io/",
   scopedStyleStrategy: "where",
   env: {
@@ -29,9 +29,6 @@ export default defineConfig({
     "/blog/1": "/blog",
     "/user-stories/1": "/user-stories",
   },
-  adapter: netlify({
-    imageCDN: false,
-  }),
   integrations: [
     sitemap(),
     favicons({
@@ -152,4 +149,15 @@ export default defineConfig({
       },
     }),
   ],
-});
+};
+
+export default defineConfig(
+  import.meta.env.NETLIFY === "true"
+    ? {
+        ...config,
+        adapter: netlify({
+          imageCDN: false,
+        }),
+      }
+    : config,
+);

@@ -1,4 +1,5 @@
-import { defineCollection, z, reference } from "astro:content";
+import { z } from "astro/zod";
+import { defineCollection, reference } from "astro:content";
 import { glob, file } from "astro/loaders";
 
 /*
@@ -7,7 +8,7 @@ import { glob, file } from "astro/loaders";
 
 const link = z.object({
   label: z.string(),
-  url: z.string().url(),
+  url: z.url(),
 });
 const textOrLink = z.union([z.string(), link]);
 
@@ -27,7 +28,7 @@ const profiles = defineCollection({
       role: z.string().optional(),
       quote: z.string().optional(),
       quoteSource: textOrLink.optional(),
-      linkedin: z.string().url().optional(),
+      linkedin: z.url().optional(),
       videos: z.array(z.string()).optional(),
       otherReferences: z
         .array(
