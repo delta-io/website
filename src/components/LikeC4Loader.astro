@@ -1,0 +1,42 @@
+---
+/*
+ * LikeC4Loader
+ *
+ * Lazily loads the LikeC4 web-component runtime — but only on pages that
+ * actually contain an interactive diagram. Blog posts author diagrams with the
+ * `::likec4{view=<id>}` remark directive (see lib/remarkPlugins.ts), which emits
+ * a `<likec4-view>` custom element. That element is defined by a pre-built
+ * bundle the post author commits to `public/likec4/likec4-webcomponent.mjs`
+ * (served at `/likec4/likec4-webcomponent.mjs`).
+ *
+ * Mounted once globally in Layout.astro, this no-ops on the vast majority of
+ * pages (no `<likec4-view>` present) so the runtime never ships site-wide. The
+ * module script is injected at most once per page; the browser fetches and
+ * evaluates it a single time, so `customElements.define` runs once even with
+ * several diagrams. Idempotent across Astro view transitions.
+ */
+---
+
+<script>
+  const RUNTIME_SRC = "/likec4/likec4-webcomponent.mjs";
+
+  function loadLikeC4() {
+    // Only load when a diagram is present on this page.
+    if (!document.querySelector("likec4-view")) return;
+    // Inject the runtime module at most once.
+    if (document.querySelector(`script[data-likec4-runtime]`)) return;
+
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = RUNTIME_SRC;
+    script.dataset.likec4Runtime = "true";
+    document.head.appendChild(script);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadLikeC4);
+  } else {
+    loadLikeC4();
+  }
+  document.addEventListener("astro:page-load", loadLikeC4);
+</script>

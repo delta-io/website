@@ -1,5 +1,6 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
+import expressiveCode from "astro-expressive-code";
 import favicons from "astro-favicons";
 import astroOrbit from "astro-orbit";
 import astroConfig from "astro-config";
@@ -33,6 +34,26 @@ export default defineConfig({
     imageCDN: false,
   }),
   integrations: [
+    // Expressive Code renders Markdown code fences with an inline copy button,
+    // optional titles/frames (```bash title="server.properties"), and line
+    // highlighting. Themed to the site palette: dark navy surface + cyan/yellow
+    // accents. Registered first so it processes all Markdown code blocks.
+    expressiveCode({
+      themes: ["github-dark"],
+      styleOverrides: {
+        borderRadius: "0.5rem",
+        borderColor: "transparent",
+        codeBackground: "#042436",
+        frames: {
+          editorActiveTabIndicatorTopColor: "#00add4",
+          editorTabBarBackground: "#031b29",
+          editorActiveTabBackground: "#042436",
+          terminalTitlebarBackground: "#031b29",
+          terminalBackground: "#042436",
+          inlineButtonBorder: "transparent",
+        },
+      },
+    }),
     sitemap(),
     favicons({
       name: siteTitle,

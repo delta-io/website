@@ -37,6 +37,20 @@ Finally, you can run a local Astro dev server by running the following command:
 pnpm dev
 ```
 
+#### Previewing a production build
+
+`pnpm dev` serves unhashed, on-the-fly assets. To preview the actual production
+output (hashed `/_astro/*` assets, exactly what deploys), build and serve `dist/`:
+
+```sh
+pnpm serve:build   # runs `astro build` then serves dist/ (or: pnpm build && pnpm serve)
+```
+
+Note: `pnpm preview` (`astro preview`) does **not** work in this repo — the
+Netlify adapter doesn't support it. Use `pnpm serve` instead. A plain static
+server also does not apply `public/_headers` (CSP, etc.); to validate those, use
+a Netlify deploy preview.
+
 ### Code formatting
 
 If you use Visual Studio Code, install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions to automatically format your code as you make changes.
@@ -105,6 +119,67 @@ Other optional fields:
 - **updatedAt:** If set, it will indicate that the blog post was last updated at this date.
 
 The remaining content of the markdown file is the blog post body.
+
+#### Rich blog constructs
+
+Blog posts are plain Markdown (`.md`), but can use a few rich constructs authored
+with [`remark-directive`](https://github.com/remarkjs/remark-directive) syntax
+(handled in `lib/remarkPlugins.ts` and styled in `src/layouts/theme.css`). No MDX
+or component imports are required.
+
+**Callouts** — highlight boxes with an icon and title. Types: `tip`, `note`,
+`info`, `warning`, `caution`, `danger`. The default title can be overridden with
+a `[label]`:
+
+```markdown
+:::warning
+Using local storage requires Docker and matching host paths.
+:::
+
+:::tip[Pro tip]
+You can run all of this locally today.
+:::
+```
+
+**Journeys** — a numbered step-by-step timeline. Wrap `::::step[Title]` items in a
+`:::::journey` (note the extra colons on the outer fence so it nests the steps):
+
+```markdown
+:::::journey
+::::step[Create the table]
+Body markdown for the first step…
+::::
+::::step[Write data]
+Body markdown for the second step…
+::::
+:::::
+```
+
+**Code blocks** — rendered by
+[Expressive Code](https://expressive-code.com/). Add a title/filename and
+highlight lines directly on the fence:
+
+````markdown
+```properties title="server.properties" {2-3}
+server.env=dev
+server.authorization=disable
+server.managed-table.enabled=true
+```
+````
+
+A copy button is added automatically — no extra markup needed.
+
+**Interactive LikeC4 diagrams** — pan/zoom architecture diagrams:
+
+```markdown
+::likec4{view=overview}
+```
+
+This renders a `<likec4-view>` element. The custom element is defined by a
+pre-built web-component bundle that the post author must commit to
+`public/likec4/likec4-webcomponent.mjs` (generate it with the LikeC4 CLI). The
+runtime is loaded lazily and only on pages that actually contain a diagram (see
+`src/components/LikeC4Loader.astro`).
 
 ### Profiles
 

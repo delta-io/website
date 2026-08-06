@@ -15,12 +15,14 @@
 }
 
 /*
- * Spacing below fenced/highlighted code blocks. astro-orbit's prose rules add
- * margin-bottom to p/ol/ul/blockquote but not to <pre>/.astro-code, leaving
- * code blocks visually flush against the next paragraph.
+ * Spacing around fenced/highlighted code blocks. Code fences are rendered by
+ * Expressive Code (astro-expressive-code), which owns its own <pre>/<code>
+ * markup under a `.expressive-code` wrapper and applies the site palette + copy
+ * button. astro-orbit's prose rules add margin to p/ol/ul/blockquote but not to
+ * these blocks, so give them matching vertical rhythm.
  */
-.astro-code {
-  margin-bottom: 1rem;
+.expressive-code {
+  margin: 1.5rem 0;
 }
 
 /*
@@ -126,4 +128,149 @@
   height: auto;
   max-width: 100%;
   object-fit: contain;
+}
+
+/*
+ * Rich blog constructs authored as remark `:::` directives (see
+ * lib/remarkPlugins.ts): callouts, journey step timelines, and interactive
+ * LikeC4 diagrams. All scoped under `.typography-prose` (the wrapper
+ * Post.astro renders) so they only affect post/prose bodies.
+ */
+
+/* ---- Callouts (tip / note / info / warning / caution / danger) ---------- */
+
+.typography-prose .callout {
+  --callout-accent: var(--color-primary);
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-border-light);
+  border-left: 3px solid var(--callout-accent);
+  border-radius: 0.4rem;
+  background: color-mix(
+    in srgb,
+    var(--callout-accent) 7%,
+    var(--color-neutral-0)
+  );
+  padding: 0.85rem 1rem;
+}
+.typography-prose .callout[data-type="tip"] {
+  --callout-accent: #16a34a; /* green */
+}
+.typography-prose .callout[data-type="note"],
+.typography-prose .callout[data-type="info"] {
+  --callout-accent: var(--color-primary); /* Delta cyan */
+}
+.typography-prose .callout[data-type="warning"],
+.typography-prose .callout[data-type="caution"] {
+  --callout-accent: #d97706; /* amber */
+}
+.typography-prose .callout[data-type="danger"] {
+  --callout-accent: #dc2626; /* red */
+}
+.typography-prose .callout-head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+  color: var(--callout-accent);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-secondary);
+}
+.typography-prose .callout-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+/* First/last body elements sit flush with the callout padding. */
+.typography-prose .callout > :not(.callout-head):first-child,
+.typography-prose .callout > *:first-of-type {
+  margin-top: 0;
+}
+.typography-prose .callout > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Journey (step timeline) -------------------------------------------- */
+
+.typography-prose .jr {
+  list-style: none;
+  counter-reset: jr-step; /* step numbers come from this counter */
+  margin: 1.75rem 0;
+  /* left pad leaves room for the bubbles' outer halo ring, drawn with
+     box-shadow, which would otherwise be clipped by an overflow ancestor. */
+  padding: 0 0 0 6px;
+  --jr-bubble: 2rem; /* bubble diameter */
+  --jr-gutter: 2.75rem; /* bubble-column width */
+}
+.typography-prose .jr-step {
+  position: relative;
+  counter-increment: jr-step;
+  margin: 0;
+  padding: 0 0 1.75rem var(--jr-gutter);
+}
+.typography-prose .jr-step:last-child {
+  padding-bottom: 0;
+}
+/* The rail: a thin line down the bubble column, hidden on the last step. */
+.typography-prose .jr-step::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--jr-bubble) / 2);
+  bottom: 0;
+  left: calc(var(--jr-bubble) / 2);
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--color-border);
+}
+.typography-prose .jr-step:last-child::before {
+  display: none;
+}
+/* The bubble: accent surface + ring, the step number via counter(). */
+.typography-prose .jr-bubble {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: var(--jr-bubble);
+  height: var(--jr-bubble);
+  border-radius: 999px;
+  background: var(--color-primary);
+  /* mask the rail behind it, then a soft accent halo */
+  box-shadow:
+    0 0 0 4px var(--color-neutral-0),
+    0 0 0 6px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  color: var(--color-bg-dark);
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+.typography-prose .jr-bubble::before {
+  content: counter(jr-step);
+}
+.typography-prose .jr-title {
+  display: flex;
+  align-items: center;
+  min-height: var(--jr-bubble);
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+}
+.typography-prose .jr-body {
+  margin-top: 0.6rem;
+}
+.typography-prose .jr-body > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Interactive LikeC4 diagram ----------------------------------------- */
+
+.typography-prose likec4-view,
+.typography-prose .likec4-view {
+  display: block;
+  min-height: 26rem;
+  margin: 1.75rem 0;
+  border: 1px solid var(--color-border-light);
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
