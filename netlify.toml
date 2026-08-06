@@ -2,3 +2,23 @@
   base = "."
   publish = "/dist"
   command = "pnpm build"
+
+# Headers live here (not public/_headers) so Netlify applies them from deploy
+# config even on incremental asset-only uploads. CSP is one line: Netlify's
+# _headers format has been flaky about picking up edits on this site.
+#
+# Allow-list notes:
+#   HubSpot (GTM portal 8112310)  hs-scripts loader + analytics/forms/banner/
+#                                 CTA/ads pixels + source maps
+#   Google Ads (AW-1032976986)    gtag remarketing / conversion pixels
+#   LinkedIn / Facebook           ad pixels injected by HubSpot ads loader
+#   app.netlify.com               deploy-preview drawer iframe
+#   cdn.jsdelivr.net              LikeC4 IBM Plex Sans woff2
+#   raw.githubusercontent.com     LF AI project logos in blog posts
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://plausible.io https://js.hs-scripts.com https://js.hs-analytics.net https://js.hscollectedforms.net https://js.hs-banner.com https://js.hsadspixel.net https://js.hsleadflows.net https://js.hsforms.net https://js.hs-cta.net https://js.usemessages.com https://js.hubspot.com https://snap.licdn.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com https://raw.githubusercontent.com https://www.googletagmanager.com https://www.google-analytics.com https://ad.doubleclick.net https://www.googleadservices.com https://www.google.com https://googleads.g.doubleclick.net https://track.hubspot.com https://forms.hsforms.com https://perf-na1.hsforms.com https://cdn2.hubspot.net https://www.facebook.com https://px.ads.linkedin.com; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://plausible.io https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://api.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://forms.hsforms.com https://track.hubspot.com https://cta-service-cms2.hubspot.com https://js.hs-analytics.net https://js.hscollectedforms.net https://js.hs-banner.com https://static.hsappstatic.net https://www.facebook.com https://px.ads.linkedin.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://app.netlify.com https://app.hubspot.com https://forms.hsforms.com https://play.hubspotvideo.com; worker-src 'self' blob:"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

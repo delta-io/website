@@ -1,4 +1,4 @@
-Content-Security-Policy: default-src 'self'
-X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
-Referrer-Policy: strict-origin-when-cross-origin
+# Headers for this site are defined in netlify.toml ([[headers]]).
+# Do not add Content-Security-Policy here — Netlify merges duplicate CSP
+# values with commas, which breaks the policy. Kept as a stub so a stray
+# public/_headers doesn't get reintroduced without context.
