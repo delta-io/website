@@ -1,17 +1,4 @@
-# Netlify custom headers (https://docs.netlify.com/routing/headers/).
-# Each rule is a path line followed by indented "Header: value" lines. The
-# path must come first — without it Netlify rejects the block.
-#
-# CSP allow-list notes:
-#   js.hs-*/usemessages.com  HubSpot tracker, injected at runtime by the GTM
-#                            container; the hs-scripts loader then pulls the
-#                            analytics/forms/banner scripts itself.
-#   app.netlify.com          Netlify deploy-preview drawer iframe.
-#   cdn.jsdelivr.net         IBM Plex Sans woff2 files fetched by the LikeC4
-#                            web component's injected @font-face rules.
-#   raw.githubusercontent.com  LF AI project logos referenced from blog posts.
-/*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://plausible.io https://js.hs-scripts.com https://js.hs-analytics.net https://js.hscollectedforms.net https://js.hs-banner.com https://js.hsadspixel.net https://js.hsleadflows.net https://js.hsforms.net https://js.hs-cta.net https://js.usemessages.com https://js.hubspot.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com https://raw.githubusercontent.com https://www.googletagmanager.com https://www.google-analytics.com https://track.hubspot.com https://forms.hsforms.com https://cdn2.hubspot.net; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://plausible.io https://www.google-analytics.com https://www.googletagmanager.com https://api.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://forms.hsforms.com https://track.hubspot.com https://js.hs-analytics.net https://js.hscollectedforms.net https://js.hs-banner.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://app.netlify.com https://app.hubspot.com https://forms.hsforms.com https://play.hubspotvideo.com; worker-src 'self' blob:
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
+# Headers for this site are defined in netlify.toml ([[headers]]).
+# Do not add Content-Security-Policy here — Netlify merges duplicate CSP
+# values with commas, which breaks the policy. Kept as a stub so a stray
+# public/_headers doesn't get reintroduced without context.

@@ -48,8 +48,8 @@ pnpm serve:build   # runs `astro build` then serves dist/ (or: pnpm build && pnp
 
 Note: `pnpm preview` (`astro preview`) does **not** work in this repo — the
 Netlify adapter doesn't support it. Use `pnpm serve` instead. A plain static
-server also does not apply `public/_headers` (CSP, etc.); to validate those, use
-a Netlify deploy preview.
+server also does not apply the CSP / security headers from `netlify.toml`; to
+validate those, use a Netlify deploy preview.
 
 ### Code formatting
 
