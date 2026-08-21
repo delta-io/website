@@ -325,7 +325,7 @@ Please check out the new Delta Flink connector and let us know what you think.
 
 ## Wrapping Things Up
 
-Delta Lake 4.4.0 pushes the _catalog-managed_ vision forward in two directions at once. On the Delta Spark side, it brings a batch of everyday quality-of-life features to Apache Spark 4.2 — identity and generated columns in DDL, `SHOW PARTITIONS`, `VOID` columns, and Unity Catalog metric views on to of your Delta tables. On the ecosystem side, it wires Delta Kernel and Delta Flink into the UC Delta API, so more of the open lakehouse can speak to catalog-managed tables through a single, open specification.
+Delta Lake 4.4.0 pushes the _catalog-managed_ vision forward in two directions at once. On the Delta Spark side, it brings a batch of everyday quality-of-life features to Apache Spark 4.2 — identity and generated columns in DDL, `SHOW PARTITIONS`, `VOID` columns, and Unity Catalog metric views on top of your Delta tables. On the ecosystem side, it wires Delta Kernel and Delta Flink into the UC Delta API, so more of the open lakehouse can speak to catalog-managed tables through a single, open specification.
 
 ### Try it yourself
 
