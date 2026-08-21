@@ -138,7 +138,7 @@ AnalysisException
 - [DELTA_SHOW_PARTITION_IN_NON_PARTITIONED_TABLE] SHOW PARTITIONS is not allowed on a table that is not partitioned: unity.sanctuary.pets
 ```
 
-## `VOID` Column Support
+## VOID Column Support
 
 On Apache Spark 4.1 and later, Delta 4.4.0 preserves `VOID` (`NullType`) columns instead of failing or silently dropping them, and this includes operations like time-travel and path-based reads. The [Delta protocol itself](https://github.com/delta-io/delta/pull/6966) was updated in this release to define how readers and writers treat `VOID`, so an all-null placeholder column (a field you've scaffolded but haven't populated yet) is retained rather than quietly discarded:
 
