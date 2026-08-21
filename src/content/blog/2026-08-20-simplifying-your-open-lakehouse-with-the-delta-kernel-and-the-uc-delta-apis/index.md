@@ -109,9 +109,9 @@ USING DELTA
 TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported')
 ```
 
-## Inspecting Partitions with `SHOW PARTITIONS`
+## Inspecting Table Partitions
 
-Because `inventory` is partitioned by `animal_category`, we can reach for Spark SQL's standard [`SHOW PARTITIONS`](https://github.com/delta-io/delta/pull/6102) command — now supported on Delta tables — to see exactly which partitions exist:
+Because `inventory` is partitioned by `animal_category`, we can reach for Spark SQL's standard [`SHOW PARTITIONS`](https://github.com/delta-io/delta/pull/6102) command, which is now supported on Delta tables, to see exactly which partitions exist:
 
 ```python
 spark.sql("SHOW PARTITIONS unity.sanctuary.inventory").show()
