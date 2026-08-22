@@ -1,5 +1,5 @@
 ---
-title: Simplifying your Open Lakehouse with the Delta Kernel and the UC Delta APIs
+title: Advancing the Open Lakehouse with Apache Spark, the Delta Kernel, and the new UC Delta APIs
 description: "Delta Lake 4.4.0 advances the catalog-managed vision: Apache Spark 4.2 by default, identity and generated columns in DDL, SHOW PARTITIONS, UC metric views, and Delta Flink on the UC Delta API."
 thumbnail: ./release-4.4.0.jpg
 author:
