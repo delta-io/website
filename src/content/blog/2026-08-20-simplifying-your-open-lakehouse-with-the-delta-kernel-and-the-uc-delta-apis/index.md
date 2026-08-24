@@ -18,7 +18,7 @@ This mission to simplify ecosystem support continues with the release of Delta L
 
 There are many notable changes for this release across Delta Spark, Delta Kernel, Delta UniForm, Delta Sharing, as well as Delta Flink, all aimed at simplifying the way you work with your Delta tables and expanding the ecosystem support for catalog-managed tables as well as the new UC Delta APIs.
 
-## Delta Spark now defaults to Apache Spark 4.2
+## Delta-Spark now defaults to Spark 4.2
 
 This release brings [Apache Spark 4.2](https://spark.apache.org/releases/spark-release-4-2-0.html) support to Delta, and provides continued support for Apache Spark 4.1.0, as well as Apache Spark 4.0.1 across Delta Spark, Delta Connect, and Delta Sharing.
 
