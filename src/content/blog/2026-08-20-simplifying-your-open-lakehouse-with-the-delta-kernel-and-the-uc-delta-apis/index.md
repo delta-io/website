@@ -59,9 +59,29 @@ TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported')
 PARTITIONED BY (animal_category)
 ```
 
->
+The generated data from the marimo notebook showcases how the generated identity column works by purposely excluding the `id` column. We then take a list of `RescueProduct` instances, and convert them to a DataFrame none the wiser of the sequence being managed by the table itself.
 
-Identity columns are only half of the story. Delta 4.4.0 also [preserves generated-column expressions](https://github.com/delta-io/delta/pull/7290) when a table is created through Unity Catalog, computing (or validating) those values on every write. So a computed column round-trips cleanly through a catalog-managed table:
+```python
+def rescue_products_to_dataframe(
+        products: list[RescueProduct],
+        spark: SparkSession,
+    ) -> DataFrame:
+        rows = [
+            (p.name, p.product_type, p.animal_category, p.quantity)
+            for p in products
+        ]
+        schema = StructType([
+            StructField("name", StringType(), nullable=False),
+            StructField("product_type", StringType(), nullable=False),
+            StructField("animal_category", StringType(), nullable=False),
+            StructField("quantity", IntegerType(), nullable=False),
+        ])
+        return spark.createDataFrame(rows, schema=schema)
+```
+
+> You can view the [code here](https://github.com/open-lakehouse/unitycatalog-playground/blob/main/marimo-playground/notebooks/delta-new-in-4.4.0.py#L156) where we create the `@dataclass`, and set up the converter from python objects to Apache Spark DataFrame.
+
+We simply generate ~100 shelter-supply rows (just `name`, `product_type`, `animal_category`, and `quantity`) and append them. Afterwards, Delta fills in the `id` for us on write. Nice right!
 
 ```python
 # ~100 shelter-supply products; the identity `id` is assigned by Delta on write
