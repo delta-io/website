@@ -1,0 +1,317 @@
+---
+title: GDPR Compliance with Delta Lake
+description: Learn how to use Delta Lake for GDPR compliance.
+thumbnail: ./thumbnail.png
+author: Avril Aysha
+date: 2024-10-25
+---
+
+Delta Lake has many great features that support you in meeting the requirements of the European Union's General Data Regulation Policy (GDPR).
+
+This article will explain how Delta Lake helps you achieve GDPR compliance. It is relevant to all organizations processing data points of people living in the EU. The article will walk you through what the GDPR is, why it's important to pay careful attention to it, and how you can use Delta Lake to make it easier to ensure compliance.
+
+Let's jump in.
+
+## What is the GDPR?
+
+The [GDPR](https://gdpr.eu/) is the data protection law of the European Union (EU). It sets rules for how you collect, use, share, and delete personal data. It applies to you if you offer goods or services to people in the EU, or track their behavior—no matter where your company is based.
+
+The GDPR gives people whose data you're collecting clear rights:
+
+1. They can access their data.
+2. They can correct it.
+3. They can ask you to delete it (“right to be forgotten”).
+4. They can take it with them (portability).
+
+It also defines the following responsibilities:
+
+1. You must respond quickly and keep records of what you did.
+2. You should collect and process only as much data as absolutely necessary for the purposes specified.
+3. You may only store personally identifying data for as long as necessary for the specified purpose.
+4. Processing must be done in such a way as to ensure appropriate security, integrity, and confidentiality (e.g. by using encryption).
+5. You should always be able to demonstrate GDPR compliance (e.g. through an audit)
+
+Achieving GDPR compliance is complex. This article is intended to support you in your compliance efforts, not as a stand-alone guide. Delta Lake can help you solve important parts of the GDPR compliance puzzle but you must do your own independent research to make sure you are following all the rules that apply to your organization.
+
+## Why should I pay attention to GDPR compliance?
+
+The EU imposes fines on businesses that do not follow the GDPR rules. GDPR fines are designed to make non-compliance a costly mistake for both large and small businesses.
+
+Even if you think you might not be collecting sensitive data, you should consider running a compliance check. The GDPR defines personal data (officially Personally Identifiable Information or PII) broadly. If a person can be identified directly or indirectly from your data, it counts as personal data . This means names and emails count, as well as IDs, device identifiers and many other data points that might live in your dataset. Even combinations of “non-PII” can become personal when linked together. It's worth taking the time to make sure your datasets comply.
+
+Besides this, poor data hygiene is expensive. Duplicate copies of personal data, stale backups, and ad-hoc deletes drive cost and risk. They can also slow you down. When something goes wrong, you need to be able to show what changed, when, and by whom. If you cannot, you risk longer and stricter bureaucratic processes that will drag performance.
+
+It's best to treat GDPR compliance as part of running a reliable data platform. Clean inputs, clear retention, and repeatable deletes make your pipelines faster, cheaper, and safer.
+
+## How does Delta Lake support GDPR compliance?
+
+Delta Lake gives you table-level tools that line up well with GDPR requirements. Here's how the core features help your compliance efforts:
+
+### Right to be forgotten (data deletion)
+
+Delta Lake makes it easy to programmatically [delete rows](https://delta.io/blog/2022-12-07-delete-rows-from-delta-lake-table/) when needed. You can target and delete rows by key or predicate, and every delete is processed as an atomic commit. To make the deletion permanent, you can run a [VACUUM operation](https://delta.io/blog/remove-files-delta-lake-vacuum-command/) so old files are removed from storage. You can also use the [deletion vectors](https://delta.io/blog/2023-07-05-deletion-vectors/) feature when you need to make small deletes to many files at the same time.
+
+### Data minimization and purpose limitation
+
+The [schema enforcement](https://delta.io/blog/2022-11-16-delta-lake-schema-enforcement/) and [column constraints](https://delta.io/blog/2022-11-21-delta-lake-contraints-check/) features help you block bad or unnecessary PII at time of data ingest. This keeps extra or invalid fields out of your tables in the first place and reduces maintenance downstream.
+
+### Accuracy and correction
+
+You can easily fix data subject details or update fields with [idempotent upserts](https://delta.io/blog/delta-lake-upsert/). Add a freshness guard using a [column constraint](https://delta.io/blog/2022-11-21-delta-lake-contraints-check/) (e.g., `event_time > last_update`) so older events never overwrite newer values. This way you will keep records accurate without duplicates, even under retries.
+
+### Access and portability
+
+Delta Lake's transaction log makes it easy to produce specific point-in-time reads. [Time travel](https://delta.io/blog/2023-02-01-delta-lake-time-travel/) lets you read the exact state at a given version or timestamp, which is useful when a request asks for “my data as of last month.” [Change Data Feed (CDF)](https://delta.io/blog/2023-07-14-delta-lake-change-data-feed-cdf/) gives you an incremental stream of inserts, updates, and deletes so you can propagate subject changes to other systems quickly. [Row tracking](#link-when-live) gives you visibility on changes at the level of individual rows.
+
+### Storage limitation and retention
+
+The GDPR demands that you keep data no longer than necessary. Delta Lake lets you set table properties for log and deleted-file retention. You can then schedule <code>[VACUUM operations](https://delta.io/blog/remove-files-delta-lake-vacuum-command/)</code> to remove data that falls outside that window. This reduces risk and cost. Note the trade-off: shorter retention means less time travel while longer retention improves audits but delays purging.
+
+### Accountability and audit
+
+Every Delta write creates a new version and an entry in the [table history](#link-when-live). You can answer “who changed what and when” with `DESCRIBE HISTORY` as well as point-in-time time travel queries. Row tracking gives you stable row IDs to trace how a single record evolved across commits.
+
+## GDPR Compliance with Delta Lake in action
+
+Let's take a look at each of these Delta Lake features in action. We'll work through an end-to-end code example using PySpark. The example will suppose that you are storing personal data in a table named `people_gdpr`.
+
+### Delta Lake and GDPR: Clean writes with Schema Enforcement and Column Constraints
+
+Delta Lake supports ACID transactions that guarantee clean writes and reduced risk of data corruption. This means that you get atomic deletes and updates, so a “right to be forgotten” request either fully applies or doesn't change the table at all. There is no chance of data remnants or leftovers accidentally leaving a trail that could identify someone who has requested to be removed from your dataset. Query engines always see a consistent snapshot, which reduces compliance risk.
+
+Read more about ACID transactions in the dedicated [Delta Lake ACID transactions](#link-when-live) article.
+
+### Delta Lake and GDPR: Clean writes with Schema Enforcement and Column Constraints
+
+Delta Lake guarantees clean writes with [schema enforcement](https://delta.io/blog/2022-11-16-delta-lake-schema-enforcement/) and [column constraints](https://delta.io/blog/2022-11-21-delta-lake-contraints-check/). This way you can be sure that no sensitive or incorrect data accidentally ends up in the wrong place. You block bad or unnecessary PII at ingest (e.g., invalid emails, disallowed countries) and this also supports data minimization and accuracy from day one.
+
+Let's take a look at this in practice. Start by creating a new Delta table with a strong schema:
+
+```
+    spark.sql("""
+    CREATE TABLE people_gdpr (
+      subject_id   STRING  NOT NULL,
+      email        STRING  NOT NULL,
+      country      STRING,
+      birth_date   DATE,
+      last_update  TIMESTAMP NOT NULL
+    ) USING DELTA
+    """)
+```
+
+Now use the column constraints to define specific conditions for relevant columns, e.g. the `email` column should never be blank:
+
+```
+    spark.sql("ALTER TABLE people_gdpr ADD CONSTRAINT email_not_blank CHECK (email <> '')")
+    spark.sql("""
+    ALTER TABLE people_gdpr ADD CONSTRAINT eu_country
+    CHECK (country IS NULL OR country IN ('DE','FR','ES','PT','NL','IT','IE','BE','AT','SE','DK','FI'))
+    """)
+```
+
+Now let's try to run a valid insert:
+
+```
+    spark.sql("""
+    INSERT INTO people_gdpr VALUES
+    ('sub_001','alice@example.com','DE',DATE'1990-01-01',TIMESTAMP'2025-08-01 10:00:00'),
+    ('sub_002','bob@example.com','FR',  DATE'1985-02-02',TIMESTAMP'2025-08-01 10:05:00')
+    """)
+```
+
+This should complete normally as the new rows match the schema and our column constraints.
+
+Let's inspect our table to confirm:
+
+```
+    > spark.sql("SELECT * FROM people_gdpr ORDER BY subject_id").show()
+
+    +----------+-----------------+-------+----------+-------------------+
+    |subject_id|            email|country|birth_date|        last_update|
+    +----------+-----------------+-------+----------+-------------------+
+    |   sub_001|alice@example.com|     DE|1990-01-01|2025-08-01 10:00:00|
+    |   sub_002|  bob@example.com|     FR|1985-02-02|2025-08-01 10:05:00|
+    +----------+-----------------+-------+----------+-------------------+
+```
+
+Now try adding an invalid row with a blank `email` field and a `country` value that does not match one in the predefined list:
+
+```
+    spark.sql("""
+    INSERT INTO people_gdpr VALUES
+    ('sub_003','', 'XX', DATE'1970-01-01', TIMESTAMP'2025-08-01 11:00:00')
+    """)
+```
+
+This will error out with the following message: `CHECK constraint email_not_blank (NOT (email = '')) violated by row with values: - email :`
+
+### Delta Lake and GDPR: Time travel
+
+Use the Delta Lake time travel feature to travel back to earlier states of your table. This can be helpful to correct mistakes or when undergoing an audit process. You can reproduce past states and show an audit trail of who changed what and when. This helps you answer regulator questions with precise evidence.
+
+Here's how to use the time travel feature:
+
+```
+    spark.sql(f"""
+    SELECT subject_id, email, country
+    FROM people_gdpr VERSION AS OF 0
+    """).show()
+```
+
+This will show the original state of the table (version 0) – an empty table before any of the rows were added:
+
+```
+    +----------+-----+-------+
+    |subject_id|email|country|
+    +----------+-----+-------+
+    +----------+-----+-------+
+```
+
+Read more about time travel in the dedicated [Delta Lake time travel](https://delta.io/blog/2023-02-01-delta-lake-time-travel/) guide.
+
+### Delta Lake and GDPR: Idempotent upserts
+
+Idempotent upserts support GDPR compliance by enabling you to add subject data without creating duplicates, even under retries. This protects accuracy and supports the right to rectification.
+
+Here's how to easily perform idempotent upserts with Delta Lake. First stage a temporary table with an update to an existing row and a late arrival additional data point:
+
+```
+    spark.sql("""
+    CREATE OR REPLACE TEMP VIEW fixes AS
+    SELECT * FROM VALUES
+      ('sub_001','alice@example.com','DE', DATE'1990-01-01', TIMESTAMP'2025-08-01 10:30:00'),
+      ('sub_004','dana@example.com','PT', DATE'1993-04-04', TIMESTAMP'2025-08-01 10:40:00')
+    AS fixes(subject_id, email, country, birth_date, event_time)
+    """)
+```
+
+Then use the [Delta Lake MERGE command](https://delta.io/blog/2023-02-14-delta-lake-merge/) to perform the upsert:
+
+```
+    spark.sql("""
+    MERGE INTO people_gdpr AS t
+    USING fixes       AS s
+    ON t.subject_id = s.subject_id
+    WHEN MATCHED AND s.event_time > t.last_update THEN
+      UPDATE SET
+        t.email       = s.email,
+        t.country     = s.country,
+        t.birth_date  = s.birth_date,
+        t.last_update = s.event_time
+    WHEN NOT MATCHED THEN
+      INSERT (subject_id, email, country, birth_date, last_update)
+      VALUES (s.subject_id, s.email, s.country, s.birth_date, s.event_time)
+    """)
+```
+
+Let's take a look at our data to confirm the changes:
+
+```
+    spark.sql("SELECT * FROM people_gdpr ORDER BY subject_id").show()
+```
+
+This should return:
+
+```
+    +----------+-----------------+-------+----------+-------------------+
+    |subject_id|email            |country|birth_date|last_update        |
+    +----------+-----------------+-------+----------+-------------------+
+    |sub_001   |alice@example.com|DE     |1990-01-01|2025-08-01 10:30:00|
+    |sub_002   |bob@example.com  |FR     |1985-02-02|2025-08-01 10:05:00|
+    |sub_004   |dana@example.com |PT     |1993-04-04|2025-08-01 10:40:00|
+    +----------+-----------------+-------+----------+-------------------+
+```
+
+Excellent, you have successfully updated an existing row and added a late arrival in a single operation. Read more in the [Delta Lake Upsert](https://delta.io/blog/delta-lake-upsert/) guide.
+
+### Delta Lake and GDPR: Vacuum + retention
+
+The Delta Lake VACUUM feature lets you keep data points only as long as policy allows and automatically purges old files. This enforces the storage limitation principle and enables permanent deletion.
+
+Here's how to set the retention policy values (example values):
+
+```
+    spark.sql("""
+    ALTER TABLE people_gdpr SET TBLPROPERTIES (
+      'delta.logRetentionDuration'='30 days',
+      'delta.deletedFileRetentionDuration'='7 days'
+    )
+    """)
+```
+
+And here's how to manually purge files older than a certain retention period:
+
+```
+    spark.sql("VACUUM people_gdpr RETAIN 168 HOURS")
+```
+
+Read more in the [Delta Lake Vacuum](https://delta.io/blog/remove-files-delta-lake-vacuum-command/) article.
+
+### Delta Lake and GDPR: Deletion vectors
+
+Delta Lake deletion vectors let you perform fast, in-place logical deletes without rewriting large file. This means erasure requests are quickly enforced and propagated throughout your systems. Make sure to pair this with the VACUUM feature mentioned above to complete the physical purge.
+
+Here's how to enable deletion vectors:
+
+```
+    spark.sql("ALTER TABLE people_gdpr SET TBLPROPERTIES ('delta.enableDeletionVectors'='true')")
+```
+
+Then use a deletion vector to remove a specific row:
+
+```
+    spark.sql("DELETE FROM people_gdpr WHERE subject_id = 'sub_001'")
+```
+
+Confirm that it has been removed:
+
+```
+    > spark.sql("SELECT * FROM people_gdpr ORDER BY subject_id").show()
+
+    +----------+----------------+-------+----------+-------------------+
+    |subject_id|email           |country|birth_date|last_update        |
+    +----------+----------------+-------+----------+-------------------+
+    |sub_002   |bob@example.com |FR     |1985-02-02|2025-08-01 10:05:00|
+    |sub_004   |dana@example.com|PT     |1993-04-04|2025-08-01 10:40:00|
+    +----------+----------------+-------+----------+-------------------+
+```
+
+Time travel confirms the row existed before the delete operation:
+
+```
+    > spark.sql(f"""
+    SELECT subject_id, email
+    FROM people_gdpr VERSION AS OF 5
+    WHERE subject_id = 'sub_001'
+    """).show()
+
+    +----------+-----------------+
+    |subject_id|email            |
+    +----------+-----------------+
+    |sub_001   |alice@example.com|
+    +----------+-----------------+
+```
+
+## Limitations of Delta Lake for GDPR Compliance
+
+Delta Lake is a table format. It does not manage users, roles, or row-level permissions and does not provide catalog-wide lineage. To meet all of GDPR requirements, you will probably want to pair Delta Lake with a catalog or other governance layer.
+
+Here's what Delta Lake covers:
+
+- ACID deletes, updates, and inserts. You get atomic changes and clean snapshots.
+- Time travel and table history. You can audit and reproduce past states.
+- Schema enforcement and column constraints. You block bad PII at ingest.
+- Idempotent upserts with MERGE. You correct records without duplicates.
+- Retention settings and VACUUM. You purge old files for permanent deletion.
+  Deletion Vectors (where supported). You perform fast logical deletes before purge.
+- (Optional) Row tracking at create time. You trace row-level evolution.
+
+Here's what Delta Lake doesn't cover:
+
+- Users, roles, grants, or row/column-level policies.
+- Catalog-wide naming, discovery, owners, or tags.
+- Read auditing and usage logs.
+- Cross-system deletes and cache eviction.
+- End-to-end lineage across pipelines.
+
+To fully meet GDPR requirements and make compliance easier, you consider pairing Delta Lake with a catalog/governance layer like [Unity Catalog](#link-when-live) for identities, permissions, naming, policies, and lineage.
