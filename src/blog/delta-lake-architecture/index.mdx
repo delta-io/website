@@ -1,0 +1,373 @@
+---
+title: Understanding the Delta Lake Architecture
+description: This post explains the Delta Lake architecture
+thumbnail: ./thumbnail.png
+author: Avril Aysha
+date: 2025-01-15
+---
+
+# Understanding the Delta Lake Architecture
+
+This article explains the Delta Lake architecture. Understanding how Delta Lake is built will help you get the most out of its powerful features, like data versioning, schema management and data skipping.
+
+Delta Lake is an open source storage framework for tabular datasets. It combines the flexibility and low storage costs of a data lake with the reliability and performance of a traditional data warehouse. You can run Delta Lake on top of your existing data lake infrastructure to build a data lakehouse architecture.
+
+Let’s start by taking a high-level look at the Delta Lake architecture and then go in more detail for each component.
+
+## Delta Lake Architecture Components
+
+The Delta Lake architecture has 3 main components:
+
+1. the **tabular data** stored in partitions as Parquet files
+2. the **transaction log **stored in JSON files
+3. the **storage layer**
+
+![](image1.png)
+
+Delta Tables are a combination of your tabular data (stored partitioned as Parquet files) and a record of all the changes to that data (the transaction log stored as JSON files). By combining these two components, Delta Lake gives you the flexibility and cheap storage of a traditional data lake (Parquet files) as well as the reliability, granular control and performance of a data warehouse via the transaction log.
+
+The storage layer is the location where you store your data. Strictly speaking the storage layer is external to the Delta Lake architecture and not controlled by Delta Lake. But since the storage location can affect usage and performance, it is important to consider when designing your own Delta Lake architecture.
+
+Here’s what data stored with Delta Lake looks like on disk:
+
+```
+your-delta-table                        <-- your delta directory
+├── _delta_log			        <-- the transaction log
+│   └── 00000000000000000000.json
+│   └── 00000000000000000001.json
+└── part-00001.snappy.parquet           <-- partitioned data
+└── part-00002.snappy.parquet
+```
+
+The Parquet files store the data that was written. The `_delta_log` directory stores metadata about the transactions in lightweight JSON files.
+
+## Delta Lake Architecture: the Transaction Log
+
+The transaction log is the core component of the Delta Lake architecture.
+
+Let’s take a closer look at what the transaction log files look like and how this architecture works to give you great features like data versioning, schema enforcement and evolution, and efficient data skipping.
+
+For these examples we will use Delta Lake with Apache Spark. Follow [these instructions](https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake) to set up Spark with Delta Lake.
+
+> You can also use Delta Lake with many other query engines. See the Querying Delta Lake section below for more detail.
+
+### Basic Structure of the Transaction Log
+
+Let’s start by creating some data to play with:
+
+```
+d = [("Aysha", 27), ("Jasper", 44)]
+columns = ["name", "age"]
+data = spark.createDataFrame(d, schema=columns)
+data.write.format("delta").save("tmp/delta-table")
+```
+
+Here’s what your data should look like:
+
+```
++------+---+
+|  name|age|
++------+---+
+| Aysha| 27|
+|Jasper| 44|
++------+---+
+```
+
+Now take a look at the files that have been created using the `tree` command from your terminal:
+
+```
+> tree tmp/delta-table
+tmp/delta-table
+├── _delta_log
+│   ├── 00000000000000000000.json
+│   └── _commits
+└── part-00000-f5da54b2-df1a-4ca6-9524-070ee94ae902-c000.snappy.parquet
+```
+
+> Spark generally runs in parallel on multiple cores. In that case, it will create at least one partition per core. In the example above, the Spark session is running on 1 core and creates 1 partition.
+> The Parquet files store the data in your Spark DataFrame. The `_delta_log` directory stores metadata about the transactions in lightweight JSON files.
+
+Here are the contents of the `00000000000000000000.json` file:
+
+```
+[
+  {
+    "commitInfo": {
+      "timestamp": 1732724288380,
+      "operation": "WRITE",
+      "operationParameters": {
+        "mode": "ErrorIfExists",
+        "partitionBy": "[]"
+      },
+      "isolationLevel": "Serializable",
+      "isBlindAppend": true,
+      "operationMetrics": {
+        "numFiles": "1",
+        "numOutputRows": "2",
+        "numOutputBytes": "728"
+      },
+      "engineInfo": "Apache-Spark/3.5.1 Delta-Lake/3.2.0",
+      "txnId": "1d77c975-36ec-4478-acea-8238d9a48621"
+    }
+  },
+  {
+    "metaData": {
+      "id": "bb096c5c-6024-48fc-a380-aefa9e0f1c18",
+      "format": {
+        "provider": "parquet",
+        "options": {}
+      },
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"Age\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "partitionColumns": [],
+      "configuration": {},
+      "createdTime": 1732724288236
+    }
+  },
+  {
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2
+    }
+  },
+  {
+    "add": {
+      "path": "part-00000-39306d80-39cf-489d-ab99-0066f21aa0d6-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": 728,
+      "modificationTime": 1732724288370,
+      "dataChange": true,
+      "stats": "{\"numRecords\":2,\"minValues\":{\"name\":\"Aysha\",\"Age\":27},\"maxValues\":{\"name\":\"Jasper\",\"Age\":44},\"nullCount\":{\"name\":0,\"Age\":0}}"
+    }
+  }
+]
+```
+
+You don’t need to know exactly what all of this means. Just note that the transaction log file contains the following information:
+
+- the files added to the Delta table (under `"add"`)
+- schema of the data (`schemaString`)
+- column level metadata including the min/max value for each file (`minValues` and `maxValues`)
+- other metadata stats like timestamps, write mode, engine info etc.
+
+Let’s now take a look at how the transaction log enables some of Delta Lake’s core features.
+
+### Data versioning
+
+The transaction log records every operation that changes the data in your Delta table. This enables data versioning and time travel.
+
+Let’s create another Spark DataFrame and append it to the Delta table to see how this transaction is recorded:
+
+```
+d2 = [("Bianca", 33)]
+columns = ["name", "Age"]
+data2 = spark.createDataFrame(d2, schema=columns)
+data2.write.format("delta").mode("append").save("tmp/delta-table")
+```
+
+Read in the Delta table:
+
+```
+> df = spark.read.format("delta").load("tmp/delta-table/")
+> df.show()
++------+---+
+|  name|Age|
++------+---+
+|Bianca| 33|
+| Aysha| 27|
+|Jasper| 44|
++------+---+
+```
+
+Your Delta table now includes the appended data.
+
+Let’s look at the transaction logs with the `tree` command again:
+
+```
+> tree tmp/delta-table
+tmp/delta-table
+├── _delta_log
+│   ├── 00000000000000000000.json
+│   ├── 00000000000000000001.json
+│   └── _commits
+├── part-00000-39306d80-39cf-489d-ab99-0066f21aa0d6-c000.snappy.parquet
+└── part-00000-3a2d466c-2605-4211-8733-90a06bc40993-c000.snappy.parquet
+```
+
+A new transaction log file has been created: `00000000000000000001.json`. Let’s take a look at it:
+
+```
+[
+  {
+    "commitInfo": {
+      "timestamp": 1732724694891,
+      "operation": "WRITE",
+      "operationParameters": {
+        "mode": "Append",
+        "partitionBy": "[]"
+      },
+      "readVersion": 0,
+      "isolationLevel": "Serializable",
+      "isBlindAppend": true,
+      "operationMetrics": {
+        "numFiles": "1",
+        "numOutputRows": "1",
+        "numOutputBytes": "729"
+      },
+      "engineInfo": "Apache-Spark/3.5.1 Delta-Lake/3.2.0",
+      "txnId": "41707e38-0d8d-412a-bbef-483d222395cf"
+    }
+  },
+  {
+    "add": {
+      "path": "part-00000-3a2d466c-2605-4211-8733-90a06bc40993-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": 729,
+      "modificationTime": 1732724694884,
+      "dataChange": true,
+      "stats": "{\"numRecords\":1,\"minValues\":{\"name\":\"Bianca\",\"Age\":33},\"maxValues\":{\"name\":\"Bianca\",\"Age\":33},\"nullCount\":{\"name\":0,\"Age\":0}}"
+    }
+  }
+]
+```
+
+The transaction log shows that one new row (`numRecords: 1`) has been added.
+
+Because all data change operations are fully recorded, you can always travel back to previous states of your Delta table.
+
+You can use the `versionAsOf` option to read a specific version, either by version number or timestamp. For example:
+
+```
+> spark.read.format("delta").option("versionAsOf", "0").load("tmp/some_nums").show()
++------+---+
+|  name|Age|
++------+---+
+| Aysha| 27|
+|Jasper| 44|
++------+---+
+```
+
+You can also inspect the entire history of operations:
+
+```
+> from delta.tables import DeltaTable
+> delta_table = DeltaTable.forPath(spark, "tmp/delta-table")
+> delta_table.history().select("version", "timestamp", "operation").show(truncate=False)
++-------+-----------------------+---------+
+|version|timestamp              |operation|
++-------+-----------------------+---------+
+|1      |2024-11-27 16:24:54.898|WRITE    |
+|0      |2024-11-27 16:18:08.387|WRITE    |
++-------+-----------------------+---------+
+```
+
+Read more in the [Delta Lake Time Travel](https://delta.io/blog/2023-02-01-delta-lake-time-travel/) article.
+
+### Schema enforcement and evolution
+
+Because the transaction log records the schema of the Delta table, it can easily make sure that the schema is enforced. This prevents accidental data corruption when data writes don’t match the existing schema.
+
+Let’s try to append more data with a different schema:
+
+```
+d3 = [("Abraham", "Zayn", 45, "Doctor")]
+columns = ["first_name", "last_name", "age", "profession"]
+data3 = spark.createDataFrame(d3, schema=columns)
+data3.write.format("delta").mode("append").save("tmp/delta-table")
+```
+
+This will fail with an error:
+
+```
+A schema mismatch detected when writing to the Delta table
+Table schema:
+root
+-- name: string (nullable = true)
+-- Age: long (nullable = true)
+Data schema:
+root
+-- first_name: string (nullable = true)
+-- last_name: string (nullable = true)
+-- age: long (nullable = true)
+-- profession: string (nullable = true)
+```
+
+Delta Lake protects your data by controlling schema enforcement by default.
+
+To update a table’s schema, use the `mergeSchema` option:
+
+```
+data3.write.format("delta").mode("append").option("mergeSchema", "true").save("tmp/delta-table")
+```
+
+This will update your table schema. When adding new columns, existing rows will be filled with `NULL` values for the new columns:
+
+```
++-------+---+---------+----------+
+|   name|age|last_name|profession|
++-------+---+---------+----------+
+|Abraham| 45|     Zayn|    Doctor|
+| Bianca| 33|     NULL|      NULL|
+|  Aysha| 27|     NULL|      NULL|
+| Jasper| 44|     NULL|      NULL|
++-------+---+---------+----------+
+```
+
+Delta Lake gives you both the reliability and flexibility to safely manage your data schemas. Read more in the [Delta Lake Schema Enforcement](https://delta.io/blog/2022-11-16-delta-lake-schema-enforcement/) and [Delta Lake Schema Evolution](https://delta.io/blog/2023-02-08-delta-lake-schema-evolution/) articles.
+
+### Data skipping
+
+Because the transaction log records metadata about each file that is created, Delta Lake gives you highly efficient query optimizations via data skipping. Query engines can read the metadata in the transaction log and figure out which files to skip.
+
+This is even better than the type of data skipping that Parquet offers. Parquet records metadata at the column and row-group levels. Query engines still have to list and read each Parquet file to read that metadata. Delta Lake instead lets query engines read only the transaction log without having to list all the underlying Parquet files. This is much faster.
+
+## Benefits of the Delta Lake Architecture
+
+The transaction log is the backbone of the Delta Lake architecture. Without it, Delta tables are just partitioned Parquet files: efficient but immutable and hard to manage at scale.
+
+The transaction log is a lightweight JSON file that supports all of Delta Lake’s core features:
+
+- **Data versioning**
+- **File skipping**
+- **Schema enforcement and evolution**
+- **Concurrency control**
+- **Auto-compaction and file size optimization**
+- **Unified batch and streaming support**
+
+Read the [Delta Lake vs data lake](https://delta.io/blog/delta-lake-vs-data-lake/) article for more detail on each of these features.
+
+## Querying Data stored with Delta Lake
+
+There are many ways to work with your data stored using Delta Lake. Delta Lake was first built with a Spark implementation. There are also many ways to use Delta Lake without Spark, for example using SQL, Python or Rust.
+
+You might want to use Delta Lake without Spark because:
+
+- You don’t want to learn Spark
+- Your team doesn’t use Spark
+- You don’t want to use the Java Virtual Machine (JVM)
+- You are working with relatively small datasets
+
+Read more in the [Delta Lake without Spark](https://delta.io/blog/delta-lake-without-spark/) article.
+
+## Delta Lake Medallion Architecture
+
+When building your own Delta Lake project, it is also important to consider how you will implement the Delta Lake medallion architecture.
+
+The medallion architecture refers to the stages of your data processing:
+
+- Bronze: raw data
+- Silver: cleaned/joined datasets
+- Gold: business-level aggregates
+
+The medallion architecture is a powerful tool for many business use cases, like BI, reporting, AI, and ML. Delta Lake helps you build efficient and reliable pipelines with the medallion architecture because it supports ACID transactions, works well for both small and large datasets, and has many great features that will speed up your data queries.
+
+Read more in the [Delta Lake Medallion Architecture post](https://delta.io/blog/delta-lake-medallion-architecture/).
+
+## Using the Delta Lake Architecture
+
+It’s important to understand the basics of how the Delta Lake architecture is constructed under the hood. This will help you make the most of its powerful features, like data versioning, schema enforcement and evolution, and data skipping.
+
+Here are some other great posts that will help you understand other features that rely on the Delta Lake architecture:
+
+- Using the transaction log to [optimize your Delta tables](https://delta.io/blog/delta-lake-optimize/).
+- Implementing Delta Lake on cloud stores like [AWS S3](https://delta.io/blog/delta-lake-s3/), Google Cloud Storage and Azure Data Lake Storage.
+- Using [Delta Lake for ETL pipelines](https://delta.io/blog/delta-lake-etl/).
