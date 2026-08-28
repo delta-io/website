@@ -1,0 +1,161 @@
+---
+title: Use Delta Lake with Apache Arrow
+description: Learn how to use Delta Lake with Apache Arrow
+thumbnail: ./thumbnail.png
+author: Avril Aysha
+date: 2025-07-12
+---
+
+This article explains how you can use Delta Lake with Apache Arrow.
+
+You can use Delta Lake and Apache Arrow to build multi-platform pipelines and to maximize the interoperability between tools and engines. One team can write their code in pandas, another in Polars, and downstream business analytics can run queries in SQL, while all the data is stored in the same Delta table. Because Arrow is language-independent and supports zero-copy reads, all of this can happen with minimal serialization overhead and no language conversions.
+
+Let's take a closer look at how this works.
+
+## What is Delta Lake?
+
+Delta Lake is a lakehouse storage protocol that makes your structured data workloads faster and more secure. It adds powerful features like ACID transactions, schema enforcement, time travel, and file-level metadata [to your data lake](https://delta.io/blog/delta-lake-vs-data-lake/). You get the flexibility of files with the reliability of a database.
+
+With Delta Lake, you can:
+
+- Safely update or delete records without risk
+- Rewind to past versions of your data
+- Enforce schema rules to keep tables consistent
+- Improve performance with file skipping and data clustering
+- Access data from multiple concurrent clients without conflicts \
+
+Delta Lake works with tools like Spark, [Pandas](https://delta.io/blog/2022-10-15-version-pandas-dataset/), DuckDB, and Polars and many others. To make the most out of the integration with Apache Arrow, we will use the [delta-rs library](https://delta-io.github.io/delta-rs/): the Rust implementation of the Delta Lake protocol with full Python support.
+
+Read more in the [Delta Lake without Spark blog](https://delta.io/blog/delta-lake-without-spark/).
+
+## What is Apache Arrow?
+
+[Apache Arrow](https://arrow.apache.org/) is an in-memory storage format that minimizes serialization overhead by supporting zero-copy reads. It is language-independent and supports efficient interoperability between languages and query engines. It's a standard used by many tools like Pandas, DuckDB, PySpark, and Polars. Arrow is fast because it stores data in memory in a predictable, column-first layout.
+
+The main benefits:
+
+- Zero-copy data sharing across languages that support Arrow
+- Efficient memory layout for analytics
+- Avoids serialization/deserialization, speeding up pipelines
+
+This format makes it easy to move data between tools without expensive conversions.
+
+### Arrow Datasets vs Arrow Tables
+
+Apache Arrow has [two main data types](https://arrow.apache.org/docs/python/getstarted.html#working-with-large-data) for structured data: Arrow Table and Arrow Dataset. Understanding the difference will help you pick the right approach.
+
+- **Arrow Table** is eager. You load the entire dataset into memory. This is great for smaller tables or exploratory work.
+- **Arrow Dataset** is lazy. You define queries first, then Arrow reads only the rows and columns you need. It supports filtering and partition pruning.
+
+This makes a big difference in performance. In a [test on a 1 billion-row Delta table](https://delta-io.github.io/delta-rs/integrations/delta-lake-arrow/) (~50 GB CSV) the same DuckDB query using:
+
+- Arrow Table took 17 seconds
+- Arrow Dataset took ~0.01 seconds
+
+That's because the Arrow Dataset query skips irrelevant data and only reads the filtered subset. For large-scale workloads you will usually want to use the Arrow Dataset structure.
+
+## Delta Lake + Arrow for Interoperability
+
+Combining Delta Lake's storage format with Arrow's in-memory format lets you connect multiple query engines smoothly. Arrow is especially helpful when an engine you want to use does not have built-in Delta Lake support yet. In that case you can use Arrow as an easy and reliable go-between.
+
+#### 1. Read Delta tables in Arrow
+
+With `delta-rs`, you can convert Delta data into Arrow structures using the `to_pyarrow_dataset()` and `to_pyarrow_table()` methods.
+
+For example:
+
+```python
+from deltalake import DeltaTable
+
+table = DeltaTable("path/to/delta/table")
+dataset = table.to_pyarrow_dataset()
+```
+
+Excellent, now any Arrow-aware engine can query your table.
+
+#### 2. Query with DuckDB or Polars
+
+For example, you can load the table into DuckDB to run SQL queries:
+
+```python
+import duckdb
+from deltalake import DeltaTable
+
+dataset = DeltaTable("delta/my_table").to_pyarrow_dataset()
+df = duckdb.arrow(dataset).query("SELECT * FROM dataset WHERE col > 10")
+```
+
+Or you can read the table with Polars for further transformations:
+
+```python
+import polars as pl
+from deltalake import DeltaTable
+
+table = DeltaTable("delta/my_table")
+arrow_tab = table.to_pyarrow_table()
+df = pl.from_arrow(arrow_tab)
+```
+
+You can store the table back in Delta format using the `write_deltalake`:
+
+```python
+from deltalake import write_deltalake
+write_deltalake("path/to/delta/table", df)
+```
+
+#### Run queries in any Arrow engine
+
+Because you're using Arrow, you're not tied to any single engine:
+
+- Pandas for quick analysis
+- Polars for fast, multi-threaded transforms
+- DuckDB or DataFusion for SQL
+- Dask, Daft, Ray for distributed workloads
+
+All of these engines can read the same data without moving it around or copying.
+
+## Delta Lake and Arrow Example in Python
+
+Here's a simple workflow to demonstrate how you can use Apache Arrow to read, write and manipulate data stored in a Delta table:
+
+1. Write events to a Delta table
+2. Read data as Arrow Dataset for SQL queries
+3. Transform using Polars
+
+```python
+import pandas as pd
+import duckdb
+import polars as pl
+from deltalake import write_deltalake, DeltaTable
+
+# Step 1: Write data
+df = pd.DataFrame({"id": [1,2,3], "value": [10, 20, 30]})
+write_deltalake("delta/events", df, mode="overwrite")
+
+# Step 2: Load as Arrow dataset
+table = DeltaTable("delta/events")
+dataset = table.to_pyarrow_dataset()
+
+# Step 3: Query with DuckDB
+duck_df = duckdb.arrow(dataset).query("SELECT * FROM dataset WHERE value > 10").to_df()
+
+# Step 4: Use Polars for transformation
+pl_df = pl.from_pandas(duck_df).with_columns((pl.col("value") * 2).alias("value2"))
+
+# Step 5: Write to Delta Lake
+write_deltalake("delta/transformed_events", df, mode="overwrite")
+```
+
+You just moved seamlessly from storage, to SQL query, to fast Python transformation.
+
+## When to use Delta Lake and Apache Arrow
+
+Delta Lake and Apache Arrow work great together. Using them together gives you:
+
+- ACID safety, time travel, and schema management from Delta
+- Fast, zero-copy in-memory format from Arrow
+- Portable access from any Arrow-compatible engine
+
+This means you can move data between languages and tools without data duplication.
+
+Many engines support interoperability under the hood so that you don't have to manually convert your Delta table into Arrow Tables or Datasets. When working with engines that don't support direct Delta reads or writes yet, you can use the explicit Arrow conversion as a safe and efficient go-between.
