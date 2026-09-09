@@ -12,7 +12,6 @@ import {
   TwitchSection,
 } from "../components/Community";
 import AnnouncementSection from "../components/AnnouncementSection.astro";
-import { BookDownloadSection } from "../components/BookDownloadSection";
 import { ContributorsSection } from "../components/ContributorsSection";
 import { ProjectGovernanceSection } from "../components/ProjectGovernanceSection";
 
@@ -32,7 +31,6 @@ const videos = await fetchChannelVideos(youtubeChannelId, { limit: 5 });
   <ChartSection />
   <ContributeSection />
   <ArticleVideoSection />
-  <BookDownloadSection />
   <MaintainersSection />
   <ContributorsSection className="bg-lightBg" />
   <ProjectGovernanceSection />
