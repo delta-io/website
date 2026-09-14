@@ -1,0 +1,245 @@
+---
+title: How to use Delta Lake with PySpark
+description: This post explains how to use Delta Lake with PySpark.
+thumbnail: ./thumbnail.png
+author: Avril Aysha
+date: 2025-05-27
+---
+
+This article explains how you can you use Delta Lake with PySpark.
+
+Delta Lake and PySpark are a great combination. Delta Lake brings reliability and performance features to your data lake, and PySpark gives you a Python-friendly way to scale those features across large datasets. Together, they let you build powerful and reliable data pipelines.
+
+PySpark is the Python API for Apache Spark. It lets you write Spark code using Python instead of Scala or Java. You can work with big data using familiar libraries and syntax, while still taking advantage of Spark's speed and distributed power.
+
+Delta Lake brings ACID transactions, schema enforcement, time travel, and other database-like features to your data lake. In this guide, you'll learn how to set up Delta Lake with PySpark, run your read and write operations, and understand what's happening under the hood. If you're new to Delta Lake, check out the [Delta Lake vs Data Lake](https://delta.io/blog/delta-lake-vs-data-lake/) guide.
+
+## When should I use PySpark?
+
+You should consider using Delta Lake with PySpark:
+
+- If you're working in Python and already familiar with Spark
+- If you need features only available in the `delta-spark` [implementation](https://delta.io/blog/2023-07-07-delta-lake-transaction-log-protocol/)
+- If you're working with massive datasets that require a Spark cluster
+
+If you're working in Python and don't want to use Spark, check out the [Delta Lake without Spark](https://delta.io/blog/delta-lake-without-spark/) guide.
+
+## Delta Lake PySpark: Configuration and Setup
+
+Let's start by explaining how to setup PySpark with Delta Lake support.
+
+### Step 1: Install the Delta Lake JARs
+
+PySpark doesn't include Delta Lake out of the box. You will need to add the Delta Lake JAR files to your Spark session. It's very important that you install compatible versions of Spark and Delta Lake. If the versions don't match then Delta Lake won't work properly.
+
+There are 3 ways make sure you have the right versions:
+
+1. Use the [compatibility matrix](https://docs.delta.io/latest/releases.html) and a virtual environment manager to pin the right versions, e.g. conda, poetry or venv.
+2. Install the official [Delta Lake Docker image](https://github.com/delta-io/delta-docker).
+3. Install the right versions manually.
+
+The last option is only recommended for quick testing purposes. Avoid installing packages manually in production settings.
+
+#### Conda Environment Example
+
+Here's an example of how to pin compatible versions using a `conda` environment `yaml` file:
+
+```
+    name: pyspark-350-delta-330
+    channels:
+     - conda-forge
+     - defaults
+    dependencies:
+     - python=3.11
+     - pyspark=3.5.0
+     - pip
+     - pip:
+       - delta-spark==3.3.0
+```
+
+This creates an environment with the latest PySpark and Delta-spark versions. The [Delta Examples repository](https://github.com/delta-io/delta-examples/tree/master/envs) has lots of `.yml` template files for other combinations of older compatible versions.
+
+#### Delta Lake Docker Image
+
+You can also use the official [Delta Lake Docker image](https://github.com/delta-io/delta-docker) to use Delta Lake with PySpark. You will need to have [Docker installed](https://docs.docker.com/get-docker/) on your machine.
+
+To use Delta Lake from a Jupyter Notebook with this Docker image, follow the steps below to build a Docker Image with Apache Spark and Delta Lake installed:
+
+1. Clone the [delta-docker](https://github.com/delta-io/delta-docker) repo to your machine
+2. Navigate to the cloned folder
+3. Open a terminal window
+4. Execute the following from the cloned repo folder: \
+   `docker build -t delta_quickstart -f Dockerfile_delta_quickstart`
+5. Run a container from the image with a JuypterLab entry point \
+   `docker run --name delta_quickstart --rm -it -p 8888-8889:8888-8889 delta_quickstart`
+
+Alternatively, you can also download the image from DockerHub at Delta Lake DockerHub:
+
+1. `docker pull deltaio/delta-docker:latest` for the standard Linux docker
+2. `docker pull deltaio/delta-docker:latest_arm64` for running this optimally on Apple Silicone machines
+
+### Step 2: Start a Spark Session with Delta Support
+
+With the right versions installed, you can now run launch your Spark Session with Delta Lake support:
+
+```python
+    import pyspark
+    from delta import *
+
+    builder = (
+        pyspark.sql.SparkSession.builder.appName("MyApp")
+        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+        .config(
+            "spark.sql.catalog.spark_catalog",
+            "org.apache.spark.sql.delta.catalog.DeltaCatalog",
+        )
+    )
+
+    spark = configure_spark_with_delta_pip(builder).getOrCreate()
+```
+
+Once this runs, you're ready to go!
+
+## How to Write a Delta Table with PySpark
+
+Now let's write some data to a Delta table. We'll start with a regular PySpark DataFrame containing some sample data:
+
+```python
+    data = [("alice", 30), ("bob", 42), ("claire", 25)]
+    df = spark.createDataFrame(data, ["name", "age"])
+
+    # Write the data in Delta format
+    df.write.format("delta").save("tmp/delta_table")
+```
+
+Great work, you now have a Delta table stored at `tmp/delta_table`.
+
+## How to Read a Delta Table with PySpark
+
+You can read Delta tables just like any other format:
+
+```python
+    > df = spark.read.format("delta").load("tmp/delta_table")
+    > df.show()
+```
+
+```
++------+---+
+|  name|age|
++------+---+
+|claire| 25|
+| alice| 30|
+|   bob| 42|
++------+---+
+```
+
+You'll see your original data back, but now Delta is tracking schema, metadata, and versions behind the scenes.
+
+## How to Use Delta Lake Time Travel with PySpark
+
+One of Delta Lake's most useful features is time travel.
+
+Every write to a Delta table creates a new version that is stored in [the Delta Lake transaction log](#link-to-delta-architecture-blog). You can then travel back to earlier states of your data by specifying the version you want to load. Let's take a look at how this works.
+
+First, let's append some more data to our table:
+
+```python
+    # create toy dataset
+    data2 = [("janco", 35), ("paulo", 54), ("sylvia", 21)]
+    df2 = spark.createDataFrame(data2, ["name", "age"])
+
+    # Write the data in Delta format using append mode
+    df2.write.format("delta").mode("append").save("tmp/delta_table")
+```
+
+Your dataset should now have 5 rows of data:
+
+```python
+    > df = spark.read.format("delta").load("tmp/delta_table")
+    > df.show()
+```
+
+```
+    +------+---+
+    |  name|age|
+    +------+---+
+    |claire| 25|
+    |sylvia| 21|
+    | paulo| 54|
+    | janco| 35|
+    | alice| 30|
+    |   bob| 42|
+    +------+---+
+```
+
+You can then read back the first version of your table by specifying the `versionAsOf` option:
+
+```python
+    > df_v0 = spark.read.format("delta") \
+    >     .option("versionAsOf", 0) \
+    >     .load("tmp/delta_table")
+
+    > df_v0.show()
+```
+
+```
++------+---+
+|  name|age|
++------+---+
+|claire| 25|
+| alice| 30|
+|   bob| 42|
++------+---+
+```
+
+This lets you easily debug changes, revert data, or audit history. Read more about how to use this feature in the [Delta Lake time travel](https://delta.io/blog/2023-02-01-delta-lake-time-travel/) article.
+
+## How to use SQL with PySpark
+
+You can also use SQL syntax with PySpark to query your Delta Lake tables.
+
+First, you will need to register your Delta table as a Spark SQL table using a `CREATE TABLE IF NOT EXISTS` clause and the path to the Delta table:
+
+```python
+    spark.sql(f"CREATE TABLE IF NOT EXISTS data USING DELTA LOCATION '{delta_path}'")
+```
+
+Once you've registered your table, you can run regular SQL queries on your data. For example, here's how you can find all people older than 30:
+
+```python
+    > result = spark.sql("SELECT * FROM data WHERE age > 30")
+    > result.show()
+```
+
+```
+    +-----+---+
+    | name|age|
+    +-----+---+
+    |paulo| 54|
+    |janco| 35|
+    |  bob| 42|
+    +-----+---+
+```
+
+## Other great Delta Lake features
+
+Besides time travel and SQL support, Delta Lake gives you many other great features that will make your data workloads faster and safer:
+
+1. [Reliable ACID transactions](#link-to-acid-transactions-blog)
+2. [Advanced data skipping](#link-to-data-skipping-blog)
+3. Cloud-native support (e.g. [S3](https://delta.io/blog/delta-lake-s3/), [GCP](https://delta.io/blog/delta-lake-gcp/) and [Azure](https://delta.io/blog/delta-lake-azure-data-lake-storage/))
+4. [Schema enforcement](https://delta.io/blog/2022-11-16-delta-lake-schema-enforcement/) and [evolution](https://delta.io/blog/2023-02-08-delta-lake-schema-evolution/)
+5. Full support for [CRUD operations](https://delta.io/blog/delta-lake-upsert/) like deletes, upserts etc.
+
+## Start using Delta Lake with PySpark
+
+Delta Lake makes your PySpark data pipelines more reliable, easier to debug, and safer to use in production. Here's what you get:
+
+- ACID transactions that protect you from partial writes
+- Schema evolution that helps you adapt to changing data
+- Time travel so you can audit and roll back
+- Advanced data skipping and less corrupted workflows
+
+All of this runs on top of your existing data lake and integrates smoothly with PySpark.
+
+Just remember to pass the right Delta package to Spark and configure the session properly. Once that's done, you're ready to build Lakehouse-grade pipelines!
