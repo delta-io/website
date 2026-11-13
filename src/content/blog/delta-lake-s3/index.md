@@ -1,12 +1,13 @@
 ---
 title: Delta Lake on S3
-description: Learn how to use Delta Lake on S3
+description: Configure Delta Lake on S3 with Spark or Polars, including S3 conditional writes and migration from DynamoDB coordination.
 thumbnail: "./thumbnail.png"
 author: avril-aysha
 publishedAt: 2024-06-28
+updatedAt: 2026-11-13
 ---
 
-This article shows you how to use Delta Lake with the AWS S3 object store.
+Data engineers can read and write Delta Lake tables on Amazon S3 with Spark and Polars. Delta Lake Spark 4.5 and above supports multi-cluster writes through S3 conditional writes on compatible Hadoop S3A runtimes. Existing DynamoDB deployments can follow the [migration guide](https://docs.delta.io/porting/#migrate-s3-writes-from-dynamodb-to-native-conditional-writes).
 
 Delta Lake is a great storage format for reliable and fast data storage. It provides features like ACID transactions, scalable metadata handling, high-performance query optimizations, schema enforcement and time travel. With these features you can build a performant lakehouse architecture on top of your data lake.
 
@@ -45,13 +46,13 @@ Many query engines support reading and writing Delta Lake on S3.
 For example, you can read Delta Lake tables with Spark using:
 
 ```python
-    df = spark.read.format("delta").load(path/to/delta)
+    df = spark.read.format("delta").load("s3a://example-bucket/delta-table")
 ```
 
 And you can write data to Delta Lake table with Spark using:
 
 ```python
-	df.write.format("delta").save(path/to/delta)
+	df.write.format("delta").save("s3a://example-bucket/delta-table")
 ```
 
 You can also use [Delta Lake without Spark](https://delta.io/blog/delta-lake-without-spark/).
@@ -62,153 +63,51 @@ Let's look at an example of using Delta Lake on S3 with the Spark engine.
 
 ## Delta Lake on S3 with Spark
 
-Your Spark session will need additional configuration to read/write Delta Lake tables. Specifically, you will need to install dependency JARs to reference, connect and authenticate with AWS S3.
+Use Delta Lake Spark 4.5 and above with a compatible Spark distribution, Hadoop S3A 3.4.2 and above, and matching Hadoop dependencies. Keep S3A conditional creation enabled. See [S3 conditional writes](https://docs.delta.io/delta-storage/#native-s3-setup) for the complete requirements.
 
-These dependencies need to be carefully and manually specified. Not all versions of the dependencies work together.
+1. Install a compatible `pyspark` and `delta-spark` environment and configure your S3 credentials. AWS Identity and Access Management (IAM) roles are recommended. The Hadoop runtime and `hadoop-aws` connector versions must match. Adding a newer connector JAR alone does not upgrade Spark's Hadoop runtime.
 
-In other words, you can't simply start up a basic Spark session and use it read or write Delta tables:
+1. Start a Spark session. The following example assumes a compatible Spark distribution using Hadoop 3.4.2 and the corresponding Delta Lake 4.5 package:
 
-```python
-import pyspark
-from delta import *
+   ```python
+   import pyspark
+   from delta import configure_spark_with_delta_pip
 
-builder = (
-    pyspark.sql.SparkSession.builder.master("local[4]")
-    .appName("parallel")
-    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-    .config(
-        "spark.sql.catalog.spark_catalog",
-        "org.apache.spark.sql.delta.catalog.DeltaCatalog",
-    )
-)
+   builder = (
+       pyspark.sql.SparkSession.builder
+       .appName("delta-s3")
+       .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+       .config(
+           "spark.sql.catalog.spark_catalog",
+           "org.apache.spark.sql.delta.catalog.DeltaCatalog",
+       )
+       .config("spark.hadoop.fs.s3a.create.conditional.enabled", "true")
+   )
+   spark = configure_spark_with_delta_pip(
+       builder,
+       extra_packages=["org.apache.hadoop:hadoop-aws:3.4.2"],
+   ).getOrCreate()
+   ```
 
-spark = configure_spark_with_delta_pip(builder).getOrCreate()
+1. Write and read a table. For example:
 
-df = spark.read.format("delta").load("s3a://bucket/delta-table")
+   ```python
+   s3_path = "s3a://example-bucket/delta-table"
+   spark.range(5).write.format("delta").save(s3_path)
+   spark.read.format("delta").load(s3_path).show()
+   ```
 
-```
+1. Check the driver logs for `io.delta.storage.S3LogStore`. Resolve a single-driver fallback before writing from independent Spark drivers.
 
-This will error out with:
+### Single-driver and multi-cluster support
 
-```sh
-Py4JJavaError: An error occurred while calling o35.parquet.
-: org.apache.hadoop.fs.UnsupportedFileSystemException: No FileSystem for scheme "s3"
-```
+Supported Spark setups automatically select `S3LogStore` when no explicit LogStore setting applies. S3 conditional writes ensure that only one writer can create a given commit file, using the put-if-absent condition `If-None-Match: *`. Delta Lake's transaction conflict checks determine whether competing transactions can retry.
 
-And produce a long traceback that looks something like this:
-
-![](image2.png)
-
-This error is telling you that your Spark session does not know how to handle references to an S3 filesystem. You will need to add the following JARs to your Spark session:
-
-- hadoop-aws
-- hadoop-common
-- aws-java-sdk-bundle
-
-Follow these steps to configure your Spark session to read/write Delta tables to S3:
-
-1.  Install the latest version of Spark
-2.  Get matching versions of the `hadoop-aws` and `hadoop-common` JARs. \
-     \
-    The general rule is: Spark x.y.z --> hadoop-aws/common x.y.z. For spark 3.5.0, use hadoop-aws/common 3.3.4 (the latest version) \
-     \
-    To be sure you get the right version number for hadoop-aws and hadoop-common, you can run the following command in your terminal from wherever you have Spark installed. You want to match the version number of `hadoop-client-runtime`:
-
-    > `cd pyspark/jars && ls -l | grep hadoop`
-
-```
-        …
-        -rw-rw-r--  4 avriiil  staff  30085504  4 Oct  2023 hadoop-client-runtime-3.3.4.jar
-        …
-```
-
-3.  Get a matching version of `aws-java-sdk-bundle`, see compatible versions [here](https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-aws/3.3.4).
-4.  Add these 3 dependency JARs to your Spark session builder. \
-     \
-    You may be used to doing this by adding the JARs to your Spark Config object with something like: \
-
-```python
-builder = (
-    pyspark.sql.SparkSession.builder.master("local[4]")
-    .appName("s3-write")
-    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-    .config(
-        "spark.sql.catalog.spark_catalog",
-        "org.apache.spark.sql.delta.catalog.DeltaCatalog",
-    )
-    .config(
-        "spark.jars.packages",
-        "org.apache.hadoop:hadoop-aws:3.3.4, org.apache.hadoop:aws-java-sdk-bundle:1.12.262, org.apache.hadoop:hadoop-common:3.3.4",
-    )
-    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
-    .config("spark.hadoop.fs.s3a.access.key", access_key)
-    .config("spark.hadoop.fs.s3a.secret.key", secret_key)
-)
-```
-
-        But the `jars.packages` configs will get overridden by the `configure_spark_with_delta_pip` utility function.
-
-        Instead, use the extra_packages kwarg option to the `configure_spark_with_delta_pip` function:
-
-```python
-conf = (
-    pyspark.conf.SparkConf()
-    .setAppName("MY_APP")
-    .set(
-        "spark.sql.catalog.spark_catalog",
-        "org.apache.spark.sql.delta.catalog.DeltaCatalog",
-    )
-    .set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-    .set("spark.hadoop.fs.s3a.access.key", access_key)
-    .set("spark.hadoop.fs.s3a.secret.key", secret_key)
-    .set("spark.sql.shuffle.partitions", "4")
-    .setMaster(
-        "local[*]"
-    )  # replace the * with your desired number of cores. * for use all.
-)
-
-extra_packages = [
-    "org.apache.hadoop:hadoop-aws:3.3.4",
-    "org.apache.hadoop:hadoop-common:3.3.4",
-    "com.amazonaws:aws-java-sdk-bundle:1.12.262",
-]
-
-builder = pyspark.sql.SparkSession.builder.appName("MyApp").config(conf=conf)
-spark = configure_spark_with_delta_pip(
-    builder, extra_packages=extra_packages
-).getOrCreate()
-```
-
-5.  Launch your Spark session. You can confirm that the correct JARs are installed using `spark.sparkContext.getConf().getAll()`
-6.  Create a dataframe with some toy data.
-
-```python
-`import pandas as pd`
-
-df = pd.DataFrame({'x': [1, 2, 3]})
-df = spark.createDataFrame(df)
-```
-
-7. Write the data to a Delta table on S3.
-
-```python
-	s3_path = "s3a://avriiil/delta-test-spark"
-	df.write.format("delta").save(s3_path)
-```
-
-Note that Spark references to S3 require the prefix `s3a`.
-
-### Single vs Multi-Cluster Support
-
-By default, Spark sessions will run in a single cluster mode.
-
-In [this default mode](https://docs.delta.io/latest/delta-storage.html#single-cluster-setup-default), you can use Delta Lake to _read_ in parallel from multiple clusters but any parallel writes must originate from a single Spark driver in order for Delta Lake to provide transactional guarantees. This is because S3 currently does not provide mutual exclusion. There is no way to ensure that only one writer is able to create a file, potentially leading to data corruption.
-
-You can enable multi-cluster concurrent write support by explicitly configuring Delta Lake to use a LogStore. In this case, DynamoDB will be used to guarantee the mutual exclusion that S3 does not provide. Read more in the [Multi-Cluster Writes](https://delta.io/blog/2022-05-18-multi-cluster-writes-to-delta-lake-storage-in-s3/) blog post.
-
-Next, let’s look at an example of using Delta Lake on S3 with a python-deltalake query engine like Polars.
+Older Delta versions and filesystems without the required capabilities retain the single-driver store by default. Existing `S3DynamoDBLogStore` settings continue to select DynamoDB after an upgrade. Follow the [DynamoDB migration procedure](https://docs.delta.io/porting/#migrate-s3-writes-from-dynamodb-to-native-conditional-writes) before changing an existing workload's commit protocol.
 
 ## Delta Lake on S3 with delta-rs
+
+[delta-rs 1.0 and above uses S3 conditional writes](https://github.com/delta-io/delta-rs/discussions/4482) and no longer supports its DynamoDB LogStore. Use S3 configuration without DynamoDB locking options, and choose a version whose commit protocol is compatible with every writer on the table. Coordinate the transition of existing DynamoDB workloads before changing any client.
 
 You don’t need to install extra dependencies to write Delta tables to S3 with engines that use the `delta-rs` implementation of Delta Lake. You do need to configure your AWS access credentials correctly.
 
@@ -219,10 +118,10 @@ For example, if you’re running locally with the proper credentials in your loc
 ```python
     import pandas as pd
     df = pd.DataFrame({'x': [1, 2, 3]})
-    df.to_parquet("s3://avriiil/parquet-test-pandas")
+    df.to_parquet("s3://example-bucket/parquet-test-pandas")
 ```
 
-The `delta-rs` writer does not use `boto3` and therefore does not support taking credentials from your `.aws/config` or `.aws/creds` file. If you’re used to working with writers from Python engines like Polars, pandas or Dask, this may mean a small change to your workflow.
+The `delta-rs` writer uses its own storage client rather than `boto3`. Follow the [storage configuration](https://delta-io.github.io/delta-rs/) for your installed `deltalake` version when configuring credentials.
 
 You can pass your AWS credentials explicitly by using:
 
@@ -243,18 +142,16 @@ Follow the steps below to use Delta Lake on S3 with Polars:
 
 2. Create a dataframe with some toy data.
 
-   `df = pl.DataFrame({'x': [1, 2, 3]})`
+   ```python
+   import polars as pl
 
-3. Set your `storage_options` correctly.
+   df = pl.DataFrame({"x": [1, 2, 3]})
+   ```
+
+3. Set the AWS region. This example uses credentials from the environment or an instance role:
 
 ```python
-storage_options = {
-    "AWS_REGION":<region_name>,
-    'AWS_ACCESS_KEY_ID': <key_id>,
-    'AWS_SECRET_ACCESS_KEY': <access_key>,
-    'AWS_S3_LOCKING_PROVIDER': 'dynamodb',
-    'DELTA_DYNAMO_TABLE_NAME': 'delta_log',
-}
+storage_options = {"AWS_REGION": "us-east-1"}
 ```
 
 4. Write data to Delta table using the `storage_options` kwarg.
@@ -266,41 +163,27 @@ storage_options = {
    )
    ```
 
-Just like the Spark implementation, `delta-rs` uses DynamoDB to guarantee safe concurrent writes. If for some reason you don't want to use DynamoDB as your locking mechanism you can choose to set the `AWS_S3_ALLOW_UNSAFE_RENAME` variable to `true` in order to enable S3 unsafe writes.
+Use S3 conditional writes for safe concurrent commits. Do not enable `AWS_S3_ALLOW_UNSAFE_RENAME` to bypass commit coordination.
 
 ## Delta Lake on S3: Safe Concurrent Writes
 
-You need a locking provider to ensure safe concurrent writes when writing Delta tables to S3. This is because S3 does not guarantee mutual exclusion.
+Every writer on a Delta table must use a compatible atomic commit protocol. A client that writes unconditionally can overwrite another client's commit.
 
-A locking provider guarantees that only one writer is able to create the same file. This prevents corrupted or conflicting data.
-
-You can use a DynamoDB table as your locking provider for safe concurrent writes.
-
-Run the code below in your terminal to create a DynamoDB table that will act as your locking provider.
-
-```
-    aws dynamodb create-table \
-    --table-name delta_log \
-    --attribute-definitions AttributeName=tablePath,AttributeType=S AttributeName=fileName,AttributeType=S \
-    --key-schema AttributeName=tablePath,KeyType=HASH AttributeName=fileName,KeyType=RANGE \
-    --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
-```
-
-Delta-spark supports safe concurrent writes by default from a single cluster. Multi-cluster writes require additional configuration. See the “Delta Lake on S3 with Spark” section above for more detail on both cases.
-
-delta-rs supports safe concurrent writes. You will need a DynamoDB table. You can disable the safe concurrent writes guarantee if you don't want to use a DynamoDB table. See the “Delta Lake on S3 with delta-rs” section for more detail.
+For new Spark workloads, use the supported S3 conditional write setup above. For existing `S3DynamoDBLogStore` workloads, keep the DynamoDB table, region, and configuration consistent until all clients complete the coordinated migration. The [compatibility instructions](https://docs.delta.io/delta-storage/#multi-cluster-setup) remain available for those deployments.
 
 ## Delta Lake on S3: Required permissions
 
-You need to have permissions to get, put and delete objects in the S3 bucket you're storing your data in. Please note that you must be allowed to delete objects even if you're just appending to the Delta Lake, because there are temporary files into the log folder that are deleted after usage.
+Grant the S3 permissions required by your reads, writes, multipart-upload cleanup, and table maintenance. Commit coordination through S3 conditional writes uses S3 permissions. Applications that retain DynamoDB coordination also need DynamoDB permissions.
 
 In AWS S3, you will need the following permissions:
 
+- s3:ListBucket
 - s3:GetObject
 - s3:PutObject
 - s3:DeleteObject
+- s3:AbortMultipartUpload
 
-In DynamoDB, you will need the following permissions:
+Only applications retaining DynamoDB coordination need DynamoDB permissions. The permissions for that compatibility setup include:
 
 - dynamodb:GetItem
 - dynamodb:Query
